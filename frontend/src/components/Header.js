@@ -79,7 +79,7 @@ const Header = () => {
             </button>
 
             {isLoginOpen && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50">
+              <div className="absolute  mt-2 w-60 bg-white rounded-[10px] shadow-lg z-50">
                 {/* Header */}
                 <div className="p-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
