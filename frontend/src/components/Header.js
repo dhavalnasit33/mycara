@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaUser,
   FaHeart,
@@ -6,20 +6,20 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import BagIcon from "../assets/bag.png";
 import OrdersIcon from "../assets/orders.svg";
 import LoginIcon from "../assets/login.svg";
 import WhiteLogin from "../assets/white login.png";
 import MenuIcon from "../assets/menu.png";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faRupeeSign, faGift } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
+import PayImg from "../assets/pay.png";
 import Logo from "../assets/logo.png";
 import bannerImg from "../assets/banner.png";
+import SvgComponent from "./SvgComponent";
 
 // ✅ Menu List
 const navItems = [
@@ -35,12 +35,36 @@ const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // 🔹 Default Theme (Pink)
+  useEffect(() => {
+    document.documentElement.style.setProperty("--theme-color", "#F43297");
+  }, []);
+
+  // 🔹 Theme Switcher Function
+const setTheme = (color, fontSize) => {
+  document.documentElement.style.setProperty("--theme-color", color);
+  if (fontSize) {
+    document.documentElement.style.setProperty("--theme-font-size", fontSize);
+  }
+};
+
+
+    // ✅ global theme color (pink or green etc.)
+  const themeColor = {
+    primary: "#F43297", // change this => "#22c55e" for green
+    gradient:
+      "linear-gradient(90deg, #F43297 0%, #FF74B4 31%, #FFBADA 85%)",
+    bgLight: "bg-pink-50",
+    bgHover: "hover:bg-pink-100",
+    btn: "bg-[#F43297] hover:bg-[#d91f7c]",
+  };
+  
   return (
-    <header className="bg-pink-50 shadow-md">
+    <header className="bg-primary-50 shadow-md">
       {/* 🔝 Topbar */}
-      <div className="flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px]  md:px-8 mx-auto">
+      <div className="hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto">
         {/* Logo */}
-        <div className=" flex items-center space-x-2">
+        <div className="hidden lg:flex items-center space-x-2">
           <img
             src={Logo}
             alt="Logo"
@@ -58,15 +82,14 @@ const Header = () => {
                   className={({ isActive }) =>
                     `relative cursor-pointer transition-colors duration-300 ${
                       isActive
-                        ? "text-[#F43297] font-medium"
-                        : "text-black  hover:text-[#F43297] hover:font-medium hover:opacity-100 font-normal"
+                        ? "text-[var(--theme-color)] font-medium"
+                        : "text-black hover:text-[var(--theme-color)] hover:font-medium"
                     }`
                   }
                 >
                   {({ isActive }) => (
                     <>
                       {item.name}
-                      {/* 3 dots indicator */}
                       <span
                         className={`absolute left-1/2 -translate-x-1/2 -bottom-2 flex space-x-1 transition-opacity duration-300 ${
                           isActive
@@ -74,9 +97,9 @@ const Header = () => {
                             : "opacity-0 group-hover:opacity-100"
                         }`}
                       >
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
                       </span>
                     </>
                   )}
@@ -91,8 +114,9 @@ const Header = () => {
           {/* Login Dropdown */}
           <div className="relative hidden sm:block">
             <button
+              style={{ backgroundColor: "var(--theme-color)" }}
               onClick={() => setIsLoginOpen(!isLoginOpen)}
-              className="flex items-center space-x-1 bg-[#F43297] text-white px-3 py-1 rounded-md text-sm transition-colors duration-300 hover:bg-[#d81f7d]"
+              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm transition-colors duration-300"
             >
               <img src={WhiteLogin} alt="Login" className="w-4 h-4" />
               <span>Login</span>
@@ -102,10 +126,11 @@ const Header = () => {
               <div className="absolute right-0 mt-2 w-60 bg-white rounded-[10px] shadow-lg z-50">
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
-                  <span className="text-[#F43297] cursor-pointer font-medium hover:text-[#F43297]">
+                  <span className="text-[var(--theme-color)] cursor-pointer font-medium">
                     Sign Up
                   </span>
                 </div>
+
                 <ul className="text-gray-700 text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
@@ -120,7 +145,7 @@ const Header = () => {
                     <span>Wishlist</span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faRupeeSign} />
+                    <SvgComponent />
                     <span>Gift Cards</span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
@@ -128,34 +153,49 @@ const Header = () => {
                     <span>Coupons</span>
                   </li>
                 </ul>
+
+                {/* 🔹 Theme Switcher */}
+                <div className="flex items-center gap-2 mt-2 px-4 py-2 border-t">
+                  <button
+                    onClick={() => setTheme("#F43297", "90px")}
+                    className="w-5 h-5 rounded-full bg-pink-500 border-2 border-white"
+                    title="Pink Theme"
+                  />
+                  <button
+                    onClick={() => setTheme("#00AA00")}
+                    className="w-5 h-5 rounded-full bg-green-500 border-2 border-white"
+                    title="Green Theme"
+                  />
+                  <button
+                    onClick={() => setTheme("#FF0000")}
+                    className="w-5 h-5 rounded-full bg-red-500 border-2 border-white"
+                    title="Red Theme"
+                  />
+                   <button
+                    onClick={() => setTheme("#007BFF")}
+                    className="w-5 h-5 rounded-full bg-blue-500 border-2 border-white"
+                    title="Red Theme"
+                  />
+                   <button
+                    onClick={() => setTheme("#FFD700")}
+                    className="w-5 h-5 rounded-full bg-yellow-500 border-2 border-white"
+                    title="Red Theme"
+                  />
+                </div>
               </div>
             )}
           </div>
 
           {/* Icons */}
-          <MagnifyingGlassIcon className="w-6 h-6 text-black/70 stroke-[2] cursor-pointer hover:text-[#F43297] hidden sm:block" />
-         
-         <div className="hidden lg:flex items-center space-x-4">
+          <MagnifyingGlassIcon className="w-6 h-6 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] hidden sm:block" />
           <FontAwesomeIcon
             icon={faCartShopping}
-            className="w-6 h-6 text-black/70 cursor-pointer hover:text-[#F43297]"
-          /></div>
-          <img
-            src={BagIcon}
-            alt="Bag"
-            className="w-5 h-5 cursor-pointer"
+            className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] hidden lg:block"
           />
-           <div className="hidden lg:flex items-center space-x-4">
-          <img
-            src={MenuIcon}
-            alt="Menu"
-            className="w-5 h-5 cursor-pointer"
-          /></div>
-
-
+          <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer hidden lg:block" />
+          <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer hidden lg:block" />
         </div>
       </div>
-
 
  {/* Mobile Menu Button */}
 
@@ -163,12 +203,16 @@ const Header = () => {
 
 <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
   {/* Left: Hamburger */}
-  <button
-    className="text-gray-600 hover:text-[#F43297]"
-    onClick={() => setIsMenuOpen(!isMenuOpen)}
-  >
-    {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-  </button>
+        <button
+          className="text-gray-600 transition-colors duration-300"
+          style={{ color: "var(--theme-color)" }} // icon default color
+          onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"} // optional hover same color
+          onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"} // same color back
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+        >
+          {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+        </button>
+
    {/* Center: Logo */}
   <img src={Logo} alt="Logo" className="h-10 mx-auto" />
 
@@ -176,7 +220,7 @@ const Header = () => {
   <div className="flex items-center space-x-3">
     <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer" />
     {/* Notification icon */}
-    <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer" />
+    
   </div>
 </div>
       {/* ✅ Mobile Sidebar */}
@@ -195,20 +239,31 @@ const Header = () => {
         </div>
 
         {/* Banner */}
-        <div
-          className="w-full h-[150px] sm:h-[180px] relative flex items-center justify-center"
-          style={{
-            background: "linear-gradient(90deg, #F43297 0%, #FF74B4 31%, #FFBADA 85%)",
-          }}
-        >
-          <img src={bannerImg} alt="Banner" className="h-full object-contain absolute right-4 bottom-0" />
-          <h1
-            className="absolute text-4xl sm:text-[70px] uppercase font-extrabold tracking-widest text-transparent"
-            style={{ WebkitTextStroke: "1px white" }}
-          >
-            FASHION
-          </h1>
-        </div>
+<div
+  className="relative w-full h-[154px]  bg-black overflow-hidden flex items-center justify-center"
+  style={{
+    background: "linear-gradient(90deg, #F43297 0%, #FF74B4 31%, #FFBADA 85%)",
+  }}
+>
+  {/* Banner Image */}
+  <img
+    src={bannerImg}
+    alt="Banner"
+    className="h-full object-contain absolute right-4 bottom-0 z-10"
+  />
+
+  {/* FASHION Text */}
+<h1
+  className="absolute text-[70px] sm:text-[100px] uppercase font-extrabold tracking-widest text-white"
+  style={{
+    WebkitTextStroke: "2px white", // border mota
+  }}
+>
+  FASHION
+</h1>
+
+</div>
+
 
 
       {/* Menu Items */}
@@ -236,13 +291,17 @@ const Header = () => {
               <span>Orders</span>
             </div>
             <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              <FaHeart /> <span>Wishlist</span>
+              
+              <FontAwesomeIcon icon={farHeart} />
+                    <span>Wishlist</span>
             </div>
             <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              🎁 <span>Gift Card</span>
+              <SvgComponent />
+                  <span>Gift Cards</span>
             </div>
             <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              💳 <span>Coupons</span>
+              <FontAwesomeIcon icon={faGift} />
+                    <span>Coupons</span>
             </div>
             <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
               🔔 <span>Notifications</span>
@@ -250,21 +309,34 @@ const Header = () => {
           </div>
         </nav>
 
-        {/* Bottom Banner */}
+
+{/* Bottom Banner */}
         <div className="mt-auto px-4 py-4 border-t">
-          <div className="bg-pink-100 p-3 rounded-lg text-center">
-            <p className="text-sm font-medium mb-2">
-              Enjoy The Best shopping Experience !
-            </p>
-            <button className="bg-pink-500 text-white px-4 py-2 rounded-md text-sm">
-              Get MYcra App
-            </button>
-          </div>
-        </div>
+          <div className="bg-pink-100 p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+            {/* Left: Image */}
+            <img src={PayImg} alt="Pay" className="h-16 sm:h-20 object-contain" />
+
+            {/* Right: Text + Button */}
+            <div className="text-center sm:text-left">
+              <p className="text-sm font-medium mb-2">
+                Enjoy The Best Shopping Experience !
+              </p>
+        <button className="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600">
+          Get MYcra App
+        </button>
+
+    </div>
+  </div>
+</div>
+
+
+
       </div>
+
 
      
     </header>
+    
   );
 };
 

@@ -1,4 +1,4 @@
-// Option 1: Default export
+// D:\mycara\frontend\src\pages\Home.jsx
 function Home() {
   return <h1>Home Page</h1>;
 }
