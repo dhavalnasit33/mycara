@@ -35,29 +35,7 @@ const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // 🔹 Default Theme (Pink)
-  useEffect(() => {
-    document.documentElement.style.setProperty("--theme-color", "#F43297");
-  }, []);
 
-  // 🔹 Theme Switcher Function
-const setTheme = (color, fontSize) => {
-  document.documentElement.style.setProperty("--theme-color", color);
-  if (fontSize) {
-    document.documentElement.style.setProperty("--theme-font-size", fontSize);
-  }
-};
-
-
-    // ✅ global theme color (pink or green etc.)
-  const themeColor = {
-    primary: "#F43297", // change this => "#22c55e" for green
-    gradient:
-      "linear-gradient(90deg, #F43297 0%, #FF74B4 31%, #FFBADA 85%)",
-    bgLight: "bg-pink-50",
-    bgHover: "hover:bg-pink-100",
-    btn: "bg-[#F43297] hover:bg-[#d91f7c]",
-  };
   
   return (
     <header className="bg-primary-50 shadow-md">
@@ -114,9 +92,8 @@ const setTheme = (color, fontSize) => {
           {/* Login Dropdown */}
           <div className="relative hidden sm:block">
             <button
-              style={{ backgroundColor: "var(--theme-color)" }}
               onClick={() => setIsLoginOpen(!isLoginOpen)}
-              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm transition-colors duration-300"
+              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm  duration-300 bg-color"
             >
               <img src={WhiteLogin} alt="Login" className="w-4 h-4" />
               <span>Login</span>
@@ -126,7 +103,7 @@ const setTheme = (color, fontSize) => {
               <div className="absolute right-0 mt-2 w-60 bg-white rounded-[10px] shadow-lg z-50">
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
-                  <span className="text-[var(--theme-color)] cursor-pointer font-medium">
+                  <span className="text-color cursor-pointer font-medium">
                     Sign Up
                   </span>
                 </div>
@@ -154,34 +131,7 @@ const setTheme = (color, fontSize) => {
                   </li>
                 </ul>
 
-                {/* 🔹 Theme Switcher */}
-                <div className="flex items-center gap-2 mt-2 px-4 py-2 border-t">
-                  <button
-                    onClick={() => setTheme("#F43297", "90px")}
-                    className="w-5 h-5 rounded-full bg-pink-500 border-2 border-white"
-                    title="Pink Theme"
-                  />
-                  <button
-                    onClick={() => setTheme("#00AA00")}
-                    className="w-5 h-5 rounded-full bg-green-500 border-2 border-white"
-                    title="Green Theme"
-                  />
-                  <button
-                    onClick={() => setTheme("#FF0000")}
-                    className="w-5 h-5 rounded-full bg-red-500 border-2 border-white"
-                    title="Red Theme"
-                  />
-                   <button
-                    onClick={() => setTheme("#007BFF")}
-                    className="w-5 h-5 rounded-full bg-blue-500 border-2 border-white"
-                    title="Red Theme"
-                  />
-                   <button
-                    onClick={() => setTheme("#FFD700")}
-                    className="w-5 h-5 rounded-full bg-yellow-500 border-2 border-white"
-                    title="Red Theme"
-                  />
-                </div>
+                
               </div>
             )}
           </div>
