@@ -1,5 +1,13 @@
-// D:\mycara\frontend\src\pages\Home.jsx
-function Home() {
-  return <h1>Home Page</h1>;
-}
+import React from "react";
+import Shop from "./Shop";
+
+const Home = () => {
+  return (
+    <div>
+      
+      <Shop />
+    </div>
+  );
+};
+
 export default Home;

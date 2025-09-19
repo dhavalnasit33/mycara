@@ -19,7 +19,8 @@ import MenuIcon from "../assets/menu.png";
 import PayImg from "../assets/pay.png";
 import Logo from "../assets/logo.png";
 import bannerImg from "../assets/banner.png";
-import SvgComponent from "./SvgComponent";
+
+import SvgComponent from "./icons/SvgComponent";
 
 // ✅ Menu List
 const navItems = [

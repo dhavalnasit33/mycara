@@ -50,28 +50,48 @@
 :root {
   /* Theme Colors */
   --theme-color: #F43297;         /* main theme color */
-  --theme-hover-color: #601fd8;   /* hover color */
+  --theme-hover-color: #F43297;   /* hover color */
   --theme-bg-light: #ffe6f0;      /* light background */
-
+ --theme-bg-100: #f32f94;      /* light background */
   /* Fonts */
   --font-family-h2: 'Italianno', cursive;
   --font-family-main: 'Roboto', sans-serif;
-  --font-weight-bold: 700;
+ --font-weight-bold: 700;
   --font-weight-medium: 500;
   --font-style-main: italic;
   --font-size-h1: 80px;
    --font-size-h2: 50px;
   --font-size-p: 16px;
+
+    --font-family-h3: 'Roboto', sans-serif;
+  --font-weight-h3: 600;   /* semibold */
+  --font-size-h3: 30px;    /* ~text-xl */
+  --font-color-h3: #000;   /* black */
+
+  --font-family-h4: 'Roboto', sans-serif;
+  --font-weight-h4: 500;   /* Medium */
+  --font-size-h4: 18px;    /* ~text-xl */
+   --font-color-h4: rgba(0, 0, 0, 0.7);   /* black */
 }
 
 .bg-color {
+  background-color: var(--theme-color);  
+}
+
+/* Hover */
+.bg-color:hover {
+  background-color: var(--theme-color);
+}
+
+/* Active (while clicked) */
+.bg-color:active {
   background-color: var(--theme-color);
 }
 
 /* Circle with border */
 .circle-border {
   border-style: solid; /* Set border style first */
-  border-width: 4px 0px 0px 5px; /* Then set the different widths for each side (top, right, bottom, left) */
+  border-width: 5px 0px 0px 5px; /* Then set the different widths for each side (top, right, bottom, left) */
   border-color: var(--theme-color); /* Set the border color */
   border-radius: 50%; /* perfect round */
 }
@@ -119,10 +139,32 @@
 .font-h2 {
   font-family: var(--font-family-h2);
   font-style: normal; /* Italianno is already cursive */
+  font-weight: 400;    /* regular weight */
   font-size: var(--font-size-h2);
   
 }
 
+/* common h3 style */
+.new-arrival-title {
+  font-family: var(--font-family-h3);
+  font-weight: var(--font-weight-h3);
+  font-size: var(--font-size-h3);
+  
+  position: absolute;
+  top: 40px;
+  left: 20px;
+}
+
+/* common h4 style */
+.font-h4 {
+  font-family: var(--font-family-h4);
+  font-weight: var(--font-weight-h4);
+  font-size: var(--font-size-h4);
+  color: var(--font-color-h4);
+
+  
+
+}
 
 /* slick slider styles */
 @import "~slick-carousel/slick/slick.css";
@@ -130,30 +172,22 @@
 
 
 
-/* Custom dot container */
-.slick-dots {
-  display: flex !important;
-  justify-content: center;
-  margin-top: 20px;
-  list-style: none;
-  padding: 0;
+
+
+/* Custom CSS to style the active slider dot */
+.slick-dots li.slick-active div {
+ 
+    background-color: var(--theme-color) !important;
+    border-radius: 20%; /* perfect round */
 }
 
-.slick-dots li {
-  margin: 0 5px;
-}
-
-.slick-dots li button {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: #ccc; /* inactive dot */
-  text-indent: -9999px;
-  overflow: hidden;
-  padding: 0;
-  border: none;
-}
-
-.slick-dots li.slick-active button {
-  background: var(--bg-color, #ff0000); /* active dot color */
+.discount-badge {
+  
+  color: var(--theme-color);
+  font-size: 15px; /* text-sm */
+  font-weight: 500;    /* font-semibold */
+  padding: 0.25rem 0.5rem; /* py-1 px-2 */
+  border-radius: 0.25rem; /* rounded */
+  width: 200px;       /* fixed width */
+  text-align: center;
 }
