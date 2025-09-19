@@ -1,8 +1,12 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+// AddProduct.tsx
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
+import { Upload, X, ArrowLeft, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -12,31 +16,72 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Upload, Plus, X } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 
 export default function AddProduct() {
-  const { toast } = useToast();
+  // --- State for all fields ---
+  const [name, setName] = useState("");
+  const [sku, setSku] = useState("");
+  const [description, setDescription] = useState("");
+  const [categoryId, setCategoryId] = useState("");
+  const [brandId, setBrandId] = useState("");
+  const [typeId, setTypeId] = useState("");
+  const [fabricId, setFabricId] = useState("");
+  const [price, setPrice] = useState<number | "">("");
+  const [stockQuantity, setStockQuantity] = useState<number | "">("");
+  const [discountId, setDiscountId] = useState("");
+  const [labels, setLabels] = React.useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
-  const [variants, setVariants] = useState([
-    { size: "S", color: "Blue", price: "", stock: "" },
-  ]);
+  const [isFeatured, setIsFeatured] = useState(false);
+  const [isBestSeller, setIsBestSeller] = useState(false);
+  const [isTrending, setIsTrending] = useState(false);
 
+  const allLabels = [
+    { _id: "1", name: "Nike" },
+    { _id: "2", name: "Adidas" },
+    { _id: "3", name: "Levi's" },
+    { _id: "4", name: "Zara" },
+  ];
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Product Created",
-      description: "Your product has been successfully created.",
-    });
+
+    // auto-generate slug from name
+    const slug = name.toLowerCase().replace(/\s+/g, "-");
+
+    const payload = {
+      name,
+      sku,
+      description,
+      category_id: categoryId,
+      brand_id: brandId,
+      type_id: typeId,
+      fabric_id: fabricId,
+      price,
+      stock_quantity: stockQuantity,
+      discount_id: discountId || null,
+      labels,
+      images,
+      slug,
+      is_featured: isFeatured,
+      is_best_seller: isBestSeller,
+      is_trending: isTrending,
+    };
+
+    console.log("Submit Payload:", payload);
+    // TODO: Call your create API here
   };
 
-  const addVariant = () => {
-    setVariants([...variants, { size: "", color: "", price: "", stock: "" }]);
+  const handleImageUpload = () => {
+    // implement image upload logic here
+    const dummyUrl = "https://via.placeholder.com/150";
+    setImages([...images, dummyUrl]);
   };
 
-  const removeVariant = (index: number) => {
-    setVariants(variants.filter((_, i) => i !== index));
+  const removeImage = (idx: number) => {
+    setImages(images.filter((_, i) => i !== idx));
+  };
+
+  const handleLabelsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLabels(e.target.value.split(",").map((l) => l.trim()));
   };
 
   return (
@@ -49,7 +94,9 @@ export default function AddProduct() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Add New Product</h1>
+          <h1 className="text-3xl font-bold text-foreground">
+            Add New Product
+          </h1>
           <p className="text-muted-foreground">
             Create a new product for your catalog
           </p>
@@ -69,25 +116,45 @@ export default function AddProduct() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="name">Product Name *</Label>
-                    <Input id="name" placeholder="Enter product name" required />
+                    <Input
+                      id="name"
+                      placeholder="Enter product name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                    />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="sku">SKU *</Label>
-                    <Input id="sku" placeholder="Product SKU" required />
+                    <Input
+                      id="sku"
+                      placeholder="Product SKU"
+                      value={sku}
+                      onChange={(e) => setSku(e.target.value)}
+                      required
+                    />
                   </div>
                 </div>
+
                 <div className="space-y-2">
                   <Label htmlFor="description">Description</Label>
                   <Textarea
                     id="description"
                     placeholder="Product description..."
                     className="min-h-[120px]"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
+
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="space-y-2">
                     <Label htmlFor="category">Category *</Label>
-                    <Select required>
+                    <Select
+                      value={categoryId}
+                      onValueChange={setCategoryId}
+                      required
+                    >
                       <SelectTrigger>
                         <SelectValue placeholder="Select category" />
                       </SelectTrigger>
@@ -102,7 +169,7 @@ export default function AddProduct() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="brand">Brand</Label>
-                    <Select>
+                    <Select value={brandId} onValueChange={setBrandId} required>
                       <SelectTrigger>
                         <SelectValue placeholder="Select brand" />
                       </SelectTrigger>
@@ -116,7 +183,7 @@ export default function AddProduct() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="type">Type</Label>
-                    <Select>
+                    <Select value={typeId} onValueChange={setTypeId} required>
                       <SelectTrigger>
                         <SelectValue placeholder="Select type" />
                       </SelectTrigger>
@@ -125,6 +192,22 @@ export default function AddProduct() {
                         <SelectItem value="formal">Formal</SelectItem>
                         <SelectItem value="sport">Sport</SelectItem>
                         <SelectItem value="premium">Premium</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="fabric">Fabric</Label>
+                    <Select
+                      value={fabricId}
+                      onValueChange={setFabricId}
+                      required
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select fabric" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="cotton">Cotton</SelectItem>
+                        <SelectItem value="denim">Denim</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -139,11 +222,10 @@ export default function AddProduct() {
               </CardHeader>
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-4">
-                  {images.map((image, index) => (
-                    <div key={index} className="relative">
+                  {images.map((img, idx) => (
+                    <div key={idx} className="relative">
                       <img
-                        src={image}
-                        alt={`Product ${index + 1}`}
+                        src={img}
                         className="aspect-square rounded-lg object-cover"
                       />
                       <Button
@@ -151,7 +233,7 @@ export default function AddProduct() {
                         variant="destructive"
                         size="icon"
                         className="absolute -right-2 -top-2 h-6 w-6"
-                        onClick={() => setImages(images.filter((_, i) => i !== index))}
+                        onClick={() => removeImage(idx)}
                       >
                         <X className="h-3 w-3" />
                       </Button>
@@ -160,68 +242,14 @@ export default function AddProduct() {
                   <button
                     type="button"
                     className="aspect-square rounded-lg border-2 border-dashed border-muted-foreground/25 flex flex-col items-center justify-center gap-2 hover:border-muted-foreground/50 transition-colors"
+                    onClick={handleImageUpload}
                   >
                     <Upload className="h-8 w-8 text-muted-foreground" />
-                    <span className="text-sm text-muted-foreground">Upload Image</span>
+                    <span className="text-sm text-muted-foreground">
+                      Upload Image
+                    </span>
                   </button>
                 </div>
-              </CardContent>
-            </Card>
-
-            {/* Product Variants */}
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>Product Variants</CardTitle>
-                <Button type="button" variant="outline" size="sm" onClick={addVariant} className="gap-2">
-                  <Plus className="h-4 w-4" />
-                  Add Variant
-                </Button>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {variants.map((variant, index) => (
-                  <div key={index} className="flex items-end gap-4 p-4 border border-card-border rounded-lg">
-                    <div className="flex-1 grid gap-4 md:grid-cols-4">
-                      <div className="space-y-2">
-                        <Label>Size</Label>
-                        <Select>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Size" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="xs">XS</SelectItem>
-                            <SelectItem value="s">S</SelectItem>
-                            <SelectItem value="m">M</SelectItem>
-                            <SelectItem value="l">L</SelectItem>
-                            <SelectItem value="xl">XL</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Color</Label>
-                        <Input placeholder="Color" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Price</Label>
-                        <Input placeholder="$0.00" type="number" step="0.01" />
-                      </div>
-                      <div className="space-y-2">
-                        <Label>Stock</Label>
-                        <Input placeholder="0" type="number" />
-                      </div>
-                    </div>
-                    {variants.length > 1 && (
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => removeVariant(index)}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                ))}
               </CardContent>
             </Card>
           </div>
@@ -236,15 +264,52 @@ export default function AddProduct() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="price">Base Price *</Label>
-                  <Input id="price" placeholder="$0.00" type="number" step="0.01" required />
+                  <Input
+                    id="price"
+                    value={price}
+                    onChange={(e) => setPrice(Number(e.target.value))}
+                    placeholder="$0.00"
+                    type="number"
+                    step="0.01"
+                    required
+                  />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="compare-price">Compare at Price</Label>
-                  <Input id="compare-price" placeholder="$0.00" type="number" step="0.01" />
+                  <Label htmlFor="discount">Discount</Label>
+                  <Input
+                    id="discount"
+                    value={discountId}
+                    onChange={(e) => setDiscountId(e.target.value)}
+                    placeholder="Discount ID"
+                  />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="cost">Cost per Item</Label>
-                  <Input id="cost" placeholder="$0.00" type="number" step="0.01" />
+                  <Label htmlFor="labels">Labels</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {allLabels.map((label) => (
+                      <label
+                        key={label._id}
+                        className="flex items-center gap-1 px-2 py-1 border rounded cursor-pointer select-none hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <input
+                          type="checkbox"
+                          value={label._id}
+                          checked={labels.includes(label._id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setLabels([...labels, label._id]);
+                            } else {
+                              setLabels(
+                                labels.filter((id) => id !== label._id)
+                              );
+                            }
+                          }}
+                          className="accent-blue-500"
+                        />
+                        {label.name}
+                      </label>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -257,15 +322,14 @@ export default function AddProduct() {
               <CardContent className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="stock">Stock Quantity</Label>
-                  <Input id="stock" placeholder="0" type="number" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="track-inventory">Track Inventory</Label>
-                  <Switch id="track-inventory" />
-                </div>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="continue-selling">Continue selling when out of stock</Label>
-                  <Switch id="continue-selling" />
+                  <Input
+                    id="stock"
+                    value={stockQuantity}
+                    onChange={(e) => setStockQuantity(Number(e.target.value))}
+                    placeholder="0"
+                    type="number"
+                    required
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -276,22 +340,31 @@ export default function AddProduct() {
                 <CardTitle>Product Status</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="status">Status</Label>
-                  <Select defaultValue="active">
-                    <SelectTrigger>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="active">Active</SelectItem>
-                      <SelectItem value="draft">Draft</SelectItem>
-                      <SelectItem value="inactive">Inactive</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="featured">Featured Product</Label>
-                  <Switch id="featured" />
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="featured">Featured Product</Label>
+                    <Switch
+                      id="featured"
+                      checked={isFeatured}
+                      onCheckedChange={(val) => setIsFeatured(val)}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="best-seller">Best Seller</Label>
+                    <Switch
+                      id="best-seller"
+                      checked={isBestSeller}
+                      onCheckedChange={(val) => setIsBestSeller(val)}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="trending">Trending</Label>
+                    <Switch
+                      id="trending"
+                      checked={isTrending}
+                      onCheckedChange={(val) => setIsTrending(val)}
+                    />
+                  </div>
                 </div>
               </CardContent>
             </Card>

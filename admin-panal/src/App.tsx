@@ -13,6 +13,8 @@ import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
+import Categories from "./pages/Categories";
+import AddCategoryPage from "./pages/AddCategory";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +32,8 @@ const App = () => (
               <Route index element={<VelzonDashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="products/add" element={<AddProduct />} />
-              <Route path="categories" element={<VelzonDashboard />} />
+              <Route path="categories" element={<Categories />} />
+                 <Route path="categories/add" element={<AddCategoryPage />} />
               <Route path="brands" element={<VelzonDashboard />} />
               <Route path="types" element={<VelzonDashboard />} />
               <Route path="fabrics" element={<VelzonDashboard />} />

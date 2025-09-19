@@ -9,7 +9,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem("user") || "null"), // Load user if exists
+  user: JSON.parse(localStorage.getItem("user") || "null"), 
   token: localStorage.getItem("token") || null,
   loading: false,
   error: null,

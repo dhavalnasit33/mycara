@@ -4,6 +4,23 @@ export const ROUTES = {
     me: "/auth/me",
     logout: "/auth/logout",
   },
+    products: {
+    getAll: "/products",            
+    getById: (id: string) => `/products/${id}`,  
+    create: "/products",           
+    update: (id: string) => `/products/${id}`, 
+    delete: (id: string) => `/products/${id}`,  
+    bulkDelete: "/products/bulk-delete", 
+  },
+  categories: {
+  getAll: "/categories",
+  getAllCategories:"/categories/all",
+  getById: (id: string) => `/categories/${id}`,
+  create: "/categories",
+  update: (id: string) => `/categories/${id}`,
+  delete: (id: string) => `/categories/${id}`,
+  bulkDelete: "/categories/bulk-delete",
+},
   users: {
     list: "/users",
     get: (id: string) => `/users/${id}`,

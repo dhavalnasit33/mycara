@@ -1,89 +1,46 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   Table,
-  TableBody,
-  TableCell,
-  TableHead,
   TableHeader,
   TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
 } from "@/components/ui/table";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
+  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  MoreHorizontal, 
-  Edit, 
-  Eye, 
-  Trash2,
+import {
+  Search,
+  Filter,
   Package,
-  AlertTriangle
+  Plus,
+  MoreHorizontal,
+  Trash2,
+  Eye,
+  Edit,
+  Download,
+  AlertTriangle,
 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
+import { AppDispatch, RootState } from "@/store";
+import {
+  bulkDeleteProducts,
+  deleteProduct,
+  downloadProducts,
+  fetchProducts,
+} from "@/features/products/productsThunk";
 
-const products = [
-  {
-    id: 1,
-    image: "/api/placeholder/64/64",
-    name: "Blue Denim Jacket",
-    category: "Jackets",
-    price: "$89.99",
-    stock: 24,
-    status: "active",
-    sku: "JKT-001",
-  },
-  {
-    id: 2,
-    image: "/api/placeholder/64/64",
-    name: "White Cotton T-Shirt",
-    category: "T-Shirts",
-    price: "$19.99",
-    stock: 150,
-    status: "active",
-    sku: "TSH-002",
-  },
-  {
-    id: 3,
-    image: "/api/placeholder/64/64",
-    name: "Black Leather Boots",
-    category: "Footwear",
-    price: "$199.99",
-    stock: 8,
-    status: "active",
-    sku: "BOT-003",
-  },
-  {
-    id: 4,
-    image: "/api/placeholder/64/64",
-    name: "Red Summer Dress",
-    category: "Dresses",
-    price: "$79.99",
-    stock: 0,
-    status: "out_of_stock",
-    sku: "DRS-004",
-  },
-  {
-    id: 5,
-    image: "/api/placeholder/64/64",
-    name: "Navy Blue Jeans",
-    category: "Pants",
-    price: "$59.99",
-    stock: 45,
-    status: "active",
-    sku: "PNT-005",
-  },
-];
-
-const getStatusBadge = (status: string) => {
+// Status badge based on product status
+export const getStatusBadge = (status: string) => {
   switch (status) {
     case "active":
       return <Badge variant="default">Active</Badge>;
@@ -96,7 +53,8 @@ const getStatusBadge = (status: string) => {
   }
 };
 
-const getStockStatus = (stock: number) => {
+// Stock status display
+export const getStockStatus = (stock: number) => {
   if (stock === 0) {
     return <span className="text-destructive font-medium">Out of stock</span>;
   }
@@ -108,18 +66,83 @@ const getStockStatus = (stock: number) => {
       </span>
     );
   }
-  return <span className="text-foreground">{stock} in stock</span>;
+  return <span className="text-foreground font-medium">{stock} in stock</span>;
 };
 
 export default function Products() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredProducts = products.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.sku.toLowerCase().includes(searchQuery.toLowerCase())
+  const dispatch = useDispatch<AppDispatch>();
+  const { products, total, loading } = useSelector(
+    (state: RootState) => state.products
   );
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedQuery, setDebouncedQuery] = useState("");
+
+useEffect(() => {
+  const handler = setTimeout(() => {
+    setDebouncedQuery(searchQuery);
+  }, 500);
+
+  return () => clearTimeout(handler);
+}, [searchQuery]);
+
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  // Fetch products on mount and on search
+useEffect(() => {
+  dispatch(fetchProducts({ page: 1, limit: 100, search: debouncedQuery }));
+}, [debouncedQuery, dispatch]);
+
+  const handleDelete = (id: string) => {
+    dispatch(deleteProduct(id));
+  };
+
+  const handleBulkDelete = () => {
+    if (!selectedIds.length) return;
+    dispatch(bulkDeleteProducts(selectedIds));
+    setSelectedIds([]);
+  };
+
+  const handleSelect = (id: string) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+ const handleDownload = async () => {
+  const resultAction = await dispatch(downloadProducts());
+  if (downloadProducts.rejected.match(resultAction)) {
+    return alert(resultAction.payload || "Failed to download products");
+  }
+
+  const allProducts = resultAction.payload;
+
+  const csvRows = [
+    ["Name", "SKU", "Category", "Price", "Stock", "Status"],
+    ...allProducts.map((p: any) => [
+      p.name,
+      p.sku,
+      p.category,
+      p.price,
+      p.stock,
+      p.status,
+    ]),
+  ];
+
+  const csvContent =
+    "data:text/csv;charset=utf-8," +
+    csvRows.map((e) => e.join(",")).join("\n");
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "products.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+  if (loading) return <div>Loading products...</div>;
 
   return (
     <div className="space-y-6">
@@ -131,32 +154,42 @@ export default function Products() {
             Manage your product catalog and inventory
           </p>
         </div>
-        <Link to="/products/add">
-          <Button className="gap-2">
-            <Plus className="h-4 w-4" />
-            Add Product
+        <div className="flex gap-2">
+          <Button onClick={handleDownload} variant="outline" className="gap-2">
+            <Download className="h-4 w-4" /> Download All
           </Button>
-        </Link>
+          <Link to="/products/add">
+            <Button className="gap-2">
+              <Plus className="h-4 w-4" /> Add Product
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Filters & Search */}
       <Card>
-        <CardContent className="p-6">
-          <div className="flex items-center gap-4">
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-              <Input
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <Button variant="outline" className="gap-2">
-              <Filter className="h-4 w-4" />
-              Filters
-            </Button>
+        <CardContent className="p-6 flex items-center gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search products..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
           </div>
+          <Button variant="outline" className="gap-2">
+            <Filter className="h-4 w-4" /> Filters
+          </Button>
+          {selectedIds.length > 0 && (
+            <Button
+              variant="destructive"
+              className="gap-2"
+              onClick={handleBulkDelete}
+            >
+              <Trash2 className="h-4 w-4" /> Delete Selected
+            </Button>
+          )}
         </CardContent>
       </Card>
 
@@ -164,8 +197,7 @@ export default function Products() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Package className="h-5 w-5" />
-            All Products ({filteredProducts.length})
+            <Package className="h-5 w-5" /> All Products ({total})
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -173,6 +205,20 @@ export default function Products() {
             <Table>
               <TableHeader>
                 <TableRow className="bg-table-header">
+                  <TableHead>
+                    <input
+                      type="checkbox"
+                      checked={
+                        selectedIds.length === products.length &&
+                        products.length > 0
+                      }
+                      onChange={(e) =>
+                        setSelectedIds(
+                          e.target.checked ? products.map((p) => p.id) : []
+                        )
+                      }
+                    />
+                  </TableHead>
                   <TableHead>Product</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>Price</TableHead>
@@ -182,8 +228,15 @@ export default function Products() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredProducts.map((product) => (
+                {products.map((product) => (
                   <TableRow key={product.id} className="hover:bg-table-hover">
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(product.id)}
+                        onChange={() => handleSelect(product.id)}
+                      />
+                    </TableCell>
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="h-12 w-12 overflow-hidden rounded-lg bg-muted">
@@ -204,7 +257,9 @@ export default function Products() {
                     <TableCell>
                       <Badge variant="outline">{product.category}</Badge>
                     </TableCell>
-                    <TableCell className="font-medium">{product.price}</TableCell>
+                    <TableCell className="font-medium">
+                      {product.price}
+                    </TableCell>
                     <TableCell>{getStockStatus(product.stock)}</TableCell>
                     <TableCell>{getStatusBadge(product.status)}</TableCell>
                     <TableCell>
@@ -216,16 +271,16 @@ export default function Products() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem className="gap-2">
-                            <Eye className="h-4 w-4" />
-                            View
+                            <Eye className="h-4 w-4" /> View
                           </DropdownMenuItem>
                           <DropdownMenuItem className="gap-2">
-                            <Edit className="h-4 w-4" />
-                            Edit
+                            <Edit className="h-4 w-4" /> Edit
                           </DropdownMenuItem>
-                          <DropdownMenuItem className="gap-2 text-destructive">
-                            <Trash2 className="h-4 w-4" />
-                            Delete
+                          <DropdownMenuItem
+                            className="gap-2 text-destructive"
+                            onClick={() => handleDelete(product.id)}
+                          >
+                            <Trash2 className="h-4 w-4" /> Delete
                           </DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>

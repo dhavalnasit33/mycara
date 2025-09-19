@@ -28,6 +28,15 @@ const getCategories = async (req, res) => {
   }
 };
 
+const getAllCategories = async (req, res) => {
+  try {
+    const categories = await Category.find().select("_id name");
+    res.json({ success: true, data: categories });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 const getCategoryById = async (req, res) => {
   try {
     const category = await Category.findById(req.params.id);
@@ -39,12 +48,17 @@ const getCategoryById = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
+   const { name, slug, parent_id } = req.body;
+  const image_url = req.file ? `/uploads/${req.file.filename}` : null;
+
+  const categoryData = { name, slug, parent_id, image_url };
+
   try {
-    const category = new Category(req.body);
+    const category = new Category(categoryData);
     const savedCategory = await category.save();
-    sendResponse(res, true, savedCategory, "Category created successfully");
+    res.json({ success: true, data: savedCategory });
   } catch (err) {
-    sendResponse(res, false, null, err.message);
+    res.status(500).json({ success: false, message: err.message });
   }
 };
 
@@ -91,4 +105,5 @@ module.exports = {
   updateCategory,
   deleteCategory,
   bulkDeleteCategories,
+  getAllCategories
 };

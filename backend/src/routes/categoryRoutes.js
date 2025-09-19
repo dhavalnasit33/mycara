@@ -7,12 +7,14 @@ const {
   updateCategory,
   deleteCategory,
   bulkDeleteCategories,
+  getAllCategories,
 } = require("../controllers/categoryController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
 
 router.get("/", getCategories);
 router.use(authMiddleware);
+router.get("/all", getAllCategories);
 router.get("/:id", authorizeMinRole("admin"), getCategoryById);
 router.post("/", authorizeMinRole("admin"), createCategory);
 router.put("/:id", authorizeMinRole("admin"), updateCategory);
