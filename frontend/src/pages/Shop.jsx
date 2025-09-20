@@ -6,7 +6,7 @@ import CategoriesSection from "../components/CategoriesSection";
 import NewArrivals  from "../components/NewArrivals";
 import FeaturedProducts from "../components/FeaturedProducts";
 import TrendingClothes from "../components/TrendingClothes";
-
+import HeroBanner from '../components/HeroBanner';
 const Shop = () => {
   return (
     <div>
@@ -15,6 +15,7 @@ const Shop = () => {
        <NewArrivals />
        <FeaturedProducts />
         <TrendingClothes />
+        <HeroBanner />
     </div>
   );
 };

@@ -72,6 +72,7 @@ const CategoriesSection = () => {
                 </div>
                 <p className="mt-4 text-gray-700 text-sm font-medium text-center">
                   {category.name}
+                  <span className="theme-border-block mx-auto"></span>
                 </p>
               </div>
             ))}

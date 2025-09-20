@@ -53,6 +53,7 @@
   --theme-hover-color: #F43297;   /* hover color */
   --theme-bg-light: #ffe6f0;      /* light background */
  --theme-bg-100: #f32f94;      /* light background */
+ 
   /* Fonts */
   --font-family-h2: 'Italianno', cursive;
   --font-family-main: 'Roboto', sans-serif;
@@ -74,6 +75,14 @@
    --font-color-h4: rgba(0, 0, 0, 0.7);   /* black */
 }
 
+.theme-border-block {
+  display: block;                     
+  width: 30px;                        
+  height: 2px;                        
+                
+  border-bottom: 2px solid var(--theme-color); 
+  margin-top: 0.25rem;                
+}
 .bg-color {
   background-color: var(--theme-color);  
 }
@@ -134,6 +143,7 @@
 .text-shadow {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* subtle shadow */
 }
+
 
 
 .font-h2 {

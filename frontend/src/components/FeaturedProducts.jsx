@@ -114,7 +114,7 @@ const FeaturedProducts = () => {
 
 
         {/* First Row of Products */}
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+<div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
           {/* Product 1 */}
           <div className="relative border overflow-hidden shadow-md">
             <div className="relative group overflow-hidden">
@@ -286,7 +286,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Second Row of Products */}
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
           {/* Product 5 */}
 {/* Product 5 */}
 <div className="relative border overflow-hidden shadow-md">
