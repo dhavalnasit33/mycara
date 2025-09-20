@@ -7,6 +7,8 @@ import NewArrivals  from "../components/NewArrivals";
 import FeaturedProducts from "../components/FeaturedProducts";
 import TrendingClothes from "../components/TrendingClothes";
 import HeroBanner from '../components/HeroBanner';
+import Bestsellers from '../components/Bestsellers';
+
 const Shop = () => {
   return (
     <div>
@@ -16,6 +18,7 @@ const Shop = () => {
        <FeaturedProducts />
         <TrendingClothes />
         <HeroBanner />
+         <Bestsellers />
     </div>
   );
 };
