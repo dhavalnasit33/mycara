@@ -1,4 +1,5 @@
-.App {
+.App
+ {
   text-align: center;
 }
 
@@ -64,7 +65,7 @@
    --font-size-h2: 50px;
   --font-size-p: 16px;
 
-    --font-family-h3: 'Roboto', sans-serif;
+  --font-family-h3: 'Roboto', sans-serif;
   --font-weight-h3: 600;   /* semibold */
   --font-size-h3: 30px;    /* ~text-xl */
   --font-color-h3: #000;   /* black */
@@ -73,6 +74,23 @@
   --font-weight-h4: 500;   /* Medium */
   --font-size-h4: 18px;    /* ~text-xl */
    --font-color-h4: rgba(0, 0, 0, 0.7);   /* black */
+}
+
+.bg-color-100 {
+  background-color: var(--theme-bg-100);  
+}
+
+.button {
+  transition: all 0.3s ease;
+  color: black;
+}
+.button:hover {
+  background-color: var(--theme-hover-color);
+  color: white !important;
+}
+/* globals.css */
+.text-theme {
+  color: var(--theme-color);
 }
 
 .theme-border-block {
@@ -173,10 +191,6 @@
 .font-h4 {
   font-family: var(--font-family-h4);
   font-weight: var(--font-weight-h4);
-  font-size: var(--font-size-h4);
-  color: var(--font-color-h4);
-
-  
 
 }
 
@@ -204,4 +218,46 @@
   border-radius: 0.25rem; /* rounded */
   width: 200px;       /* fixed width */
   text-align: center;
+}
+
+
+
+/* // */
+
+.discount-star {
+  background-color: #ff007f; /* Base color of the star */
+  border-radius: 5px;
+  transform: rotate(22.5deg); /* Rotate the main square */
+}
+
+.discount-star::before,
+.discount-star::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #ff007f;
+  border-radius: 5px;
+  z-index: -1;
+}
+
+.discount-star::before {
+  transform: rotate(45deg); /* Rotate the first pseudo-element */
+}
+
+.discount-star::after {
+  transform: rotate(90deg); /* Rotate the second pseudo-element */
+}
+
+/* Optional: To position the text in the center and rotate it */
+.discount-star {
+  /* To counter the rotation of the parent div */
+  transform: rotate(22.5deg);
+}
+
+.discount-star > * {
+  /* To rotate the text back to a readable angle */
+  transform: rotate(-22.5deg);
 }

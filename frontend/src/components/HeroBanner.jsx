@@ -1,22 +1,59 @@
-import React from 'react';
-import herobannerImage from '../assets/herobanner.png';
+import React, { useEffect } from "react";
+import herobannerImage from "../assets/herobanner.png";
+import DiscountStarIcon from './icons/DiscountStarIcon';
+
+// This is the updated DiscountBadge component using the imported SVG
+const DiscountBadge = ({ text = "50% off" }) => {
+  return (
+    <div className="absolute top-5 left-5 w-[120px] h-[120px] z-20 flex items-center justify-center">
+      {/* SVG Icon - અહીં સ્ટાર આકાર દેખાશે */}
+      <DiscountStarIcon 
+          // SVG ની સાઈઝ તેના કન્ટેનર જેટલી રાખવા માટે
+          width="100%" 
+          height="100%" 
+          // સ્ટારને ત્રાસો કરવા માટે Tailwind rotation class
+          className="transform rotate-[0deg]" 
+      />
+      
+      {/* Text Overlay - સ્ટારની ઉપર ટેક્સ્ટ મૂકવા માટે */}
+      <div className="absolute text-white text-xl font-bold transform rotate-[-50deg]">
+          {text}
+      </div>
+    </div>
+  );
+};
 
 const HeroBanner = () => {
-  return (
-    <div className="flex flex-col md:flex-row justify-center items-center bg-red-50 py-10 px-5 md:px-20 font-sans">
-      
-      {/* Left Image Section */}
-      <div className="relative flex-1 mb-10 md:mb-0">
-        {/* Discount Badge */}
-        <div className="absolute top-5 left-5 bg-pink-500 text-white font-bold p-2 md:p-4 rounded-full w-20 h-20 md:w-24 md:h-24 flex justify-center items-center transform -rotate-12 shadow-md text-center text-sm md:text-base">
-          50% off
-        </div>
+  // Ensure the underline style is applied for the title
+  useEffect(() => {
+    const style = document.createElement("style");
+    style.innerHTML = `
+      .theme-block {
+          background-color: black;
+          height: 2px;
+          position: absolute;
+          bottom: -8px;
+          left: 0;
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
 
+  return (
+    // The main container is now a flex row on all screen sizes
+    <div className="flex justify-center items-center bg-red-50 px-5 font-sans">
+      {/* Left Image Section */}
+      <div className="relative flex-1">
+        {/* Discount Badge (now uses SVG) */}
+        <DiscountBadge />
+        
         {/* Hero Image */}
         <img
           src={herobannerImage}
           alt="Stylish woman in a trench coat and hat"
-          className="w-full h-[500px] max-w-sm md:max-w-xl mx-auto md:mx-0 object-cover"
+          // Image size is now controlled by flexbox, ensuring it doesn't break the layout
+          className="w-full h-full object-cover"
         />
 
         {/* Half Blur Overlay */}
@@ -24,25 +61,26 @@ const HeroBanner = () => {
       </div>
 
       {/* Right Text Section */}
-      <div className="flex-1 text-center md:text-left md:pl-20">
+      {/* Use padding for spacing on all screens */}
+      <div className="flex-1 text-center md:text-left pl-10 pr-5 flex flex-col justify-center items-center md:items-start">
         <h2
-          className="text-[50px] md:text-5xl font-sans text-black mb-6 relative"
+          className="text-[20px] sm:text-[32px] md:text-[40px] font-sans text-black mb-6 relative"
           style={{ filter: "drop-shadow(5px 2px 4px rgba(0,0,0,0.4))" }}
         >
           Flesh Deals
-          <span className="absolute left-1/2 md:left-0 theme-border-block w-[100px]"></span>
+          <span className="absolute theme-border-block w-[100px]"></span>
         </h2>
 
-        <p className="text-[24px] md:text-lg text-[#989696] mb-4">
+        <p className="text-[10px] sm:text-[14px] md:text-[24px] text-[#989696] mb-4">
           Stylish Regular Fit Light Marun Denim For Women's & Girls
         </p>
 
-        <p className="text-[18px] font-regular text-black mb-6 inline-block pb-1 border-b-2 border-black">
+        <p className="text-[10px] sm:text-[18px] md:text-[18px] font-regular text-black mb-6 inline-block pb-1 border-b-2 border-black">
           Rs 1099.00
         </p>
 
         <div>
-          <button className="bg-pink-500 text-white font-regular py-3 px-8 rounded-lg">
+          <button className="bg-pink-500 text-white font-regular text-sm py-2 px-6 md:text-base md:py-3 md:px-8 rounded-lg hover:bg-pink-600 transition duration-300">
             Shop Now!
           </button>
         </div>

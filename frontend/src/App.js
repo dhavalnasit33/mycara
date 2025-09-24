@@ -30,7 +30,7 @@ function App() {
           <Route path="/features" element={<Features />} />
           <Route path="/more" element={<More />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }

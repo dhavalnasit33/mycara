@@ -8,6 +8,9 @@ import FeaturedProducts from "../components/FeaturedProducts";
 import TrendingClothes from "../components/TrendingClothes";
 import HeroBanner from '../components/HeroBanner';
 import Bestsellers from '../components/Bestsellers';
+import RecommendedSection from '../components/RecommendedSection';
+import BannerClothes from '../components/bannerclothes.jsx'; // Adjust path if needed
+import Features from '../components/Features.jsx';
 
 const Shop = () => {
   return (
@@ -19,6 +22,9 @@ const Shop = () => {
         <TrendingClothes />
         <HeroBanner />
          <Bestsellers />
+         <RecommendedSection />
+         <BannerClothes />
+         <Features />
     </div>
   );
 };
