@@ -1,5 +1,7 @@
 import React from 'react';
-import flowerImg from '../assets/flower.png';
+
+// Local images
+import FlowerIcon from "../components/icons/FlowerIcon";
 // Local images
 import earringsImg from '../assets/earrings.png';
 import shoesImg from '../assets/shoes.png';
@@ -18,25 +20,31 @@ const NewArrivals = () => {
     <div className="w-full bg-white font-sans">
       <div className="flex flex-col items-center">
         
-        {/* Header Section */}
-        <div className="relative py-16 flex justify-center w-full items-center">
+        {/* Title Section */}
+        <div className="relative  flex justify-center items-center w-full">
+          {/* Left line */}
           <div className="w-[50px] border-t border-black"></div>
-          <h2 className="relative font-h2 sm:text-3xl mx-4 z-10 whitespace-nowrap">
-            New Arrivals
-            <img
-              src={flowerImg}
-              alt="Decorative flower"
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-100 pointer-events-none"
-            />
-          </h2>
+
+          {/* Center container for title + icon */}
+          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
+            {/* Title */}
+            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
+              New Arrivals
+            </h2>
+
+            {/* Decorative SVG icon fully visible, centered */}
+            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px] pointer-events-none z-0" />
+          </div>
+
+          {/* Right line */}
           <div className="w-[50px] border-t border-black"></div>
         </div>
-
+       
         {/* Grid Layout Section */}
         <div className="w-full max-w-[1440px] mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[400px_auto_400px] gap-4">
+          <div className="grid grid-cols-1 sm:px-[0px] px-4 lg:grid-cols-[400px_auto_400px] gap-4">
 
-     <div className="h-[580px] relative group">
+     <div className="relative group  h-[280px] w-[450px]  sm:h-[300px] sm:w-[100%]  lg:h-[580px] lg:w-auto  overflow-hidden">
   <img 
     src={newArrivalItems[0].img} 
     alt={newArrivalItems[0].name} 
@@ -64,7 +72,7 @@ const NewArrivals = () => {
          {/* Center: Shoes & Watch */}
 <div className="flex flex-col gap-4">
   {/* Shoes */}
-  <div className="relative overflow-hidden group h-[280px]">
+  <div className="relative group  h-[200px] w-[450px]  sm:h-[300px] sm:w-[100%]  lg:h-[280px] lg:w-auto  overflow-hidden">
     <img 
       src={newArrivalItems[1].img} 
       alt={newArrivalItems[1].name} 
@@ -87,7 +95,7 @@ const NewArrivals = () => {
   </div>
 
   {/* Watch */}
-  <div className="relative overflow-hidden group h-[280px]">
+  <div className="relative group  h-[200px] w-[450px]  sm:h-[300px] sm:w-[100%]  lg:h-[280px] lg:w-auto  overflow-hidden">
     <img 
       src={newArrivalItems[2].img} 
       alt={newArrivalItems[2].name} 
@@ -112,11 +120,11 @@ const NewArrivals = () => {
 
 
           {/* Right: Winter Clothes */}
-<div className="h-[580px] relative group overflow-hidden">
+<div className="relative group  h-[280px] w-[450px]  sm:h-[300px] sm:w-[100%]  lg:h-[580px] lg:w-auto  overflow-hidden">
   <img 
     src={newArrivalItems[3].img} 
     alt={newArrivalItems[3].name} 
-    className="w-full h-full object-cover"
+    className="w-full h-full  "
   />
 
   {/* Overlay content */}

@@ -1,7 +1,10 @@
 import React from "react";
 import Slider from "react-slick";
-import flowerImg from "../assets/flower.png"; // decorative flower
+import flowerImg from "../assets/flower.png";
 
+
+// Local images
+import FlowerIcon from "../components/icons/FlowerIcon"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -73,18 +76,25 @@ const TrendingClothes = () => {
   return (
     <div className="w-full bg-white font-sans py-16">
       {/* Heading */}
-      <div className="flex justify-center items-center mb-10">
-        <div className="w-[50px] border-t border-black"></div>
-        <h2 className="relative font-h2 sm:text-3xl mx-4 z-10 whitespace-nowrap">
-          Trending Clothes
-          <img
-            src={flowerImg}
-            alt="Decorative flower"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-100 pointer-events-none"
-          />
-        </h2>
-        <div className="w-[50px] border-t border-black"></div>
-      </div>
+     {/* Title Section */}
+        <div className="relative flex justify-center items-center w-full">
+          {/* Left line */}
+          <div className="w-[50px] border-t border-black"></div>
+
+          {/* Center container for title + icon */}
+          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
+            {/* Title */}
+            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
+              Tranding clothes
+            </h2>
+
+            {/* Decorative SVG icon fully visible, centered */}
+            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px]  pointer-events-none z-0" />
+          </div>
+
+          {/* Right line */}
+          <div className="w-[50px] border-t border-black"></div>
+        </div>
 
       <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
         {/* Desktop Grid */}

@@ -3,8 +3,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 
+
+// Local images
+import FlowerIcon from "../components/icons/FlowerIcon";
+
 // assets
-import flowerImg from "../assets/flower.png";
 import ShoppingBagIcon from "./icons/ShoppingBagIcon";
 import HeartIcon from "./icons/HeartIcon";
 
@@ -109,6 +112,7 @@ const FeaturedProducts = () => {
   const [mounted, setMounted] = useState(false);
   const [slidesToShow, setSlidesToShow] = useState(9);
   const [showArrows, setShowArrows] = useState(true);
+   const [activeCategory, setActiveCategory] = useState("cotton-kurti"); // 👈 active category
   const sliderRef = useRef();
 
   const updateSlider = () => {
@@ -145,22 +149,36 @@ const FeaturedProducts = () => {
     swipeToSlide: true,
   };
 
+   // 👇 filter products based on activeCategory
+  const filteredProducts =
+    activeCategory === "cotton-kurti"
+      ? products
+      : products.filter((p) => p.category === activeCategory);
+
   return (
     <div className="w-full bg-white font-sans">
       <div className="flex flex-col items-center">
-        {/* Heading */}
-        <div className="relative py-16 flex justify-center w-full items-center">
+
+          {/* Title Section */}
+        <div className="relative  flex justify-center items-center w-full">
+          {/* Left line */}
           <div className="w-[50px] border-t border-black"></div>
-          <h2 className="relative font-h2 sm:text-3xl mx-4 z-10 whitespace-nowrap">
-            Featured Products
-            <img
-              src={flowerImg}
-              alt="Decorative flower"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-100 pointer-events-none"
-            />
-          </h2>
+
+          {/* Center container for title + icon */}
+          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
+            {/* Title */}
+            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
+               Featured Products
+            </h2>
+
+            {/* Decorative SVG icon fully visible, centered */}
+            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px]  pointer-events-none z-0" />
+          </div>
+
+          {/* Right line */}
           <div className="w-[50px] border-t border-black"></div>
         </div>
+        
 
         {/* Categories Slider with inside arrows */}
         <div className="relative max-w-[1440px] mx-auto w-full mb-6 px-2 sm:px-4">
@@ -182,15 +200,24 @@ const FeaturedProducts = () => {
           )}
           <Slider ref={sliderRef} {...settings}>
             {categories.map((item, i) => (
-              <div key={i} className="px-[6px] sm:px-[8px]">
-                <Link
-                  to={item.path}
-                  className="border shadow-md rounded-[30px] flex items-center justify-center 
-                              py-2 px-2 sm:py-2 sm:px-3 lg:py-2 lg:px-4
-                              text-center text-black transition-colors duration-300 button hover:text-white"
-                >
-                  <p className="font-h4 text-[12px] sm:text-[16px]">{item.name}</p>
-                </Link>
+              <div key={i} className="px-[6px] sm:px-[1px]">
+            <button
+              onClick={() => setActiveCategory(item.name)}
+              className={`border rounded-[30px] flex items-center justify-center 
+                          w-[100px] sm:w-[140px] xs:w-[100px] h-[40px]
+                          text-center transition-colors duration-300 button
+                          ${
+                            activeCategory === item.name
+                              ? "bg-color text-white hover:bg-color hover:text-white" // active + hover same style
+                              : "text-black " // inactive hover style
+                          }`}
+              style={{
+                boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
+              }}
+            >
+              <p className="font-h4 text-[12px] sm:text-[16px]">{item.name}</p>
+            </button>
+
               </div>
             ))}
           </Slider>

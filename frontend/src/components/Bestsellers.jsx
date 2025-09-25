@@ -5,7 +5,9 @@ import Image3 from '../assets/vanpees.png';
 import Image4 from '../assets/suit.png';
 
 import { IoIosArrowRoundForward } from "react-icons/io";
-import flowerImg from "../assets/flower.png";
+
+// Local images
+import FlowerIcon from "../components/icons/FlowerIcon"; 
 
 const Bestsellers = () => {
   const products = [
@@ -17,20 +19,26 @@ const Bestsellers = () => {
 
   return (
     <div className="max-w-[1440px] mx-auto w-full cursor-pointer py-16 px-4 sm:px-6 lg:px-8">
-      {/* Our Best Seller's Title */}
-      <div className="flex justify-center items-center mb-10">
-        <div className="w-[50px] border-t border-black"></div>
-        <h2 className="relative font-h2 sm:text-3xl mx-4 z-10 whitespace-nowrap">
-          Our Best Seller's
-          <img
-            src={flowerImg}
-            alt="Decorative flower"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-100 pointer-events-none"
-          />
-        </h2>
-        <div className="w-[50px] border-t border-black"></div>
-      </div>
-      
+
+      {/* Title Section */}
+        <div className="relative flex justify-center items-center w-full">
+          {/* Left line */}
+          <div className="w-[50px] border-t border-black"></div>
+
+          {/* Center container for title + icon */}
+          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
+            {/* Title */}
+            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
+              Our Best Seller's
+            </h2>
+
+            {/* Decorative SVG icon fully visible, centered */}
+            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px]  pointer-events-none z-0" />
+          </div>
+
+          {/* Right line */}
+          <div className="w-[50px] border-t border-black"></div>
+        </div>
       {/* Product Grid - Corrected for responsiveness */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product, index) => (

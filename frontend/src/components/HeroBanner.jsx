@@ -42,7 +42,7 @@ const HeroBanner = () => {
 
   return (
     // The main container is now a flex row on all screen sizes
-    <div className="flex justify-center items-center bg-red-50 px-5 font-sans">
+    <div className="flex justify-center items-center bg-red-50 px-0 sm:px-5 h-[400px] sm:h-[570px] font-sans">
       {/* Left Image Section */}
       <div className="relative flex-1">
         {/* Discount Badge (now uses SVG) */}
@@ -53,7 +53,7 @@ const HeroBanner = () => {
           src={herobannerImage}
           alt="Stylish woman in a trench coat and hat"
           // Image size is now controlled by flexbox, ensuring it doesn't break the layout
-          className="w-full h-full object-cover"
+          className="object-cover"
         />
 
         {/* Half Blur Overlay */}

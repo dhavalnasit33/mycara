@@ -18,7 +18,7 @@ import appleStore from "../assets/appleStore.png";
 const Footer = () => {
   return (
     <footer className=" text-gray-700" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
-      <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-[1440px] mx-auto w-full py-12 px-4 sm:px-2 lg:px-0 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & Contact */}
         <div className="space-y-4">
           <h1>
@@ -99,24 +99,27 @@ const Footer = () => {
           <p className="text-sm mb-3">
             Become a MYcra member and get 10% off your next purchase!
           </p>
-         <div className="flex flex-col sm:flex-row mb-4 gap-2">
-  <div className="relative w-full">
-    <input
-      type="email"
-      placeholder="Enter Your E-mail Address"
-      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none pr-10"
-    />
-    <IoIosSend 
-      className="absolute  right-3 top-1/2 transform -translate-y-1/2 text-pink-500 text-xl cursor-pointer"
-    />
-  </div>
+
+              <div className="flex flex-col sm:flex-row mb-4 gap-2">
+                <div className="relative w-full">
+                  <input
+                    type="email"
+                    placeholder="Enter Your E-mail Address"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none pr-12"
+                  />
+                  <IoIosSend 
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-pink-500 text-6xl cursor-pointer"
+                  />
+                </div>
+              </div>
+
+<div className="flex flex-wrap gap-3  sm:justify-start items-center">
+  <img src={visaImg} alt="Visa" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
+  <img src={mastercardImg} alt="Mastercard" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
+  <img src={discoverImg} alt="Discover" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
+  <img src={paypalImg} alt="Paypal" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
 </div>
-          <div className="flex  gap-3 justify-start sm:justify-start">
-            <img src={visaImg} alt="Visa" className="w-[62px] h-[36px]" />
-            <img src={mastercardImg} alt="Mastercard" className="w-[62px] h-[36px]" />
-            <img src={discoverImg} alt="Discover" className="w-[62px] h-[36px]" />
-            <img src={paypalImg} alt="Paypal" className="w-[62px] h-[36px]" />
-          </div>
+
         </div>
       </div>
 
@@ -146,7 +149,7 @@ const Footer = () => {
           </div>
 
           {/* Follow Us */}
-          <div className="flex flex-col items-center md:items-start gap-6 mr-auto">
+          <div className="flex flex-col items-center md:items-start gap-6 w-full md:w-auto">
             <h3 className="font-medium text-black tracking-wide text-[22px]">
               FOLLOW US
             </h3>
@@ -161,9 +164,11 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-white bg-color border-t border-white/30 pt-4">
-        © 2024 MYcra Fashion Ltd. All Rights Reserved
-      </div>
+<div className="w-full h-10 flex items-center justify-center text-white bg-color border-t border-white/30 px-2 text-sm sm:text-base">
+  © 2024 MYcra Fashion Ltd. All Rights Reserved
+</div>
+
+
     </footer>
   );
 };

@@ -82,7 +82,7 @@
 
 .button {
   transition: all 0.3s ease;
-  color: black;
+  
 }
 .button:hover {
   background-color: var(--theme-hover-color);
