@@ -50,7 +50,7 @@ const RecommendedSection = () => {
   const displayItems = getDisplayItems();
 
   return (
-    <div className="max-w-[1440px] mx-auto w-full py-16 px-4 sm:px-6 lg:px-8">
+    <div className="max-w-[1440px] mx-auto w-full py-8 sm:py-14 px-4 sm:px-6 lg:px-8">
 
 {/* Title Section */}
         <div className="relative flex justify-center items-center w-full">

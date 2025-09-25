@@ -1,7 +1,5 @@
 import React from "react";
 import Slider from "react-slick";
-import flowerImg from "../assets/flower.png";
-
 
 // Local images
 import FlowerIcon from "../components/icons/FlowerIcon"; 
@@ -16,25 +14,25 @@ const products = [
   {
     id: 1,
     name: "Spain tincid",
-    price: "Rs 999.00 - Rs 899.00 ",
+    price: "Rs 999.00 - Rs 899.00",
     img: SpainImg,
   },
   {
     id: 2,
     name: "Latest Look cort collection",
-    price: "Rs 999.00 - Rs 899.00 ",
+    price: "Rs 999.00 - Rs 899.00",
     img: LatestLookImg,
     sale: true,
   },
   {
     id: 3,
     name: "Latest look stylish",
-    price: "Rs 999.00 - Rs 899.00 ",
+    price: "Rs 999.00 - Rs 899.00",
     img: StylishImg,
   },
 ];
 
-// Custom Arrows BELOW the slider ( < > style )
+// Custom Arrows BELOW the slider
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
@@ -60,7 +58,7 @@ const TrendingClothes = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    arrows: false, // disable default arrows
+    arrows: false,
     slidesToShow: 2,
     slidesToScroll: 1,
     responsive: [
@@ -76,42 +74,36 @@ const TrendingClothes = () => {
   return (
     <div className="w-full bg-white font-sans py-16">
       {/* Heading */}
-     {/* Title Section */}
-        <div className="relative flex justify-center items-center w-full">
-          {/* Left line */}
-          <div className="w-[50px] border-t border-black"></div>
+      <div className="relative flex justify-center items-center w-full">
+        <div className="w-[50px] border-t border-black"></div>
 
-          {/* Center container for title + icon */}
-          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
-            {/* Title */}
-            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
-              Tranding clothes
-            </h2>
-
-            {/* Decorative SVG icon fully visible, centered */}
-            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px]  pointer-events-none z-0" />
-          </div>
-
-          {/* Right line */}
-          <div className="w-[50px] border-t border-black"></div>
+        <div className="relative mx-4 flex flex-col items-center justify-center h-48">
+          <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
+            Trending Clothes
+          </h2>
+          {/* Decorative icon */}
+          <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px] pointer-events-none z-0" />
         </div>
+
+        <div className="w-[50px] border-t border-black"></div>
+      </div>
 
       <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
         {/* Desktop Grid */}
         <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-8">
+           {/* Flower Icon outside top-left */}
+                <FlowerIcon className="absolute -top-5 -left-5 w-[100px] h-[100px] pointer-events-none z-10" />
           {products.map((product) => (
             <div key={product.id} className="group">
+               
               <div className="relative rounded-lg overflow-hidden p-2">
+                {/* Dashed border */}
                 <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
                 <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
                 <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
                 <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
 
-                <img
-                  src={flowerImg}
-                  alt="decor"
-                  className="absolute -top-3 -left-3 w-6 h-6"
-                />
+              
 
                 <img
                   src={product.img}
@@ -129,10 +121,7 @@ const TrendingClothes = () => {
               <div className="p-2 text-left">
                 <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
                 <p className="text-gray-500 mb-2">
-                  <span
-                    className="mr-2 text-[12px]"
-                    style={{ color: "#989696" }}
-                  >
+                  <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
                     {product.price}
                   </span>
                 </p>
@@ -153,21 +142,19 @@ const TrendingClothes = () => {
               <div key={product.id} className="px-2">
                 <div className="group">
                   <div className="relative rounded-lg overflow-hidden p-2">
+                    {/* Dashed border */}
                     <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
                     <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
                     <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
                     <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
 
-                    <img
-                      src={flowerImg}
-                      alt="decor"
-                      className="absolute -top-3 -left-3 w-6 h-6"
-                    />
+                    {/* Flower Icon outside top-left */}
+                    <FlowerIcon className="absolute -top-3 -left-3 w-10 h-10 pointer-events-none z-10" />
 
                     <img
                       src={product.img}
                       alt={product.name}
-                      className="w-full h-[300px] "
+                      className="w-full h-[300px]"
                     />
 
                     {product.sale && (
@@ -178,21 +165,16 @@ const TrendingClothes = () => {
                   </div>
 
                   <div className="p-2 text-left">
-                    <h3 className="font-medium text-[20px] mb-2">
-                      {product.name}
-                    </h3>
+                    <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
                     <p className="text-gray-500 mb-2">
-                      <span
-                        className="mr-2 text-[12px]"
-                        style={{ color: "#989696" }}
-                      >
+                      <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
                         {product.price}
                       </span>
                     </p>
                     <p className="text-black mb-2">★★★★★</p>
                     <button className="text-black relative transition">
                       Select Option
-                      <span className="theme-border-block"></span>
+                      <span className="theme-border-block w-7"></span>
                     </button>
                   </div>
                 </div>
