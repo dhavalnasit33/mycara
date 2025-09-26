@@ -88,52 +88,62 @@ const TrendingClothes = () => {
         <div className="w-[50px] border-t border-black"></div>
       </div>
 
-      <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
-        {/* Desktop Grid */}
-        <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-8">
-           {/* Flower Icon outside top-left */}
-                <FlowerIcon className="absolute -top-5 -left-5 w-[100px] h-[100px] pointer-events-none z-10" />
-          {products.map((product) => (
-            <div key={product.id} className="group">
-               
-              <div className="relative rounded-lg overflow-hidden p-2">
-                {/* Dashed border */}
-                <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
-                <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
-                <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
-                <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
+ <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
+        
+  {/* Desktop Grid */}
+  <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-8">
+    
+    {products.map((product) => (
+      <div key={product.id} className="group">
+         
+        {/* === START MODIFIED BLOCK (DESKTOP) === */}
+        {/* CHANGED overflow-hidden TO overflow-visible to show outside elements */}
+        <div className="relative rounded-lg overflow-visible p-2">
 
-              
+            
+          {/* Dashed border */}
+          <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
+          <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
+          <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
+          <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
 
-                <img
-                  src={product.img}
-                  alt={product.name}
-                  className="w-full h-[555px]"
-                />
+          {/* FLOWER ICON: Use standard Tailwind size classes (e.g., w-10, h-10) and Z-index */}
+          {/* Use -top-6 and -left-6 to push it outside the p-2 padding and the dashed border */}
+         <FlowerIcon 
+    className="absolute -top-6 -left-6 w-[100px] h-[100px] pointer-events-none z-20" 
+/>
+          
+          {/* === END MODIFIED BLOCK (DESKTOP) === */}
 
-                {product.sale && (
-                  <span className="absolute top-3 right-3 bg-color text-white text-xs px-3 py-1 rounded">
-                    Sale
-                  </span>
-                )}
-              </div>
+          <img
+            src={product.img}
+            alt={product.name}
+            className="w-full h-[555px]"
+          />
 
-              <div className="p-2 text-left">
-                <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
-                <p className="text-gray-500 mb-2">
-                  <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
-                    {product.price}
-                  </span>
-                </p>
-                <p className="text-black mb-2">★★★★★</p>
-                <button className="text-black relative transition">
-                  Select Option
-                  <span className="theme-border-block w-[30px]"></span>
-                </button>
-              </div>
-            </div>
-          ))}
+          {product.sale && (
+            <span className="absolute top-3 right-3 bg-color text-white text-xs px-3 py-1 rounded">
+              Sale
+            </span>
+          )}
         </div>
+
+        <div className="p-2 text-left">
+          <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
+          <p className="text-gray-500 mb-2">
+            <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
+              {product.price}
+            </span>
+          </p>
+          <p className="text-black mb-2">★★★★★</p>
+          <button className="text-black relative transition">
+            Select Option
+            <span className="theme-border-block w-[30px]"></span>
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
 
         {/* Mobile Slider */}
         <div className="relative md:hidden">

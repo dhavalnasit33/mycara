@@ -18,8 +18,8 @@ const Features = () => {
             <img src={ShippingIcon} alt="Shipping Worldwide" className="w-12 h-12 relative z-10" />
           </div>
           <div className="ml-4">
-            <h4 className="font-semibold text-lg md:text-xl">Shipping Worldwide</h4>
-            <p className="text-gray-600 mt-1">We deliver to all the locations across the world.</p>
+            <h4 className="font-medium text-[20px] md:text-xl">Shipping Worldwide</h4>
+            <p className="text-[#989696] mt-1">We deliver to all the locations across the world.</p>
           </div>
         </div>
         

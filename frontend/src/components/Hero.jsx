@@ -91,13 +91,17 @@ const settings = {
                     {heroSlides.map((slide, index) => (
                         <div key={index}>
                             {/* This is the Flexbox container for a single slide */}
-                            <div className="w-full flex flex-row md:flex-row items-center justify-between px-4 sm:px-10">
+                            <div className="w-full flex flex-row md:flex-row items-center justify-between px-1 sm:px-10">
                                 {/* Left Text: This item will take up space in the flex row */}
-                                <div className="flex-1 text-left space-y-4 sm:space-y-6 p-[20px] sm:p-[80px]">
-                                    <h1
-                                        className="font-main font-bold text-[26px] sm:text-5xl lg:text-[80px] leading-[28px] sm:leading-snug lg:leading-[90px] italic text-stroke-white text-shadow"
-                                        dangerouslySetInnerHTML={{ __html: slide.title }}
-                                    />
+                                <div className="flex-1 text-left space-y-4 sm:space-y-6 p-[10px] sm:p-[80px]">
+                    <h1 className=" text-stroke text-shadow-custom">
+                    <span
+                        className="font-sans italic font-bold text-[26px] sm:text-[80px] text-black "
+                        dangerouslySetInnerHTML={{ __html: slide.title }}
+                    />
+                    </h1>
+
+
                                   <p className="text-black relative text-[8px] sm:text-[24px]">
                                     {slide.subtitle}
                                     <span className="absolute left-0 -bottom-1 w-[60px] sm:w-[90px] h-[1px] bg-gray-800"></span>

@@ -22,7 +22,7 @@ const categories = [
 
 const CategoriesSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slidesToShow, setSlidesToShow] = useState(5); // default desktop
+  const [slidesToShow, setSlidesToShow] = useState(4); // default desktop
   const sliderRef = useRef(null);
 
   // Handle window resize
@@ -101,7 +101,7 @@ const CategoriesSection = () => {
 
         {/* Custom Dots */}
         <div className="flex justify-center mt-6 space-x-2">
-          {categories.map((_, i) => (
+          {categories.slice(0, 4).map((_, i) => (
             <button
               key={i}
               onClick={() => sliderRef.current.slickGoTo(i)}
