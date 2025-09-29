@@ -1,46 +1,66 @@
-import React, { useState } from "react";
+// D:\mycara\frontend\src\components\Header.js
+
+import React, { useState, useEffect } from "react";
 import {
   FaUser,
-  FaHeart,
+
   FaBars,
-  FaTimes,
+  FaTimes, 
 } from "react-icons/fa";
+import ShopIcon from "./icons/shop";
+import CollectionsIcon from "./icons/Collections";
+import BlogsIcon from "./icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
+import FeaturesIcon from "./icons/Features";
+import MoreIcon from "./icons/More"; 
+import LoginIcon from "./icons/login"; 
+import { FaHome, FaShoppingBag, FaThLarge, FaBlog, FaStar, FaEllipsisH } from "react-icons/fa";
+
 import { NavLink } from "react-router-dom";
-
-import BagIcon from "../assets/bag.png";
-import OrdersIcon from "../assets/orders.svg";
-import LoginIcon from "../assets/login.svg";
-import WhiteLogin from "../assets/white login.png";
-import MenuIcon from "../assets/menu.png";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faRupeeSign, faGift } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
+import BagIcon from "../assets/bag.png";
+import OrdersIcon from "../assets/orders.svg";
+
+import WhiteLogin from "../assets/white login.png";
+import MenuIcon from "../assets/menu.png";
+import PayImg from "../assets/pay.png";
 import Logo from "../assets/logo.png";
 import bannerImg from "../assets/banner.png";
 
-// ✅ Menu List
+import Notification from "./icons/notification";
+
+import SvgComponent from "./icons/SvgComponent";
+//  Menu List
 const navItems = [
-  { name: "Home", path: "/Home" },
-  { name: "Shop", path: "/shop" },
-  { name: "Collections", path: "/collections" },
-  { name: "Blogs", path: "/blogs" },
-  { name: "Features", path: "/features" },
-  { name: "More", path: "/more" },
+ {
+    name: "Home",
+    path: "/Home",
+    // 👇 Home icon + text only desktop ma show thase
+    icon: <ShopIcon className="w-5 h-6 hidden lg:block" />,
+  },
+  { name: "Shop", path: "/shop", icon: <ShopIcon className="w-5 h-6" /> },
+   { name: "Collections", path: "/collections", icon: <CollectionsIcon className="w-5 h-5" /> },
+   { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
+  { name: "Features", path: "/features", icon: <FeaturesIcon className="w-5 h-5" /> },
+{ name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
 ];
+
 
 const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+
+  
   return (
-    <header className="bg-pink-50 shadow-md">
-      {/* 🔝 Topbar */}
-      <div className="flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px]  md:px-8 mx-auto">
+    <header className="bg-primary-50 shadow-md">
+    
+      <div className="hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto">
         {/* Logo */}
-        <div className=" flex items-center space-x-2">
+        <div className="hidden lg:flex items-center space-x-2">
           <img
             src={Logo}
             alt="Logo"
@@ -58,15 +78,14 @@ const Header = () => {
                   className={({ isActive }) =>
                     `relative cursor-pointer transition-colors duration-300 ${
                       isActive
-                        ? "text-[#F43297] font-medium"
-                        : "text-black  hover:text-[#F43297] hover:font-medium hover:opacity-100 font-normal"
+                        ? "text-[var(--theme-color)] font-medium"
+                        : "text-black hover:text-[var(--theme-color)] hover:font-medium"
                     }`
                   }
                 >
                   {({ isActive }) => (
                     <>
                       {item.name}
-                      {/* 3 dots indicator */}
                       <span
                         className={`absolute left-1/2 -translate-x-1/2 -bottom-2 flex space-x-1 transition-opacity duration-300 ${
                           isActive
@@ -74,9 +93,9 @@ const Header = () => {
                             : "opacity-0 group-hover:opacity-100"
                         }`}
                       >
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[#F43297] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
+                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
                       </span>
                     </>
                   )}
@@ -92,7 +111,7 @@ const Header = () => {
           <div className="relative hidden sm:block">
             <button
               onClick={() => setIsLoginOpen(!isLoginOpen)}
-              className="flex items-center space-x-1 bg-[#F43297] text-white px-3 py-1 rounded-md text-sm transition-colors duration-300 hover:bg-[#d81f7d]"
+              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm  duration-300 bg-color"
             >
               <img src={WhiteLogin} alt="Login" className="w-4 h-4" />
               <span>Login</span>
@@ -102,10 +121,11 @@ const Header = () => {
               <div className="absolute right-0 mt-2 w-60 bg-white rounded-[10px] shadow-lg z-50">
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
-                  <span className="text-[#F43297] cursor-pointer font-medium hover:text-[#F43297]">
+                  <span className="text-color cursor-pointer font-medium">
                     Sign Up
                   </span>
                 </div>
+
                 <ul className="text-gray-700 text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
@@ -120,7 +140,7 @@ const Header = () => {
                     <span>Wishlist</span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
-                    <FontAwesomeIcon icon={faRupeeSign} />
+                    <SvgComponent />
                     <span>Gift Cards</span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
@@ -128,143 +148,235 @@ const Header = () => {
                     <span>Coupons</span>
                   </li>
                 </ul>
+
+                
               </div>
             )}
           </div>
 
           {/* Icons */}
-          <MagnifyingGlassIcon className="w-6 h-6 text-black/70 stroke-[2] cursor-pointer hover:text-[#F43297] hidden sm:block" />
-         
-         <div className="hidden lg:flex items-center space-x-4">
-          <FontAwesomeIcon
-            icon={faCartShopping}
-            className="w-6 h-6 text-black/70 cursor-pointer hover:text-[#F43297]"
-          /></div>
-          <img
-            src={BagIcon}
-            alt="Bag"
-            className="w-5 h-5 cursor-pointer"
-          />
-           <div className="hidden lg:flex items-center space-x-4">
-          <img
-            src={MenuIcon}
-            alt="Menu"
-            className="w-5 h-5 cursor-pointer"
-          /></div>
+          <MagnifyingGlassIcon 
+              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] " 
+            />
 
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] hidden lg:block"
+            />
 
+          <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer hidden lg:block" />
+          <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer hidden lg:block" />
         </div>
       </div>
 
+            {/* Mobile Menu Button */}
 
- {/* Mobile Menu Button */}
+             <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
+              {/* Left: Hamburger */}
+              <button
+                  className="text-gray-600 transition-colors duration-300"
+                  style={{ color: "var(--theme-color)" }} // icon default color
+                  onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"} // optional hover same color
+                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"} // same color back
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+               >
+              {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+              </button>
+
+             {/* Center: Logo */}
+   
+            <img src={Logo} alt="Logo" className="h-10 mx-auto" />
+      
+            {/* Right: Optional icons */}
+            <div className="flex items-center space-x-3">
+              <MagnifyingGlassIcon 
+                  className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] block" 
+              />
+            <FontAwesomeIcon
+                      icon={faCartShopping}
+                      className="w-6 h-6  text-black/70 cursor-pointer hover:text-[var(--theme-color)]  lg:block"
+                    />
+              <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer" />
+              {/* Notification icon */}
+              
+            </div>
+          </div>
+          {/*  */}
+          {/*  */}
+             {/*  */} 
+             {/*  */}
 
 
-
-<div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
-  {/* Left: Hamburger */}
-  <button
-    className="text-gray-600 hover:text-[#F43297]"
-    onClick={() => setIsMenuOpen(!isMenuOpen)}
-  >
-    {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-  </button>
-   {/* Center: Logo */}
-  <img src={Logo} alt="Logo" className="h-10 mx-auto" />
-
-  {/* Right: Optional icons */}
-  <div className="flex items-center space-x-3">
-    <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer" />
-    {/* Notification icon */}
-    <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer" />
-  </div>
-</div>
-      {/* ✅ Mobile Sidebar */}
-<div
-  className={`fixed top-0 left-0 h-full w-full bg-white shadow-lg z-50 transform transition-transform duration-300 ${
-    isMenuOpen ? "translate-x-0" : "-translate-x-full"
-  }`}
->
-
+             
         {/* Sidebar Header */}
-        <div className="flex justify-between items-center px-4 py-3 border-b">
-          <img src={Logo} alt="Logo" className="h-10" />
-          <button onClick={() => setIsMenuOpen(false)} className="text-gray-600">
-            <FaTimes size={22} />
-          </button>
+          <div
+            className={`fixed top-0 left-0 w-full h-screen bg-white shadow-lg z-50 transform transition-transform duration-300 ${
+              isMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
+          >
+
+        
+        <div className="flex justify-between bg-[rgba(210,175,159,0.3)] items-center px-4 py-3 border-b ">
+           <button
+              className="text-gray-600 transition-colors duration-300"
+              style={{ color: "var(--theme-color)" }} // icon default color
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"} // optional hover same color
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"} // same color back
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+          {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+        </button>
+          <img src={Logo} alt="Logo" className="mx-auto h-10" />
+         <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer  lg:block" />
         </div>
 
+
+
+
+      <div className="flex h-full overflow-y-auto no-scrollbar">
+
+        {/* Mobile Wrapper - Max width 450px & White background */}
+        <div className=" w-[430px]  mx-left bg-white relative flex-1 flex-col  "
+        style={{
+            boxShadow: "0px 0px 4px rgba(0,0,0,0.25)",
+          }}>
+
+            
         {/* Banner */}
         <div
-          className="w-full h-[150px] sm:h-[180px] relative flex items-center justify-center"
+          className="relative w-full h-[154px]  overflow-hidden flex items-center justify-center"
           style={{
             background: "linear-gradient(90deg, #F43297 0%, #FF74B4 31%, #FFBADA 85%)",
           }}
         >
-          <img src={bannerImg} alt="Banner" className="h-full object-contain absolute right-4 bottom-0" />
+          {/* Banner Image */}
+          <img
+            src={bannerImg}
+            alt="Banner"
+            className="h-full object-contain absolute right-4 bottom-0 z-10"
+          />
+
+          {/* FASHION Text */}
           <h1
-            className="absolute text-4xl sm:text-[70px] uppercase font-extrabold tracking-widest text-transparent"
-            style={{ WebkitTextStroke: "1px white" }}
+            className="absolute text-[70px] sm:text-[100px] uppercase font-extrabold tracking-widest text-white"
+            style={{
+              WebkitTextStroke: "2px white",
+            }}
           >
             FASHION
           </h1>
         </div>
 
 
-      {/* Menu Items */}
-        <nav className="px-4 py-4 space-y-2">
-          {navItems.map((item, i) => (
+
+
+        {/* Menu Items */}
+        <nav className=" py-3">
+          {navItems.map((item, i) => {
+          if (item.name === "Home") 
+            return null; // mobile ma render nai thase
+
+          // Mobile only background for specific items
+            const isMobileHighlight = ["Shop", "Blogs", "More"].includes(item.name);
+
+            return (
             <NavLink
               key={i}
               to={item.path}
               onClick={() => setIsMenuOpen(false)}
-              className="flex justify-between items-center py-3 px-3 rounded-md bg-pink-50 hover:bg-pink-100 text-gray-700"
+            
+                  className={`
+                  flex items-center gap-3 py-4 px-4 text-gray-700
+                  ${isMobileHighlight ? "bg-[rgba(210,175,159,0.3)] sm:bg-transparent" : "bg-white "}
+                `}
             >
-              <span>{item.name}</span> <span>›</span>
+              {item.icon}
+              <span>{item.name}</span>
+              <span className="ml-auto">›</span>
             </NavLink>
-          ))}
+          );
+        })}
 
-          <hr className="my-3" />
+        <div className="flex items-center justify-center h-[60px]">
+          <hr className="w-full border-t border-dashed border-gray-400" />
+        </div>
+
 
           {/* Extra Menu */}
-          <div className="space-y-2">
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              <FaUser /> <span>My Profile</span>
-            </div>
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />
+          <div className="">
+              <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+                <FaUser /> <span>My Profile</span>
+              </div>
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
+              <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />
               <span>Orders</span>
             </div>
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              <FaHeart /> <span>Wishlist</span>
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+              
+              <FontAwesomeIcon icon={farHeart} />
+                    <span>Wishlist</span>
             </div>
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              🎁 <span>Gift Card</span>
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
+              <SvgComponent />
+                  <span>Gift Cards</span>
             </div>
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              💳 <span>Coupons</span>
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+              <FontAwesomeIcon icon={faGift} />
+                    <span>Coupons</span>
             </div>
-            <div className="flex items-center space-x-2 py-2 px-3 hover:bg-gray-100 rounded-md cursor-pointer">
-              🔔 <span>Notifications</span>
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
+              <Notification className="w-5 h-5" /> 
+               <span>Notifications</span>
             </div>
           </div>
         </nav>
 
-        {/* Bottom Banner */}
-        <div className="mt-auto px-4 py-4 border-t">
-          <div className="bg-pink-100 p-3 rounded-lg text-center">
-            <p className="text-sm font-medium mb-2">
-              Enjoy The Best shopping Experience !
-            </p>
-            <button className="bg-pink-500 text-white px-4 py-2 rounded-md text-sm">
-              Get MYcra App
-            </button>
-          </div>
-        </div>
-      </div>
 
+        {/* Bottom Banner */}
+
+   {/* --- 2D. Bottom App Banner Section (Image Matched) --- */}
+        <div className="mt-auto px-4 py-4 border-t border-gray-200">
+            <div className="flex items-center gap-4">
+                {/* Left: Image */}
+                <img src={PayImg} alt="App Promo" className="w-[80px] h-auto object-contain" /> 
+
+                {/* Right: Text + Button */}
+                <div className="flex-1">
+                    <p className="text-sm font-medium mb-2 text-gray-700">
+                        Enjoy The Best Shopping Experience !
+                    </p>
+                    {/* Button: Pink background, white text, full width */}
+                    <button 
+                        className="w-full text-white bg-pink-600 hover:bg-pink-700 font-semibold py-2 rounded-lg transition-colors shadow-md"
+                        // Using inline style for the specific pink shade if needed
+                        style={{ backgroundColor: '#DB447C' }} 
+                    >
+                        Get MYcra App
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+  <div className="flex justify-end px-4 py-3 border-t">
+      <button
+        className="text-gray-600 transition-colors duration-300"
+        style={{ color: "var(--theme-color)" }}
+        onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+        onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+        onClick={() => setIsMenuOpen(!isMenuOpen)}
+      >
+        {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+      </button>
+    </div>
+      </div>
+</div>
+          
+       
+        </div>
      
     </header>
+    
   );
 };
 

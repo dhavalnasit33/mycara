@@ -21,14 +21,16 @@ function App() {
     <Router>
       <Header />
       <Routes>
-       <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />} />
+       <Route path="/Home" element={<Home />} />
         <Route path="/shop" element={<Shop />} /> 
+        
           <Route path="/collections" element={<Collections />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/features" element={<Features />} />
           <Route path="/more" element={<More />} />
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }
