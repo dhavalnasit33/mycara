@@ -1,15 +1,22 @@
+const { default: slugify } = require("slugify");
 const Category = require("../models/Category");
 const { sendResponse } = require("../utils/response");
 
 const getCategories = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false", status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
-    const query = search ? { name: { $regex: search, $options: "i" } } : {};
+    // Build query
+    const query = {};
+    if (search) query.name = { $regex: search, $options: "i" };
+    if (status && ["active", "inactive"].includes(status)) query.status = status;
 
     if (download) {
-      const categories = await Category.find(query).sort({ createdAt: -1 });
+      // Populate parent category name
+      const categories = await Category.find(query)
+        .sort({ createdAt: -1 })
+        .populate("parent_id", "name"); // only get parent name
       return sendResponse(res, true, { categories }, "All categories retrieved for download");
     }
 
@@ -17,10 +24,12 @@ const getCategories = async (req, res) => {
     limit = parseInt(limit);
 
     const total = await Category.countDocuments(query);
+
     const categories = await Category.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .populate("parent_id", "name"); // populate parent category name
 
     sendResponse(res, true, { categories, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
@@ -48,33 +57,67 @@ const getCategoryById = async (req, res) => {
 };
 
 const createCategory = async (req, res) => {
-   const { name, slug, parent_id } = req.body;
-  const image_url = req.file ? `/uploads/${req.file.filename}` : null;
+  const { name, slug, parent_id, image, status, description } = req.body;
 
-  const categoryData = { name, slug, parent_id, image_url };
+  if (!name)
+    return res
+      .status(400)
+      .json({ success: false, message: "Name is required" });
+
+  // Use uploaded file if exists, otherwise use frontend-provided image URL
+  const image_url = req.file ? `/uploads/${req.file.filename}` : image || null;
+
+  const categoryData = {
+    name,
+    slug: slug || slugify(name, { lower: true, strict: true }),
+    parent_id: parent_id || null,
+    image_url,
+    description: description || "", // Add description field
+    status: status || "active",
+  };
 
   try {
     const category = new Category(categoryData);
     const savedCategory = await category.save();
-    res.json({ success: true, data: savedCategory });
+    sendResponse(res, true, savedCategory, "Category created successfully");
   } catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    sendResponse(res, false, null, err.message);
   }
 };
 
 const updateCategory = async (req, res) => {
   try {
+    // Prepare update data
+    const updateData = { ...req.body };
+
+    // Normalize parent_id
+    if (updateData.parent_id === "") {
+      updateData.parent_id = null;
+    }
+
+    // Handle uploaded file
+    if (req.file) {
+      updateData.image_url = `/uploads/${req.file.filename}`;
+    } else if (req.body.image) {
+      // Use image from frontend if provided
+      updateData.image_url = req.body.image;
+    }
+
     const updatedCategory = await Category.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       { new: true }
     );
-    if (!updatedCategory) return sendResponse(res, false, null, "Category not found");
+
+    if (!updatedCategory)
+      return sendResponse(res, false, null, "Category not found");
+
     sendResponse(res, true, updatedCategory, "Category updated successfully");
   } catch (err) {
     sendResponse(res, false, null, err.message);
   }
 };
+
 
 const deleteCategory = async (req, res) => {
   try {

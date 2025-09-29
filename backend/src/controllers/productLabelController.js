@@ -3,10 +3,13 @@ const { sendResponse } = require("../utils/response");
 
 const getProductLabels = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false", status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
-    const query = search ? { name: { $regex: search, $options: "i" } } : {};
+    // Build query
+    const query = {};
+    if (search) query.name = { $regex: search, $options: "i" };
+    if (status && ["active", "inactive"].includes(status)) query.status = status;
 
     if (download) {
       const labels = await ProductLabel.find(query).sort({ createdAt: -1 });

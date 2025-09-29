@@ -10,6 +10,7 @@ const {
 } = require("../controllers/typeController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
+const upload = require("../middlewares/upload");
 
 router.get("/", getTypes);
 

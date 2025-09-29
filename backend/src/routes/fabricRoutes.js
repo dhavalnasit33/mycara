@@ -10,13 +10,14 @@ const {
 } = require("../controllers/fabricController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
+const upload = require("../middlewares/upload");
 
 router.get("/", getFabrics);
 
 router.use(authMiddleware);
 router.get("/:id", authorizeMinRole("admin"), getFabricById);
-router.post("/", authorizeMinRole("admin"), createFabric);
-router.put("/:id", authorizeMinRole("admin"), updateFabric);
+router.post("/", authorizeMinRole("admin"),upload.single("image"), createFabric);
+router.put("/:id", authorizeMinRole("admin"),upload.single("image"), updateFabric);
 router.delete("/:id", authorizeMinRole("admin"), deleteFabric);
 router.post("/bulk-delete", authorizeMinRole("admin"), bulkDeleteFabrics);
 

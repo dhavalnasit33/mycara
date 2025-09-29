@@ -24,14 +24,24 @@ const cartRoutes = require("./src/routes/cartRoutes");
 const wishlistRoutes = require("./src/routes/wishlistRoutes");
 const contactUsRoutes = require("./src/routes/contactUsRoutes");
 const customerReviewRoutes = require("./src/routes/customerReviewRoutes");
+const colorRoutes = require("./src/routes/colorRoutes");
+const sizeRoutes = require("./src/routes/sizeRoutes");
+const uploadsRoutes = require("./src/routes/upload");
+
 
 dotenv.config();
 connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:8080', // frontend origin
+  credentials: true // if you need cookies
+}));
 app.use(express.json());
+
+app.use("/uploads", express.static("uploads"));
+
 
 app.use("/api/auth", authRoutes);
 app.use("/api/settings", settingRoutes);
@@ -54,6 +64,9 @@ app.use("/api/carts", cartRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/contact-us", contactUsRoutes);
 app.use("/api/reviews", customerReviewRoutes);
+app.use("/api/colors", colorRoutes);
+app.use("/api/sizes", sizeRoutes);
+app.use("/api/uploads", uploadsRoutes);
 
 app.use(errorHandler);
 
