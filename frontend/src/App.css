@@ -55,6 +55,8 @@
   --theme-bg-light: #ffe6f0;      /* light background */
  --theme-bg-100: #f32f94;      /* light background */
  
+ --theme-bg-rgba: rgba(210, 175, 159, 0.3);
+
   /* Fonts */
   --font-family-h2: 'Italianno', cursive;
   --font-family-main: 'Roboto', sans-serif;
@@ -279,10 +281,14 @@
 .text-60px {
     font-size: 60px;
 }
+
 .text-22px {
     font-size: 22px;
 }
 
+.text-20px {
+    font-size: 20px;
+}
 /* header scroll bar */
 /* scroll bar */
 .no-scrollbar::-webkit-scrollbar {
@@ -291,4 +297,9 @@
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE/Edge */
   scrollbar-width: none;     /* Firefox */
+}
+
+
+.bg-theme {
+  background-color: var(--theme-bg-rgba);
 }

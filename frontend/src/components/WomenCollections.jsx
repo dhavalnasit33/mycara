@@ -311,10 +311,10 @@ const WomenCollections = () => {
     return (
         <div className="container mx-auto p-4 md:p-8">
             
-            <h1 className="text-2xl font-bold mb-6">Women's Collections</h1>
+            <h1 className="text-22px font-semibold font-inter  mb-6">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
-                <span className="text-gray-400">Home / </span>
-                <span className="font-medium">Shop</span>
+                <span className="text-black ">Home / </span>
+                <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
             {/* Main Content: Filter Sidebar and Products Grid */}
@@ -323,7 +323,7 @@ const WomenCollections = () => {
                 {/* 1. Filter Sidebar */}
                 <aside className="w-full lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
                     <div className="p-4 bg-gray-50 border-b border-gray-200">
-                        <h2 className="text-lg font-semibold text-gray-800">Filter Products</h2>
+                        <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
 
                     {/* Category Filter Section */}
@@ -351,7 +351,7 @@ const WomenCollections = () => {
                             </button>
                             <button
                                 onClick={handleResetCategory}
-                                className="py-2 px-4 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 transition"
+                                className="py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
                             >
                                 Reset
                             </button>
@@ -374,7 +374,7 @@ const WomenCollections = () => {
                         </button>
                         <button
                              onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="py-2 px-4 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 transition"
+                            className="py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
                         >
                             Reset
                         </button>
