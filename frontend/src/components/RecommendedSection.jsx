@@ -8,7 +8,8 @@ import mojariImage from '../assets/Mojari.png';
 // Local images
 import FlowerIcon from "../components/icons/FlowerIcon";  
 
-const recommendedItems = [
+const recommendedItems = 
+[
   { name: 'Sharara Pair', category: 'Latest trendy Clothes', image: shararaPairImage },
   { name: 'Chaniya Choli', category: 'Latest Traditional clothes', image: chaniyaCholiImage },
   { name: 'Mojari', category: 'Latest trendy Mojari', image: mojariImage },
@@ -76,7 +77,7 @@ const RecommendedSection = () => {
         {/* Previous Button */}
         <button
           onClick={goToPrevious}
-          className="absolute left-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors hover:text-pink-500"
+          className="absolute left-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors "
           style={{
             boxShadow: '0px 0px 4px rgba(0,0,0,0.25)',
           }}
@@ -99,7 +100,7 @@ const RecommendedSection = () => {
         {/* Next Button */}
         <button
           onClick={goToNext}
-          className="absolute right-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors hover:text-pink-500"
+          className="absolute right-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors "
           style={{
             boxShadow: '0px 0px 4px rgba(0,0,0,0.25)',
           }}
@@ -129,7 +130,7 @@ const ProductCard = ({ item }) => {
         <img src={item.image} alt={item.name} className="w-[90%] h-[92%] object-cover" />
       </div>
       <div className="absolute bottom-4 left-4 text-white z-20">
-        <h3 className="font-h2 text-xl sm:text-2xl">{item.name}</h3>
+        <h2 className="font-h5 text-xl sm:text-2xl">{item.name}</h2>
         <p className="font-sans font-medium text-sm sm:text-base">{item.category}</p>
       </div>
     </div>

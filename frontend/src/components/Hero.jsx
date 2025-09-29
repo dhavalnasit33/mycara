@@ -82,7 +82,7 @@ const settings = {
                     </div>
                 </div>
 
-            {/* ✅ Hero Section */}
+            {/*  Hero Section */}
             <section
                 className="relative min-h-[360px] sm:min-h-[716px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 ml-[0px] sm:ml-[50px] mt-4"
                 style={{ maxWidth: "1855px" }}
