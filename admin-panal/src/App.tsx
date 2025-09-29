@@ -5,16 +5,29 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AdminLayout } from "./components/layout/AdminLayout";
 import VelzonDashboard from "./pages/VelzonDashboard";
-import Products from "./pages/Products";
-import AddProduct from "./pages/AddProduct";
+import Products from "./pages/Products/Products";
+import AddProduct from "./pages/Products/AddProduct";
 import Users from "./pages/Users";
 import ContactMessages from "./pages/ContactMessages";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
-import Categories from "./pages/Categories";
-import AddCategoryPage from "./pages/AddCategory";
+import Categories from "./pages/Categories/Categories";
+import CategoryFormPage from "./pages/Categories/CategoryForm";
+import BrandFormPage from "./pages/Brands/BrandFormPage";
+import Brands from "./pages/Brands/Brands";
+import TypeFormPage from "./pages/Types/TypeForm";
+import Types from "./pages/Types/Types";
+
+import FabricFormPage from "./pages/Fabrics/FabricForm";
+import Fabrics from "./pages/Fabrics/Fabrics";
+import ProductLabels from "./pages/ProductLabels/ProductLabels";
+import ProductLabelFormPage from "./pages/ProductLabels/ProductLabelForm";
+import Colors from "./pages/Colors/Colors";
+import ColorFormPage from "./pages/Colors/ColorForm";
+import Sizes from "./pages/Sizes/Sizes";
+import SizeFormPage from "./pages/Sizes/SizeForm";
 
 const queryClient = new QueryClient();
 
@@ -32,11 +45,30 @@ const App = () => (
               <Route index element={<VelzonDashboard />} />
               <Route path="products" element={<Products />} />
               <Route path="products/add" element={<AddProduct />} />
+               <Route path="/products/:id/edit" element={<AddProduct />} />
               <Route path="categories" element={<Categories />} />
-                 <Route path="categories/add" element={<AddCategoryPage />} />
-              <Route path="brands" element={<VelzonDashboard />} />
-              <Route path="types" element={<VelzonDashboard />} />
-              <Route path="fabrics" element={<VelzonDashboard />} />
+                 <Route path="categories/add" element={<CategoryFormPage />} />
+                  <Route path="/categories/:id/edit" element={<CategoryFormPage />} />
+                  <Route path="brands" element={<Brands />} />
+                 <Route path="brands/add" element={<BrandFormPage />} />
+                  <Route path="/brands/:id/edit" element={<BrandFormPage />} />
+                   <Route path="types" element={<Types />} />
+                 <Route path="types/add" element={<TypeFormPage />} />
+                  <Route path="/types/:id/edit" element={<TypeFormPage />} />
+                     <Route path="fabrics" element={<Fabrics />} />
+                 <Route path="fabrics/add" element={<FabricFormPage />} />
+                  <Route path="/fabrics/:id/edit" element={<FabricFormPage />} />
+                     <Route path="product-labels" element={<ProductLabels />} />
+                 <Route path="product-labels/add" element={<ProductLabelFormPage />} />
+                  <Route path="/product-labels/:id/edit" element={<ProductLabelFormPage />} />
+                    <Route path="colors" element={<Colors />} />
+                 <Route path="colors/add" element={<ColorFormPage />} />
+                  <Route path="/colors/:id/edit" element={<ColorFormPage />} />
+                    <Route path="sizes" element={<Sizes />} />
+                 <Route path="sizes/add" element={<SizeFormPage />} />
+                  <Route path="/sizes/:id/edit" element={<SizeFormPage />} />
+             
+             
               <Route path="product-labels" element={<VelzonDashboard />} />
               <Route path="discounts" element={<VelzonDashboard />} />
               <Route path="coupons" element={<VelzonDashboard />} />

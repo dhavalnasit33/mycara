@@ -17,6 +17,8 @@ import {
   MessageSquare,
   ChevronDown,
   Layers,
+  Droplet,
+  Ruler,
 } from "lucide-react";
 import {
   Sidebar,
@@ -36,6 +38,7 @@ const mainNavItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
 ];
 
+
 const catalogItems = [
   { title: "Products", url: "/products", icon: Package },
   { title: "Categories", url: "/categories", icon: FolderTree },
@@ -43,6 +46,8 @@ const catalogItems = [
   { title: "Types", url: "/types", icon: Shirt },
   { title: "Fabrics", url: "/fabrics", icon: Palette },
   { title: "Product Labels", url: "/product-labels", icon: Tags },
+  { title: "Colors", url: "/colors", icon: Droplet },
+  { title: "Sizes", url: "/sizes", icon: Ruler },
 ];
 
 const promotionItems = [
