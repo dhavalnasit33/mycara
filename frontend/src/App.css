@@ -80,7 +80,10 @@
     --font-size-h5: 70px;    /* ~text-xl */
   
 }
-
+.theme-bg-light
+{
+  background-color: var(--theme-bg-light);  
+}
 .bg-color-100 {
   background-color: var(--theme-bg-100);  
 }
@@ -126,6 +129,10 @@
   border-width: 5px 0px 0px 5px; /* Then set the different widths for each side (top, right, bottom, left) */
   border-color: var(--theme-color); /* Set the border color */
   border-radius: 50%; /* perfect round */
+}
+
+.theme-border {
+   border: 1px solid var(--theme-color) !important; /* Set border color */
 }
 .text-color {
   color: var(--theme-color);

@@ -3,9 +3,12 @@
 import React, { useState } from 'react';
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react'; 
 
+import ProductGrid from '../components/ProductGrid'; 
+
 import shopsaree1 from '../assets/shopsaree1.jpg'; 
 import shopsaree2 from '../assets/shopsaree2.jpg';
 
+import SortByIcon from "./icons/SortByIcon";  
 
 // --------------------- Data Mockups ---------------------
 const mockCategories = [
@@ -79,36 +82,51 @@ const mockProducts = [
 
 // --------------------- Sub-Components ---------------------
 
-// Component for a single filter checkbox (Used for Category, Brand, Type, Fabric, Discount, Label)
+// Category, Brand, Type, Fabric, Discount, Label mate
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
-    <label className="flex items-center justify-between cursor-pointer p-1 hover:bg-gray-50 rounded">
-        <div className="flex items-center">
-            <input
-                type="checkbox"
-                name={name}
-                checked={isChecked}
-                onChange={onChange}
-                className="form-checkbox text-pink-600 border-gray-300 rounded focus:ring-pink-500"
-            />
-            <span className="ml-3 text-sm text-gray-700">{name}</span>
-        </div>
-        {/* Count માત્ર Category અને Brand માટે જ દેખાશે */}
-        {count !== undefined && <span className="text-xs text-gray-500">{count}</span>}
-    </label>
+  <label className="flex items-center justify-between cursor-pointer p-1 rounded hover:bg-pink-50">
+    <div className="flex items-center">
+      <input
+        type="checkbox"
+        name={name}
+        checked={isChecked}
+        onChange={onChange}
+        className="
+          w-5 h-5 rounded border border-gray-400 cursor-pointer
+          appearance-none
+          checked:bg-pink-600 checked:border-pink-600
+          checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
+        "
+      />
+      <span className="ml-3 text-sm text-gray-700">{name}</span>
+    </div>
+
+    {/* Count માત્ર Category અને Brand માટે જ દેખાશે */}
+    {count !== undefined && (
+      <span className="text-xs text-gray-500">{count}</span>
+    )}
+  </label>
 );
 
+// Size mate
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
-    <label className="flex items-center cursor-pointer p-1 hover:bg-gray-50 rounded w-1/2">
-        <input
-            type="checkbox"
-            name={name}
-            checked={isChecked}
-            onChange={onChange}
-            className="form-checkbox text-pink-600 border-gray-300 rounded focus:ring-pink-500"
-        />
-        <span className="ml-3 text-sm text-gray-700">{name}</span>
-    </label>
+  <label className="flex items-center cursor-pointer p-1 hover:bg-gray-50 rounded w-1/2">
+    <input
+      type="checkbox"
+      name={name}
+      checked={isChecked}
+      onChange={onChange}
+      className="
+        w-5 h-5 rounded border border-gray-400 cursor-pointer
+        appearance-none
+        checked:bg-pink-600 checked:border-pink-600
+        checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
+      "
+    />
+    <span className="ml-3 text-sm text-gray-700">{name}</span>
+  </label>
 );
+
 
 const ColorFilterItem = ({ name, colorClass, isChecked, onChange }) => (
     <div className="flex flex-col items-center p-1 cursor-pointer" onClick={() => onChange({ target: { name, checked: !isChecked } })}>
@@ -120,10 +138,10 @@ const ColorFilterItem = ({ name, colorClass, isChecked, onChange }) => (
     </div>
 );
 
-// નવું કમ્પોનન્ટ: Collapsible Filter Section જે Brands, Type, Fabric, Discounts, Product Label માટે વપરાશે.
+
 const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
-    // આ સ્ટેટ Filters ને expand/collapse કરવા માટે છે, તમારી ઈમેજ પ્રમાણે default open છે.
-    const [isOpen, setIsOpen] = useState(false); // તમારી ઈમેજમાં બધા બંધ (collapse) છે.
+ 
+    const [isOpen, setIsOpen] = useState(false); 
 
     return (
         <div className="p-4 border-t border-gray-200">
@@ -133,11 +151,11 @@ const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
             >
                 <h3 className="font-semibold text-sm uppercase">{title}</h3>
                 <div className="flex items-center space-x-2">
-                    {/* અહીં Reset બટન (નાનું) અથવા માત્ર Plus/Minus આઇકન મૂકી શકાય છે */}
+                   
                     {isOpen ? (
-                        <Minus className="w-4 h-4 text-pink-500" />
+                        <Minus className="w-4 h-4 text-white bg-color" />
                     ) : (
-                        <Plus className="w-4 h-4 text-pink-500" />
+                        <Plus className="w-4 h-4 text-white bg-color" />
                     )}
                 </div>
             </div>
@@ -146,9 +164,7 @@ const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
             {isOpen && (
                 <div className="mt-4 space-y-1">
                     {children}
-                    {/* તમારી ઈમેજમાં દરેક ફિલ્ટર નીચે Cancel/Reset બટન નથી, 
-                    પણ એક જ Cancel/Reset બટન ટોચ પર છે, તેથી તેને અહીંથી દૂર કરાય છે
-                    અને માત્ર Content જ દર્શાવ્યું છે. */}
+                   
                 </div>
             )}
         </div>
@@ -214,20 +230,58 @@ const PriceFilter = ({ minPrice, maxPrice, onChangeMin, onChangeMax }) => (
 
 // Component for a single product card
 const ProductCard = ({ product }) => (
-    <div className="relative bg-white group overflow-hidden">
-        <div className="w-full h-auto bg-gray-100 overflow-hidden relative">
+    // The main container needs to be 'relative' for the overlay to be 'absolute' to it
+    <div className="relative group overflow-hidden">
+        
+        {/* 1. Image Container */}
+        <div className="w-full h-auto bg-gray-100 overflow-hidden">
             <img
                 src={product.imageSrc} 
                 alt={product.name}
-                className="w-full h-[550px] object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                // Kept your image classes, adjusting h-[550px] for consistent sizing
+                className="w-full h-[553px] transition-transform duration-500 ease-in-out"
             />
-            <button className="absolute bottom-4 right-4 bg-white/70 backdrop-blur-sm p-2 rounded-full shadow-lg transition duration-300 opacity-80 hover:opacity-100">
-                <span className="text-lg font-bold">+</span>
-            </button>
         </div>
-        <div className="p-4 text-center">
-            <h3 className="text-sm font-medium tracking-wider text-gray-800 uppercase mb-1">{product.name}</h3>
-            <p className="text-lg font-semibold text-gray-900">Rs {product.price.toFixed(2)}</p>
+
+       
+       {/* // This is the modified overlay div for the ProductCard component */}
+<div 
+    className="absolute right-4 bottom-4 w-[350px] h-[250px] p-10 bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+                flex flex-col justify-between" 
+    // This container is 300px x 300px, positioned 4px from the bottom and right.
+    // 'flex flex-col justify-between' ensures the first content block (title/button) 
+    // is at the top, and the second content block (price) is at the bottom.
+>
+    
+    {/* 1. Top Section: Title and Button */}
+    {/* This entire div is pushed to the TOP by 'justify-between' */}
+    <div className="flex justify-between items-start"> 
+        
+        {/* Text (Title) */}
+        <div className="pr-4"> 
+            <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">
+                {product.name}
+            </h3>
+        </div>
+        
+        {/* The Add/Plus Button */}
+<button className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full 
+                   shadow-lg  transition duration-300 border border-white">
+ 
+    <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+</button>
+    </div>
+
+    {/* 2. Bottom Section: Price */}
+    {/* This div is pushed to the ABSOLUTE BOTTOM by 'justify-between' */}
+    <div> 
+        <p className="text-[14px] font-medium font-inter text-black">
+            RS {product.price.toFixed(2)}
+        </p>
+    </div>
+            
+            {/* Note: In the image, the plus button is slightly higher than the text block, 
+               but placing it inside the overlay box is the simplest implementation. */}
         </div>
     </div>
 );
@@ -309,7 +363,7 @@ const WomenCollections = () => {
     const showingResults = mockProducts.length;
 
     return (
-        <div className="container mx-auto p-4 md:p-8">
+        <div className="container w-[1440px] mx-auto  py-2 sm:py-8">
             
             <h1 className="text-22px font-semibold font-inter  mb-6">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
@@ -321,16 +375,24 @@ const WomenCollections = () => {
             <div className="flex flex-col lg:flex-row gap-8">
 
                 {/* 1. Filter Sidebar */}
-                <aside className="w-full lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
-                    <div className="p-4 bg-gray-50 border-b border-gray-200">
+                <aside className="w-full h-fit px-2 lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
+                    <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
 
                     {/* Category Filter Section */}
-                    <div className="p-4">
-                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-pink-500/70">
-                            <h3 className="font-semibold text-sm uppercase">Category</h3>
-                        </div>
+                <div className="px-3 ">
+                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
+                    <div className="flex items-center px-3 py-3 justify-between">
+                        <h3 className="font-medium font-inter text-black text-[14px]">Category</h3>
+                    </div>
+                    </div>
+                </div>
+
+
+
+                         <div className="p-4">
+                        
                         <div className="space-y-1  overflow-y-auto">
                             {mockCategories.map(cat => (
                                 <FilterItemCheckbox
@@ -345,13 +407,13 @@ const WomenCollections = () => {
                         <div className="flex justify-between mt-4">
                             <button
                                 onClick={handleResetCategory}
-                                className="py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                                className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleResetCategory}
-                                className="py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
+                                className="py-2 px-4 w-[100px] h-[40px] text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
                             >
                                 Reset
                             </button>
@@ -368,13 +430,13 @@ const WomenCollections = () => {
                     <div className="flex justify-between p-4 border-b border-gray-200">
                          <button
                             onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                            className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
                         >
                             Cancel
                         </button>
                         <button
                              onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
+                            className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
                         >
                             Reset
                         </button>
@@ -536,7 +598,8 @@ const WomenCollections = () => {
                         <div className="text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center gap-2 cursor-pointer  rounded px-3 py-2">
+                            <SortByIcon />
                             <span className="text-sm text-gray-700">Sort By</span>
                             <div className="relative">
                                 <select
@@ -554,20 +617,24 @@ const WomenCollections = () => {
                         </div>
                     </div>
 
-                    {/* Active Filters Display */}
-                    <div className="flex flex-wrap gap-2 mb-6">
-                        <span className="text-sm font-medium text-gray-700 mr-2">Clear Filters:</span>
-                        {currentFilters.map((filter, index) => (
-                            <span
-                                key={index}
-                                className="inline-flex items-center px-3 py-1 text-xs font-medium text-pink-700 bg-pink-100 rounded-full cursor-pointer hover:bg-pink-200 transition"
-                                onClick={() => handleClearFilter(filter.type, filter.value)}
-                            >
-                                {filter.value}
-                                <X className="w-3 h-3 ml-1 text-pink-600" />
-                            </span>
-                        ))}
-                    </div>
+                {/* Active Filters Display */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                <span className="text-sm font-medium text-gray-700 mr-2">Clear Filters:</span>
+                {/* Clear All Filters બટન ઉમેરી શકાય છે, જો જરૂર હોય તો */}
+
+                {currentFilters.map((filter, index) => (
+                <span
+                key={index}
+                className="theme-border text-color px-4 py-1 rounded-[5px] cursor-pointer
+                                                    inline-flex items-center "
+                onClick={() => handleClearFilter(filter.type, filter.value)}
+                >
+                {filter.value}
+
+                <X className="w-4 h-4 ml-2 text-color" />
+                </span>
+                ))}
+                </div>
 
                     {/* Products Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
@@ -575,9 +642,12 @@ const WomenCollections = () => {
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
+                    <ProductGrid />
 
                 </main>
+               
             </div>
+             
         </div>
     );
 };
