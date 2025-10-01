@@ -1,3 +1,4 @@
+// D:\mycara\frontend\src\components\icons\Collections.jsx
 import * as React from "react"
 const SvgComponent = (props) => (
   <svg

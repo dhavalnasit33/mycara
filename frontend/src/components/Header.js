@@ -216,7 +216,7 @@ const Header = () => {
           >
 
         
-        <div className="flex justify-between bg-[rgba(210,175,159,0.3)] items-center px-4 py-3 border-b ">
+        <div className="flex justify-between bg-theme items-center px-4 py-3 border-b ">
            <button
               className="text-gray-600 transition-colors duration-300"
               style={{ color: "var(--theme-color)" }} // icon default color
@@ -287,7 +287,7 @@ const Header = () => {
             
                   className={`
                   flex items-center gap-3 py-4 px-4 text-gray-700
-                  ${isMobileHighlight ? "bg-[rgba(210,175,159,0.3)] sm:bg-transparent" : "bg-white "}
+                  ${isMobileHighlight ? "bg-theme sm:bg-transparent" : "bg-white "}
                 `}
             >
               {item.icon}
@@ -304,14 +304,14 @@ const Header = () => {
 
           {/* Extra Menu */}
           <div className="">
-              <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+              <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
                 <FaUser /> <span>My Profile</span>
               </div>
             <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
               <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />
               <span>Orders</span>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
               
               <FontAwesomeIcon icon={farHeart} />
                     <span>Wishlist</span>
@@ -320,7 +320,7 @@ const Header = () => {
               <SvgComponent />
                   <span>Gift Cards</span>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-[rgba(210,175,159,0.3)] sm:bg-transparent ">
+            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
               <FontAwesomeIcon icon={faGift} />
                     <span>Coupons</span>
             </div>
