@@ -71,6 +71,30 @@ export const ROUTES = {
 upload:{
 image:"/uploads/image"
 },
+discounts: {
+    getAll: "/discounts",
+    getById: (id: string) => `/discounts/${id}`,
+    create: "/discounts",
+    update: (id: string) => `/discounts/${id}`,
+    delete: (id: string) => `/discounts/${id}`,
+    bulkDelete: "/discounts/bulk-delete",
+  },
+   coupons: {
+    getAll: "/coupons",
+    getById: (id: string) => `/coupons/${id}`,
+    create: "/coupons",
+    update: (id: string) => `/coupons/${id}`,
+    delete: (id: string) => `/coupons/${id}`,
+    bulkDelete: "/coupons/bulk-delete",
+  },
+orders : {
+  getAll: "/orders",
+  getById: (id: string) => `/orders/${id}`,
+  create: "/orders",
+  update: (id: string) => `/orders/${id}`,
+  delete: (id: string) => `/orders/${id}`,
+  bulkDelete: "/orders/bulk-delete",
+},
   users: {
     list: "/users",
     get: (id: string) => `/users/${id}`,

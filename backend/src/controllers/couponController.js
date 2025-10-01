@@ -1,6 +1,16 @@
 const Coupon = require("../models/Coupon");
 const { sendResponse } = require("../utils/response");
 
+// Helper function to generate a random coupon code
+const generateCouponCode = (length = 8) => {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+  for (let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+};
+
 // Get all coupons with pagination & search / optional download
 const getCoupons = async (req, res) => {
   try {
@@ -40,9 +50,23 @@ const getCouponById = async (req, res) => {
   }
 };
 
-// Create coupon
+// ✅ Create Coupon
 const createCoupon = async (req, res) => {
   try {
+    let { code } = req.body;
+
+    // If no code provided, generate one
+    if (!code) {
+      code = generateCouponCode();
+      req.body.code = code;
+    }
+
+    // Ensure uniqueness
+    const existingCoupon = await Coupon.findOne({ code });
+    if (existingCoupon) {
+      return sendResponse(res, false, null, "Coupon code already exists");
+    }
+
     const coupon = new Coupon(req.body);
     const savedCoupon = await coupon.save();
     sendResponse(res, true, savedCoupon, "Coupon created successfully");
@@ -51,11 +75,26 @@ const createCoupon = async (req, res) => {
   }
 };
 
-// Update coupon
+// ✅ Update Coupon
 const updateCoupon = async (req, res) => {
   try {
-    const updatedCoupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    // Optional: prevent updating code to a duplicate one
+    if (req.body.code) {
+      const existingCoupon = await Coupon.findOne({
+        code: req.body.code,
+        _id: { $ne: req.params.id },
+      });
+      if (existingCoupon) {
+        return sendResponse(res, false, null, "Coupon code already exists");
+      }
+    }
+
+    const updatedCoupon = await Coupon.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
     if (!updatedCoupon) return sendResponse(res, false, null, "Coupon not found");
+
     sendResponse(res, true, updatedCoupon, "Coupon updated successfully");
   } catch (err) {
     sendResponse(res, false, null, err.message);
