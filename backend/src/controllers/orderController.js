@@ -11,27 +11,65 @@ const getOrders = async (req, res) => {
     const query = {};
     if (search) query.status = { $regex: search, $options: "i" };
 
+    const populateOrder = [
+      { path: "user_id", select: "name email" },
+      { path: "coupon_id", select: "code discount_value" },
+    ];
+
+   const populateOrderItems = [
+  { path: "product_id", select: "name price" },
+  { 
+    path: "variant_id", 
+    populate: [
+      { path: "color_id", select: "name hexCode" }, // or whatever fields your Color schema has
+      { path: "size_id", select: "name" }           // fields in Size schema
+    ] 
+  }
+];
+
+
     if (download) {
-      const orders = await Order.find(query).sort({ createdAt: -1 });
-      return sendResponse(res, true, { orders }, "All orders retrieved for download");
+      // Fetch all orders
+      const orders = await Order.find(query)
+        .sort({ createdAt: -1 })
+        .populate(populateOrder);
+
+      // Fetch items for each order with variant details
+      const ordersWithItems = await Promise.all(
+        orders.map(async (order) => {
+          const items = await OrderItem.find({ order_id: order._id }).populate(populateOrderItems);
+          return { ...order.toObject(), items };
+        })
+      );
+
+      return sendResponse(res, true, { orders: ordersWithItems }, "All orders retrieved for download");
     }
 
     page = parseInt(page);
     limit = parseInt(limit);
 
     const total = await Order.countDocuments(query);
+
     const orders = await Order.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
       .sort({ createdAt: -1 })
-      .populate("user_id", "name email")
-      .populate("coupon_id", "code discount_value");
+      .populate(populateOrder);
 
-    sendResponse(res, true, { orders, total, page, pages: Math.ceil(total / limit) });
+    // Fetch items for each order with variant details
+    const ordersWithItems = await Promise.all(
+      orders.map(async (order) => {
+        const items = await OrderItem.find({ order_id: order._id }).populate(populateOrderItems);
+        return { ...order.toObject(), items };
+      })
+    );
+
+    sendResponse(res, true, { orders: ordersWithItems, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
     sendResponse(res, false, null, err.message);
   }
 };
+
 
 // Get order by ID
 const getOrderById = async (req, res) => {

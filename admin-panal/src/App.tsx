@@ -28,6 +28,11 @@ import Colors from "./pages/Colors/Colors";
 import ColorFormPage from "./pages/Colors/ColorForm";
 import Sizes from "./pages/Sizes/Sizes";
 import SizeFormPage from "./pages/Sizes/SizeForm";
+import Discounts from "./pages/Discount/Discounts";
+import DiscountFormPage from "./pages/Discount/DiscountForm";
+import Coupons from "./pages/coupons/Coupons";
+import CouponFormPage from "./pages/coupons/CouponForm";
+import Orders from "./pages/Orders/Orders";
 
 const queryClient = new QueryClient();
 
@@ -67,12 +72,13 @@ const App = () => (
                     <Route path="sizes" element={<Sizes />} />
                  <Route path="sizes/add" element={<SizeFormPage />} />
                   <Route path="/sizes/:id/edit" element={<SizeFormPage />} />
-             
-             
-              <Route path="product-labels" element={<VelzonDashboard />} />
-              <Route path="discounts" element={<VelzonDashboard />} />
-              <Route path="coupons" element={<VelzonDashboard />} />
-              <Route path="orders" element={<VelzonDashboard />} />
+               <Route path="discounts" element={<Discounts/>} />
+                 <Route path="discounts/add" element={<DiscountFormPage/>} />
+                  <Route path="/discounts/:id/edit" element={<DiscountFormPage/>} />
+                  <Route path="coupons" element={<Coupons/>} />
+                 <Route path="coupons/add" element={<CouponFormPage/>} />
+                  <Route path="/coupons/:id/edit" element={<CouponFormPage/>} />
+              <Route path="orders" element={<Orders />} />
               <Route path="payments" element={<VelzonDashboard />} />
               <Route path="users" element={<Users />} />
               <Route path="reviews" element={<VelzonDashboard />} />

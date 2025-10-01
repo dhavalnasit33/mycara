@@ -1,5 +1,6 @@
 const Discount = require("../models/Discount");
 const { sendResponse } = require("../utils/response");
+const crypto = require("crypto");
 
 // Implement get, getById, create, update, delete, bulkDelete (same pattern as above)
 const getDiscounts = async (req, res) => {
@@ -41,8 +42,12 @@ const getDiscountById = async (req, res) => {
 
 const createDiscount = async (req, res) => {
   try {
-    const discount = new Discount(req.body);
+    // Generate a unique 8-character code
+    const code = crypto.randomBytes(4).toString("hex").toUpperCase();
+
+    const discount = new Discount({ ...req.body, code });
     const savedDiscount = await discount.save();
+
     sendResponse(res, true, savedDiscount, "Discount created successfully");
   } catch (err) {
     sendResponse(res, false, null, err.message);
