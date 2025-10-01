@@ -10,6 +10,8 @@ import colorsReducer from "./features/colors/colorsSlice";
 import discountsReducer from "./features/discounts/discountsSlice";
 import couponsReducer from "./features/coupons/couponsSlice";
 import ordersReducer from "./features/orders/ordersSlice";
+import paymentsReducer from "./features/payments/paymentsSlice";
+import usersReducer from  "./features/users/usersSlice"
 
 export const rootReducer = {
   auth: authReducer,
@@ -23,5 +25,7 @@ export const rootReducer = {
   colors: colorsReducer,
   discounts: discountsReducer,
   coupons: couponsReducer,
-  orders:ordersReducer
+  orders:ordersReducer,
+    payments:paymentsReducer,
+     users:usersReducer
 };

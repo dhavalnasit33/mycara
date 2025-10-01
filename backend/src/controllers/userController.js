@@ -46,7 +46,7 @@ const getUserById = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
     if (!user) return sendResponse(res, false, null, "User not found");
-    return sendResponse(res, true, { user }, "User details retrieved successfully");
+    return sendResponse(res, true, user , "User details retrieved successfully");
   } catch (err) {
     return sendResponse(res, false, null, "Failed to retrieve user: " + err.message);
   }
@@ -61,11 +61,11 @@ const createUser = async (req, res) => {
     if (existingUser) {
       return sendResponse(res, false, null, "A user with this email already exists");
     }
-
+const passwordToUse = password || "Temp1234!"; 
     const newUser = await User.create({
       name,
       email,
-      password,
+    password: passwordToUse,
       role,
       mobile_number,
       address,
