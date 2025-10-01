@@ -84,7 +84,7 @@ const mockProducts = [
 
 // Category, Brand, Type, Fabric, Discount, Label mate
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
-  <label className="flex items-center justify-between cursor-pointer p-1 rounded hover:bg-pink-50">
+  <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
     <div className="flex items-center">
       <input
         type="checkbox"
@@ -98,19 +98,19 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
           checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
         "
       />
-      <span className="ml-3 text-sm text-gray-700">{name}</span>
+      <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
     </div>
 
     {/* Count માત્ર Category અને Brand માટે જ દેખાશે */}
     {count !== undefined && (
-      <span className="text-xs text-gray-500">{count}</span>
+      <span className="text-[14px] font-regular font-inter text-[#989696]">{count}</span>
     )}
   </label>
 );
 
 // Size mate
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
-  <label className="flex items-center cursor-pointer p-1 hover:bg-gray-50 rounded w-1/2">
+  <label className="flex items-center cursor-pointer p-1  rounded w-1/2">
     <input
       type="checkbox"
       name={name}
@@ -123,7 +123,7 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
         checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
       "
     />
-    <span className="ml-3 text-sm text-gray-700">{name}</span>
+    <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">{name}</span>
   </label>
 );
 
@@ -131,10 +131,10 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
 const ColorFilterItem = ({ name, colorClass, isChecked, onChange }) => (
     <div className="flex flex-col items-center p-1 cursor-pointer" onClick={() => onChange({ target: { name, checked: !isChecked } })}>
         <div 
-            className={`w-5 h-5 rounded-full shadow-md ${colorClass} ${isChecked ? 'ring-2 ring-pink-500 ring-offset-2' : ''} transition-all duration-150`}
+            className={`w-[22px] h-[22px] rounded-full shadow-md ${colorClass} ${isChecked ? 'ring-2 ring-pink-500 ring-offset-2' : ''} transition-all duration-150`}
         >
         </div>
-        <span className="text-xs text-gray-700 mt-1">{name}</span>
+        <span className="text-[10px] text-[#989696] font-regular mt-1">{name}</span>
     </div>
 );
 
@@ -144,12 +144,12 @@ const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
     const [isOpen, setIsOpen] = useState(false); 
 
     return (
-        <div className="p-4 border-t border-gray-200">
+        <div className="px-4 py-2  border-gray-200">
             <div 
-                className="flex items-center justify-between cursor-pointer"
+                className="flex rounded-[10px] px-4 py-2 border items-center justify-between cursor-pointer"
                 onClick={() => setIsOpen(!isOpen)}
             >
-                <h3 className="font-semibold text-sm uppercase">{title}</h3>
+                <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
                 <div className="flex items-center space-x-2">
                    
                     {isOpen ? (
@@ -162,7 +162,7 @@ const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
             
             {/* Filter Content */}
             {isOpen && (
-                <div className="mt-4 space-y-1">
+                <div className="p-4 space-y-1">
                     {children}
                    
                 </div>
@@ -172,56 +172,56 @@ const CollapsibleFilter = ({ title, children, isSelected, onReset }) => {
 };
 
 
-// Component for the Price Range Slider (Simplified)
+
 const PriceFilter = ({ minPrice, maxPrice, onChangeMin, onChangeMax }) => (
-    //... (PriceFilter remains unchanged from the previous code)
+
     <div className="p-4 border-t border-gray-200">
-        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-pink-500/70">
-            <h3 className="font-semibold text-sm uppercase">Price</h3>
+            
+                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
+                    <div className="flex items-center  py-3 justify-between">
+                        <h3 className="font-medium font-inter text-black text-[14px]">Price</h3>
+                    </div>
+                   
+                
         </div>
-        <div className="relative pt-1">
-            <input
-                type="range"
-                min="0"
-                max="5000"
-                value={minPrice}
-                onChange={onChangeMin}
-                className="w-full h-1 bg-pink-100 rounded-lg appearance-none cursor-pointer range-pink"
-                style={{ '--tw-ring-color': '#ec4899', '--tw-ring-opacity': '1' }} 
-            />
-             <div className="absolute top-1 left-0 right-0 h-1 bg-pink-600 rounded-lg opacity-50"
-                 style={{ 
-                    width: `${((maxPrice - minPrice) / 5000) * 100}%`, 
-                    marginLeft: `${(minPrice / 5000) * 100}%` 
-                 }} 
-            />
-            <input
-                type="range"
-                min="0"
-                max="5000"
-                value={maxPrice}
-                onChange={onChangeMax}
-                className="w-full h-1 bg-pink-100 rounded-lg appearance-none cursor-pointer range-pink absolute top-1 left-0 opacity-0"
-                style={{ '--tw-ring-color': '#ec4899', '--tw-ring-opacity': '1' }}
-            />
+             <div className="relative pt-1">
+                <input
+                    type="range"
+                    min="0"
+                    max="5000"
+                    value={minPrice}
+                    onChange={onChangeMin}
+                    className="w-full h-1 bg-transparent rounded-lg appearance-none cursor-pointer range-pink relative z-10"
+                    style={{ '--tw-ring-color': '#ec4899', '--tw-ring-opacity': '1' }}
+                />
+
+                {/* Highlight (single line) */}
+                <div
+                    className="absolute px-3 top-1 h-1 bg-pink-600 rounded-lg opacity-50"
+                    style={{
+                    width: `${((maxPrice - minPrice) / 5000) * 100}%`,
+                    left: `${(minPrice / 5000) * 100}%`
+                    }}
+                 />
+   
         </div>
-        <div className="flex justify-between mt-4 text-sm">
-            <div className="flex flex-col">
-                <span className="text-xs text-gray-500">Max</span>
+        <div className="flex px-3 mt-4 justify-between text-sm">
+            <div className="flex flex-col items-start">
+                <span className=" text-[14px] font-inter font-regular p-1 text-[#989696]">Max</span>
                 <input 
                     type="number"
                     value={minPrice}
                     onChange={onChangeMin}
-                    className="font-medium border border-gray-300 rounded-md p-1 w-20 text-center"
+                    className="text-[14px] font-inter font-regular text-black border border-gray-300 rounded-[30px] p-1 w-[110px] text-center"
                 />
             </div>
-            <div className="flex flex-col items-end">
-                <span className="text-xs text-gray-500">Min</span>
+            <div className="flex flex-col items-start">
+                <span className="text-[14px] font-inter font-regular p-1 text-[#989696]">Min</span>
                  <input 
                     type="number"
                     value={maxPrice}
                     onChange={onChangeMax}
-                    className="font-medium border border-gray-300 rounded-md p-1 w-20 text-center"
+                    className="text-[14px] font-inter font-regular text-black border border-gray-300 rounded-[30px] p-1 w-[110px] text-center"
                 />
             </div>
         </div>
@@ -248,13 +248,10 @@ const ProductCard = ({ product }) => (
 <div 
     className="absolute right-4 bottom-4 w-[350px] h-[250px] p-10 bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                 flex flex-col justify-between" 
-    // This container is 300px x 300px, positioned 4px from the bottom and right.
-    // 'flex flex-col justify-between' ensures the first content block (title/button) 
-    // is at the top, and the second content block (price) is at the bottom.
+ 
 >
     
-    {/* 1. Top Section: Title and Button */}
-    {/* This entire div is pushed to the TOP by 'justify-between' */}
+
     <div className="flex justify-between items-start"> 
         
         {/* Text (Title) */}
@@ -363,7 +360,7 @@ const WomenCollections = () => {
     const showingResults = mockProducts.length;
 
     return (
-        <div className="container w-[1440px] mx-auto  py-2 sm:py-8">
+        <div className="container w-[1440px] mx-auto  py-2 sm:py-14">
             
             <h1 className="text-22px font-semibold font-inter  mb-6">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
@@ -375,15 +372,15 @@ const WomenCollections = () => {
             <div className="flex flex-col lg:flex-row gap-8">
 
                 {/* 1. Filter Sidebar */}
-                <aside className="w-full h-fit px-2 lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
+                <aside className="w-full h-fit px-2 py-5 lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
 
                     {/* Category Filter Section */}
-                <div className="px-3 ">
+                <div className="px-4">
                     <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
-                    <div className="flex items-center px-3 py-3 justify-between">
+                    <div className="flex items-center  py-3 justify-between">
                         <h3 className="font-medium font-inter text-black text-[14px]">Category</h3>
                     </div>
                     </div>
@@ -393,7 +390,7 @@ const WomenCollections = () => {
 
                          <div className="p-4">
                         
-                        <div className="space-y-1  overflow-y-auto">
+                        <div className="space-y-1  px-2 overflow-y-auto">
                             {mockCategories.map(cat => (
                                 <FilterItemCheckbox
                                     key={cat.name}
@@ -404,16 +401,16 @@ const WomenCollections = () => {
                                 />
                             ))}
                         </div>
-                        <div className="flex justify-between mt-4">
+                        <div className="flex gap-4 mt-4">
                             <button
                                 onClick={handleResetCategory}
-                                className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleResetCategory}
-                                className="py-2 px-4 w-[100px] h-[40px] text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
+                                className=" w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
                             >
                                 Reset
                             </button>
@@ -427,27 +424,31 @@ const WomenCollections = () => {
                         onChangeMin={(e) => setMinPrice(Number(e.target.value))}
                         onChangeMax={(e) => setMaxPrice(Number(e.target.value))}
                     />
-                    <div className="flex justify-between p-4 border-b border-gray-200">
+                    <div className="flex gap-4 p-4 border-b border-gray-200">
                          <button
                             onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                            className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
                         >
                             Cancel
                         </button>
                         <button
                              onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="w-[100px] h-[40px] py-2 px-4 text-sm font-medium text-white bg-color rounded-md hover:bg-pink-700 transition"
+                            className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
                         >
                             Reset
                         </button>
                     </div>
                     
                     {/* Size Filter Section */}
-                    <div className="p-4 border-t border-gray-200">
-                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-pink-500/70">
-                            <h3 className="font-semibold mb-2 text-sm uppercase">Size</h3>
-                        </div>
-                        <div className="flex flex-wrap"> 
+              <div className="p-4 border-t border-gray-200">
+                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
+                    <div className="flex items-center  py-3 justify-between">
+                        <h3 className="font-medium font-inter text-black text-[14px] text-black text-[14px]">Size</h3>
+                    </div>
+                   
+                
+        </div>
+                        <div className="flex flex-wrap p-4"> 
                             {mockSizes.map(size => (
                                 <SizeFilterItem
                                     key={size}
@@ -457,16 +458,16 @@ const WomenCollections = () => {
                                 />
                             ))}
                         </div>
-                        <div className="flex justify-between mt-4">
+                        <div className="flex gap-4 mt-4">
                             <button
                                 onClick={handleResetSizes}
-                                className="py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
+                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={handleResetSizes}
-                                className="py-2 px-4 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 transition"
+                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
                             >
                                 Reset
                             </button>
@@ -475,10 +476,12 @@ const WomenCollections = () => {
                     
                     {/* Color Filter Section (Non-collapsible in the image) */}
                     <div className="p-4 border-t border-gray-200">
-                        <div className="flex items-center justify-between mb-4 pb-2 border-b-2 border-pink-500/70">
-                            <h3 className="font-semibold mb-2 text-sm uppercase">Color</h3>
-                        </div>
-                        <div className="flex flex-wrap gap-x-2 gap-y-4 justify-start"> 
+                        <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
+                         <div className="flex items-center  py-3 justify-between">
+                        <h3 className="font-medium font-inter text-black text-[14px]  ">Color</h3>
+                    </div>
+</div>
+                        <div className="p-4 flex flex-wrap gap-x-2 gap-y-4 justify-start"> 
                             {mockColors.map(color => (
                                 <ColorFilterItem
                                     key={color.name}
@@ -489,20 +492,8 @@ const WomenCollections = () => {
                                 />
                             ))}
                         </div>
-                        <div className="flex justify-between mt-4">
-                            <button
-                                onClick={handleResetColors}
-                                className="py-2 px-4 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-100 transition"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleResetColors}
-                                className="py-2 px-4 text-sm font-medium text-white bg-pink-600 rounded-md hover:bg-pink-700 transition"
-                            >
-                                Reset
-                            </button>
-                        </div>
+                        <div className="border-t border-gray-200"></div>
+                        
                     </div>
 
                     {/* Brands Filter Section (Collapsible - as per your new image) */}
@@ -618,8 +609,8 @@ const WomenCollections = () => {
                     </div>
 
                 {/* Active Filters Display */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                <span className="text-sm font-medium text-gray-700 mr-2">Clear Filters:</span>
+                <div className="flex flex-wrap items-center gap-2 mb-6">
+                <span className="text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696]">Clear Filters:</span>
                 {/* Clear All Filters બટન ઉમેરી શકાય છે, જો જરૂર હોય તો */}
 
                 {currentFilters.map((filter, index) => (
