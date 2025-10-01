@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react'; 
-
+import { ChevronLeftIcon, MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import ProductGrid from '../components/ProductGrid'; 
 
 import shopsaree1 from '../assets/shopsaree1.jpg'; 
@@ -234,12 +234,12 @@ const ProductCard = ({ product }) => (
     <div className="relative group overflow-hidden">
         
         {/* 1. Image Container */}
-        <div className="w-full h-auto bg-gray-100 overflow-hidden">
+        <div className="w-full h-auto  overflow-hidden">
             <img
                 src={product.imageSrc} 
                 alt={product.name}
                 // Kept your image classes, adjusting h-[550px] for consistent sizing
-                className="w-full h-[553px] transition-transform duration-500 ease-in-out"
+                className="w-[450px] h-[490px] sm:w-full sm:h-[553px]  transition-transform duration-500"
             />
         </div>
 
@@ -269,16 +269,14 @@ const ProductCard = ({ product }) => (
 </button>
     </div>
 
-    {/* 2. Bottom Section: Price */}
-    {/* This div is pushed to the ABSOLUTE BOTTOM by 'justify-between' */}
+
     <div> 
         <p className="text-[14px] font-medium font-inter text-black">
             RS {product.price.toFixed(2)}
         </p>
     </div>
             
-            {/* Note: In the image, the plus button is slightly higher than the text block, 
-               but placing it inside the overlay box is the simplest implementation. */}
+           
         </div>
     </div>
 );
@@ -301,6 +299,7 @@ const WomenCollections = () => {
     const [maxPrice, setMaxPrice] = useState(2500);
     const [sortBy, setSortBy] = useState('Popularity');
 
+    
     // --- Filter Handlers ---
     const createToggleHandler = (setState) => (e) => {
         const { name, checked } = e.target;
@@ -314,7 +313,7 @@ const WomenCollections = () => {
     const handleColorChange = createToggleHandler(setSelectedColors);
     const handleBrandChange = createToggleHandler(setSelectedBrands);
     
-    // 👇 નવા ફિલ્ટર્સના Handlers
+    
     const handleTypeChange = createToggleHandler(setSelectedTypes);
     const handleFabricChange = createToggleHandler(setSelectedFabrics);
     const handleDiscountChange = createToggleHandler(setSelectedDiscounts);
@@ -326,7 +325,7 @@ const WomenCollections = () => {
         else if (filterType === 'size') setSelectedSizes(prev => prev.filter(size => size !== value));
         else if (filterType === 'color') setSelectedColors(prev => prev.filter(color => color !== value));
         else if (filterType === 'brand') setSelectedBrands(prev => prev.filter(brand => brand !== value));
-        // 👇 નવા ફિલ્ટર્સ માટે Clear Logic
+   
         else if (filterType === 'type') setSelectedTypes(prev => prev.filter(item => item !== value));
         else if (filterType === 'fabric') setSelectedFabrics(prev => prev.filter(item => item !== value));
         else if (filterType === 'discount') setSelectedDiscounts(prev => prev.filter(item => item !== value));
@@ -338,7 +337,7 @@ const WomenCollections = () => {
     const handleResetSizes = () => setSelectedSizes([]);
     const handleResetColors = () => setSelectedColors([]);
     const handleResetBrands = () => setSelectedBrands([]);
-    // 👇 નવા ફિલ્ટર્સના Reset Handlers
+    
     const handleResetTypes = () => setSelectedTypes([]);
     const handleResetFabrics = () => setSelectedFabrics([]);
     const handleResetDiscounts = () => setSelectedDiscounts([]);
@@ -349,7 +348,7 @@ const WomenCollections = () => {
         ...selectedSizes.map(size => ({ type: 'size', value: size })),
         ...selectedColors.map(color => ({ type: 'color', value: color })),
         ...selectedBrands.map(brand => ({ type: 'brand', value: brand })),
-        // 👇 Active નવા ફિલ્ટર્સ ઉમેર્યા
+      
         ...selectedTypes.map(type => ({ type: 'type', value: type })),
         ...selectedFabrics.map(fabric => ({ type: 'fabric', value: fabric })),
         ...selectedDiscounts.map(discount => ({ type: 'discount', value: discount })),
@@ -360,8 +359,28 @@ const WomenCollections = () => {
     const showingResults = mockProducts.length;
 
     return (
-        <div className="container w-[1440px] mx-auto  py-2 sm:py-14">
+        <div className="container w-full max-w-[1440px] mx-auto py-2 sm:py-14  px-4 sm:px-0 ">
             
+             <div className="flex justify-between items-center py-2 px-4 mb-4 lg:hidden">
+        
+{/* Left Arrow Icon (Wrapped in a responsive button) */}
+    <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
+        <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
+    </button>
+        
+        {/* Search Bar */}
+<div className="flex-1 mx-3 relative">
+    <input 
+        type="text" 
+        placeholder="Women's Fashion.." 
+        // 👇 UPDATED: Figma style custom shadow added
+        className="w-full h-8 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"
+    />
+    {/* Search Icon inside the input field */}
+    <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
+</div>
+    </div>
+
             <h1 className="text-22px font-semibold font-inter  mb-6">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
                 <span className="text-black ">Home / </span>
@@ -372,7 +391,7 @@ const WomenCollections = () => {
             <div className="flex flex-col lg:flex-row gap-8">
 
                 {/* 1. Filter Sidebar */}
-                <aside className="w-full h-fit px-2 py-5 lg:w-1/4 bg-white shadow-lg rounded-lg border border-gray-200">
+                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white  rounded-lg border border-gray-200">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
@@ -586,7 +605,7 @@ const WomenCollections = () => {
 
                     {/* Top Bar: Results and Sorting */}
                     <div className="flex justify-between items-center mb-6">
-                        <div className="text-sm text-gray-700">
+                        <div className="hidden sm:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
                         <div className="flex items-center gap-2 cursor-pointer  rounded px-3 py-2">
@@ -609,7 +628,7 @@ const WomenCollections = () => {
                     </div>
 
                 {/* Active Filters Display */}
-                <div className="flex flex-wrap items-center gap-2 mb-6">
+                <div className="hidden sm:block flex flex-wrap items-center gap-2 mb-6">
                 <span className="text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696]">Clear Filters:</span>
                 {/* Clear All Filters બટન ઉમેરી શકાય છે, જો જરૂર હોય તો */}
 
@@ -628,7 +647,7 @@ const WomenCollections = () => {
                 </div>
 
                     {/* Products Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {mockProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}

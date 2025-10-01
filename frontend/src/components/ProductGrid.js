@@ -173,7 +173,7 @@ const ProductCard = ({ product }) => {
       {/* --- Image Section --- */}
       <div className="relative">
         <img 
-          className="w-full h-96 object-cover transition duration-500 group-hover:scale-95" 
+          className="w-[220px] h-[230px] sm:w-full sm:h-96 object-cover transition duration-500 group-hover:scale-95" 
           src={product.image} 
           alt={product.name} 
         />
@@ -213,39 +213,39 @@ const ProductCard = ({ product }) => {
 
 
         {product.expressShipping && (
-          <div className="mb-2 inline-block text-theme theme-bg-light  text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
+          <div className="mb-2 inline-block text-theme theme-bg-light  text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
             Express Shipping
           </div>
         )}
 
         {product.isSale && ( // જો Express Shipping ન હોય અને isSale હોય તો આ દેખાશે
-           <div className="mb-2 inline-block text-theme theme-bg-light  text-[14px] px-3 font-regular font-sans px-2 py-0.5 rounded-sm">
+           <div className="mb-2 inline-block text-theme theme-bg-light  text-[12px] sm:text-[14px] px-3 font-regular font-sans px-2 py-0.5 rounded-sm">
                Sale
             </div>
         )}      
 
         {/* Brand Name */}
-        <h3 className="text-[16px] font-regular font-sans text-black truncate py-0.5">
+        <h3 className="text-[14px] sm:text-[16px] font-regular font-sans text-black truncate py-0 sm:py-0.5">
           {product.brand}
         </h3>
         
         {/* Product Name */}
-        <p className="text-[14px] text-[#989696] font-regular font-sans  truncate py-0.5">
+        <p className="text-[12px] sm:text-[14px] text-[#989696] font-regular font-sans  truncate py-0 sm:py-0.5">
           {product.name}
         </p>
 
         {/* Pricing */}
-        <div className="flex items-center space-x-2 mb-3 py-0.5">
+        <div className="flex items-center space-x-2 mb-1 sm:mb-2 py-0.5">
           {/* Current Price */}
-          <span className="text-[16px] font-regular font-sans text-black py-0.5">
+          <span className="text-[12px] sm:text-[16px] font-regular font-sans text-black py-0 sm:py-0.5">
             {product.price}
           </span>
           {/* Original Price (Strikethrough) */}
-          <span className="text-[14px] text-[#BCBCBC] line-through font-regular font-sans py-0.5">
+          <span className="text-[12px] sm:text-[14px]  text-[#BCBCBC] line-through font-regular font-sans py-0 sm:py-0.5">
             {product.originalPrice}
           </span>
           {/* Discount Percentage */}
-          <span className="text-[16px] font-regular font-sans text-theme">
+          <span className="text-[12px] sm:text-[16px] font-regular font-sans text-theme">
             {product.discount}
           </span>
         </div>
@@ -255,7 +255,7 @@ const ProductCard = ({ product }) => {
           {product.colorOptions.map((colorClass, index) => (
             <div 
               key={index}
-              className={`w-[16px] h-[16px] ${colorClass} rounded-full border border-gray-200 cursor-pointer`}
+              className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full border border-gray-200 cursor-pointer`}
             ></div>
           ))}
         </div>
@@ -270,7 +270,7 @@ const ProductGrid = () => {
     <div className="py-10 ">
       <div className="max-w-7xl mx-auto">
         {/* Grid layout for the products */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
@@ -278,7 +278,7 @@ const ProductGrid = () => {
           {/* --- Load More Button Section --- */}
            <div className="flex justify-center mt-10 ">
   <button
-    className="theme-border font-inter text-theme w-[220px] h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
+    className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
     style={{
       boxShadow: "inset 0px 0px 30px rgba(244, 50, 151, 0.25)",
     }}
