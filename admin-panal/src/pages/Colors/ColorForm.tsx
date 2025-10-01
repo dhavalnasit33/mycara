@@ -90,7 +90,7 @@ export default function ColorFormPage() {
           <Card className="shadow-md border border-gray-200">
             <CardHeader>
               <CardTitle className="text-lg font-semibold">
-                Basic Information
+                Basic Informatio
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
