@@ -15,6 +15,8 @@ import More from "./pages/More";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import LoginForm from "./pages/Login";
+import RegistrationForm from "./pages/RegistrationForm";
 
 function App() {
   return (
@@ -29,6 +31,8 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/features" element={<Features />} />
           <Route path="/more" element={<More />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/register" element={<RegistrationForm />} />
       </Routes>
       <Footer />
     </Router>
