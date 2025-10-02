@@ -10,6 +10,11 @@ import shopsaree2 from '../assets/shopsaree2.jpg';
 
 import SortByIcon from "./icons/SortByIcon";  
 
+import { IoCellular } from "react-icons/io5";
+import { IoIosWifi } from "react-icons/io";
+import Battery from "./icons/Battery";
+
+
 // --------------------- Data Mockups ---------------------
 const mockCategories = [
     { name: 'Saree', count: 256 },
@@ -361,8 +366,24 @@ const WomenCollections = () => {
     return (
         <div className="container w-full max-w-[1440px] mx-auto py-2 sm:py-14  px-4 sm:px-0 ">
             
-             <div className="flex justify-between items-center py-2 px-4 mb-4 lg:hidden">
+             <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
+                 {/* Left Side - Time */}
+                 
+  <div className="  w-full">
+      {/* -------- Status Bar (Top Row) -------- */}
+      <div className="flex justify-between items-center py-2 ">
+        {/* Left Side - Time */}
+        <div className="text-sm font-semibold text-black">9:41</div>
+
+        {/* Right Side - Icons */}
+        <div className="flex items-center space-x-3">
+          <IoCellular className="w-6 h-6 text-black cursor-pointer" />
+          <IoIosWifi className="w-6 h-6 text-black cursor-pointer" />
+          <Battery className="w-6 h-3 text-GRAY cursor-pointer" />
+        </div>
+      </div>
         
+         <div className="flex items-center py-2  space-x-2">
 {/* Left Arrow Icon (Wrapped in a responsive button) */}
     <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
         <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
@@ -373,17 +394,19 @@ const WomenCollections = () => {
     <input 
         type="text" 
         placeholder="Women's Fashion.." 
-        // 👇 UPDATED: Figma style custom shadow added
-        className="w-full h-8 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"
+         className="w-full h-11 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"
     />
-    {/* Search Icon inside the input field */}
-    <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-500" />
-</div>
+  
+    <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
+    </div>
+    </div>
+    </div>
     </div>
 
-            <h1 className="text-22px font-semibold font-inter  mb-6">Women's Collections</h1>
+            <h1 className="text-22px font-semibold font-inter mb-2 ">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
-                <span className="text-black ">Home / </span>
+                <span className="text-black border-b border-black lg:border-none">Home</span>
+                <span className="text-black "> / </span>
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
