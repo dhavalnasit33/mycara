@@ -95,14 +95,20 @@ orders : {
   delete: (id: string) => `/orders/${id}`,
   bulkDelete: "/orders/bulk-delete",
 },
-  users: {
-    list: "/users",
-    get: (id: string) => `/users/${id}`,
-    create: "/users",
-    update: (id: string) => `/users/${id}`,
-    delete: (id: string) => `/users/${id}`,
-    bulkDelete: "/users/bulk-delete",
-  },
+payments : {
+  getAll: "/payments",
+  getById: (id: string) => `/payments/${id}`,
+  delete: (id: string) => `/payments/${id}`,
+  bulkDelete: "/payments/bulk-delete",
+},
+ users : {
+  getAll: "/users",
+  getById: (id: string) => `/users/${id}`,
+  create: "/users",
+  update: (id: string) => `/users/${id}`,
+  delete: (id: string) => `/users/${id}`,
+  bulkDelete: "/users/bulk-delete",
+},
   pages: {
     list: "/pages",
     get: (id: string) => `/pages/${id}`,
@@ -126,9 +132,5 @@ orders : {
     update: (id: string) => `/news/${id}`,
     delete: (id: string) => `/news/${id}`,
     bulkDelete: "/news/bulk-delete",
-  },
-  payments: {
-    list: "/payments",
-    stats: "/payments/stats",
   },
 };

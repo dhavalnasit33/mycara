@@ -7,7 +7,7 @@ import { AdminLayout } from "./components/layout/AdminLayout";
 import VelzonDashboard from "./pages/VelzonDashboard";
 import Products from "./pages/Products/Products";
 import AddProduct from "./pages/Products/AddProduct";
-import Users from "./pages/Users";
+import Users from "./pages/Users/Users";
 import ContactMessages from "./pages/ContactMessages";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -33,6 +33,8 @@ import DiscountFormPage from "./pages/Discount/DiscountForm";
 import Coupons from "./pages/coupons/Coupons";
 import CouponFormPage from "./pages/coupons/CouponForm";
 import Orders from "./pages/Orders/Orders";
+import Payments from "./pages/Payments/Payments";
+import UserFormPage from "./pages/Users/UserForm";
 
 const queryClient = new QueryClient();
 
@@ -79,8 +81,10 @@ const App = () => (
                  <Route path="coupons/add" element={<CouponFormPage/>} />
                   <Route path="/coupons/:id/edit" element={<CouponFormPage/>} />
               <Route path="orders" element={<Orders />} />
-              <Route path="payments" element={<VelzonDashboard />} />
-              <Route path="users" element={<Users />} />
+              <Route path="payments" element={<Payments />} />
+                <Route path="users" element={<Users />} />
+                 <Route path="users/add" element={<UserFormPage />} />
+                  <Route path="/users/:id/edit" element={<UserFormPage />} />
               <Route path="reviews" element={<VelzonDashboard />} />
               <Route path="settings" element={<Settings />} />
               <Route path="contact-messages" element={<ContactMessages />} />

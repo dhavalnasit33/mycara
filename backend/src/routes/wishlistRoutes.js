@@ -8,14 +8,14 @@ const {
   deleteWishlist
 } = require("../controllers/wishlistController");
 
-const { authMiddleware } = require("../middlewares/authMiddleware");
+const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
 
 router.use(authMiddleware);
 
-router.post("/", createWishlist); 
-router.post("/items", addItemToWishlist); 
-router.delete("/items", removeItemFromWishlist); 
-router.get("/user/:user_id", getWishlistByUser); 
-router.delete("/:id", deleteWishlist); 
+router.post("/",authorizeMinRole("admin"), createWishlist); 
+router.post("/items",authorizeMinRole("admin"), addItemToWishlist); 
+router.delete("/items",authorizeMinRole("admin"), removeItemFromWishlist); 
+router.get("/user/:user_id",authorizeMinRole("admin"), getWishlistByUser); 
+router.delete("/:id",authorizeMinRole("admin"), deleteWishlist); 
 
 module.exports = router;

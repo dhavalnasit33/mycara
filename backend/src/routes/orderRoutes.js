@@ -13,7 +13,7 @@ const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddlew
 
 router.use(authMiddleware);
 
-router.get("/", getOrders);
+router.get("/",authorizeMinRole("admin"), getOrders);
 router.get("/:id", authorizeMinRole("admin"), getOrderById);
 router.post("/", createOrder);
 router.put("/:id", authorizeMinRole("admin"), updateOrder);
