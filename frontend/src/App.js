@@ -31,7 +31,7 @@ function App() {
     const isShopPage = location.pathname === "/shop";
 
     return (
-      <>
+      <Router>
        
         <Header hideOnMobileShopPage={isShopPage} />
         
@@ -43,10 +43,13 @@ function App() {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/features" element={<Features />} />
           <Route path="/more" element={<More />} />
+          <Route path="/Login" element={<LoginForm />} />
+          <Route path="/Register" element={<RegistrationForm />} />
       </Routes>
       <Footer />
     </Router>
   );
+}
 }
 
 export default App;
