@@ -49,16 +49,21 @@ const navItems = [
 ];
 
 
-const Header = () => {
+const Header = ({ hideOnMobileShopPage }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // ✅ નવું (New): Conditional class નક્કી કરો
+  const headerClasses = `
+    bg-primary-50 shadow-md 
+    ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
+  `;
 
   
   return (
-    <header className="bg-primary-50 shadow-md">
+    <header className="{headerClasses}">
     
-      <div className="hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto">
+      <div className="bg-primary-50 shadow-md hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           <img

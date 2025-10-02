@@ -1,3 +1,4 @@
+// D:\mycara\frontend\src\pages\Shop.jsx
 import React from 'react';
 import ShopBanner from '../components/ShopBanner'; 
 

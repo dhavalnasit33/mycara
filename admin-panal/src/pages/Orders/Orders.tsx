@@ -185,12 +185,13 @@ export default function Orders() {
       </Card>
 
       {/* Orders Table */}
-      <Card className="shadow-sm border border-gray-200">
+      <Card className="shadow-sm border border-gray-200 rounded-lg">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg font-semibold">
             Orders <span className="text-gray-400 font-normal">({total})</span>
           </CardTitle>
         </CardHeader>
+
         <CardContent>
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="w-full text-sm table-fixed">
@@ -207,15 +208,16 @@ export default function Orders() {
                       }
                     />
                   </th>
-                  <th className="p-3 text-left">Order ID</th>
-                  <th className="p-3 text-left">User</th>
-                  <th className="p-3 text-left">Total</th>
-                  <th className="p-3 text-left">Status</th>
-                  <th className="p-3 text-left">Created At</th>
-                  <th className="p-3 text-left">Actions</th>
+                  <th className="p-3 w-48 text-left">Order ID</th>
+                  <th className="p-3 w-32 text-left">User</th>
+                  <th className="p-3 w-24 text-left">Total</th>
+                  <th className="p-3 w-24 text-left">Status</th>
+                  <th className="p-3 w-32 text-left">Created At</th>
+                  <th className="p-3 w-24 text-right">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+
+              <tbody className="divide-y divide-gray-100 text-sm">
                 {orders.map((order) => {
                   const isExpanded = expandedRows.includes(order._id);
                   return (
@@ -231,25 +233,28 @@ export default function Orders() {
                           {order._id}
                         </td>
                         <td className="p-3">{order.user_id?.name}</td>
-                        <td className="p-3">{order.total_price}</td>
+                        <td className="p-3">${order.total_price.toFixed(2)}</td>
                         <td className="p-3">{getStatusBadge(order.status)}</td>
                         <td className="p-3">
                           {new Date(order.createdAt).toLocaleDateString()}
                         </td>
-                        <td className="p-3 flex justify-end gap-2">
+                        <td className="p-3 flex items-center justify-end gap-2">
+                          {/* Expand/Collapse */}
                           <Button
                             size="sm"
                             variant="ghost"
+                            className="p-1 h-8 w-8 flex items-center justify-center"
                             onClick={() => toggleExpand(order._id)}
                           >
-                            {isExpanded ? <ChevronUp /> : <ChevronDown />}
+                            {isExpanded ? (
+                              <ChevronUp className="h-4 w-4" />
+                            ) : (
+                              <ChevronDown className="h-4 w-4" />
+                            )}
                           </Button>
-                          <Link
-                            to={`/orders/${order._id}/edit`}
-                            className="p-1 text-blue-600 hover:bg-blue-50 rounded-md transition"
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </Link>
+
+                         
+                          {/* Delete */}
                           <ConfirmDialog
                             title="Delete Order"
                             description={`This will permanently delete order "${order._id}".`}
@@ -257,7 +262,7 @@ export default function Orders() {
                             onConfirm={() => handleDelete(order._id)}
                             danger
                           >
-                            <button className="p-1 text-red-600 hover:bg-red-50 rounded-md transition">
+                            <button className="p-1 h-8 w-8 flex items-center justify-center text-red-600 hover:bg-red-50 rounded-md transition">
                               <Trash2 className="h-4 w-4" />
                             </button>
                           </ConfirmDialog>
@@ -266,14 +271,14 @@ export default function Orders() {
 
                       {isExpanded && (
                         <tr className="bg-gray-50">
-                          <td colSpan={9} className="p-3">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                          <td colSpan={7} className="p-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                               {order.items.map((item) => (
                                 <div
                                   key={item._id}
                                   className="p-3 border rounded-lg bg-white shadow-sm hover:shadow-md transition"
                                 >
-                                  <p className="font-semibold text-gray-800">
+                                  <p className="font-semibold text-gray-800 truncate">
                                     {item.product_id?.name}
                                   </p>
                                   <p className="text-gray-600 text-sm">
@@ -283,7 +288,7 @@ export default function Orders() {
                                     Price: ${item.price_at_order.toFixed(2)}
                                   </p>
                                   {item.variant_id && (
-                                    <p className="text-gray-600 text-sm">
+                                    <p className="text-gray-600 text-sm truncate">
                                       Variant:{" "}
                                       {`${
                                         item.variant_id.color_id?.name || "-"
