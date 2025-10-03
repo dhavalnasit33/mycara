@@ -63,7 +63,7 @@ const Header = ({ hideOnMobileShopPage }) => {
   return (
     <header className="{headerClasses}">
     
-      <div className="bg-primary-50 shadow-md hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto ">
+      <div className="bg-primary-50  hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           <img
@@ -175,37 +175,35 @@ const Header = ({ hideOnMobileShopPage }) => {
       </div>
 
             {/* Mobile Menu Button */}
+      {!hideOnMobileShopPage && (
+        <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
+            {/* Left: Hamburger */}
+            <button
+                className="text-gray-600 transition-colors duration-300"
+                style={{ color: "var(--theme-color)" }}
+                onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+                onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+            {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+            </button>
 
-             <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
-              {/* Left: Hamburger */}
-              <button
-                  className="text-gray-600 transition-colors duration-300"
-                  style={{ color: "var(--theme-color)" }} // icon default color
-                  onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"} // optional hover same color
-                  onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"} // same color back
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-               >
-              {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-              </button>
-
-             {/* Center: Logo */}
-   
+            {/* Center: Logo */}
             <img src={Logo} alt="Logo" className="h-10 mx-auto" />
-      
+            
             {/* Right: Optional icons */}
             <div className="flex items-center space-x-3">
               <MagnifyingGlassIcon 
                   className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] block" 
               />
-            <FontAwesomeIcon
-                      icon={faCartShopping}
-                      className="w-6 h-6  text-black/70 cursor-pointer hover:text-[var(--theme-color)]  lg:block"
-                    />
+              <FontAwesomeIcon
+                  icon={faCartShopping}
+                  className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] lg:block"
+              />
               <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer" />
-              {/* Notification icon */}
-              
             </div>
-          </div>
+        </div>
+      )}
           {/*  */}
           {/*  */}
              {/*  */} 

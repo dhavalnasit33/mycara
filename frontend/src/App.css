@@ -134,14 +134,14 @@
 
 /* Circle with border */
 .circle-border {
-  border-style: solid; /* Set border style first */
-  border-width: 5px 0px 0px 5px; /* Then set the different widths for each side (top, right, bottom, left) */
-  border-color: var(--theme-color); /* Set the border color */
-  border-radius: 50%; /* perfect round */
+  border-style: solid; 
+  border-width: 5px 0px 0px 5px; 
+  border-color: var(--theme-color);
+  border-radius: 50%; 
 }
 
 .theme-border {
-   border: 1px solid var(--theme-color) !important; /* Set border color */
+   border: 1px solid var(--theme-color) !important; 
 }
 .text-color {
   color: var(--theme-color);
@@ -306,14 +306,15 @@
 .text-20px {
     font-size: 20px;
 }
-/* header scroll bar */
+
+/* responsive header scroll bar */
 /* scroll bar */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;  /* IE/Edge */
-  scrollbar-width: none;     /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;    
 }
 .bg-theme {
   background-color: var(--theme-bg-rgba);
@@ -341,3 +342,11 @@
   margin: 0 !important;
 }
 
+
+.sfpro {
+
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600; /* semibold */
+  font-size: 17px;
+  line-height: 1.4; 
+}
