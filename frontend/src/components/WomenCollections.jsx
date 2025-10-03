@@ -311,7 +311,7 @@ const ProductCard = ({ product }) => (
                 src={product.imageSrc} 
                 alt={product.name}
                 // Kept your image classes, adjusting h-[550px] for consistent sizing
-                className="w-[450px] h-[490px] sm:w-full sm:h-[553px]  transition-transform duration-500"
+                className="w-[450px] h-[490px] sm:w-full  sm:h-[553px]  md:w-full md:h-[553px] transition-transform duration-500"
             />
         </div>
 
@@ -551,7 +551,7 @@ const handleColorChange = createToggleHandler(setSelectedColors);
     const showingResults = mockProducts.length;
 // 
     return (
-        <div className="container w-full max-w-[1440px] mx-auto py-2 sm:py-14  px-4 sm:px-0 ">
+        <div className="container w-full max-w-[1440px] mx-auto py-2 md:py-0 sm:py-14  px-4 sm:px-0 md:px-0  ">
             
              <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                  {/* Left Side - Time */}
@@ -910,7 +910,7 @@ const handleColorChange = createToggleHandler(setSelectedColors);
 
                     {/* Top Bar: Results and Sorting */}
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden sm:block text-sm text-gray-700">
+                        <div className="hidden sm:block md:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
                    
