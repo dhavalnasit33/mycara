@@ -28,7 +28,7 @@ const products = [
         image: shopsaree3,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
         expressShipping: true,
-        isSale: false // Sale નથી
+        isSale: false
     },
     {
         id: 2,
@@ -40,7 +40,7 @@ const products = [
         image: shopsaree4,
         colorOptions: ['bg-[#16D5FF]', 'bg-[#E45BE7]', 'bg-[#ECF01D]'],
         expressShipping: false,
-        isSale: true // Example: Sale છે
+        isSale: true 
     },
     {
         id: 3,
@@ -67,7 +67,7 @@ const products = [
         isSale: false
     },
     {
-        id: 5, // ⭐ આ પ્રોડક્ટમાં ફેરફાર છે ⭐
+        id: 5, 
         brand: "Gajara Gang",
         name: "Women Plain Tar Work Fancy Saree",
         price: "₹1,137",
@@ -75,8 +75,8 @@ const products = [
         discount: "75%",
         image: shopsaree7, 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: false, // Express Shipping નથી
-        isSale: true // ⭐ અહીં 'Sale' ઉમેરવામાં આવ્યું છે ⭐
+        expressShipping: false, 
+        isSale: true 
     },
     {
         id: 6,
@@ -103,7 +103,7 @@ const products = [
         isSale: false
     },
     {
-        id: 8, // ⭐ આ પ્રોડક્ટમાં ફેરફાર છે ⭐
+        id: 8, 
         brand: "Gajara Gang",
         name: "Women Plain Tar Work Fancy Saree",
         price: "₹1,137",
@@ -111,8 +111,8 @@ const products = [
         discount: "75%",
         image: shopsaree10, 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: false, // Express Shipping નથી
-        isSale: false // ⭐ અહીં 'Sale' ઉમેરવામાં આવ્યું છે ⭐
+        expressShipping: false, 
+        isSale: false 
     },
     {
         id: 9,
@@ -139,7 +139,7 @@ const products = [
         isSale: false
     },
     {
-        id: 11, // ⭐ આ પ્રોડક્ટમાં ફેરફાર છે ⭐
+        id: 11, 
         brand: "Gajara Gang",
         name: "Women Plain Tar Work Fancy Saree",
         price: "₹1,137",
@@ -147,8 +147,8 @@ const products = [
         discount: "75%",
         image: shopsaree13, 
         colorOptions: ['bg-[#16D5FF]', 'bg-[#E45BE7]', 'bg-[#ECF01D]'],
-        expressShipping: false, // Express Shipping નથી
-        isSale: true // ⭐ અહીં 'Sale' ઉમેરવામાં આવ્યું છે ⭐
+        expressShipping: false, 
+        isSale: true 
     },
     {
         id: 12,
