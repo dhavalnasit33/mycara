@@ -64,6 +64,7 @@
  --text-line-height:100%;
 
 
+
   /* Fonts */
   --font-family-h2: 'Italianno', cursive;
   --font-family-main: 'Roboto', sans-serif;
@@ -72,6 +73,7 @@
   --font-style-main: italic;
   --font-size-h1: 80px;
    --font-size-h2: 50px;
+   --font-mobile-h2:22px;
   --font-size-p: 16px;
 
    --font-inter: 'Inter', sans-serif;
@@ -324,6 +326,12 @@
   background-color: var(--theme-bg-rgba);
 }
 
+.sfpro {
+  font-family: "SF Pro Display", sans-serif;
+  font-weight: 600; /* semibold */
+  font-size: 17px;
+  line-height: 1.4; 
+}
 
 
 
@@ -352,13 +360,13 @@
   word-break: var(--text-break);
 }
 .leading{
-  line-height:var(--text-line-heigh);
+  line-height:var(--text-line-height);
 }
 
-.sfpro {
 
-  font-family: "SF Pro Display", sans-serif;
-  font-weight: 600; /* semibold */
-  font-size: 17px;
-  line-height: 1.4; 
+
+@media (max-width: 640px) {
+.font-h2{
+  font-size: var(--font-mobile-h2);
+}
 }
