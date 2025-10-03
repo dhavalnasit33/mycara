@@ -33,37 +33,39 @@ const Filter = (props) => (
 
 // --- 1. Mobile Responsive UI  ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
-  <div className="flex justify-around items-center w-[450px] gap-0">
-    
-    {/* Sort By Card */}
+  <div className="flex justify-around items-center w-[450px]  gap-0">
     <div 
-      className=" flex-1 max-w-[200px] rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)]"
-      onClick={onSortClick} 
+        className="flex-1 max-w-[200px]  rounded-[10px]  cursor-pointer transition duration-300  border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)] "
+        onClick={onSortClick} 
     >
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 ">
         <div>
           <div className="text-[16px] font-inter font-semibold text-[rgba(0,0,0,0.7)]">Sort By</div>
+    
           <div className="text-[12px] font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
         </div>
+       
         <SortByIcon className="h-6 w-6 text-pink-500" />
       </div>
     </div>
 
-    {/* Filter Card */}
+   
     <div 
-      className="flex-1 max-w-[200px]  rounded-[10px] cursor-pointer transition duration-300 shadow-lg bg-color hover:shadow-xl text-white"
-      onClick={onFilterClick}
+        className="flex-1 max-w-[200px] bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white"
+        onClick={onFilterClick} 
     >
       <div className="flex items-center justify-between p-4">
         <div>
           <div className="text-[16px] font-inter font-semibold">Filter</div>
           <div className="flex items-center mt-0.5">
-            <span className="text-[12px] font-inter font-medium">Applied</span>
-            <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
-              {filterCount}
-            </span>
+              <span className="text-[12px] font-inter font-medium">Applied</span>
+            
+              <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
+                  {filterCount}
+              </span>
           </div>
         </div>
+       
         <Filter className="h-6 w-6 text-white" /> 
       </div>
     </div>
@@ -71,14 +73,17 @@ const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) =>
 );
 
 
-// --- 2. Desktop UI ---
+// --- 2. Desktop UI (Refactored to accept props) ---
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
   <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">
+    {/* SortByIcon no upyog kariyo chhe */}
     <SortByIcon />
     <span className="text-base font-medium text-gray-700">Sort By</span>
     <div className="relative">
       <select
+        // Using passed prop 'sortBy'
         value={sortBy}
+        // Using passed prop 'setSortBy'
         onChange={(e) => setSortBy(e.target.value)}
         className="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm transition duration-150 ease-in-out"
       >
@@ -87,6 +92,7 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
         <option value="Price: Low to High">Price: Low to High</option>
         <option value="Price: High to Low">Price: High to Low</option>
       </select>
+      {/* Using the globally defined CustomChevronDown */}
       <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
     </div>
   </div>
@@ -139,10 +145,12 @@ const mockBrands = [
     { name: 'Max', count: 180 },
 ];
 
+// 👇 નવા ફિલ્ટર્સ માટેની ડેટા Mockups
 const mockTypes = ['Casual', 'Ethnic', 'Party Wear', 'Formal', 'Sports'];
 const mockFabrics = ['Cotton', 'Silk', 'Linen', 'Georgette', 'Rayon', 'Wool'];
 const mockDiscounts = ['10% and above', '20% and above', '30% and above', '50% and above'];
 const mockLabels = ['Bestseller', 'New Arrival', 'Limited Edition', 'Top Rated'];
+
 
 const mockProducts = [
     {
@@ -192,7 +200,7 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
       name={name}
       checked={isChecked}
       
-      // 👇 અહીં, આપણે સીધું જ onChange ફંક્શન કૉલ કરીએ છીએ
+      
       //    જે WomenCollections માં handleSizeChange(size) તરીકે વ્યાખ્યાયિત છે.
       onChange={onChange} 
       
@@ -207,8 +215,10 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
   </label>
 );
 
-// ColorFilterItem કમ્પોનન્ટ
+
+
 const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
+    
 
     const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
 
@@ -224,7 +234,7 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
                 `}
                 style={{ 
                     backgroundColor: hex,
-                    filter: dropShadowStyle 
+                    filter: dropShadowStyle
                 }} 
             >
             </div>
@@ -233,13 +243,17 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
     );
 };
 
+
 const CollapsibleFilter = ({ title, isSelected, onReset, children , onCancelClick , defaultOpen = false}) => {
-   const [isOpen, setIsOpen] = useState(defaultOpen); 
+   
+       const [isOpen, setIsOpen] = useState(defaultOpen); 
+
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
 
-const handleClose = () => {
+
+    const handleClose = () => {
         setIsOpen(false);
         if (onCancelClick) {
             onCancelClick(); 
@@ -250,19 +264,31 @@ const handleClose = () => {
    <div className={` border rounded-[10px] px-4 py-3 items-center justify-between cursor-pointer flex 
                 ${isOpen ? 'border-transparent' : 'border-gray-200'}
             `}
-            style={{backgroundColor: isOpen ? 'rgba(210, 175, 159, 0.3)' : 'transparent'  }} >
+            style={{
+                
+                backgroundColor: isOpen ? 'rgba(210, 175, 159, 0.3)' : 'transparent' 
+            }}
+            onClick={handleToggle} 
+        >
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
+                
+                <div className="flex items-center space-x-2">
+                    
+  
+
+          
                     <div className="flex items-center space-x-2">
-                         <div className="flex items-center space-x-2">
-                            {isOpen ? (
-                                <Minus className="w-4 h-4 text-white bg-color" />
-                            ) : (
-                                <Plus className="w-4 h-4 text-white bg-color" />
-                            )}
-                         </div>
+                        {isOpen ? (
+                            <Minus className="w-4 h-4 text-white bg-color" />
+                        ) : (
+                            <Plus className="w-4 h-4 text-white bg-color" />
+                        )}
                     </div>
+
+                </div>
             </div>
-              {/* Filter Content */}
+            
+            {/* Filter Content */}
             {isOpen && (
                 <div className="p-4 space-y-1">
                     {children} 
@@ -272,43 +298,68 @@ const handleClose = () => {
     );
 };
 
+
+
+
 const ProductCard = ({ product }) => (
+ 
     <div className="relative group overflow-hidden">
+        
+        {/* 1. Image Container */}
         <div className="w-full h-auto  overflow-hidden">
             <img
                 src={product.imageSrc} 
                 alt={product.name}
+                // Kept your image classes, adjusting h-[550px] for consistent sizing
                 className="w-[450px] h-[490px] sm:w-full sm:h-[553px]  transition-transform duration-500"
             />
         </div>
-     <div className="absolute right-4 bottom-4 w-[350px] h-[250px] p-10 bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                flex flex-col justify-between" >
+
+       
+       {/* // This is the modified overlay div for the ProductCard component */}
+<div 
+    className="absolute right-4 bottom-4 w-[350px] h-[250px] p-10 bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+                flex flex-col justify-between" 
+ 
+>
     
-<div className="flex justify-between items-start"> 
+
+    <div className="flex justify-between items-start"> 
+        
+        {/* Text (Title) */}
         <div className="pr-4"> 
             <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">
                 {product.name}
             </h3>
         </div>
-         
-            <button className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full shadow-lg  transition duration-300 border border-white">
-                    <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
-            </button>
+        
+        {/* The Add/Plus Button */}
+<button className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full 
+                   shadow-lg  transition duration-300 border border-white">
+ 
+    <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+</button>
     </div>
-         <div> 
-                <p className="text-[14px] font-medium font-inter text-black">
-                    RS {product.price.toFixed(2)}
-                </p>
+
+
+    <div> 
+        <p className="text-[14px] font-medium font-inter text-black">
+            RS {product.price.toFixed(2)}
+        </p>
+    </div>
+            
+           
         </div>
     </div>
- </div>
 );
 
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
+   
     const MAX_PRICE = 5000; 
     const DEFAULT_MIN = 500;
     const DEFAULT_MAX = 2500;
     
+
     const isRangeSelected = minPrice !== DEFAULT_MIN || maxPrice !== DEFAULT_MAX; 
 
     const handleSliderChange = (e) => {
@@ -320,6 +371,7 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
             setMaxPrice(Math.max(value, minPrice + 100)); 
         }
     };
+    
     const handleReset = () => {
         setMinPrice(DEFAULT_MIN); 
         setMaxPrice(DEFAULT_MAX); 
@@ -335,20 +387,21 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
         >
             <div className="px-2 py-2 space-y-6">
                 
-              
+               
                 <div className="relative h-1 w-full bg-gray-200 rounded-full ">
                     
                   
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-full"></div>
 
-                 
+                    
                     <div 
                         className="absolute bg-pink-600 h-1 rounded-full top-0"
                         style={{
                             left: `${(minPrice / MAX_PRICE) * 100}%`,
                             right: `${100 - (maxPrice / MAX_PRICE) * 100}%`,
-                        }}>
-                     </div>
+                        }}
+                    ></div>
+                    
                     
                     <input
                         id="min"
@@ -357,7 +410,7 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
                         max={MAX_PRICE}
                         value={minPrice}
                         onChange={handleSliderChange}
-                       
+                     
                         className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer" 
                         style={{ zIndex: minPrice === MAX_PRICE ? 5 : 4 }} 
                     />
@@ -368,11 +421,14 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
                         max={MAX_PRICE}
                         value={maxPrice}
                         onChange={handleSliderChange}
-                      
+                     
                         className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer"
                     />
                     
-                  <div 
+                  
+                    
+           
+                    <div 
                         className="absolute w-4 h-4 rounded-full bg-pink-600 top-1/2 transform -translate-y-1/2 shadow-md"
                         style={{ left: `${(minPrice / MAX_PRICE) * 100}%`, marginLeft: '-8px' }}
                     ></div>
@@ -382,15 +438,17 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
                     ></div>
 
                 </div>
-
-                 <div className="flex justify-between  text-center">
+                
+              
+                <div className="flex justify-between  text-center">
+                  
                     <div className="flex flex-col items-start">
                         <span className="font-inter text-[#989696]  text-[14px] font-regular">Max</span>
                         <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg text-black font-inter text-[14px] font-regular">
                             Rs {maxPrice} 
                         </div>
                     </div>
-                    
+                
                     <div className="flex flex-col items-end">
                         <span className="font-inter text-[#989696]  text-[14px] font-regular">Min</span>
                         <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg font-inter text-black  text-[14px] font-regular">
@@ -415,20 +473,21 @@ const WomenCollections = () => {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     
-
+    // 👇 નવા ફિલ્ટર્સના States
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedFabrics, setSelectedFabrics] = useState([]);
     const [selectedDiscounts, setSelectedDiscounts] = useState([]);
     const [selectedLabels, setSelectedLabels] = useState([]);
 
+    // 💡 Price Range States
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
     
     const [sortBy, setSortBy] = useState('Popularity');
-      const filterCount = 0; 
+      const filterCount = 0; // Placeholder for applied filter count
     
     // --- Filter Handlers ---
-    const createToggleHandler = (setState) => (name) => {
+    const createToggleHandler = (setState) => (name) => { // Modified to accept name directly
         setState(prev => 
             prev.includes(name)
                 ? prev.filter(item => item !== name)
@@ -438,7 +497,8 @@ const WomenCollections = () => {
 
     const handleCategoryChange = createToggleHandler(setSelectedCategories);
     const handleSizeChange = createToggleHandler(setSelectedSizes);
-    const handleColorChange = createToggleHandler(setSelectedColors);
+    
+const handleColorChange = createToggleHandler(setSelectedColors);
 
     const handleBrandChange = createToggleHandler(setSelectedBrands);
     const handleTypeChange = createToggleHandler(setSelectedTypes);
@@ -446,6 +506,8 @@ const WomenCollections = () => {
     const handleDiscountChange = createToggleHandler(setSelectedDiscounts);
     const handleLabelChange = createToggleHandler(setSelectedLabels);
 
+
+      // Dummy handlers for mobile clicks
     const handleSortClick = () => console.log('Mobile Sort Clicked. Implement modal/popup logic here.');
     const handleFilterClick = () => console.log('Mobile Filter Clicked. Implement filter sidebar logic here.');
     
@@ -492,13 +554,15 @@ const WomenCollections = () => {
         <div className="container w-full max-w-[1440px] mx-auto py-2 sm:py-14  px-4 sm:px-0 ">
             
              <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
-                
+                 {/* Left Side - Time */}
                  
   <div className="  w-full">
-     
+      {/* -------- Status Bar (Top Row) -------- */}
       <div className="flex justify-between items-center py-2 ">
+        {/* Left Side - Time */}
         <div className="sfpro  text-black">9:41</div>
 
+        {/* Right Side - Icons */}
         <div className="flex items-center space-x-3">
           <IoCellular className="w-6 h-6 text-black cursor-pointer" />
           <IoIosWifi className="w-6 h-6 text-black cursor-pointer" />
@@ -507,16 +571,20 @@ const WomenCollections = () => {
       </div>
         
          <div className="flex items-center py-2  space-x-2">
-                <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
-                    <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
-                </button>
-                    
+{/* Left Arrow Icon (Wrapped in a responsive button) */}
+    <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
+        <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
+    </button>
+        
+        {/* Search Bar */}
 <div className="flex-1 mx-3 relative">
-            <input 
-                type="text" 
-                placeholder="Women's Fashion.." 
-                className="w-full h-11 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"/>
-                <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
+    <input 
+        type="text" 
+        placeholder="Women's Fashion.." 
+         className="w-full h-11 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"
+    />
+  
+    <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
     </div>
     </div>
     </div>
@@ -529,13 +597,16 @@ const WomenCollections = () => {
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
+            {/* Main Content: Filter Sidebar and Products Grid */}
             <div className="flex flex-col lg:flex-row gap-8">
 
+                {/* 1. Filter Sidebar */}
                 <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white  rounded-lg border border-gray-200">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
 
+                    {/* Category Filter Section */}
 
 
 
@@ -543,9 +614,11 @@ const WomenCollections = () => {
 <CollapsibleFilter 
             title="Category" 
             defaultOpen={true}
+      
             isSelected={isCategorySelected} 
-            onReset={handleResetCategories}>
-    
+            onReset={handleResetCategories} 
+        >
+            {/* Filter Content */}
             <div className="space-y-1 px-2 overflow-y-auto">
                 {mockCategories.map(cat => (
                     <FilterItemCheckbox
@@ -559,21 +632,28 @@ const WomenCollections = () => {
             </div>
             
         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
             <button
+               
                 onClick={handleResetColors} 
-                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition" >
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
                 Cancel
             </button>
             
+            {/* Reset Button */}
             <button
                 onClick={handleResetColors} 
-                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md" >
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
                 Reset
             </button>
         </div>
- </CollapsibleFilter>
+
+        </CollapsibleFilter>
                     
-                     <PriceRangeFilter 
+          
+                    <PriceRangeFilter 
                         minPrice={minPrice} 
                         
                         maxPrice={maxPrice} 
@@ -581,46 +661,60 @@ const WomenCollections = () => {
                         setMaxPrice={setMaxPrice} 
                     />
 
-        <CollapsibleFilter 
-            title="Size" 
-            defaultOpen={true}
-            isSelected={selectedSizes.length > 0} 
-            onReset={handleResetSizes} 
-        >
-            <div className="flex flex-wrap "> 
-                {mockSizes.map(size => (
-                    <SizeFilterItem
-                        key={size}
-                        name={size}
-                        isChecked={selectedSizes.includes(size)}
-                        onChange={() => handleSizeChange(size)} 
-                    />
-                ))}
-            </div>
-            
-           <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-                    <button onClick={handleResetColors} 
-                        className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition" >
-                        Cancel
-                    </button>
+
+             
+
+
+<CollapsibleFilter 
+    title="Size" 
+    defaultOpen={true}
+    isSelected={selectedSizes.length > 0} 
+    onReset={handleResetSizes}
+>
+    <div className="flex flex-wrap "> 
+        {mockSizes.map(size => (
+            <SizeFilterItem
+                key={size}
+                name={size}
+                isChecked={selectedSizes.includes(size)}
+                onChange={() => handleSizeChange(size)} 
+            />
+        ))}
+    </div>
+    
+   
+          <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+           
+            <button
                
-                    <button
-                        onClick={handleResetColors} 
-                        className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
-                    >
-                        Reset
-                    </button>
-                </div>
-         </CollapsibleFilter>
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+          
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
+   
+
+</CollapsibleFilter>
                     
                 <CollapsibleFilter 
                     title="Color" 
                     defaultOpen={true}
                     isSelected={selectedColors.length > 0} 
                     onReset={handleResetColors} 
-                    onClose={() => console.log("Panel closed after cancel")}  >
+                    onClose={() => console.log("Panel closed after cancel")} 
+                >
                     <div className=""> 
-                     <div className="flex flex-wrap"> 
+                        {/* કલર આઇટમ્સ માટેનું મુખ્ય div */}
+                        <div className="flex flex-wrap"> 
                             {mockColors.map(color => (
                                 <ColorFilterItem
                                     key={color.name}
@@ -634,9 +728,14 @@ const WomenCollections = () => {
                         </div>
 
                     </div>
-                </CollapsibleFilter>
+</CollapsibleFilter>
 
-                    <CollapsibleFilter  title="Brands" isSelected={selectedBrands.length > 0} onReset={handleResetBrands}  >
+                    
+                    <CollapsibleFilter 
+                        title="Brands" 
+                        isSelected={selectedBrands.length > 0} 
+                        onReset={handleResetBrands}
+                    >
                         {mockBrands.map(brand => (
                             <FilterItemCheckbox
                                 key={brand.name}
@@ -647,19 +746,27 @@ const WomenCollections = () => {
                             />
                         ))}
                          <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-       <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition" >
+          
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
                 Cancel
             </button>
-        
+            
+          
             <button
                 onClick={handleResetColors} 
-                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md" >
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
                 Reset
             </button>
         </div>
-      </CollapsibleFilter>
+                    </CollapsibleFilter>
                     
-            <CollapsibleFilter 
+                 
+                    <CollapsibleFilter 
                         title="Type" 
                         isSelected={selectedTypes.length > 0} 
                         onReset={handleResetTypes}
@@ -673,75 +780,15 @@ const WomenCollections = () => {
                             />
                         ))}
                          <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-        
-        <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"  >
-                Cancel
-            </button>
-            
-           <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"  >
-                Reset
-            </button>
-        </div>
-       </CollapsibleFilter>
-
-            <CollapsibleFilter title="Fabric" isSelected={selectedFabrics.length > 0}  onReset={handleResetFabrics}  >
-                        {mockFabrics.map(fabric => (
-                            <FilterItemCheckbox
-                                key={fabric}
-                                name={fabric}
-                                isChecked={selectedFabrics.includes(fabric)}
-                                onChange={handleFabricChange}
-                            />
-                        ))}
-                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-           
-            <button onClick={handleResetColors}  className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition" >
-                Cancel
-            </button>
-            
-           <button onClick={handleResetColors}  className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md" >
-                Reset
-            </button>
-        </div>
-                    </CollapsibleFilter>
-
-             <CollapsibleFilter  title="Discounts" isSelected={selectedDiscounts.length > 0}  onReset={handleResetDiscounts} >
-                        {mockDiscounts.map(discount => (
-                            <FilterItemCheckbox
-                                key={discount}
-                                name={discount}
-                                isChecked={selectedDiscounts.includes(discount)}
-                                onChange={handleDiscountChange}
-                            />
-                        ))}
-                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-         <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition" >
-                Cancel
-            </button>
-
-             <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md" >
-                Reset
-            </button>
-        </div>
-                    </CollapsibleFilter>
-                    
-                 <CollapsibleFilter 
-                        title="Product Label" 
-                        isSelected={selectedLabels.length > 0} 
-                        onReset={handleResetLabels} >
-                        {mockLabels.map(label => (
-                            <FilterItemCheckbox
-                                key={label}
-                                name={label}
-                                isChecked={selectedLabels.includes(label)}
-                                onChange={handleLabelChange}
-                            />
-                        ))}
-                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
           
-            <button onClick={handleResetColors} className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"  >
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
                 Cancel
             </button>
+            
             
             <button
                 onClick={handleResetColors} 
@@ -751,16 +798,125 @@ const WomenCollections = () => {
             </button>
         </div>
                     </CollapsibleFilter>
+
+                    
+                    <CollapsibleFilter 
+                        title="Fabric" 
+                        isSelected={selectedFabrics.length > 0} 
+                        onReset={handleResetFabrics}
+                    >
+                        {mockFabrics.map(fabric => (
+                            <FilterItemCheckbox
+                                key={fabric}
+                                name={fabric}
+                                isChecked={selectedFabrics.includes(fabric)}
+                                onChange={handleFabricChange}
+                            />
+                        ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+          
+            <button
+              
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
+                    </CollapsibleFilter>
+
+                    {/* 👇 Discounts Filter Section */}
+                    <CollapsibleFilter 
+                        title="Discounts" 
+                        isSelected={selectedDiscounts.length > 0} 
+                        onReset={handleResetDiscounts}
+                    >
+                        {mockDiscounts.map(discount => (
+                            <FilterItemCheckbox
+                                key={discount}
+                                name={discount}
+                                isChecked={selectedDiscounts.includes(discount)}
+                                onChange={handleDiscountChange}
+                            />
+                        ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
+            <button
+                
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
+                    </CollapsibleFilter>
+
+                
+                    <CollapsibleFilter 
+                        title="Product Label" 
+                        isSelected={selectedLabels.length > 0} 
+                        onReset={handleResetLabels}
+                    >
+                        {mockLabels.map(label => (
+                            <FilterItemCheckbox
+                                key={label}
+                                name={label}
+                                isChecked={selectedLabels.includes(label)}
+                                onChange={handleLabelChange}
+                            />
+                        ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
+            <button
+              
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
+                    </CollapsibleFilter>
+                    {/* End of new filters */}
+
+
                 </aside>
 
-            <main className="w-full lg:w-3/4">
-                     <div className="flex justify-between items-center mb-6">
+              
+                <main className="w-full lg:w-3/4">
+
+                    {/* Top Bar: Results and Sorting */}
+                    <div className="flex justify-between items-center mb-6">
                         <div className="hidden sm:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
-                       
+                   
           <div className="md:hidden flex">
-          <MobileFilterBar 
+          
+            <MobileFilterBar 
               sortBy={sortBy} 
               filterCount={filterCount} 
               onSortClick={handleSortClick}
@@ -768,22 +924,32 @@ const WomenCollections = () => {
             />
           </div>
 
+        
           <div className="hidden md:flex justify-end">
+            {/* Passing state and setter as props */}
             <DesktopSortBar sortBy={sortBy} setSortBy={setSortBy} />
           </div>
 </div>
-               <div className="hidden sm:block flex flex-wrap items-center gap-2 mb-6">
+                {/* Active Filters Display */}
+                <div className="hidden sm:block flex flex-wrap items-center gap-2 mb-6">
                 <span className="text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696]">Clear Filters:</span>
-               {currentFilters.map((filter, index) => (
+             
+
+                {currentFilters.map((filter, index) => (
                 <span
                 key={index}
-                className="theme-border text-color px-4 py-1 rounded-[5px] cursor-pointer inline-flex items-center " onClick={() => handleClearFilter(filter.type, filter.value)}>
+                className="theme-border text-color px-4 py-1 rounded-[5px] cursor-pointer
+                                                    inline-flex items-center "
+                onClick={() => handleClearFilter(filter.type, filter.value)}
+                >
                 {filter.value}
+
                 <X className="w-4 h-4 ml-2 text-color" />
                 </span>
                 ))}
                 </div>
 
+                    {/* Products Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {mockProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
