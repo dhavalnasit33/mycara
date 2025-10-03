@@ -15,6 +15,7 @@ import Footer from "./components/Footer";
 import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";
+import ContactUs from "./pages/ContactUs";
 function App() {
   const RouterWrapper = () => {
     const location = useLocation();
@@ -33,6 +34,7 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/offer" element={<Offer/>}/>
+          <Route path="/contact-us" element={<ContactUs/>}/>
         </Routes>
         <Footer />
       </>

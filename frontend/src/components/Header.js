@@ -110,24 +110,13 @@ const Header = ({ hideOnMobileShopPage }) => {
           </ul>
         </nav>
 
-        {/* Right Side */}
         <div className="flex items-center space-x-4 relative">
-          {/* Login Dropdown */}
           <div className="relative hidden sm:block">
-            {/* <button
-              onClick={() => setIsLoginOpen(!isLoginOpen)}
-              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm  duration-300 bg-color"
-            >
-              <img src={WhiteLogin} alt="Login" className="w-4 h-4" />
-              <span>Login</span>
-            </button> */}
-            <Button onClick={() => { setIsLoginOpen(!isLoginOpen); }} variant="common" className="min-w-[113px] rounded-[10px]">
-              
-            <a href="/login" className="flex ">
-              <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
-              <span>Login</span>
-            </a>
-
+            <Button onClick={() => { setIsLoginOpen(!isLoginOpen); }} variant="common" className="!min-w-[113px] !py-[7px] !px-[10px] !rounded-[10px] ">    
+              <a href="/login" className="flex ">
+                <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
+                <span>Login</span>
+              </a>
             </Button>
 
 

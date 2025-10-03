@@ -46,58 +46,58 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <div>
-          <h2 className="font-regular text-black mb-4 tracking-[3%]">
+          <h2 className="font-regular text-20px text-black mb-4 tracking-[3%]">
             NAVIGATION LINKS
             <span className="theme-border-block w-[45px]"></span>
           </h2>
-          <ul className="space-y-2 text-sm list-disc list-inside marker:text-[rgba(0,0,0,0.7)]">
+          <ul className="space-y-2 text-sm list-disc list-inside marker:text-light">
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">About</a>
+              <a href="#" className="text-light text-[15px]">About</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Contact Us</a>
+              <a href="/contact-us" className="text-light text-[15px]">Contact Us</a>
             </li>
             <li>
-              <a href="/offer" className="text-[rgba(0,0,0,0.7)] text-[15px]">Offers</a>
+              <a href="/offer" className="text-light text-[15px]">Offers</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Women</a>
+              <a href="#" className="text-light text-[15px]">Women</a>
             </li>
           </ul>
         </div>
 
         {/* Customer Support */}
         <div>
-          <h2 className="font-regular text-black mb-4 tracking-[3%]">
+          <h2 className="font-regular text-black text-20px mb-4 tracking-[3%]">
             CUSTOMER SUPPORT
             <span className="theme-border-block w-[45px]"></span>
           </h2>
-          <ul className="space-y-2 text-sm list-disc list-inside marker:text-[rgba(0,0,0,0.7)]">
+          <ul className="space-y-2 text-sm list-disc list-inside marker:text-light">
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Return Policy</a>
+              <a href="#" className="text-light text-[15px]">Return Policy</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">FAQ</a>
+              <a href="#" className="text-light text-[15px]">FAQ</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Terms & Conditions</a>
+              <a href="#" className="text-light text-[15px]">Terms & Conditions</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Privacy Policy</a>
+              <a href="#" className="text-light text-[15px]">Privacy Policy</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Payment Methods</a>
+              <a href="#" className="text-light text-[15px]">Payment Methods</a>
             </li>
           </ul>
         </div>
 
         {/* Join Now */}
         <div>
-          <h2 className="font-regular text-black mb-4 tracking-[3%]">
+          <h2 className="font-regular text-black mb-4 tracking-[3%] text-20px">
             JOIN NOW !
             <span className="theme-border-block w-[45px]"></span>
           </h2>
-          <p className="text-sm mb-3">
+          <p className="text-sm mb-3 text-light">
             Become a MYcra member and get 10% off your next purchase!
           </p>
 
