@@ -11,6 +11,8 @@ import KurtiImg from "../assets/Kurti.png";
 import CropTopsImg from "../assets/Crop Tops.png";
 import JeansImg from "../assets/Jeans.png";
 import NightwareImg from "../assets/Nightware.png";
+import jewelleryimg from "../assets/jewellery.png";
+
 
 const categories = [
   { name: "Saree", img: shoppingImg },
@@ -18,6 +20,7 @@ const categories = [
   { name: "Crop Tops", img: CropTopsImg },
   { name: "Jeans", img: JeansImg },
   { name: "Nightware", img: NightwareImg },
+  { name: "Jewellery", img: jewelleryimg },
 ];
 
 const CategoriesSection = () => {
@@ -26,33 +29,45 @@ const CategoriesSection = () => {
   const sliderRef = useRef(null);
 
   // Handle window resize
-  const handleResize = () => {
-    if (window.innerWidth >= 1024) setSlidesToShow(5); // desktop
-    else if (window.innerWidth >= 768) setSlidesToShow(3); // tablet
-    else setSlidesToShow(2); // mobile
-  };
+  // const handleResize = () => {
+  //   if (window.innerWidth >= 1024) setSlidesToShow(5); // desktop
+  //   else if (window.innerWidth >= 768) setSlidesToShow(3); // tablet
+  //   else setSlidesToShow(2); // mobile
+  // };
 
-  useEffect(() => {
-    handleResize(); // initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // useEffect(() => {
+  //   handleResize(); // initial check
+  //   window.addEventListener("resize", handleResize);
+  //   return () => window.removeEventListener("resize", handleResize);
+  // }, []);
 
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow,
+    slidesToShow:5,
     slidesToScroll: 1,
     arrows: false,
     beforeChange: (_, next) => setCurrentSlide(next),
+     responsive: [
+      {
+        breakpoint: 1280, 
+        settings: { slidesToShow: 4, slidesToScroll: 1 },
+      },
+      {
+        breakpoint: 980, 
+        settings: { slidesToShow: 3, slidesToScroll: 1 },
+      },
+      {
+        breakpoint: 767, 
+        settings: { slidesToShow: 2, slidesToScroll: 1 },
+      },
+    ],
   };
 
   return (
     <div className="w-full py-16 bg-white font-sans">
       <div className="flex flex-col items-center">
-
-
         {/* Title Section */}
         <div className="relative  flex justify-center items-center w-full">
           {/* Left line */}
@@ -73,7 +88,7 @@ const CategoriesSection = () => {
           <div className="w-[50px] border-t border-black"></div>
         </div>
 
-
+ 
 
         {/* Slider */}
         <div className="max-w-[1440px] mx-auto w-full">
@@ -83,14 +98,14 @@ const CategoriesSection = () => {
                 key={index}
                 className="flex flex-col items-center group cursor-pointer p-2"
               >
-                <div className="relative w-[230px] h-[230px] rounded-full overflow-hidden border-4 circle-border transition-all duration-300 mx-auto">
-                  <img
-                    src={category.img}
-                    alt={category.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <p className="mt-4 text-gray-700 text-sm font-medium text-center">
+              <div className="relative sm:w-[165px] sm:h-[165px] md:w-[200px] md:h-[200px] lg:w-[230px] lg:h-[230px] rounded-full overflow-hidden border-4 circle-border transition-all duration-300 mx-auto">
+                <img
+                  src={category.img}
+                  alt={category.name}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+                <p className="mt-4 text-dark text-[20px]  text-center">
                   {category.name}
                   <span className="theme-border-block w-[20px] mx-auto"></span>
                 </p>
@@ -100,7 +115,7 @@ const CategoriesSection = () => {
         </div>
 
         {/* Custom Dots */}
-        <div className="flex justify-center mt-6 space-x-2">
+        <div className="flex justify-center mt-[35px] sm:mt-[65px] space-x-2">
           {categories.slice(0, 4).map((_, i) => (
             <button
               key={i}

@@ -52,6 +52,7 @@
 :root {
   /* Theme Colors */
   --theme-color: #F43297;         /* main theme color */
+  --sec-theme-color:#D2AF9F;
   --theme-hover-color: #F43297;   /* hover color */
   --theme-bg-light: #ffe6f0;      /* light background */
  --theme-bg-100: #f32f94;      /* light background */
@@ -59,6 +60,9 @@
  
  --theme-bg-rgba: rgba(210, 175, 159, 0.3);
  --theme-light-border:#BCBCBC;
+ --text-break:break-word;
+ --text-line-height:100%;
+
 
   /* Fonts */
   --font-family-h2: 'Italianno', cursive;
@@ -340,4 +344,12 @@
 .loginSlider .slick-dots li{
   margin: 0 !important;
 }
-
+.sec-theme{
+  color: var(--sec-theme-color);
+}
+.break{
+  word-break: var(--text-break);
+}
+.leading{
+  line-height:var(--text-line-heigh);
+}
