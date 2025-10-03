@@ -52,7 +52,7 @@
 :root {
   /* Theme Colors */
   --theme-color: #F43297;         /* main theme color */
-  --sec-theme-color:#D2AF9F;
+  --sec-theme-color-30: rgba(210, 175, 159, 0.3); /* 30% opacity */
   --theme-hover-color: #F43297;   /* hover color */
   --theme-bg-light: #ffe6f0;      /* light background */
  --theme-bg-100: #f32f94;      /* light background */
@@ -359,7 +359,7 @@
   margin: 0 !important;
 }
 .sec-theme{
-  color: var(--sec-theme-color);
+  background-color: var(--sec-theme-color-30);
 }
 .heading-18{
   color:var(--font-size-h4);

@@ -61,9 +61,9 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses}">
+    <header className="{headerClasses} drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]  w-full border-b sec-theme">
     
-      <div className="bg-primary-50  hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto ">
+      <div className="bg-primary-50   hidden lg:flex justify-between items-center max-w-[1280px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           <img

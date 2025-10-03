@@ -7,7 +7,7 @@ import shopBannerImage from '../assets/shopBannerImage.jpg';
 
 const ShopBanner = () => {
     return (
-        <div className="relative w-full h-[413px] flex items-center justify-center overflow-hidden hidden md:flex">
+        <div className="relative w-full h-[413px] flex items-center justify-center overflow-hidden hidden ">
             
            
             <div 

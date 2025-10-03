@@ -18,60 +18,54 @@ import { IoCellular } from "react-icons/io5";
 import { IoIosWifi } from "react-icons/io";
 import Battery from "./icons/Battery";
 
-
 const SortByIcon = (props) => (
-  // Use the renamed imported component here
-  <OriginalSortByIcon {...props} className="h-6 w-6  md:text-gray-500" />
+        <OriginalSortByIcon {...props} className="h-4 w-4  md:text-gray-500" />
 );
 
 
-// This replaces the user's custom ChevronDown (used in desktop select)
 const CustomChevronDown = (props) => (
   <ChevronDown {...props} />
 );
 
-// This is the icon for the mobile "Filter" button
-const Filter = (props) => ( // Keep this name for use in the bar
-    // Use the capitalized imported icon component
+const Filter = (props) => ( 
     <FilterIconComponent {...props} /> 
 );
 
-// --- 1. Mobile Responsive UI (Refactored to accept props) ---
+// --- 1. Mobile Responsive UI  ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
   <div className="flex justify-around items-center w-[450px]  gap-0">
-    {/* Mobile Sort By Card */}
     <div 
         className="flex-1 max-w-[200px]  rounded-[10px]  cursor-pointer transition duration-300  border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)] "
-        onClick={onSortClick} // Added click handler
+        onClick={onSortClick} 
     >
       <div className="flex items-center justify-between p-4 ">
         <div>
           <div className="text-[16px] font-inter font-semibold text-[rgba(0,0,0,0.7)]">Sort By</div>
-          {/* Using passed prop 'sortBy' */}
+    
           <div className="text-[12px] font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
         </div>
-        {/* SortByIcon no upyog kariyo chhe */}
+       
         <SortByIcon className="h-6 w-6 text-pink-500" />
       </div>
     </div>
 
-    {/* Mobile Filter Card */}
+   
     <div 
         className="flex-1 max-w-[200px] bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white"
-        onClick={onFilterClick} // Added click handler
+        onClick={onFilterClick} 
     >
       <div className="flex items-center justify-between p-4">
         <div>
           <div className="text-[16px] font-inter font-semibold">Filter</div>
           <div className="flex items-center mt-0.5">
               <span className="text-[12px] font-inter font-medium">Applied</span>
-              {/* Using passed prop 'filterCount' */}
+            
               <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
                   {filterCount}
               </span>
           </div>
         </div>
-        {/* Using the globally defined FilterIcon */}
+       
         <Filter className="h-6 w-6 text-white" /> 
       </div>
     </div>
@@ -120,25 +114,26 @@ const mockCategories = [
     { name: 'Indianwear', count: 5000 },
 ];
 
+
 const mockSizes = ['4XL', '3XL', 'XXL', 'XL', 'L', 'M', 'S', 'XS', 'XXS', 'All Size'];
 
 const mockColors = [
-    { name: 'Black', class: 'bg-black' },
-    { name: 'Peach', class: 'bg-orange-100' },
-    { name: 'Brown', class: 'bg-amber-800' },
-    { name: 'Red', class: 'bg-red-600' },
-    { name: 'Gray', class: 'bg-gray-400' },
-    { name: 'Orange', class: 'bg-orange-500' },
-    { name: 'Rust', class: 'bg-red-800' },
-    { name: 'Beige', class: 'bg-amber-200' },
-    { name: 'Teal', class: 'bg-teal-500' },
-    { name: 'Magnt', class: 'bg-fuchsia-600' },
-    { name: 'Green', class: 'bg-green-600' },
-    { name: 'Pink', class: 'bg-pink-500' },
-    { name: 'Maruti', class: 'bg-red-900' },
-    { name: 'Blue', class: 'bg-blue-600' },
-    { name: 'White', class: 'bg-white border border-gray-300' },
-    { name: 'Purple', class: 'bg-purple-600' },
+    { name: 'Black', hex: '#000000' },
+    { name: 'Peach', hex: '#FFD379' },
+    { name: 'Brown', hex: '#964B00' },
+    { name: 'Red', hex: '#E10404' },
+    { name: 'Gray', hex: '#808080' },
+    { name: 'Orange', hex: '#FF9000' },
+    { name: 'Rust', hex: '#289E3A' },
+    { name: 'Beige', hex: '#FFC0CB' },
+    { name: 'Teal', hex: '#800000' },
+    { name: 'Magnt', hex: '#0F0FAA' },
+    { name: 'Green', hex: '#FFFFFF' },
+    { name: 'Pink', hex: '#A363E2' },
+    { name: 'Maruti', hex: '#A0392F' },
+    { name: 'Blue', hex: '#F2E7BF' },
+    { name: 'White', hex: '#008080' },
+    { name: 'Purple', hex: '#FF0090' },
 ];
 
 const mockBrands = [
@@ -196,6 +191,7 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
   </label>
 );
 
+
 // Size mate
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
   <label className="flex items-center cursor-pointer p-1  rounded w-1/2">
@@ -203,7 +199,11 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
       type="checkbox"
       name={name}
       checked={isChecked}
-      onChange={onChange}
+      
+      
+      //    જે WomenCollections માં handleSizeChange(size) તરીકે વ્યાખ્યાયિત છે.
+      onChange={onChange} 
+      
       className="
         w-5 h-5 rounded border border-gray-400 cursor-pointer
         appearance-none
@@ -216,43 +216,82 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
 );
 
 
-const ColorFilterItem = ({ name, colorClass, isChecked, onChange }) => (
-    <div className="flex flex-col items-center p-1 cursor-pointer" onClick={() => onChange({ target: { name, checked: !isChecked } })}>
-        <div 
-            className={`w-[22px] h-[22px] rounded-full shadow-md ${colorClass} ${isChecked ? 'ring-2 ring-pink-500 ring-offset-2' : ''} transition-all duration-150`}
-        >
-        </div>
-        <span className="text-[10px] text-[#989696] font-regular mt-1">{name}</span>
-    </div>
-);
 
+const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
+    
 
-const CollapsibleFilter = ({ title, isSelected, onReset, children }) => {
-   
-    const [isOpen, setIsOpen] = useState(true); 
+    const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
 
     return (
-        <div className="px-4 py-2  border-gray-200">
+        <div 
+            className="flex flex-col items-center p-1 cursor-pointer w-1/6" 
+            onClick={() => onChange(name)} 
+        >
             <div 
-                className="flex rounded-[10px] px-4 py-2 border items-center justify-between cursor-pointer"
-                onClick={() => setIsOpen(!isOpen)}
+                className={`w-[22px] h-[22px] rounded-full transition-all duration-150
+                    ${border ? 'border border-gray-300' : ''} 
+                    ${isChecked ? 'ring-2 ring-pink-500 ring-offset-2' : ''}
+                `}
+                style={{ 
+                    backgroundColor: hex,
+                    filter: dropShadowStyle
+                }} 
             >
+            </div>
+            <span className="text-[10px] text-[#989696] font-regular mt-1">{name}</span>
+        </div>
+    );
+};
+
+
+const CollapsibleFilter = ({ title, isSelected, onReset, children , onCancelClick , defaultOpen = false}) => {
+   
+       const [isOpen, setIsOpen] = useState(defaultOpen); 
+
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+    };
+
+
+    const handleClose = () => {
+        setIsOpen(false);
+        if (onCancelClick) {
+            onCancelClick(); 
+        }
+    };
+    return (
+ <div className="px-4 py-2 border-gray-200">
+   <div className={` border rounded-[10px] px-4 py-3 items-center justify-between cursor-pointer flex 
+                ${isOpen ? 'border-transparent' : 'border-gray-200'}
+            `}
+            style={{
+                
+                backgroundColor: isOpen ? 'rgba(210, 175, 159, 0.3)' : 'transparent' 
+            }}
+            onClick={handleToggle} 
+        >
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
+                
                 <div className="flex items-center space-x-2">
-                   
-                    {isOpen ? (
-                        <Minus className="w-4 h-4 text-white bg-color" />
-                    ) : (
-                        <Plus className="w-4 h-4 text-white bg-color" />
-                    )}
+                    
+  
+
+          
+                    <div className="flex items-center space-x-2">
+                        {isOpen ? (
+                            <Minus className="w-4 h-4 text-white bg-color" />
+                        ) : (
+                            <Plus className="w-4 h-4 text-white bg-color" />
+                        )}
+                    </div>
+
                 </div>
             </div>
             
             {/* Filter Content */}
             {isOpen && (
                 <div className="p-4 space-y-1">
-                    {children}
-                   
+                    {children} 
                 </div>
             )}
         </div>
@@ -261,64 +300,9 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children }) => {
 
 
 
-const PriceFilter = ({ minPrice, maxPrice, onChangeMin, onChangeMax }) => (
 
-    <div className="p-4 border-t border-gray-200">
-            
-                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
-                    <div className="flex items-center  py-3 justify-between">
-                        <h3 className="font-medium font-inter text-black text-[14px]">Price</h3>
-                    </div>
-                   
-                
-        </div>
-             <div className="relative pt-1">
-                <input
-                    type="range"
-                    min="0"
-                    max="5000"
-                    value={minPrice}
-                    onChange={onChangeMin}
-                    className="w-full h-1 bg-transparent rounded-lg appearance-none cursor-pointer range-pink relative z-10"
-                    style={{ '--tw-ring-color': '#ec4899', '--tw-ring-opacity': '1' }}
-                />
-
-                {/* Highlight (single line) */}
-                <div
-                    className="absolute px-3 top-1 h-1 bg-pink-600 rounded-lg opacity-50"
-                    style={{
-                    width: `${((maxPrice - minPrice) / 5000) * 100}%`,
-                    left: `${(minPrice / 5000) * 100}%`
-                    }}
-                 />
-   
-        </div>
-        <div className="flex px-3 mt-4 justify-between text-sm">
-            <div className="flex flex-col items-start">
-                <span className=" text-[14px] font-inter font-regular p-1 text-[#989696]">Max</span>
-                <input 
-                    type="number"
-                    value={minPrice}
-                    onChange={onChangeMin}
-                    className="text-[14px] font-inter font-regular text-black border border-gray-300 rounded-[30px] p-1 w-[110px] text-center"
-                />
-            </div>
-            <div className="flex flex-col items-start">
-                <span className="text-[14px] font-inter font-regular p-1 text-[#989696]">Min</span>
-                 <input 
-                    type="number"
-                    value={maxPrice}
-                    onChange={onChangeMax}
-                    className="text-[14px] font-inter font-regular text-black border border-gray-300 rounded-[30px] p-1 w-[110px] text-center"
-                />
-            </div>
-        </div>
-    </div>
-);
-
-// Component for a single product card
 const ProductCard = ({ product }) => (
-    // The main container needs to be 'relative' for the overlay to be 'absolute' to it
+ 
     <div className="relative group overflow-hidden">
         
         {/* 1. Image Container */}
@@ -327,7 +311,7 @@ const ProductCard = ({ product }) => (
                 src={product.imageSrc} 
                 alt={product.name}
                 // Kept your image classes, adjusting h-[550px] for consistent sizing
-                className="w-[450px] h-[490px] sm:w-full sm:h-[553px]  transition-transform duration-500"
+                className="w-[450px] h-[490px] sm:w-full  sm:h-[553px]  md:w-full md:h-[553px] transition-transform duration-500"
             />
         </div>
 
@@ -369,11 +353,123 @@ const ProductCard = ({ product }) => (
     </div>
 );
 
+const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
+   
+    const MAX_PRICE = 5000; 
+    const DEFAULT_MIN = 500;
+    const DEFAULT_MAX = 2500;
+    
+
+    const isRangeSelected = minPrice !== DEFAULT_MIN || maxPrice !== DEFAULT_MAX; 
+
+    const handleSliderChange = (e) => {
+        const value = parseInt(e.target.value);
+        
+        if (e.target.id === 'min') {
+            setMinPrice(Math.min(value, maxPrice - 100)); 
+        } else if (e.target.id === 'max') {
+            setMaxPrice(Math.max(value, minPrice + 100)); 
+        }
+    };
+    
+    const handleReset = () => {
+        setMinPrice(DEFAULT_MIN); 
+        setMaxPrice(DEFAULT_MAX); 
+    };
+
+    return (
+         <CollapsibleFilter 
+            title="Price" 
+            defaultOpen={true} 
+
+            isSelected={isRangeSelected} 
+            onReset={handleReset}
+        >
+            <div className="px-2 py-2 space-y-6">
+                
+               
+                <div className="relative h-1 w-full bg-gray-200 rounded-full ">
+                    
+                  
+                    <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-full"></div>
+
+                    
+                    <div 
+                        className="absolute bg-pink-600 h-1 rounded-full top-0"
+                        style={{
+                            left: `${(minPrice / MAX_PRICE) * 100}%`,
+                            right: `${100 - (maxPrice / MAX_PRICE) * 100}%`,
+                        }}
+                    ></div>
+                    
+                    
+                    <input
+                        id="min"
+                        type="range"
+                        min="0"
+                        max={MAX_PRICE}
+                        value={minPrice}
+                        onChange={handleSliderChange}
+                     
+                        className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer" 
+                        style={{ zIndex: minPrice === MAX_PRICE ? 5 : 4 }} 
+                    />
+                    <input
+                        id="max"
+                        type="range"
+                        min="0"
+                        max={MAX_PRICE}
+                        value={maxPrice}
+                        onChange={handleSliderChange}
+                     
+                        className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer"
+                    />
+                    
+                  
+                    
+           
+                    <div 
+                        className="absolute w-4 h-4 rounded-full bg-pink-600 top-1/2 transform -translate-y-1/2 shadow-md"
+                        style={{ left: `${(minPrice / MAX_PRICE) * 100}%`, marginLeft: '-8px' }}
+                    ></div>
+                    <div 
+                        className="absolute w-4 h-4 rounded-full bg-pink-600 top-1/2 transform -translate-y-1/2 shadow-md"
+                        style={{ left: `${(maxPrice / MAX_PRICE) * 100}%`, marginLeft: '-8px' }}
+                    ></div>
+
+                </div>
+                
+              
+                <div className="flex justify-between  text-center">
+                  
+                    <div className="flex flex-col items-start">
+                        <span className="font-inter text-[#989696]  text-[14px] font-regular">Max</span>
+                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg text-black font-inter text-[14px] font-regular">
+                            Rs {maxPrice} 
+                        </div>
+                    </div>
+                
+                    <div className="flex flex-col items-end">
+                        <span className="font-inter text-[#989696]  text-[14px] font-regular">Min</span>
+                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg font-inter text-black  text-[14px] font-regular">
+                            Rs {minPrice}
+                        </div>
+                    </div>
+                </div>
+                <div className="flex gap-4  border-t border-gray-200 "></div>
+            </div>
+        </CollapsibleFilter>
+    );
+};
+
+
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
-    const [selectedCategories, setSelectedCategories] = useState(['Saree']);
-    const [selectedSizes, setSelectedSizes] = useState(['4XL']);
+     const [selectedCategories, setSelectedCategories] = useState([]);
+     
+     
+    const [selectedSizes, setSelectedSizes] = useState([]);
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
     
@@ -383,48 +479,45 @@ const WomenCollections = () => {
     const [selectedDiscounts, setSelectedDiscounts] = useState([]);
     const [selectedLabels, setSelectedLabels] = useState([]);
 
+    // 💡 Price Range States
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
+    
     const [sortBy, setSortBy] = useState('Popularity');
       const filterCount = 0; // Placeholder for applied filter count
     
     // --- Filter Handlers ---
-    const createToggleHandler = (setState) => (e) => {
-        const { name, checked } = e.target;
-        setState(prev =>
-            checked ? [...prev, name] : prev.filter(item => item !== name)
+    const createToggleHandler = (setState) => (name) => { // Modified to accept name directly
+        setState(prev => 
+            prev.includes(name)
+                ? prev.filter(item => item !== name)
+                : [...prev, name]
         );
     };
 
-    const handleCategoryChange = (categoryName) => {
-    // આ ફંક્શન ઇવેન્ટ ઓબ્જેક્ટને બદલે સીધો categoryName (string) સ્વીકારે છે.
-    // તેથી આમાં કોઈ ફેરફાર જરૂરી નથી.
-    setSelectedCategories(prev => 
-        prev.includes(categoryName)
-            ? prev.filter(c => c !== categoryName)
-            : [...prev, categoryName]
-    );
-};
+    const handleCategoryChange = createToggleHandler(setSelectedCategories);
     const handleSizeChange = createToggleHandler(setSelectedSizes);
-    const handleColorChange = createToggleHandler(setSelectedColors);
+    
+const handleColorChange = createToggleHandler(setSelectedColors);
+
     const handleBrandChange = createToggleHandler(setSelectedBrands);
-    
-      // Dummy handlers for mobile clicks
-  const handleSortClick = () => console.log('Mobile Sort Clicked. Implement modal/popup logic here.');
-  const handleFilterClick = () => console.log('Mobile Filter Clicked. Implement filter sidebar logic here.');
-    
     const handleTypeChange = createToggleHandler(setSelectedTypes);
     const handleFabricChange = createToggleHandler(setSelectedFabrics);
     const handleDiscountChange = createToggleHandler(setSelectedDiscounts);
     const handleLabelChange = createToggleHandler(setSelectedLabels);
 
 
+      // Dummy handlers for mobile clicks
+    const handleSortClick = () => console.log('Mobile Sort Clicked. Implement modal/popup logic here.');
+    const handleFilterClick = () => console.log('Mobile Filter Clicked. Implement filter sidebar logic here.');
+    
+    
     const handleClearFilter = (filterType, value) => {
         if (filterType === 'category') setSelectedCategories(prev => prev.filter(cat => cat !== value));
         else if (filterType === 'size') setSelectedSizes(prev => prev.filter(size => size !== value));
         else if (filterType === 'color') setSelectedColors(prev => prev.filter(color => color !== value));
         else if (filterType === 'brand') setSelectedBrands(prev => prev.filter(brand => brand !== value));
-   
+       
         else if (filterType === 'type') setSelectedTypes(prev => prev.filter(item => item !== value));
         else if (filterType === 'fabric') setSelectedFabrics(prev => prev.filter(item => item !== value));
         else if (filterType === 'discount') setSelectedDiscounts(prev => prev.filter(item => item !== value));
@@ -432,7 +525,7 @@ const WomenCollections = () => {
     };
 
     // --- Reset Handlers ---
-    const handleResetCategory = () => setSelectedCategories([]);
+    const handleResetCategories = () => setSelectedCategories([]);
     const handleResetSizes = () => setSelectedSizes([]);
     const handleResetColors = () => setSelectedColors([]);
     const handleResetBrands = () => setSelectedBrands([]);
@@ -453,12 +546,12 @@ const WomenCollections = () => {
         ...selectedDiscounts.map(discount => ({ type: 'discount', value: discount })),
         ...selectedLabels.map(label => ({ type: 'label', value: label })),
     ];
-    
+    const isCategorySelected = selectedCategories.length > 0;
     const totalResults = 100;
     const showingResults = mockProducts.length;
-
+// 
     return (
-        <div className="container w-full max-w-[1440px] mx-auto py-2 sm:py-14  px-4 sm:px-0 ">
+        <div className="container w-full max-w-[1440px] mx-auto py-2 md:py-0 sm:py-14  px-4 sm:px-0 md:px-0  ">
             
              <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                  {/* Left Side - Time */}
@@ -514,125 +607,130 @@ const WomenCollections = () => {
                     </div>
 
                     {/* Category Filter Section */}
-                <div className="px-4">
-                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
-                    <div className="flex items-center  py-3 justify-between">
-                        <h3 className="font-medium font-inter text-black text-[14px]">Category</h3>
-                    </div>
-                    </div>
-                </div>
 
 
 
-                         <div className="p-4">
-                        
-                        <div className="space-y-1  px-2 overflow-y-auto">
-                            {mockCategories.map(cat => (
-                                <FilterItemCheckbox
-                                    key={cat.name}
-                                    name={cat.name}
-                                    count={cat.count}
-                                    isChecked={selectedCategories.includes(cat.name)}
-                                    onChange={handleCategoryChange}
-                                />
-                            ))}
-                        </div>
-                        <div className="flex gap-4 mt-4">
-                            <button
-                                onClick={handleResetCategory}
-                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleResetCategory}
-                                className=" w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
-                            >
-                                Reset
-                            </button>
-                        </div>
-                    </div>
-                    
-                    {/* Price Filter Section */}
-                    <PriceFilter
-                        minPrice={minPrice}
-                        maxPrice={maxPrice}
-                        onChangeMin={(e) => setMinPrice(Number(e.target.value))}
-                        onChangeMax={(e) => setMaxPrice(Number(e.target.value))}
+
+<CollapsibleFilter 
+            title="Category" 
+            defaultOpen={true}
+      
+            isSelected={isCategorySelected} 
+            onReset={handleResetCategories} 
+        >
+            {/* Filter Content */}
+            <div className="space-y-1 px-2 overflow-y-auto">
+                {mockCategories.map(cat => (
+                    <FilterItemCheckbox
+                        key={cat.name}
+                        name={cat.name}
+                        count={cat.count}
+                        isChecked={selectedCategories.includes(cat.name)}
+                        onChange={handleCategoryChange}
                     />
-                    <div className="flex gap-4 p-4 border-b border-gray-200">
-                         <button
-                            onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                             onClick={() => {setMinPrice(500); setMaxPrice(2500);}}
-                            className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
-                        >
-                            Reset
-                        </button>
-                    </div>
-                    
-                    {/* Size Filter Section */}
-              <div className="p-4 border-t border-gray-200">
-                    <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
-                    <div className="flex items-center  py-3 justify-between">
-                        <h3 className="font-medium font-inter text-black text-[14px] text-black text-[14px]">Size</h3>
-                    </div>
-                   
-                
+                ))}
+            </div>
+            
+        <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
         </div>
-                        <div className="flex flex-wrap p-4"> 
-                            {mockSizes.map(size => (
-                                <SizeFilterItem
-                                    key={size}
-                                    name={size}
-                                    isChecked={selectedSizes.includes(size)}
-                                    onChange={handleSizeChange}
-                                />
-                            ))}
-                        </div>
-                        <div className="flex gap-4 mt-4">
-                            <button
-                                onClick={handleResetSizes}
-                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px]  transition"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={handleResetSizes}
-                                className="w-[100px] h-[40px]  text-[18px] font-regular font-inter text-white bg-color rounded-[3px]  transition"
-                            >
-                                Reset
-                            </button>
-                        </div>
-                    </div>
+
+        </CollapsibleFilter>
                     
-                    {/* Color Filter Section (Non-collapsible in the image) */}
-                    <div className="p-4 border-t border-gray-200">
-                        <div className="px-3 rounded-[10px] bg-theme overflow-hidden">
-                         <div className="flex items-center  py-3 justify-between">
-                        <h3 className="font-medium font-inter text-black text-[14px]  ">Color</h3>
-                    </div>
-</div>
-                        <div className="p-4 flex flex-wrap gap-x-2 gap-y-4 justify-start"> 
+          
+                    <PriceRangeFilter 
+                        minPrice={minPrice} 
+                        
+                        maxPrice={maxPrice} 
+                        setMinPrice={setMinPrice} 
+                        setMaxPrice={setMaxPrice} 
+                    />
+
+
+             
+
+
+<CollapsibleFilter 
+    title="Size" 
+    defaultOpen={true}
+    isSelected={selectedSizes.length > 0} 
+    onReset={handleResetSizes}
+>
+    <div className="flex flex-wrap "> 
+        {mockSizes.map(size => (
+            <SizeFilterItem
+                key={size}
+                name={size}
+                isChecked={selectedSizes.includes(size)}
+                onChange={() => handleSizeChange(size)} 
+            />
+        ))}
+    </div>
+    
+   
+          <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+           
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+          
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
+   
+
+</CollapsibleFilter>
+                    
+                <CollapsibleFilter 
+                    title="Color" 
+                    defaultOpen={true}
+                    isSelected={selectedColors.length > 0} 
+                    onReset={handleResetColors} 
+                    onClose={() => console.log("Panel closed after cancel")} 
+                >
+                    <div className=""> 
+                        {/* કલર આઇટમ્સ માટેનું મુખ્ય div */}
+                        <div className="flex flex-wrap"> 
                             {mockColors.map(color => (
                                 <ColorFilterItem
                                     key={color.name}
                                     name={color.name}
-                                    colorClass={color.class}
+                                    hex={color.hex}     
+                                    border={color.border} 
                                     isChecked={selectedColors.includes(color.name)}
-                                    onChange={handleColorChange}
+                                    onChange={handleColorChange} 
                                 />
                             ))}
                         </div>
-                        <div className="border-t border-gray-200"></div>
-                        
-                    </div>
 
-                    {/* Brands Filter Section (Collapsible - as per your new image) */}
+                    </div>
+</CollapsibleFilter>
+
+                    
                     <CollapsibleFilter 
                         title="Brands" 
                         isSelected={selectedBrands.length > 0} 
@@ -647,9 +745,27 @@ const WomenCollections = () => {
                                 onChange={handleBrandChange}
                             />
                         ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+          
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+          
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
                     </CollapsibleFilter>
                     
-                    {/* 👇 Type Filter Section */}
+                 
                     <CollapsibleFilter 
                         title="Type" 
                         isSelected={selectedTypes.length > 0} 
@@ -663,9 +779,27 @@ const WomenCollections = () => {
                                 onChange={handleTypeChange}
                             />
                         ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+          
+            <button
+               
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
                     </CollapsibleFilter>
 
-                    {/* 👇 Fabric Filter Section */}
+                    
                     <CollapsibleFilter 
                         title="Fabric" 
                         isSelected={selectedFabrics.length > 0} 
@@ -679,6 +813,24 @@ const WomenCollections = () => {
                                 onChange={handleFabricChange}
                             />
                         ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+          
+            <button
+              
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
                     </CollapsibleFilter>
 
                     {/* 👇 Discounts Filter Section */}
@@ -695,9 +847,27 @@ const WomenCollections = () => {
                                 onChange={handleDiscountChange}
                             />
                         ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
+            <button
+                
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
                     </CollapsibleFilter>
 
-                    {/* 👇 Product Label Filter Section */}
+                
                     <CollapsibleFilter 
                         title="Product Label" 
                         isSelected={selectedLabels.length > 0} 
@@ -711,23 +881,41 @@ const WomenCollections = () => {
                                 onChange={handleLabelChange}
                             />
                         ))}
+                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+            {/* Cancel Button */}
+            <button
+              
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+            >
+                Cancel
+            </button>
+            
+            {/* Reset Button */}
+            <button
+                onClick={handleResetColors} 
+                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-pink-600 rounded-[3px] transition shadow-md"
+            >
+                Reset
+            </button>
+        </div>
                     </CollapsibleFilter>
                     {/* End of new filters */}
 
 
                 </aside>
 
-                {/* 2. Products Listing Area (Same as before) */}
+              
                 <main className="w-full lg:w-3/4">
 
                     {/* Top Bar: Results and Sorting */}
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden sm:block text-sm text-gray-700">
+                        <div className="hidden sm:block md:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
-                        {/* --- Mobile UI: Visible on small screens, Hidden on medium/large screens --- */}
+                   
           <div className="md:hidden flex">
-            {/* Passing state and handlers as props */}
+          
             <MobileFilterBar 
               sortBy={sortBy} 
               filterCount={filterCount} 
@@ -736,7 +924,7 @@ const WomenCollections = () => {
             />
           </div>
 
-          {/* --- Desktop UI: Hidden on small screens, Visible on medium/large screens --- */}
+        
           <div className="hidden md:flex justify-end">
             {/* Passing state and setter as props */}
             <DesktopSortBar sortBy={sortBy} setSortBy={setSortBy} />
@@ -745,7 +933,7 @@ const WomenCollections = () => {
                 {/* Active Filters Display */}
                 <div className="hidden sm:block flex flex-wrap items-center gap-2 mb-6">
                 <span className="text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696]">Clear Filters:</span>
-                {/* Clear All Filters બટન ઉમેરી શકાય છે, જો જરૂર હોય તો */}
+             
 
                 {currentFilters.map((filter, index) => (
                 <span
