@@ -155,7 +155,7 @@ export default function CategoryFormPage() {
               <div>
                 <Label htmlFor="parent">Parent Category</Label>
                 <Select
-                  value={parentId ?? "none"} // fallback to "none" if null
+                  value={parentId ?? "none"} 
                   onValueChange={(val) =>
                     setParentId(val === "none" ? null : val)
                   }
@@ -167,7 +167,7 @@ export default function CategoryFormPage() {
                   <SelectContent>
                     <SelectItem value="none">None</SelectItem>
                     {categories
-                      .filter((cat) => cat._id !== id) // exclude current category
+                      .filter((cat) => cat._id !== id) 
                       .map((cat) => (
                         <SelectItem key={cat._id} value={cat._id}>
                           {cat.name}

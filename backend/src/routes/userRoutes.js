@@ -7,6 +7,8 @@ const {
   updateUser,
   deleteUser,
   bulkDeleteUsers,
+  updateOwnProfile,
+  getOwnProfile,
 } = require("../controllers/userController");
 const { authMiddleware, authorizeRoles, authorizeMinRole } = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/upload");
@@ -15,8 +17,11 @@ const upload = require("../middlewares/upload");
 router.use(authMiddleware);
 
 // Routes
-router.get("/",authorizeMinRole("admin"), getUsers);                        
-router.get("/:id", authorizeMinRole("admin"), getUserById);                
+router.get("/",authorizeMinRole("admin"), getUsers); 
+router.get("/me", getOwnProfile);                       
+router.get("/:id", authorizeMinRole("admin"), getUserById);
+
+router.put("/me", upload.single("image"),updateOwnProfile);                
 router.post("/", authorizeMinRole("admin"),upload.single("image"),createUser);   
 router.put("/:id", authorizeMinRole("admin"), updateUser); 
 router.delete("/:id", authorizeMinRole("admin"), deleteUser); 

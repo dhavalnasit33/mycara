@@ -52,6 +52,21 @@ const getUserById = async (req, res) => {
   }
 };
 
+// ✅ NEW: Get logged-in user's own profile
+const getOwnProfile = async (req, res) => {
+  try {
+    const userId = req.user._id; 
+  
+    const user = await User.findById(userId).select("-password");
+    if (!user) {
+      return sendResponse(res, false, null, "User not found");
+    }
+
+    return sendResponse(res, true, user, "Profile details retrieved successfully");
+  } catch (err) {
+    return sendResponse(res, false, null, "Failed to retrieve profile: " + err.message);
+  }
+};
 // Create new user
 const createUser = async (req, res) => {
   try {
@@ -105,6 +120,62 @@ const updateUser = async (req, res) => {
   }
 };
 
+// Update own profile (for logged-in users)
+const updateOwnProfile = async (req, res) => {
+  try {
+    const userId = req.user._id; 
+    const {
+      name,
+      email,
+      mobile_number,
+      address,
+      gender,
+      date_of_birth,
+      profile_picture,
+      password,
+    } = req.body;
+
+    const updateData = {
+      name,
+      email,
+      mobile_number,
+      address,
+      gender,
+      date_of_birth,
+      profile_picture,
+    };
+
+    // If user wants to change password
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      updateData.password = await bcrypt.hash(password, salt);
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return sendResponse(res, false, null, "User not found");
+    }
+
+    return sendResponse(
+      res,
+      true,
+      { user: updatedUser },
+      "Profile updated successfully"
+    );
+  } catch (err) {
+    return sendResponse(
+      res,
+      false,
+      null,
+      "Failed to update profile: " + err.message
+    );
+  }
+};
+
+
 // Delete user by ID
 const deleteUser = async (req, res) => {
   try {
@@ -139,4 +210,6 @@ module.exports = {
   updateUser,
   deleteUser,
   bulkDeleteUsers,
+  updateOwnProfile,
+  getOwnProfile
 };

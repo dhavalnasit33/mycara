@@ -19,6 +19,10 @@ import {
   Layers,
   Droplet,
   Ruler,
+  Heart,
+  ShoppingBasket,
+  Navigation,
+  Columns,
 } from "lucide-react";
 import {
   Sidebar,
@@ -32,12 +36,13 @@ import {
   SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
-const mainNavItems = [
-  { title: "Dashboard", url: "/", icon: LayoutDashboard },
-];
-
+const mainNavItems = [{ title: "Dashboard", url: "/", icon: LayoutDashboard }];
 
 const catalogItems = [
   { title: "Products", url: "/products", icon: Package },
@@ -62,12 +67,17 @@ const salesItems = [
 
 const customerItems = [
   { title: "Users", url: "/users", icon: Users },
-  { title: "Customer Reviews", url: "/reviews", icon: Star },
+  { title: "Customer Reviews", url: "/customer-reviews", icon: Star },
+  { title: "Wishlist", url: "/wishlists", icon: Heart },
+  { title: "Cart", url: "/carts", icon: ShoppingBasket },
 ];
 
 const systemItems = [
-  { title: "Settings", url: "/settings", icon: Settings },
+  { title: "Sections", url: "/sections", icon: Layers },
+  { title: "Navbar", url: "/navbar", icon: Navigation },
+  { title: "Footer", url: "/footer", icon: Columns },
   { title: "Contact Messages", url: "/contact-messages", icon: MessageSquare },
+  { title: "Settings", url: "/settings", icon: Settings },
 ];
 
 export function AdminSidebar() {
@@ -75,14 +85,16 @@ export function AdminSidebar() {
   const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
-  const isGroupActive = (items: typeof mainNavItems) => 
-    items.some(item => location.pathname.startsWith(item.url) && item.url !== "/");
+  const isGroupActive = (items: typeof mainNavItems) =>
+    items.some(
+      (item) => location.pathname.startsWith(item.url) && item.url !== "/"
+    );
 
   const getNavClass = (path: string) => {
     const active = isActive(path);
     return `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-200 ${
-      active 
-        ? "bg-sidebar-active text-sidebar-active-foreground shadow-sm" 
+      active
+        ? "bg-sidebar-active text-sidebar-active-foreground shadow-sm"
         : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
     }`;
   };
@@ -98,7 +110,9 @@ export function AdminSidebar() {
           </div>
           {!isCollapsed && (
             <div>
-              <h2 className="text-lg font-semibold text-sidebar-foreground">Mycra</h2>
+              <h2 className="text-lg font-semibold text-sidebar-foreground">
+                Mycra
+              </h2>
               <p className="text-xs text-muted-foreground">Admin Dashboard</p>
             </div>
           )}
@@ -139,7 +153,10 @@ export function AdminSidebar() {
                       {catalogItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <NavLink
+                              to={item.url}
+                              className={getNavClass(item.url)}
+                            >
                               <item.icon className="h-4 w-4" />
                               <span>{item.title}</span>
                             </NavLink>
@@ -167,7 +184,10 @@ export function AdminSidebar() {
                       {promotionItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <NavLink
+                              to={item.url}
+                              className={getNavClass(item.url)}
+                            >
                               <item.icon className="h-4 w-4" />
                               <span>{item.title}</span>
                             </NavLink>
@@ -195,7 +215,10 @@ export function AdminSidebar() {
                       {salesItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <NavLink
+                              to={item.url}
+                              className={getNavClass(item.url)}
+                            >
                               <item.icon className="h-4 w-4" />
                               <span>{item.title}</span>
                             </NavLink>
@@ -223,7 +246,10 @@ export function AdminSidebar() {
                       {customerItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <NavLink
+                              to={item.url}
+                              className={getNavClass(item.url)}
+                            >
                               <item.icon className="h-4 w-4" />
                               <span>{item.title}</span>
                             </NavLink>
@@ -251,7 +277,10 @@ export function AdminSidebar() {
                       {systemItems.map((item) => (
                         <SidebarMenuItem key={item.title}>
                           <SidebarMenuButton asChild>
-                            <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <NavLink
+                              to={item.url}
+                              className={getNavClass(item.url)}
+                            >
                               <item.icon className="h-4 w-4" />
                               <span>{item.title}</span>
                             </NavLink>

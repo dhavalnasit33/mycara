@@ -10,6 +10,7 @@ const sectionSchema = new mongoose.Schema(
     is_button: { type: Boolean, default: false },
     button_name: { type: String, required: false },
     button_link: { type: String, required: false },
+    status: { type: String, enum: ["active", "inactive"], default: "active" },
   },
     { timestamps: true } 
 );

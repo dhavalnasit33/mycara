@@ -8,8 +8,6 @@ import VelzonDashboard from "./pages/VelzonDashboard";
 import Products from "./pages/Products/Products";
 import AddProduct from "./pages/Products/AddProduct";
 import Users from "./pages/Users/Users";
-import ContactMessages from "./pages/ContactMessages";
-import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login";
@@ -30,11 +28,23 @@ import Sizes from "./pages/Sizes/Sizes";
 import SizeFormPage from "./pages/Sizes/SizeForm";
 import Discounts from "./pages/Discount/Discounts";
 import DiscountFormPage from "./pages/Discount/DiscountForm";
-import Coupons from "./pages/coupons/Coupons";
-import CouponFormPage from "./pages/coupons/CouponForm";
+import Coupons from "./pages/Coupons/Coupons";
+import CouponFormPage from "./pages/Coupons/CouponForm";
 import Orders from "./pages/Orders/Orders";
 import Payments from "./pages/Payments/Payments";
 import UserFormPage from "./pages/Users/UserForm";
+import CustomerReviews from "./pages/CustomerReviews/CustomerReviews";
+import Cart from "./pages/carts/carts";
+import Wishlist from "./pages/Wishlists/Wishlist";
+import ContactUs from "./pages/ContactUs/ContactUs";
+import Sections from "./pages/Sections/Sections";
+import SectionFormPage from "./pages/Sections/SectionForm";
+import Navbar from "./pages/Navbar/Navbar";
+import NavbarFormPage from "./pages/Navbar/NavbarForm";
+import Footer from "./pages/Footer/Footer";
+import FooterFormPage from "./pages/Footer/FooterForm";
+import Settings from "./pages/Settings/Settings";
+
 
 const queryClient = new QueryClient();
 
@@ -85,9 +95,20 @@ const App = () => (
                 <Route path="users" element={<Users />} />
                  <Route path="users/add" element={<UserFormPage />} />
                   <Route path="/users/:id/edit" element={<UserFormPage />} />
-              <Route path="reviews" element={<VelzonDashboard />} />
+                  <Route path="customer-reviews" element={<CustomerReviews />} />
+             <Route path="carts" element={<Cart />} />
+              <Route path="contact-messages" element={<ContactUs />} />
+              <Route path="sections" element={<Sections />} />
+                 <Route path="sections/add" element={<SectionFormPage />} />
+                  <Route path="/sections/:id/edit" element={<SectionFormPage />} />
+                  <Route path="navbar" element={<Navbar />} />
+                 <Route path="navbar/add" element={<NavbarFormPage />} />
+                  <Route path="/navbar/:id/edit" element={<NavbarFormPage />} />
+                   <Route path="footer" element={<Footer />} />
+                 <Route path="footer/add" element={<FooterFormPage />} />
+                  <Route path="/footer/:id/edit" element={<FooterFormPage />} />
               <Route path="settings" element={<Settings />} />
-              <Route path="contact-messages" element={<ContactMessages />} />
+            
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

@@ -174,82 +174,92 @@ export default function Users() {
         <CardContent>
           <div className="overflow-x-auto rounded-lg border border-gray-200">
             <table className="w-full text-sm table-fixed">
-              <thead className="bg-gray-50 text-gray-700 text-sm font-medium">
-                <tr>
-                  <th className="p-3 w-10 text-left">
-                    <Checkbox
-                      checked={
-                        selectedIds.length === users.length && users.length > 0
-                      }
-                      onCheckedChange={(checked) =>
-                        setSelectedIds(checked ? users.map((u) => u._id) : [])
-                      }
-                    />
-                  </th>
-                  <th className="p-3 w-48 text-left">Name</th>
-                  <th className="p-3 w-48 text-left">Email</th>
-                  <th className="p-3 w-32 text-left">Role</th>
-                  <th className="p-3 w-32 text-left">Status</th>
-                  <th className="p-3 w-24 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {users.map((user) => (
-                  <tr
-                    key={user._id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="p-3">
-                      <Checkbox
-                        checked={selectedIds.includes(user._id)}
-                        onCheckedChange={() => handleSelect(user._id)}
-                      />
-                    </td>
-                    <td className="p-3 font-medium text-gray-900 truncate flex items-center gap-2">
-                      {/* Profile Picture or Avatar */}
-                      <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
-                        {user.profile_picture ? (
-                          <img
-                            src={`${import.meta.env.VITE_API_URL_IMAGE}${
-                              user.profile_picture
-                            }`}
-                            alt={user.name}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <span className="flex items-center justify-center w-full h-full text-gray-500 font-bold">
-                            {user.name?.charAt(0).toUpperCase()}
-                          </span>
-                        )}
-                      </div>
-                      {user.name}
-                    </td>
-                    <td className="p-3 truncate">{user.email}</td>
-                    <td className="p-3">{user.role}</td>
-                    <td className="p-3">{getStatusBadge(user.is_active)}</td>
-                    <td className="p-3 flex justify-end gap-2">
-                      <Link
-                        to={`/users/${user._id}/edit`}
-                        className="p-1 text-blue-600 hover:bg-blue-50 rounded-md transition"
-                      >
-                        <Edit2 className="h-4 w-4" />
-                      </Link>
-                      <ConfirmDialog
-                        title="Delete User"
-                        description={`This will permanently delete user "${user.name}".`}
-                        confirmText="Delete"
-                        onConfirm={() => handleDelete(user._id)}
-                        danger
-                      >
-                        <button className="p-1 text-red-600 hover:bg-red-50 rounded-md transition">
-                          <Trash2 className="h-4 w-4" />
-                        </button>
-                      </ConfirmDialog>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+  <thead className="bg-gray-50 text-gray-700 text-sm font-medium">
+    <tr>
+      <th className="p-3 w-10 text-left">
+        <Checkbox
+          checked={selectedIds.length === users.length && users.length > 0}
+          onCheckedChange={(checked) =>
+            setSelectedIds(checked ? users.map((u) => u._id) : [])
+          }
+        />
+      </th>
+      <th className="p-3 w-48 text-left">Name</th>
+      <th className="p-3 w-48 text-left">Email</th>
+      <th className="p-3 w-32 text-left">Role</th>
+      <th className="p-3 w-32 text-left">Status</th>
+      <th className="p-3 w-24 text-right">Actions</th>
+    </tr>
+  </thead>
+
+  <tbody className="divide-y divide-gray-100">
+    {users.length > 0 ? (
+      users.map((user) => (
+        <tr key={user._id} className="hover:bg-gray-50 transition-colors">
+          <td className="p-3">
+            <Checkbox
+              checked={selectedIds.includes(user._id)}
+              onCheckedChange={() => handleSelect(user._id)}
+            />
+          </td>
+
+          <td className="p-3 font-medium text-gray-900 truncate flex items-center gap-2">
+            {/* Profile Picture or Avatar */}
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-200 flex-shrink-0">
+              {user.profile_picture ? (
+                <img
+                  src={`${import.meta.env.VITE_API_URL_IMAGE}${user.profile_picture}`}
+                  alt={user.name}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <span className="flex items-center justify-center w-full h-full text-gray-500 font-bold">
+                  {user.name?.charAt(0).toUpperCase()}
+                </span>
+              )}
+            </div>
+            {user.name}
+          </td>
+
+          <td className="p-3 truncate">{user.email}</td>
+          <td className="p-3">{user.role}</td>
+          <td className="p-3">{getStatusBadge(user.is_active)}</td>
+
+          <td className="p-3 flex justify-end gap-2">
+            <Link
+              to={`/users/${user._id}/edit`}
+              className="p-1 text-blue-600 hover:bg-blue-50 rounded-md transition"
+            >
+              <Edit2 className="h-4 w-4" />
+            </Link>
+
+            <ConfirmDialog
+              title="Delete User"
+              description={`This will permanently delete user "${user.name}".`}
+              confirmText="Delete"
+              onConfirm={() => handleDelete(user._id)}
+              danger
+            >
+              <button className="p-1 text-red-600 hover:bg-red-50 rounded-md transition">
+                <Trash2 className="h-4 w-4" />
+              </button>
+            </ConfirmDialog>
+          </td>
+        </tr>
+      ))
+    ) : (
+      <tr>
+        <td
+          colSpan={6}
+          className="p-4 text-center text-gray-500"
+        >
+          No users found.
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
           </div>
 
           {totalPages > 1 && (

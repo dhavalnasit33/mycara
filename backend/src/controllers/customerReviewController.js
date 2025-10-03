@@ -12,23 +12,23 @@ const getReviews = async (req, res) => {
       : {};
 
     if (download) {
-      const reviews = await CustomerReview.find(query)
+      const customerReviews = await CustomerReview.find(query)
         .populate("user_id product_id")
         .sort({ createdAt: -1 });
-      return sendResponse(res, true, { reviews }, "All reviews retrieved for download");
+      return sendResponse(res, true, { customerReviews }, "All reviews retrieved for download");
     }
 
     page = parseInt(page);
     limit = parseInt(limit);
 
     const total = await CustomerReview.countDocuments(query);
-    const reviews = await CustomerReview.find(query)
+    const customerReviews = await CustomerReview.find(query)
       .populate("user_id product_id")
       .skip((page - 1) * limit)
       .limit(limit)
       .sort({ createdAt: -1 });
 
-    sendResponse(res, true, { reviews, total, page, pages: Math.ceil(total / limit) });
+    sendResponse(res, true, { customerReviews, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
     sendResponse(res, false, null, err.message);
   }
