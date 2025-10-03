@@ -58,7 +58,7 @@ const Footer = () => {
               <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Contact Us</a>
             </li>
             <li>
-              <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Offers</a>
+              <a href="/offer" className="text-[rgba(0,0,0,0.7)] text-[15px]">Offers</a>
             </li>
             <li>
               <a href="#" className="text-[rgba(0,0,0,0.7)] text-[15px]">Women</a>
