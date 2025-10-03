@@ -345,7 +345,15 @@
 .loginSlider .slick-dots li{
   margin: 0 !important;
 }
-
+.sec-theme{
+  color: var(--sec-theme-color);
+}
+.break{
+  word-break: var(--text-break);
+}
+.leading{
+  line-height:var(--text-line-heigh);
+}
 
 .sfpro {
 
