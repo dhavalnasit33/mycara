@@ -32,9 +32,9 @@ export default function FAQ() {
         className="bg-cover bg-center bg-no-repeat min-h-[400px]"
         style={{ backgroundImage: `url(${faqBg})` }}
         >
-            <Row className='!max-w-[688px]'>
+            <Row className='!max-w-[688px] pt-[30px] md:pt-0'>
         <div className=" text-center ">
-            <h1 className="text-[36px] sm:text-4xl font-semibold mb-[22px] leading">
+            <h1 className="text-[24px] sm:text-[36px] sm:text-4xl font-semibold mb-[15px] sm:mb-[22px] leading">
             Frequently Asked Questions
             </h1>
             <p className="text-dark text-14 ">
@@ -44,11 +44,11 @@ export default function FAQ() {
         </Row>
         </Section>
 
-        <Section className="!pt-0 -mt-[12rem]">
+        <Section className="relative !pt-0  -mt-[12rem]">
         <Row className="!max-w-[1122px] form-shadow rounded-[20px] p-[40px] !px-[30px] bg-white">
             <div className="space-y-[10px]">
             {faqData.map((item, index) => (
-                <div key={index} className="border-b border-dashed px-[10px] py-[20px] border-[#D2AF9F]">
+                <div key={index} className="border-b border-dashed px-[10px] py-[14px] sm:py-[20px] border-[#D2AF9F]">
                 <div
                     className="flex justify-between items-center cursor-pointer"
                     onClick={() => toggle(index)}

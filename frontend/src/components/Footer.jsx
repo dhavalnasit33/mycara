@@ -19,34 +19,34 @@ import appleStore from "../assets/appleStore.png";
 const Footer = () => {
   return (
     <footer className=" text-gray-700" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
-      <div className="max-w-[1440px] mx-auto w-full py-12 px-4 sm:px-2 lg:px-0 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-[1440px] mx-auto w-full py-[50px] md:py-[80px] px-4 sm:px-2 lg:px-0 grid grid-cols-1 md:grid-cols-4 gap-8">
         {/* Logo & Contact */}
         <div className="space-y-4">
-          <h1>
+          <div>
             <img
               src={require("../assets/my_logo.png")}
               alt="MYcra Logo"
-              className="w-[190px] h-[58.52px]  md:mx-0"
+              className="w-[190px] h-[58.52px]  md:mx-0  mb-[35px]"
             />
-          </h1>
-          <p className="flex py-[5px] gap-2 text-sm items-start md:items-center">
+          </div>
+          <p className="flex py-[5px] gap-[20px] text-sm items-start md:items-center">
             <IoLocationOutline className="text-gray-600 w-[30px] h-[30px]" />
             215, Dhara Arcade near Lajamani Chowk, Surat
           </p>
-          <p className="flex py-[5px] items-center gap-2 text-sm">
+          <p className="flex py-[5px] items-center gap-[20px] text-sm">
             <TfiEmail className="text-gray w-[25px] h-[20px]" />
             <a href="mailto:info@gmail.com" className="hover:underline break-words">
               Info@gmail.com
             </a>
           </p>
-          <p className="flex py-[5px] items-center gap-2 text-sm">
+          <p className="flex py-[5px] items-center gap-[20px] text-sm">
             <BsTelephone className="text-gray w-[25px] h-[20px]" /> +1[155]000-01000
           </p>
         </div>
 
         {/* Navigation Links */}
         <div>
-          <h2 className="font-regular text-20px text-black mb-4 tracking-[3%]">
+          <h2 className="font-regular text-20px text-black  mb-[35px] tracking-[3%]">
             NAVIGATION LINKS
             <span className="theme-border-block w-[45px]"></span>
           </h2>
@@ -68,7 +68,7 @@ const Footer = () => {
 
         {/* Customer Support */}
         <div>
-          <h2 className="font-regular text-black text-20px mb-4 tracking-[3%]">
+          <h2 className="font-regular text-black text-20px  mb-[35px] tracking-[3%]">
             CUSTOMER SUPPORT
             <span className="theme-border-block w-[45px]"></span>
           </h2>
@@ -93,7 +93,7 @@ const Footer = () => {
 
         {/* Join Now */}
         <div>
-          <h2 className="font-regular text-black mb-4 tracking-[3%] text-20px">
+          <h2 className="font-regular text-black mb-[35px] tracking-[3%] text-20px">
             JOIN NOW !
             <span className="theme-border-block w-[45px]"></span>
           </h2>
@@ -129,29 +129,30 @@ const Footer = () => {
         className="text-white text-sm"
         style={{ backgroundColor: "rgba(210, 175, 159, 0.5)" }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Download Our App */}
-          <div className="flex flex-col items-center md:items-end gap-6 ml-auto">
-            <h3 className="font-medium text-black tracking-wide text-[22px]">
-              DOWNLOAD OUR APP
-            </h3>
-            <div className="flex flex-wrap gap-3 justify-center md:justify-end">
-              <img
-                src={googlePlay}
-                alt="Google Play"
-                className="w-[178px] h-[50px] cursor-pointer"
-              />
-              <img
-                src={appleStore}
-                alt="App Store"
-                className="w-[178px] h-[50px] cursor-pointer"
-              />
+        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-2 gap-[50px] md:gap-[30px] items-center">
+          <div className="flex flex-col  text-center md:text-right items-center md:items-end">
+              <h3 className="font-medium text-black tracking-wide text-[22px] mb-[28px] leading">
+                DOWNLOAD OUR APP
+              </h3>
+
+              <div className="grid grid-cols-2 flex flex-wrap gap-3 justify-center md:justify-end w-full w-auto">
+                <img
+                  src={googlePlay}
+                  alt="Google Play"
+                  className="w-full max-w-[178px] h-auto cursor-pointer"
+                />
+                <img
+                  src={appleStore}
+                  alt="App Store"
+                  className="w-full max-w-[178px] h-auto cursor-pointer"
+                />
+              </div>
             </div>
-          </div>
+
 
           {/* Follow Us */}
-          <div className="flex flex-col items-center md:items-start gap-6 w-full md:w-auto">
-            <h3 className="font-medium text-black tracking-wide text-[22px]">
+          <div className="flex flex-col items-center md:items-start w-full md:w-auto">
+            <h3 className="font-medium text-black tracking-wide text-[22px]  mb-[28px] leading">
               FOLLOW US
             </h3>
             <div className="flex gap-3 flex-wrap justify-center md:justify-start">
@@ -165,7 +166,7 @@ const Footer = () => {
       </div>
 
       {/* Copyright */}
-<div className="w-full h-10 flex items-center justify-center text-white bg-color border-t border-white/30 px-2 text-sm sm:text-base">
+<div className="w-full p-[10px]  text-center text-white bg-color text-p ">
   © 2024 MYcra Fashion Ltd. All Rights Reserved
 </div>
 
