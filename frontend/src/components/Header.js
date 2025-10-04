@@ -53,7 +53,6 @@ const Header = ({ hideOnMobileShopPage }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // ✅ નવું (New): Conditional class નક્કી કરો
   const headerClasses = `
     bg-primary-50 shadow-md 
     ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
@@ -61,9 +60,9 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses}">
+    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
-      <div className="bg-primary-50  hidden lg:flex justify-between items-center max-w-[1440px] w-full h-[80px] md:h-[100px] mx-auto ">
+      <div className="bg-primary-50   hidden lg:flex justify-between items-center max-w-[1280px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           <img
@@ -110,24 +109,13 @@ const Header = ({ hideOnMobileShopPage }) => {
           </ul>
         </nav>
 
-        {/* Right Side */}
         <div className="flex items-center space-x-4 relative">
-          {/* Login Dropdown */}
           <div className="relative hidden sm:block">
-            {/* <button
-              onClick={() => setIsLoginOpen(!isLoginOpen)}
-              className="flex items-center space-x-1 text-white px-3 py-1 rounded-md text-sm  duration-300 bg-color"
-            >
-              <img src={WhiteLogin} alt="Login" className="w-4 h-4" />
-              <span>Login</span>
-            </button> */}
-            <Button onClick={() => { setIsLoginOpen(!isLoginOpen); }} variant="common" className="min-w-[113px] rounded-[10px]">
-              
-            <a href="/login" className="flex ">
-              <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
-              <span>Login</span>
-            </a>
-
+            <Button onClick={() => { setIsLoginOpen(!isLoginOpen); }} variant="common" className="!min-w-[113px] !py-[7px] !px-[10px] !rounded-[10px] ">    
+              <a href="/login" className="flex ">
+                <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
+                <span>Login</span>
+              </a>
             </Button>
 
 
@@ -136,14 +124,14 @@ const Header = ({ hideOnMobileShopPage }) => {
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
                   <span className="text-color cursor-pointer font-medium">
-                    Sign Up
+                    <a href="/register">Sign Up</a>
                   </span>
                 </div>
 
                 <ul className="text-gray-700 text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
-                    <span>My Profile</span>
+                    <span><a href="/my-account">My Profile</a></span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />

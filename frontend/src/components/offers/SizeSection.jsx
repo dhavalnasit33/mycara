@@ -25,7 +25,7 @@ export default function SizeSection() {
             </div>
         </Row>
         <Row>
-            <div className="mt-[60px] mx-auto max-w-[1122px] border-2 border-[#F43297] rounded-md text-[14px] py-7 px-[10px] md:px-[75px] text-center text-light">
+            <div className="mt-[60px] mx-auto max-w-[1122px] border-2 border-[#F43297] rounded-md text-14 py-7 px-[10px] md:px-[75px] text-center text-light">
                 Mykra Fashion will never contact their customers for cash prizes or request passwords/pins/CVV. Please refrain from sharing such confidential information with anyone, as this can result in fraudulent transactions.
             </div>
         </Row>
