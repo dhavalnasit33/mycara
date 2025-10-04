@@ -15,6 +15,8 @@ import discoverImg from "../assets/discover.png";
 import paypalImg from "../assets/paypal.png";
 import googlePlay from "../assets/googlePlay.png";
 import appleStore from "../assets/appleStore.png";
+import Row from "./ui/Row";
+import Section from "./ui/Section";
 
 const Footer = () => {
   return (
@@ -124,32 +126,26 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Section */}
-      <div
-        className="text-white text-sm"
-        style={{ backgroundColor: "rgba(210, 175, 159, 0.5)" }}
-      >
-        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-2 gap-[50px] md:gap-[30px] items-center">
-          <div className="flex flex-col  text-center md:text-right items-center md:items-end">
-              <h3 className="font-medium text-black tracking-wide text-[22px] mb-[28px] leading">
-                DOWNLOAD OUR APP
-              </h3>
-
-              <div className="grid grid-cols-2 flex flex-wrap gap-3 justify-center md:justify-end w-full w-auto">
-                <img
-                  src={googlePlay}
-                  alt="Google Play"
-                  className="w-full max-w-[178px] h-auto cursor-pointer"
-                />
-                <img
-                  src={appleStore}
-                  alt="App Store"
-                  className="w-full max-w-[178px] h-auto cursor-pointer"
-                />
-              </div>
+      <Section  style={{ backgroundColor: "rgba(210, 175, 159, 0.5)" }}>
+      <Row>
+        <div className=" grid grid-cols-1 md:grid-cols-2 gap-[50px] md:gap-[30px] items-center">
+         <div className="flex flex-col text-center md:text-right items-center md:items-end">
+            <h3 className="font-medium text-black tracking-wide text-[22px] mb-[28px] leading" >
+              DOWNLOAD OUR APP
+            </h3>
+            <div className="grid grid-cols-2 gap-3 w-full max-w-[360px]">
+              <img
+                src={googlePlay}
+                alt="Google Play"
+                className="w-full h-auto max-w-[178px] mx-auto sm:mx-0 cursor-pointer"
+              />
+              <img
+                src={appleStore}
+                alt="App Store"
+                className="w-full h-auto max-w-[178px] mx-auto sm:mx-0 cursor-pointer"
+              />
             </div>
-
-
+          </div>
           {/* Follow Us */}
           <div className="flex flex-col items-center md:items-start w-full md:w-auto">
             <h3 className="font-medium text-black tracking-wide text-[22px]  mb-[28px] leading">
@@ -163,7 +159,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Row>
+      </Section>
 
       {/* Copyright */}
 <div className="w-full p-[10px]  text-center text-white bg-color text-p ">

@@ -61,7 +61,7 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses} drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]  w-full border-b sec-theme">
+    <header className="{headerClasses}   w-full border-b sec-theme ">
     
       <div className="bg-primary-50   hidden lg:flex justify-between items-center max-w-[1280px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
@@ -125,14 +125,14 @@ const Header = ({ hideOnMobileShopPage }) => {
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
                   <span className="text-color cursor-pointer font-medium">
-                    Sign Up
+                    <a href="/register">Sign Up</a>
                   </span>
                 </div>
 
                 <ul className="text-gray-700 text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
-                    <span>My Profile</span>
+                    <span><a href="/my-account">My Profile</a></span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />

@@ -373,7 +373,9 @@
 .leading{
   line-height:var(--text-line-height);
 }
-
+.hover-text{
+  color: var(--theme-color);
+}
 
 
 @media (max-width: 640px) {

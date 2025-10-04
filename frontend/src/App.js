@@ -16,6 +16,9 @@ import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";
 import ContactUs from "./pages/ContactUs";
+import MyAccount from "./pages/Account";
+import Orders from "./components/userAccount/Orders";
+import Dashboard from "./components/userAccount/Dashbord";
 function App() {
   const RouterWrapper = () => {
     const location = useLocation();
@@ -35,6 +38,13 @@ function App() {
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/offer" element={<Offer/>}/>
           <Route path="/contact-us" element={<ContactUs/>}/>
+          <Route path="/my-account" element={<MyAccount />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="orders" element={<Orders />} />
+            <Route path="address" element={<p>Address content goes here.</p>} />
+            <Route path="account-details" element={<p>Account details content goes here.</p>} />
+            <Route path="logout" />
+          </Route>
         </Routes>
         <Footer />
       </>
