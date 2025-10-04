@@ -21,6 +21,7 @@ import navbarReducer from "./features/navbar/navbarSlice";
 import footerReducer from "./features/footer/footerSlice";
 import profileReducer from "./features/profile/profileSlice";
 import settingReducer from "./features/settings/settingsSlice";
+import storesReducer from "./features/stores/storeSlice";
 
 export const rootReducer = {
   auth: authReducer,
@@ -46,4 +47,5 @@ export const rootReducer = {
   footer: footerReducer,
   profile: profileReducer,
   setting: settingReducer,
+  stores: storesReducer,
 };

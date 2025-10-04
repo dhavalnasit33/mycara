@@ -1,6 +1,7 @@
 export const ROUTES = {
   auth: {
     login: "/auth/login",
+    register: "/auth/register",
     me: "/auth/me",
     logout: "/auth/logout",
   },
@@ -102,12 +103,13 @@ payments : {
   bulkDelete: "/payments/bulk-delete",
 },
  users : {
-  getAll: "/users",
-  getById: (id: string) => `/users/${id}`,
-  create: "/users",
-  update: (id: string) => `/users/${id}`,
-  delete: (id: string) => `/users/${id}`,
-  bulkDelete: "/users/bulk-delete",
+     getAll: "/users",
+    getStoreCustomers: "/users/store/customers",
+    getById: (id: string) => `/users/${id}`,
+    create: "/users",
+    update: (id: string) => `/users/${id}`,
+    delete: (id: string) => `/users/${id}`,
+    bulkDelete: "/users/bulk-delete",
 },
  profile: {
     get: "/users/me",
@@ -165,4 +167,12 @@ footer: {
   delete: (id: string) => `/footer/${id}`,
   bulkDelete: "/footer/bulk-delete",
 },
+stores: {
+    getAll: "/stores",
+    getById: (id: string) => `/stores/${id}`,
+    create: "/stores",
+    update: (id: string) => `/stores/${id}`,
+    delete: (id: string) => `/stores/${id}`,
+    bulkDelete: "/stores/bulk-delete",
+  },
 };

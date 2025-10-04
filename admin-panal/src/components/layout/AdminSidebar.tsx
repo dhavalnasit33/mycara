@@ -23,6 +23,10 @@ import {
   ShoppingBasket,
   Navigation,
   Columns,
+  Home,
+  Shield,
+  FileText,
+  BarChart2,
 } from "lucide-react";
 import {
   Sidebar,
@@ -41,8 +45,15 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 const mainNavItems = [{ title: "Dashboard", url: "/", icon: LayoutDashboard }];
+
+const superAdminItems = [
+  { title: "All Stores", url: "/stores", icon: Home },             
+  { title: "Store Owners", url: "/store-owners", icon: Users },   
+];
 
 const catalogItems = [
   { title: "Products", url: "/products", icon: Package },
@@ -77,12 +88,14 @@ const systemItems = [
   { title: "Navbar", url: "/navbar", icon: Navigation },
   { title: "Footer", url: "/footer", icon: Columns },
   { title: "Contact Messages", url: "/contact-messages", icon: MessageSquare },
-  { title: "Settings", url: "/settings", icon: Settings },
+  // { title: "Settings", url: "/settings", icon: Settings },
 ];
+
 
 export function AdminSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
+const { user } = useSelector((state: RootState) => state.auth);
 
   const isActive = (path: string) => location.pathname === path;
   const isGroupActive = (items: typeof mainNavItems) =>
@@ -292,6 +305,35 @@ export function AdminSidebar() {
                 </CollapsibleContent>
               </SidebarGroup>
             </Collapsible>
+
+             {user?.role === "super_admin" && (
+        <Collapsible defaultOpen={isGroupActive(superAdminItems)}>
+          <SidebarGroup>
+            <CollapsibleTrigger className="flex w-full items-center justify-between">
+              <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                Super Admin
+              </SidebarGroupLabel>
+              <ChevronDown className="h-4 w-4 text-muted-foreground" />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {superAdminItems.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <NavLink to={item.url} className={getNavClass(item.url)}>
+                          <item.icon className="h-4 w-4" />
+                          <span>{item.title}</span>
+                        </NavLink>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </CollapsibleContent>
+          </SidebarGroup>
+        </Collapsible>
+      )}
           </>
         )}
       </SidebarContent>

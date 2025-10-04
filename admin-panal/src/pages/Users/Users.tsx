@@ -37,10 +37,19 @@ export default function Users() {
     return () => clearTimeout(handler);
   }, [searchQuery]);
 
-  // Fetch users
-  useEffect(() => {
-    dispatch(fetchUsers({ page, limit, search: debouncedQuery }));
-  }, [debouncedQuery, page, dispatch]);
+  const { user } = useSelector((state: RootState) => state.auth);
+const userRole = user?.role; // now you have userRole
+console.log("userRole",userRole)
+
+
+useEffect(() => {
+  dispatch(fetchUsers({
+    page,
+    limit,
+    search: debouncedQuery,
+    role: userRole, 
+  }));
+}, [debouncedQuery, page, userRole, dispatch]);
 
   const handleDelete = async (id: string) => {
     try {

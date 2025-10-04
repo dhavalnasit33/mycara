@@ -12,6 +12,7 @@ const settingSchema = new mongoose.Schema(
     footer_text: { type: String },
     meta_title: { type: String },
     meta_description: { type: String },
+    font_family: { type: String },
   },
   { timestamps: true } 
 );

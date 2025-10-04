@@ -2,16 +2,21 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 import { ROUTES } from "../../services/routes";
 
-// Fetch users (with pagination/search)
+// Fetch users based on role
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (
-    params: { page?: number; limit?: number; search?: string; isDownload?: boolean; status?: "active" | "inactive" } = {},
+    params: { page?: number; limit?: number; search?: string; isDownload?: boolean; role?: string } = {},
     { rejectWithValue }
   ) => {
     try {
-      const { isDownload = false, ...query } = params;
-      const res = await api.get(ROUTES.users.getAll, { params: { ...query, isDownload } });
+      const { role, ...query } = params;
+      const url =
+        role === "store_owner"
+          ? ROUTES.users.getStoreCustomers
+          : ROUTES.users.getAll;
+
+      const res = await api.get(url, { params: query });
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to fetch users");
     } catch (err: any) {
@@ -20,7 +25,7 @@ export const fetchUsers = createAsyncThunk(
   }
 );
 
-// Get user by ID
+// Other CRUD thunks
 export const getUserById = createAsyncThunk(
   "users/getUserById",
   async (id: string, { rejectWithValue }) => {
@@ -34,7 +39,6 @@ export const getUserById = createAsyncThunk(
   }
 );
 
-// Create user
 export const createUser = createAsyncThunk(
   "users/createUser",
   async (data: any, { rejectWithValue }) => {
@@ -48,7 +52,6 @@ export const createUser = createAsyncThunk(
   }
 );
 
-// Update user
 export const updateUser = createAsyncThunk(
   "users/updateUser",
   async ({ id, data }: { id: string; data: any }, { rejectWithValue }) => {
@@ -62,7 +65,6 @@ export const updateUser = createAsyncThunk(
   }
 );
 
-// Delete user
 export const deleteUser = createAsyncThunk(
   "users/deleteUser",
   async (id: string, { rejectWithValue }) => {
@@ -76,7 +78,6 @@ export const deleteUser = createAsyncThunk(
   }
 );
 
-// Bulk delete users
 export const bulkDeleteUsers = createAsyncThunk(
   "users/bulkDeleteUsers",
   async (ids: string[], { rejectWithValue }) => {
@@ -89,4 +90,3 @@ export const bulkDeleteUsers = createAsyncThunk(
     }
   }
 );
-

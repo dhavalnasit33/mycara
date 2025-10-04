@@ -43,6 +43,8 @@ export default function Settings() {
   const [footerText, setFooterText] = useState("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [fontFamily, setFontFamily] = useState("");
+
 
   // --- Fetch profile ---
   useEffect(() => {
@@ -81,6 +83,7 @@ export default function Settings() {
         setSecondaryColor(s.secondary_color || "#64748b");
         setButtonColor(s.button_color || "#3b82f6");
         setFooterText(s.footer_text || "");
+        setFontFamily(s.fontFamily || "")
         setMetaTitle(s.meta_title || "");
         setMetaDescription(s.meta_description || "");
       }
@@ -116,6 +119,7 @@ export default function Settings() {
     const payload = {
       site_name: siteName,
       logo_url: logo,
+      font_family: fontFamily, 
       favicon_url: favicon,
       primary_color: primaryColor,
       secondary_color: secondaryColor,
@@ -303,108 +307,128 @@ export default function Settings() {
         </TabsContent>
 
         {/* Appearance Settings */}
-        <TabsContent value="appearance">
-          <Card>
-            <CardHeader>
-              <CardTitle>Store Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* Site Name */}
-              <div className="space-y-2">
-                <Label htmlFor="site-name">Site Name</Label>
-                <Input
-                  id="site-name"
-                  value={siteName}
-                  onChange={(e) => setSiteName(e.target.value)}
-                  placeholder="Enter site name"
-                />
-              </div>
+       <TabsContent value="appearance">
+  <Card>
+    <CardHeader>
+      <CardTitle>Store Settings</CardTitle>
+    </CardHeader>
+    <CardContent className="space-y-6">
+      {/* Site Name */}
+      <div className="space-y-2">
+        <Label htmlFor="site-name">Site Name</Label>
+        <Input
+          id="site-name"
+          value={siteName}
+          onChange={(e) => setSiteName(e.target.value)}
+          placeholder="Enter site name"
+        />
+      </div>
 
-              {/* Logo & Favicon */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Logo</Label>
-                  <ImageUpload
-                    value={logo}
-                    onChange={(val) => setLogo(val as string | null)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Favicon</Label>
-                  <ImageUpload
-                    value={favicon}
-                    onChange={(val) => setFavicon(val as string | null)}
-                  />
-                </div>
-              </div>
+      {/* Logo & Favicon */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label>Logo</Label>
+          <ImageUpload
+            value={logo}
+            onChange={(val) => setLogo(val as string | null)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Favicon</Label>
+          <ImageUpload
+            value={favicon}
+            onChange={(val) => setFavicon(val as string | null)}
+          />
+        </div>
+      </div>
 
-              {/* Colors */}
-              <div className="grid gap-4 md:grid-cols-3">
-                <div className="space-y-2">
-                  <Label>Primary Color</Label>
-                  <Input
-                    type="color"
-                    value={primaryColor}
-                    onChange={(e) => setPrimaryColor(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Secondary Color</Label>
-                  <Input
-                    type="color"
-                    value={secondaryColor}
-                    onChange={(e) => setSecondaryColor(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Button Color</Label>
-                  <Input
-                    type="color"
-                    value={buttonColor}
-                    onChange={(e) => setButtonColor(e.target.value)}
-                  />
-                </div>
-              </div>
+      {/* Colors */}
+      <div className="grid gap-4 md:grid-cols-3">
+        <div className="space-y-2">
+          <Label>Primary Color</Label>
+          <Input
+            type="color"
+            value={primaryColor}
+            onChange={(e) => setPrimaryColor(e.target.value)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Secondary Color</Label>
+          <Input
+            type="color"
+            value={secondaryColor}
+            onChange={(e) => setSecondaryColor(e.target.value)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Button Color</Label>
+          <Input
+            type="color"
+            value={buttonColor}
+            onChange={(e) => setButtonColor(e.target.value)}
+          />
+        </div>
+      </div>
 
-              {/* Footer Text */}
-              <div className="space-y-2">
-                <Label>Footer Text</Label>
-                <Textarea
-                  value={footerText}
-                  onChange={(e) => setFooterText(e.target.value)}
-                  className="min-h-[80px]"
-                />
-              </div>
+      {/* Font Family */}
+      <div className="space-y-2">
+        <Label htmlFor="font-family">Font Family</Label>
+        <select
+          id="font-family"
+          className="border rounded-md p-2 w-full"
+          value={fontFamily}
+          onChange={(e) => setFontFamily(e.target.value)}
+        >
+          <option value="">Select Font</option>
+          <option value="Arial, sans-serif">Arial</option>
+          <option value="Roboto, sans-serif">Roboto</option>
+          <option value="Poppins, sans-serif">Poppins</option>
+          <option value="Helvetica, sans-serif">Helvetica</option>
+          <option value="Times New Roman, serif">Times New Roman</option>
+          <option value="Georgia, serif">Georgia</option>
+        </select>
+      </div>
 
-              {/* Meta Info */}
-              <div className="grid gap-4 md:grid-cols-2">
-                <div className="space-y-2">
-                  <Label>Meta Title</Label>
-                  <Input
-                    value={metaTitle}
-                    onChange={(e) => setMetaTitle(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label>Meta Description</Label>
-                  <Textarea
-                    value={metaDescription}
-                    onChange={(e) => setMetaDescription(e.target.value)}
-                    className="min-h-[80px]"
-                  />
-                </div>
-              </div>
+      {/* Footer Text */}
+      <div className="space-y-2">
+        <Label>Footer Text</Label>
+        <Textarea
+          value={footerText}
+          onChange={(e) => setFooterText(e.target.value)}
+          className="min-h-[80px]"
+        />
+      </div>
 
-              {/* Save Button */}
-              <div className="flex justify-end">
-                <Button onClick={handleSaveSettings} className="gap-2">
-                  <Save className="h-4 w-4" />
-                  Save Settings
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+      {/* Meta Info */}
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-2">
+          <Label>Meta Title</Label>
+          <Input
+            value={metaTitle}
+            onChange={(e) => setMetaTitle(e.target.value)}
+          />
+        </div>
+        <div className="space-y-2">
+          <Label>Meta Description</Label>
+          <Textarea
+            value={metaDescription}
+            onChange={(e) => setMetaDescription(e.target.value)}
+            className="min-h-[80px]"
+          />
+        </div>
+      </div>
+
+      {/* Save Button */}
+      <div className="flex justify-end">
+        <Button onClick={handleSaveSettings} className="gap-2">
+          <Save className="h-4 w-4" />
+          Save Settings
+        </Button>
+      </div>
+    </CardContent>
+  </Card>
+</TabsContent>
+
       </Tabs>
     </div>
   );

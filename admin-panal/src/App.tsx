@@ -44,6 +44,9 @@ import NavbarFormPage from "./pages/Navbar/NavbarForm";
 import Footer from "./pages/Footer/Footer";
 import FooterFormPage from "./pages/Footer/FooterForm";
 import Settings from "./pages/Settings/Settings";
+import Register from "./pages/Register";
+import Stores from "./pages/Stores/Store";
+import StoreFormPage from "./pages/Stores/StoreForm";
 
 
 const queryClient = new QueryClient();
@@ -56,6 +59,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<AdminLayout />}>
@@ -108,6 +112,9 @@ const App = () => (
                  <Route path="footer/add" element={<FooterFormPage />} />
                   <Route path="/footer/:id/edit" element={<FooterFormPage />} />
               <Route path="settings" element={<Settings />} />
+                <Route path="stores" element={<Stores />} />
+                 <Route path="stores/add" element={<StoreFormPage />} />
+                  <Route path="/stores/:id/edit" element={<StoreFormPage />} />
             
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

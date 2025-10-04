@@ -22,7 +22,12 @@ export default function Login() {
 
     if (loginUser.fulfilled.match(result)) {
       toast.success("Logged in successfully!");
-      navigate("/");
+
+      const userRole = result.payload.user.role;
+      if (userRole === "super_admin") navigate("/");
+      else if (userRole === "store_owner") navigate("/");
+      else navigate("/"); // store_user
+
     } else {
       const message =
         (result.payload as string) || "Login failed: Invalid credentials";
@@ -34,7 +39,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       <div className="bg-white shadow-lg rounded-xl p-10 w-full max-w-md animate-fade-in">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-          Admin Panel Login
+          Login
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -44,7 +49,7 @@ export default function Login() {
             </label>
             <input
               type="email"
-              placeholder="admin@example.com"
+              placeholder="email@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
@@ -105,8 +110,11 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-8 text-center text-gray-500 text-sm">
-          © {new Date().getFullYear()} My Admin Panel. All rights reserved.
+        <p className="mt-6 text-center text-gray-500 text-sm">
+          Don't have an account?{" "}
+          <a href="/register" className="text-blue-600 hover:underline">
+            Register
+          </a>
         </p>
       </div>
     </div>
