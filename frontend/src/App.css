@@ -63,6 +63,7 @@
  --text-break:break-word;
  --text-line-height:100%;
  --text-14:14px;
+ --text-p-light:#989696;
 
 
 
@@ -71,6 +72,7 @@
   --font-family-main: 'Roboto', sans-serif;
  --font-weight-bold: 700;
   --font-weight-medium: 500;
+  --font-weight-reguler: 400;
   --font-style-main: italic;
   --font-size-h1: 80px;
    --font-size-h2: 50px;
@@ -375,6 +377,12 @@
 }
 .hover-text{
   color: var(--theme-color);
+}
+.font-regular{
+  font-weight: var(--font-weight-reguler);
+}
+.sec-text-color{
+  color: var( --text-p-light);
 }
 
 

@@ -53,7 +53,6 @@ const Header = ({ hideOnMobileShopPage }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // ✅ નવું (New): Conditional class નક્કી કરો
   const headerClasses = `
     bg-primary-50 shadow-md 
     ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
@@ -61,7 +60,7 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses}   w-full border-b sec-theme ">
+    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
       <div className="bg-primary-50   hidden lg:flex justify-between items-center max-w-[1280px] w-full h-[80px] md:h-[100px] mx-auto ">
         {/* Logo */}
