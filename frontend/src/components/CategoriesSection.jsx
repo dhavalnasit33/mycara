@@ -74,14 +74,14 @@ const CategoriesSection = () => {
       </Row>
 
         {/* Slider */}
-        <Row className="max-w-[1440px] mx-auto w-full">
+        <Row className="container-1440 mx-auto w-full">
           <Slider ref={sliderRef} {...settings}>
             {categories.map((category, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center group cursor-pointer p-2"
+                className="flex flex-col items-center group cursor-pointer "
               >
-              <div className="relative xl:w-[230px] xl:h-[230px] rounded-full overflow-hidden border-4 circle-border transition-all duration-300 mx-auto">
+              <div className="relative w-[225px] h-[225px] rounded-full overflow-hidden border-4 circle-border  duration-300 mx-auto">
                 <img
                   src={category.img}
                   alt={category.name}

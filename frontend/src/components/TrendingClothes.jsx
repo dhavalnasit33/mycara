@@ -9,7 +9,8 @@ import "slick-carousel/slick/slick-theme.css";
 import SpainImg from "../assets/Spain tincid.png";
 import LatestLookImg from "../assets/Leatest Look cort collection.png";
 import StylishImg from "../assets/Leatest look stylish.png";
-
+import SectionHeading from './ui/SectionHeading';
+import Row from './ui/Row.jsx';
 const products = [
   {
     id: 1,
@@ -54,44 +55,37 @@ const PrevArrow = ({ onClick }) => (
 const TrendingClothes = () => {
   const sliderRef = React.useRef(null);
 
-  const sliderSettings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    arrows: false,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-        },
+const sliderSettings = {
+  dots: false,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 2,   // tablet shows 2 slides
+  slidesToScroll: 1,
+  arrows: false,
+  responsive: [
+    {
+      breakpoint: 768, // mobile
+      settings: {
+        slidesToShow: 2,
       },
-    ],
-  };
+    },
+  ],
+};
+
 
   return (
-    <div className="w-full bg-white font-sans py-16">
+    <div className=" bg-white font-sans mb-[90px]">
       {/* Heading */}
       <div className="relative flex justify-center items-center w-full">
-        <div className="w-[50px] border-t border-black"></div>
-
-        <div className="relative mx-4 flex flex-col items-center justify-center h-48">
-          <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
-            Trending Clothes
-          </h2>
-          {/* Decorative icon */}
-          <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px] pointer-events-none z-0" />
-        </div>
-
-        <div className="w-[50px] border-t border-black"></div>
+                <Row>
+                         <SectionHeading title=" Trending Clothes" />
+                </Row>
       </div>
 
  <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
         
   {/* Desktop Grid */}
-  <div className="hidden md:grid grid-cols-2 md:grid-cols-3 gap-8">
+  <div className="hidden lg:grid grid-cols-3 gap-8">
     
     {products.map((product) => (
       <div key={product.id} className="group">
@@ -122,16 +116,16 @@ const TrendingClothes = () => {
           />
 
           {product.sale && (
-            <span className="absolute top-3 right-3 bg-color text-white text-xs px-3 py-1 rounded">
+            <span className="absolute top-3 right-3 bg-color text-white text-xs px-3 py-1 rounded-[2px]">
               Sale
             </span>
           )}
         </div>
 
         <div className="p-2 text-left">
-          <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
+          <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] mb-2">{product.name}</h3>
           <p className="text-gray-500 mb-2">
-            <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
+            <span className="mr-2 text-[10px] md:text-[14px] lg:text-[14px]" style={{ color: "#989696" }}>
               {product.price}
             </span>
           </p>
@@ -146,7 +140,7 @@ const TrendingClothes = () => {
   </div>
 
         {/* Mobile Slider */}
-        <div className="relative md:hidden">
+        <div className="relative lg:hidden">
           <Slider ref={sliderRef} {...sliderSettings}>
             {products.map((product) => (
               <div key={product.id} className="px-2">
@@ -164,25 +158,25 @@ const TrendingClothes = () => {
                     <img
                       src={product.img}
                       alt={product.name}
-                      className="w-full h-[300px]"
+                      className="w-full h-[400px] "
                     />
 
                     {product.sale && (
-                      <span className="absolute top-2 right-2 bg-color text-white text-xs px-3 py-1 rounded">
+                      <span className="text-[8px] md:text-[16px] lg:text-[16px] font-sans font-medium absolute top-2 right-2 bg-color text-white px-1 md:px-2 lg:px-2 top-4 md:top-4 lg:top-4 right-4 md:right-4 lg:right-4  ">
                         Sale
                       </span>
                     )}
                   </div>
 
                   <div className="p-2 text-left">
-                    <h3 className="font-medium text-[20px] mb-2">{product.name}</h3>
+                    <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] mb-2">{product.name}</h3>
                     <p className="text-gray-500 mb-2">
-                      <span className="mr-2 text-[12px]" style={{ color: "#989696" }}>
+                      <span className=" text-[10px] md:text-[14px] lg:text-[14px]" style={{ color: "#989696" }}>
                         {product.price}
                       </span>
                     </p>
                     <p className="text-black mb-2">★★★★★</p>
-                    <button className="text-black relative transition">
+                    <button className="text-black text-[12px] md:text-[14px]  lg:text-[14px] relative transition">
                       Select Option
                       <span className="theme-border-block w-7"></span>
                     </button>

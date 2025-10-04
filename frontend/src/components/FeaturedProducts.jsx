@@ -2,7 +2,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
-
+import SectionHeading from './ui/SectionHeading';
+import Row from './ui/Row.jsx';
 
 // Local images
 import FlowerIcon from "../components/icons/FlowerIcon";
@@ -112,7 +113,7 @@ const FeaturedProducts = () => {
   const [mounted, setMounted] = useState(false);
   const [slidesToShow, setSlidesToShow] = useState(9);
   const [showArrows, setShowArrows] = useState(true);
-   const [activeCategory, setActiveCategory] = useState("cotton-kurti"); // 👈 active category
+   const [activeCategory, setActiveCategory] = useState("cotton-kurti"); 
   const sliderRef = useRef();
 
   const updateSlider = () => {
@@ -122,7 +123,7 @@ const FeaturedProducts = () => {
       setSlidesToShow(9);
       setShowArrows(false); // Desktop - hide arrows
     } else if (width >= 768) {
-      setSlidesToShow(6);
+      setSlidesToShow(4);
       setShowArrows(true); // Tablet - show arrows
     } else {
       setSlidesToShow(4);
@@ -161,37 +162,29 @@ const FeaturedProducts = () => {
 
           {/* Title Section */}
         <div className="relative  flex justify-center items-center w-full">
-          {/* Left line */}
-          <div className="w-[50px] border-t border-black"></div>
-
-          {/* Center container for title + icon */}
-          <div className="relative mx-4 flex flex-col items-center justify-center h-48">
-            {/* Title */}
-            <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
-               Featured Products
-            </h2>
-
-            {/* Decorative SVG icon fully visible, centered */}
-            <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px]  pointer-events-none z-0" />
-          </div>
-
-          {/* Right line */}
-          <div className="w-[50px] border-t border-black"></div>
+                {/* Title Section */}
+                 <div className="relative  flex justify-center items-center w-full">
+         
+                <Row>
+                 <SectionHeading title=" Featured Products" />
+               </Row>
+         
+                 </div>
         </div>
         
 
         {/* Categories Slider with inside arrows */}
-        <div className="relative max-w-[1440px] mx-auto w-full mb-6 px-2 sm:px-4">
+        <div className="relative container-1440 mx-auto w-full mb-6 px-0 sm:px-4">
           {showArrows && (
             <>
               <button
-                className="absolute top-1/2 left-0 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="absolute top-1/2 left-0 -translate-y-1/2 z-20 w-9 h-9   flex items-center justify-center"
                 onClick={() => sliderRef.current.slickPrev()}
               >
                 <FaArrowLeftLong className="text-black" />
               </button>
               <button
-                className="absolute top-1/2 right-0 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center"
+                className="absolute top-1/2 right-0 -translate-y-1/2 z-20 w-9 h-9   flex items-center justify-center"
                 onClick={() => sliderRef.current.slickNext()}
               >
                 <FaArrowRightLong className="text-black" />
@@ -201,21 +194,18 @@ const FeaturedProducts = () => {
           <Slider ref={sliderRef} {...settings}>
             {categories.map((item, i) => (
               <div key={i} className="px-[6px] sm:px-[1px]">
-            <button
-              onClick={() => setActiveCategory(item.name)}
-              className={`border rounded-[30px] flex items-center justify-center 
-                          w-[100px] sm:w-[140px] xs:w-[100px] h-[40px]
-                          text-center transition-colors duration-300 button
-                          ${
-                            activeCategory === item.name
-                              ? "bg-color text-white hover:bg-color hover:text-white" // active + hover same style
-                              : "text-black " // inactive hover style
-                          }`}
-              style={{
-                boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
-              }}
-            >
-              <p className="font-h4 text-[12px] sm:text-[16px]">{item.name}</p>
+       <button onClick={() => setActiveCategory(item.name)}
+                className={`  border rounded-[30px] flex items-center justify-center  w-[65px] h-[22px]  md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
+                text-center transition-colors duration-300  mx-auto
+                ${activeCategory === item.name
+                  ? "bg-color text-white button:hover hover:text-white"
+                  : "text-black button:hover"}
+          `}
+  style={{
+    boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
+  }}
+>
+              <p className="font-h4 text-[10px] md:text-[18px] lg:text-[18px]">{item.name}</p>
             </button>
 
               </div>
@@ -224,7 +214,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2 sm:px-4 mt-6">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 px-2 sm:px-4 mt-6">
           {products.map((p, index) => (
             <div
               key={index}
@@ -235,7 +225,7 @@ const FeaturedProducts = () => {
                 <img
                   src={p.img}
                   alt={p.name}
-                  className="w-full h-[250px] sm:h-[300px] md:h-[320px] lg:h-[350px] transform transition-transform duration-300 hover:scale-105"
+                  className="w-full h-[250px]  md:h-[320px] lg:h-[350px] transform transition-transform duration-300 hover:scale-105"
                 />
 
                 {/* Heart Icon */}
@@ -253,28 +243,30 @@ const FeaturedProducts = () => {
                 </div>
 
                 {/* Hover Overlay */}
-                <div
-                  className="absolute top-1/2 left-1/2 
-                             w-[200px] sm:w-[250px] md:w-[280px] lg:w-[325px] 
-                             h-[235px] sm:h-[280px] md:h-[300px] lg:h-[330px] 
-                             bg-[rgba(12,11,11,0.3)] border border-white 
-                             flex items-center justify-center 
-                             opacity-0 group-hover:opacity-100 
-                             transition-opacity duration-500 
-                             -translate-x-1/2 -translate-y-1/2"
-                >
+  <div
+    className="absolute inset-3
+               bg-[rgba(12,11,11,0.3)] border border-white
+               flex items-center justify-center 
+               opacity-0 group-hover:opacity-100 
+               transition-opacity duration-500 "
+  >
+
                   <p className="text-white font-semibold text-center">View product</p>
                 </div>
               </div>
 
               {/* Product Info */}
               <div className="p-4 text-center">
-                <p className="text-gray-800 font-medium">{p.name}</p>
-                <p className="font-regular">
+                <p className="text-black text-[12px] md:text-[15px]  lg:text-[15px] font-regular mb-1">{p.name}</p>
+                <p className="text-black text-[12px]  md:text-[15px] lg:text-[15px] font-regular mb-1">
                   {p.price}{" "}
-                  <span className="line-through text-gray-400">{p.oldPrice}</span>
+                  <span className="line-through text-gray-400 text-[10px] md:text-[12px]  lg:text-[12px] font-regular">{p.oldPrice}</span>
                 </p>
-                <p className="text-pink-500 text-sm">{p.discount}</p>
+                <></>
+                <p className="mx-auto w-[60px] h-[19px] flex justify-center items-center text-theme text-[10px] lg:text-[12px] bg-ef3a96-9 font-regular rounded">
+  {p.discount}
+</p>
+
                 <div className="flex gap-2 mt-2 justify-center">
                   {p.colors.map((c, i) => (
                     <span

@@ -17,6 +17,7 @@ const Home = () => {
   return (
     <div>
       <Hero />
+      
       <CategoriesSection />
       <NewArrivals />
       <FeaturedProducts />

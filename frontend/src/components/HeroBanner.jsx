@@ -62,20 +62,20 @@ const HeroBanner = () => {
 
       {/* Right Text Section */}
       {/* Use padding for spacing on all screens */}
-      <div className="flex-1 text-center md:text-left pl-10 pr-5 flex flex-col justify-center items-center md:items-start">
+      <div className="flex-1  md:text-left pl-10 pr-5 flex flex-col ">
         <h2
-          className="text-[20px] sm:text-[32px] md:text-[40px] font-sans text-black mb-6 relative"
+          className="text-[20px]  md:text-[50px] lg:text-[50px] font-sans text-black mb-6 relative"
           style={{ filter: "drop-shadow(5px 2px 4px rgba(0,0,0,0.4))" }}
         >
           Flesh Deals
           <span className="absolute theme-border-block w-[100px]"></span>
         </h2>
 
-        <p className="text-[10px] sm:text-[14px] md:text-[24px] text-[#989696] mb-4">
+        <p className="text-[10px]  md:text-[24px] lg:text-[24px] text-[#989696] lg:text-[24px] text-[#989696] mb-4 font-regular">
           Stylish Regular Fit Light Marun Denim For Women's & Girls
         </p>
 
-        <p className="text-[10px] sm:text-[18px] md:text-[18px] font-regular text-black mb-6 inline-block pb-1 border-b-2 border-black">
+        <p className="text-[10px] lg:text-[18px] md:text-[18px] font-regular text-black mb-6 inline-block w-[94px] pb-1 border-b-2 border-black">
           Rs 1099.00
         </p>
 
