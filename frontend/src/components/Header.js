@@ -53,7 +53,6 @@ const Header = ({ hideOnMobileShopPage }) => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // ✅ નવું (New): Conditional class નક્કી કરો
   const headerClasses = `
     bg-primary-50 shadow-md 
     ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
@@ -61,7 +60,7 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses} drop-shadow-[0_2px_4px_rgba(0,0,0,0.25)]  w-full border-b sec-theme">
+    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
       <div className=" container-1440  mx-auto md:h-[100px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
         {/* Logo */}
@@ -125,14 +124,14 @@ const Header = ({ hideOnMobileShopPage }) => {
                 <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
                   <span>Welcome User !</span>
                   <span className="text-color cursor-pointer font-medium">
-                    Sign Up
+                    <a href="/register">Sign Up</a>
                   </span>
                 </div>
 
                 <ul className="text-gray-700 text-sm">
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
-                    <span>My Profile</span>
+                    <span><a href="/my-account">My Profile</a></span>
                   </li>
                   <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
                     <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />
