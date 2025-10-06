@@ -390,6 +390,9 @@
 .sec-text-color{
   color: var( --text-p-light);
 }
+.font-18{
+  font-size: var(--font-size-h4);
+}
 
 
 @media (max-width: 640px) {

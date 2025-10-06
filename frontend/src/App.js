@@ -19,6 +19,7 @@ import ContactUs from "./pages/ContactUs";
 import MyAccount from "./pages/Account";
 import Orders from "./components/userAccount/Orders";
 import Dashboard from "./components/userAccount/Dashbord";
+import Cart from "./pages/Cart";
 function App() {
   const RouterWrapper = () => {
     const location = useLocation();
@@ -45,6 +46,7 @@ function App() {
             <Route path="account-details" element={<p>Account details content goes here.</p>} />
             <Route path="logout" />
           </Route>
+          <Route path="/cart" element={<Cart />}></Route>
         </Routes>
         <Footer />
       </>

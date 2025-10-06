@@ -3,6 +3,7 @@ import Logo from "../assets/my_logo.png";
 import LoginSlider from "../components/login/loginSlider";
 import { FaPlay, FaTimes } from "react-icons/fa";
 import SocialButtons from "../components/login/SocialButtons";
+import Button from "../components/ui/Button";
 
 const LoginForm = () => {
   return (
@@ -46,12 +47,10 @@ const LoginForm = () => {
                 <button type="button" className="text-gray-500 text-[14px] hover:underline" >
                     <a href= "">Forgot password?</a>
                 </button>
-                <button className="flex items-stretch bg-color text-white rounded w-[185px] justify-between  ">
-                    <div className=" flex items-center justify-between px-[20px] py-[13px] text-[18px] w-full">
-                        Sign In
-                        <FaPlay size={8} />
-                    </div>
-                </button>
+                <Button variant="common" className="!min-w-[185px] flex items-center justify-between">
+                    Sign In
+                    <FaPlay size={8} />
+                </Button>
             </div>
           </form>
           <div className="mt-4  sm:mt-10 space-x-4">
