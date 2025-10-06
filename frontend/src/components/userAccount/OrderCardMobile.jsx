@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/outline";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { ChevronDown, ChevronLeftIcon, ChevronRightIcon, ChevronUp } from "lucide-react";
+import sortImg from "../../assets/sorting.png";
+
 
 export default function OrderCardMobile({ orders }) {
   const [openRow, setOpenRow] = useState(null);
@@ -12,10 +13,10 @@ export default function OrderCardMobile({ orders }) {
   return (
     
     <div className="hidden max-[980px]:block [box-shadow:0_2px_4px_rgba(0,0,0,25%)] rounded-[10px] overflow-hidden">
-        <div className="block  mb-3">
+        <div className="block">
              <div className="flex items-center gap-10 light-color text-20px text-dark font-normal p-2 px-[12px]">
               <span className="text-black text-p ">#</span>
-              <span className="text-black text-p ">Order Id</span>
+              <span className="text-black text-p flex gap-[5px] items-center">Order Id<img src={sortImg} className="h-[14px] w-[14px]"/></span>
             </div>
         </div>
 
@@ -33,9 +34,9 @@ export default function OrderCardMobile({ orders }) {
               <span className="sec-text-color text-p ">{order.orderId}</span>
             </div>
             {openRow === order.id ? (
-              <ChevronUpIcon className="w-5 h-5 text-gray-500" />
+              <ChevronUp className="w-5 h-5 sec-text-color" />
             ) : (
-              <ChevronDownIcon className="w-5 h-5 text-gray-500" />
+              <ChevronDown className="w-5 h-5 sec-text-color" />
             )}
           </div>
 
@@ -80,6 +81,10 @@ export default function OrderCardMobile({ orders }) {
                 >
                   {order.status}
                 </span>
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="text-black w-[80px] inline-block">Comments:</span>
+                <span>1 Comments</span>
               </p>
             </div>
           )}

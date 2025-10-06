@@ -1,6 +1,7 @@
 import React from "react";
 import OrderCardMobile from "./OrderCardMobile";
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontal, MoreVertical } from "lucide-react";
+import {  ChevronLeftIcon, ChevronRightIcon, MessageCircleMore, MoreHorizontal, MoreVertical, Search, SlidersHorizontal, SortDesc } from "lucide-react";
+import sortImg from "../../assets/sorting.png";
 
 const ordersData = [
   {
@@ -44,11 +45,35 @@ const ordersData = [
 export default function Orders() {
   return (
     <div>
+    
+        <div className="w-full flex flex-row items-center justify-between gap-3 sm:gap-5 mb-[18px]">
+          <div className="w-[226px] flex items-center box-shadow rounded-[3px] px-[10px] py-[6px] ">
+            <Search className="text-[#BCBCBC] mr-[15px]" size={20} />
+            <input
+              type="text"
+              placeholder="Search anything.."
+              className="w-full outline-none text-[#BCBCBC] text-p"
+            />
+          </div>
+          <div className="flex gap-[10px] sm:gap-[17px]">
+            <button className="w-full  md:w-[109px] flex items-center justify-between sm:justify-between text-p sec-text-color box-shadow px-[10px] sm:px-[14px] py-[6px] transition ">
+              <span className="hidden md:inline">Filter</span>
+              <SlidersHorizontal size={18} />
+            </button>
+
+            <button className="w-full md:w-[109px] flex items-center justify-center sm:justify-between text-p sec-text-color box-shadow px-[10px] sm:px-[14px] py-[6px] transition ">
+              <span className="hidden md:inline">Sort</span>
+              <SortDesc size={18} />
+            </button>
+          </div>
+        </div>
+
+
       <table className="hidden min-[980px]:table w-full box-shadow rounded-[10px] w-full border-collapse overflow-hidden ">
         <thead className="light-color text-20px text-dark font-normal">
           <tr>
             <td className="p-[12px] px-[30px] py-[10px] text-left">#</td>
-            <td className="p-[12px] py-[10px] text-left">Order ID</td>
+            <td className="p-[12px] py-[10px] text-left flex gap-[7px] items-center">Order ID<img src={sortImg} className="h-[14px] w-[14px]"/></td>
             <td className="p-[12px] py-[10px] text-left">Date</td>
             <td className="p-[12px] py-[10px] text-left">Price</td>
             <td className="p-[12px] py-[10px] text-left">Paid</td>
@@ -90,8 +115,15 @@ export default function Orders() {
                   {order.status}
                 </span>
               </td>
-              <td className="p-3  px-[30px] h-[75px] flex justify-center items-center"><MoreVertical size={20}/></td>
+              <td className="p-3 px-[30px] h-[75px]">
+                <div className="flex justify-center items-center gap-[10px] sec-text-color">
+                  <MessageCircleMore size={24} />
+                  <MoreVertical size={20} />
+                </div>
+              </td>
+
             </tr>
+            
           ))}
           <tr>
             <td colSpan="8" className="px-[30px] py-[20px]">
