@@ -60,7 +60,7 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
+    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sm:mb-[0px] sec-theme  box-shadow ">
     
       <div className=" container-1440  mx-auto md:h-[100px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
         {/* Logo */}

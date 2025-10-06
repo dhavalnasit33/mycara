@@ -33,43 +33,41 @@ const Filter = (props) => (
 
 // --- 1. Mobile Responsive UI  ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
-  <div className="flex justify-around items-center w-[450px]  gap-0">
+<div className="flex justify-around items-center  w-full mx-auto gap-4 sm:gap-6">
+    {/* Sort By Button */}
     <div 
-        className="flex-1 max-w-[200px]  rounded-[10px]  cursor-pointer transition duration-300  border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)] "
+        className="flex-1 rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)]"
         onClick={onSortClick} 
     >
-      <div className="flex items-center justify-between p-4 ">
+      <div className="flex items-center justify-between p-4">
         <div>
           <div className="text-[16px] font-inter font-semibold text-[rgba(0,0,0,0.7)]">Sort By</div>
-    
           <div className="text-[12px] font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
         </div>
-       
         <SortByIcon className="h-6 w-6 text-pink-500" />
       </div>
     </div>
 
-   
+    {/* Filter Button */}
     <div 
-        className="flex-1 max-w-[200px] bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white"
+        className="flex-1 bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white"
         onClick={onFilterClick} 
     >
       <div className="flex items-center justify-between p-4">
         <div>
           <div className="text-[16px] font-inter font-semibold">Filter</div>
           <div className="flex items-center mt-0.5">
-              <span className="text-[12px] font-inter font-medium">Applied</span>
+            <span className="text-[12px] font-inter font-medium">Applied</span>
             
-              <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
-                  {filterCount}
-              </span>
+            <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
+                {filterCount}
+            </span>
           </div>
         </div>
-       
         <Filter className="h-6 w-6 text-white" /> 
       </div>
     </div>
-  </div>
+</div>
 );
 
 
@@ -303,54 +301,58 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children , onCancelClic
 
 const ProductCard = ({ product }) => (
  
-    <div className="relative group overflow-hidden">
+   <div className="relative group overflow-hidden bg-white">
         
-        {/* 1. Image Container */}
-        <div className="w-full h-auto  overflow-hidden">
-            <img
-                src={product.imageSrc} 
-                alt={product.name}
-                // Kept your image classes, adjusting h-[550px] for consistent sizing
-                className="w-[450px] h-[490px] sm:w-full  sm:h-[553px]  md:w-full md:h-[553px] transition-transform duration-500"
-            />
-        </div>
+    {/* 1. Image Container (Ensuring full responsiveness) */}
+    <div className="w-full h-auto overflow-hidden">
+        <img
+            src={product.imageSrc} 
+            alt={product.name}
+            // Image should be fluid (w-full, h-full) and use aspect ratio for consistent height
+            // w-full and h-auto ensures it scales with the parent grid item
+            className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500 "
+        />
+    </div>
 
-       
-       {/* // This is the modified overlay div for the ProductCard component */}
-<div 
-    className="absolute right-4 bottom-4 w-[350px] h-[250px] p-10 bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                flex flex-col justify-between" 
- 
->
     
-
-    <div className="flex justify-between items-start"> 
+    {/* 2. Responsive Overlay Div (The Fix) */}
+    <div 
+        // W/H FIX: Use responsive percentage/auto instead of fixed pixels.
+        // PADDING FIX: Use smaller padding on mobile.
+        // Positioning: right/bottom is slightly reduced on mobile for better fit.
+        className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4 
+               w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5 
+               bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+               flex flex-col justify-between" 
+    >
         
-        {/* Text (Title) */}
-        <div className="pr-4"> 
-            <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">
-                {product.name}
-            </h3>
-        </div>
-        
-        {/* The Add/Plus Button */}
-<button className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full 
-                   shadow-lg  transition duration-300 border border-white">
- 
-    <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
-</button>
-    </div>
-
-
-    <div> 
-        <p className="text-[14px] font-medium font-inter text-black">
-            RS {product.price.toFixed(2)}
-        </p>
-    </div>
+        <div className="flex justify-between items-start"> 
             
-           
+            {/* Text (Title) */}
+            <div className="pr-2 sm:pr-4"> 
+                {/* Text size adjusted for mobile (text-xs) to tablet/desktop (text-sm/base) */}
+                <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
+                    {product.name}
+                </h3>
+            </div>
+            
+            {/* The Add/Plus Button */}
+            <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full 
+                               shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
+                
+                <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+            </button>
+        </div>
+
+
+        <div> 
+            {/* Price text size adjusted for mobile (text-sm) */}
+            <p className="text-sm font-medium font-inter text-black">
+                RS {product.price ? product.price.toFixed(2) : '0.00'}
+            </p>
         </div>
     </div>
+</div>
 );
 
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice }) => {
@@ -551,7 +553,7 @@ const handleColorChange = createToggleHandler(setSelectedColors);
     const showingResults = mockProducts.length;
 // 
     return (
-        <div className="container w-full max-w-[1440px] mx-auto py-2 md:py-0 sm:py-14  px-4 sm:px-0 md:px-0  ">
+        <div className=" w-full container-1440 mx-auto py-2 px-3 lg:px-0 lg:py-10   ">
             
              <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                  {/* Left Side - Time */}
@@ -910,11 +912,11 @@ const handleColorChange = createToggleHandler(setSelectedColors);
 
                     {/* Top Bar: Results and Sorting */}
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden sm:block md:block text-sm text-gray-700">
-                            Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
-                        </div>
+                       <div className="hidden lg:block text-sm text-gray-700">
+    Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
+</div>
                    
-          <div className="md:hidden flex">
+          <div className=" sm:flex lg:hidden">
           
             <MobileFilterBar 
               sortBy={sortBy} 
@@ -925,7 +927,7 @@ const handleColorChange = createToggleHandler(setSelectedColors);
           </div>
 
         
-          <div className="hidden md:flex justify-end">
+          <div className="hidden lg:flex justify-end">
             {/* Passing state and setter as props */}
             <DesktopSortBar sortBy={sortBy} setSortBy={setSortBy} />
           </div>
@@ -950,7 +952,7 @@ const handleColorChange = createToggleHandler(setSelectedColors);
                 </div>
 
                     {/* Products Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}

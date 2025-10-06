@@ -173,7 +173,7 @@ const ProductCard = ({ product }) => {
       {/* --- Image Section --- */}
       <div className="relative">
         <img 
-          className="w-[220px] h-[230px] sm:w-full sm:h-96 object-cover transition duration-500 group-hover:scale-95" 
+          className="w-full object-cover aspect-[4/5] min-h-[227px] sm:min-h-[300px] lg:min-h-[350px] transition duration-500 group-hover:scale-95" 
           src={product.image} 
           alt={product.name} 
         />
@@ -270,7 +270,7 @@ const ProductGrid = () => {
     <div className="py-10 ">
       <div className="max-w-7xl mx-auto">
         {/* Grid layout for the products */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

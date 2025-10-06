@@ -7,7 +7,7 @@ import shopBannerImage from '../assets/shopBannerImage.jpg';
 
 const ShopBanner = () => {
     return (
-        <div className="relative w-full h-[413px] flex items-center justify-center overflow-hidden  ">
+        <div className="hidden lg:flex relative w-full h-[413px] items-center justify-center overflow-hidden">
             
            
             <div 
@@ -29,7 +29,7 @@ const ShopBanner = () => {
             
            
             <h1 
-                className="relative z-10 text-white font-semibold font-inter text-6xl md:text-[60px]"
+                className="relative z-10 text-white font-semibold font-inter text-[60px]"
  
             >
                 Shop

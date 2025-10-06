@@ -7,7 +7,7 @@ import WomenCollections from '../components/WomenCollections';
 
 const Shop = () => {
     return (
-        <div className=" container-1440">
+        <div>
             
               <ShopBanner />
             <WomenCollections />
