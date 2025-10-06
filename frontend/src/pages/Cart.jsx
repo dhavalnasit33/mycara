@@ -18,8 +18,6 @@ export default function Cart() {
             Home / <span className="font-light">Cart</span>
           </h2>
         </Row>
-
-        {/* Cart Table */}
         <Row className="flex flex-col lg:flex-row gap-[30px]">
           <div className="flex-1">
             <CartItem/>

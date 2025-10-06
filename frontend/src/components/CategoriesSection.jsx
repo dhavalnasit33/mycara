@@ -26,22 +26,7 @@ const categories = [
 
 const CategoriesSection = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [slidesToShow, setSlidesToShow] = useState(4); // default desktop
   const sliderRef = useRef(null);
-
-  // Handle window resize
-  // const handleResize = () => {
-  //   if (window.innerWidth >= 1024) setSlidesToShow(5); // desktop
-  //   else if (window.innerWidth >= 768) setSlidesToShow(3); // tablet
-  //   else setSlidesToShow(2); // mobile
-  // };
-
-  // useEffect(() => {
-  //   handleResize(); // initial check
-  //   window.addEventListener("resize", handleResize);
-  //   return () => window.removeEventListener("resize", handleResize);
-  // }, []);
-
   const settings = {
     dots: false,
     infinite: true,
@@ -68,33 +53,25 @@ const CategoriesSection = () => {
 
   return (
     <Section >
-      {/* <div className="flex flex-col items-center"> */}
        <Row>
         <SectionHeading title=" Shop By Categories" />
       </Row>
-
         {/* Slider */}
-        <Row className="container-1440 mx-auto w-full">
+        <Row >
           <Slider ref={sliderRef} {...settings}>
             {categories.map((category, index) => (
-              <div
-                key={index}
-                className="flex flex-col items-center group cursor-pointer "
-              >
-              <div className="relative w-[225px] h-[225px] rounded-full overflow-hidden border-4 circle-border  duration-300 mx-auto">
-                <img
-                  src={category.img}
-                  alt={category.name}
-                  className="w-full h-full object-cover rounded-full"
-                />
-              </div>
-                <p className="mt-4 text-dark text-20px  text-center">
+              <div key={index} className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]">
+                <div className="relative w-full aspect-square rounded-full overflow-hidden border-4 circle-border duration-300">
+                  <img src={category.img} alt={category.name} className="w-full h-full object-cover rounded-full " />
+                </div>
+                <p className="mt-4 text-dark text-center text-[20px]">
                   {category.name}
                   <span className="theme-border-block w-[20px] mx-auto"></span>
                 </p>
               </div>
             ))}
           </Slider>
+
         </Row>
 
         {/* Custom Dots */}
@@ -111,8 +88,6 @@ const CategoriesSection = () => {
             ></button>
           ))}
         </div>
-      {/* </div> */}
-    {/* </div> */}
     </Section>
   );
 };
