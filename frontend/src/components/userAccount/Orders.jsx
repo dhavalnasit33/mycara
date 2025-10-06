@@ -70,16 +70,16 @@ export default function Orders() {
 
 
       <table className="hidden min-[980px]:table w-full box-shadow rounded-[10px] w-full border-collapse overflow-hidden ">
-        <thead className="light-color text-20px text-dark font-normal">
+        <thead className="light-color text-20px text-dark ">
           <tr>
-            <td className="p-[12px] px-[30px] py-[10px] text-left">#</td>
-            <td className="p-[12px] py-[10px] text-left flex gap-[7px] items-center">Order ID<img src={sortImg} className="h-[14px] w-[14px]"/></td>
-            <td className="p-[12px] py-[10px] text-left">Date</td>
-            <td className="p-[12px] py-[10px] text-left">Price</td>
-            <td className="p-[12px] py-[10px] text-left">Paid</td>
-            <td className="p-[12px] py-[10px] text-left">Address</td>
-            <td className="p-[12px] py-[10px] text-left">Status</td>
-            <td className="p-[12px] py-[10px] px-[30px] text-center">Action</td>
+            <th className="p-[12px] px-[30px] py-[10px] text-left font-normal">#</th>
+            <th className="p-[12px] py-[10px] text-left flex gap-[7px] items-center font-normal">Order ID<img src={sortImg} className="h-[14px] w-[14px]"/></th>
+            <th className="p-[12px] py-[10px] text-left font-normal">Date</th>
+            <th className="p-[12px] py-[10px] text-left font-normal">Price</th>
+            <th className="p-[12px] py-[10px] text-left font-normal">Paid</th>
+            <th className="p-[12px] py-[10px] text-left font-normal">Address</th>
+            <th className="p-[12px] py-[10px] text-left font-normal">Status</th>
+            <th className="p-[12px] py-[10px] px-[30px] text-center font-normal">Action</th>
           </tr>
         </thead>
         

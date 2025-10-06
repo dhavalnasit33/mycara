@@ -15,7 +15,7 @@ export default function OfferBanner() {
                 <h2 className="xl:text-[62px] lg:text-[48px] sm:text-[20px] font-bold text-theme mb-[10px] xl:mb-[40px] leading break">
                     UP TO 50%
                 </h2>
-                <h1 className="sec-theme text-[30px] md:text-[60px] xl:text-[120px] font-bold leading-[100%] md:leading-[80px] xl:leading-[111px] mb-5 break-words">
+                <h1 className=" text-[30px] md:text-[60px] xl:text-[120px] font-bold leading-[100%] md:leading-[80px] xl:leading-[111px] text-[#D2AF9F] mb-5 break-words">
                     LIMITED DISCOUNT
                 </h1>
                 <p className="text-p text-light mb-3 max-w-[327px] md:mb-11 sm:text-[10px] md:text-[10px]">
