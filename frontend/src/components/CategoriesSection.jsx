@@ -81,7 +81,7 @@ const CategoriesSection = () => {
                 key={index}
                 className="flex flex-col items-center group cursor-pointer "
               >
-              <div className="relative w-[225px] h-[225px] rounded-full overflow-hidden border-4 circle-border  duration-300 mx-auto">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 lg:w-[225px] lg:h-[225px] rounded-full overflow-hidden border-4 circle-border duration-300 mx-auto">
                 <img
                   src={category.img}
                   alt={category.name}

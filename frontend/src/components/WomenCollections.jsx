@@ -30,47 +30,56 @@ const CustomChevronDown = (props) => (
 const Filter = (props) => ( 
     <FilterIconComponent {...props} /> 
 );
-
-// --- 1. Mobile Responsive UI  ---
+// --- 1. Mobile Responsive UI  ---
+// --- 1. Mobile Responsive UI  ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
-<div className="flex justify-around items-center  w-full mx-auto gap-4 sm:gap-6">
+// કિનારીઓથી અંતર જાળવવા માટે w-full અને justify-center નો ઉપયોગ
+<div className="flex justify-center items-center w-full mx-auto gap-4 sm:gap-2"> 
     {/* Sort By Button */}
     <div 
-        className="flex-1 rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.25)]"
+        
+        className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] " 
         onClick={onSortClick} 
     >
-      <div className="flex items-center justify-between p-4">
+
+      <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4"> 
         <div>
-          <div className="text-[16px] font-inter font-semibold text-[rgba(0,0,0,0.7)]">Sort By</div>
-          <div className="text-[12px] font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
+       
+          <div className="text-base sm:text-lg font-inter font-semibold text-black/70">Sort By</div>
+          
+          <div className="text-xs sm:text-sm font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
         </div>
-        <SortByIcon className="h-6 w-6 text-pink-500" />
+        
+        <SortByIcon className="h-5 w-5 sm:h-6 sm:w-6 text-black/70" /> 
       </div>
     </div>
 
-    {/* Filter Button */}
+
     <div 
-        className="flex-1 bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white"
+        
+        className="bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white w-[140px] sm:w-[180px] md:w-[200px]"
         onClick={onFilterClick} 
     >
-      <div className="flex items-center justify-between p-4">
+      
+      <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4"> 
         <div>
-          <div className="text-[16px] font-inter font-semibold">Filter</div>
+          {/* Main Text: Filter */}
+          <div className="text-base sm:text-lg font-inter font-semibold">Filter</div>
           <div className="flex items-center mt-0.5">
-            <span className="text-[12px] font-inter font-medium">Applied</span>
+            <span className="text-xs sm:text-sm font-inter font-medium">Applied</span>
             
-            <span className="ml-2 px-2 py-0.5 bg-white text-[rgba(0,0,0,0.7)] font-semibold rounded-full text-[12px]">
+            {/* Filter Count Badge: Set explicit background for white */}
+            <span className="ml-2 px-2 py-0.5 bg-white text-black/70 font-semibold rounded-full text-xs">
                 {filterCount}
             </span>
           </div>
         </div>
-        <Filter className="h-6 w-6 text-white" /> 
+        {/* Filter Icon */}
+        <Filter className="h-5 w-5 sm:h-6 sm:w-6 text-white" /> 
       </div>
     </div>
 </div>
 );
-
-
 // --- 2. Desktop UI (Refactored to accept props) ---
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
   <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">

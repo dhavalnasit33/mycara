@@ -157,7 +157,7 @@ const FeaturedProducts = () => {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="w-full bg-white font-sans">
+    <div className="w-full bg-white font-sans container-1440 mx-auto w-full">
       <div className="flex flex-col items-center">
 
           {/* Title Section */}
@@ -195,7 +195,7 @@ const FeaturedProducts = () => {
             {categories.map((item, i) => (
               <div key={i} className="px-[6px] sm:px-[1px]">
        <button onClick={() => setActiveCategory(item.name)}
-                className={`  border rounded-[30px] flex items-center justify-center  w-[65px] h-[22px]  md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
+                className={` border rounded-[30px] flex items-center justify-center w-[65px] h-[22px] md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
                 text-center transition-colors duration-300  mx-auto
                 ${activeCategory === item.name
                   ? "bg-color text-white button:hover hover:text-white"
@@ -214,7 +214,7 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 px-2 sm:px-4 mt-6">
+        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 px-2 sm:px-4 mt-6">
           {products.map((p, index) => (
             <div
               key={index}

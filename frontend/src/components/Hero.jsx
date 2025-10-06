@@ -52,7 +52,7 @@ const settings = {
 };
 
     return (
-        <div className="relative  w-full">
+        <div className="relative  w-[90%] md:w-[90%] container-1440">
             {/* Left Vertical Strip */}
            {/* Left Vertical Strip - Hidden on mobile/tablet, shown from 'lg' (desktop) breakpoint */}
             <div className="hidden lg:flex absolute items-center left-[-50px] top-0 bottom-0 flex-col justify-between z-20">
@@ -86,10 +86,9 @@ const settings = {
             </div>
 
             {/*  Hero Section */}
-            <section
-                className="relative min-h-[360px] sm:min-h-[230px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 sm:ml-[0px] lg:ml-[50px] mt-4"
-                
-            >
+          <section
+  className="relative min-h-[210px] sm:min-h-[210px] md:min-h-[210px] lg:min-h-[716px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 sm:ml-0 lg:ml-[50px] mt-4"
+>
                 <Slider {...settings} className="w-full container-1440 h-full">
                     {heroSlides.map((slide, index) => (
                         <div key={index}>
@@ -97,7 +96,7 @@ const settings = {
                             <div className="w-full flex  flex-row md:flex-row items-center justify-between px-10 sm:px-10">
                                 {/* Left Text: This item will take up space in the flex row */}
                                 <div className="flex-1 text-left gap-[30px] ">
-                    <h1 className=" text-stroke text-shadow-custom">
+                    <h1 className=" text-stroke text-shadow-custom py-5">
                     <span
                         className="font-sans italic font-bold  text-[26px] lg:text-[80px] text-black "
                         dangerouslySetInnerHTML={{ __html: slide.title }}
@@ -105,14 +104,15 @@ const settings = {
                     </h1>
 
 
- <div className="flex flex-col gap-[30px]">
+ <div className="flex flex-col gap-[40px]">
+
   <span className="text-black text-[8px] md:text-[8px] lg:text-[24px] leading-[19px] relative">
     {slide.subtitle}
-    <span className="absolute left-0 -bottom-1 w-[60px] sm:w-[90px] h-[1px] bg-gray-800"></span>
+    <span className="absolute left-0 bottom-0 sm:translate-y-[0px] md:translate-y-[0px] lg:translate-y-[10px]  w-[56px] sm:w-[56px] md:w-[90px] lg:w-[225px] h-[0.5px] bg-black"></span>
   </span>
 
   <button
-    className="lg:w-[160px] sm:w-[72px] lg:h-[54px] sm:h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color"
+    className="lg:w-[160px] sm:w-[72px] lg:h-[54px] sm:h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
  
   >
     Shop Now!
@@ -123,13 +123,14 @@ const settings = {
                                 </div>
 
                                 {/* Right Image: This item will also take up space in the flex row */}
-                                <div className="flex-1 flex justify-center mt-0">
-                                    <img
-                                        src={slide.image}
-                                        alt="Fashion"
-                                        className="sm:w-[132.02px] sm:h-[170.18px] lg:w-[398px]  lg:h-[600px] object-contain"
-                                    />
-                                </div>
+                               <div className="flex-1 flex justify-center mt-0">
+  <img
+    src={slide.image}
+    alt="Fashion"
+    className="w-[132.02px] h-[170.18px] sm:w-[132.02px] sm:h-[170.18px] md:w-[132.02px] md:h-[170.18px] lg:w-[487.38px] lg:h-[607px] object-contain"
+  />
+</div>
+
                             </div>
                         </div>
                     ))}
