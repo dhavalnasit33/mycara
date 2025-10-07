@@ -13,7 +13,7 @@ const Button = ({
   const variants = {
     common: "bg-color-100 text-white text-[18px] min-w-[200px] py-[8px] md:py-[15px]  ",
     secondary: "bg-white text-black text-[18px] min-w-[200px] py-[8px] md:py-[15px] box-shadow",
-    danger: "bg-red-600 text-white hover:bg-red-700",
+    outline: "border border-[#BCBCBC] text-black text-[18px] min-w-[200px] py-[8px] md:py-[15px] ",
   };
 
   // Size styles
