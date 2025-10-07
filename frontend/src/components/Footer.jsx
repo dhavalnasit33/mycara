@@ -17,6 +17,7 @@ import googlePlay from "../assets/googlePlay.png";
 import appleStore from "../assets/appleStore.png";
 import Row from "./ui/Row";
 import Section from "./ui/Section";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -61,10 +62,10 @@ const Footer = () => {
               <a href="#" className="text-light text-[15px]">About</a>
             </li>
             <li>
-              <a href="/contact-us" className="text-light text-[15px]">Contact Us</a>
+              <Link to="/contact-us" className="text-light text-[15px]">Contact Us</Link>
             </li>
             <li>
-              <a href="/offer" className="text-light text-[15px]">Offers</a>
+              <Link to="/offer" className="text-light text-[15px]">Offers</Link>
             </li>
             <li>
               <a href="#" className="text-light text-[15px]">Women</a>
