@@ -118,6 +118,31 @@ const updateCategory = async (req, res) => {
   }
 };
 
+const updateCategoryStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const category = await Category.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!category) {
+      return sendResponse(res, false, null, "Category not found");
+    }
+
+    sendResponse(res, true, category, "Category status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
 
 const deleteCategory = async (req, res) => {
   try {
@@ -148,5 +173,6 @@ module.exports = {
   updateCategory,
   deleteCategory,
   bulkDeleteCategories,
-  getAllCategories
+  getAllCategories,
+  updateCategoryStatus
 };

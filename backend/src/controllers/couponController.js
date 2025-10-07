@@ -101,6 +101,33 @@ const updateCoupon = async (req, res) => {
   }
 };
 
+const updateCouponStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const coupon = await Coupon.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!coupon) {
+      return sendResponse(res, false, null, "Coupon not found");
+    }
+
+    sendResponse(res, true, coupon, "Coupon status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
+
 // Delete coupon
 const deleteCoupon = async (req, res) => {
   try {
@@ -132,4 +159,5 @@ module.exports = {
   updateCoupon,
   deleteCoupon,
   bulkDeleteCoupons,
+  updateCouponStatus
 };

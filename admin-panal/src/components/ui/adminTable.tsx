@@ -9,13 +9,20 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import { Link } from "react-router-dom";
 import { Edit, Trash } from "lucide-react";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select";
 
 interface Column<T> {
   key: string;
   label: string;
   render?: (item: T) => React.ReactNode;
   width?: string;
+  exportValue?: (item: T) => any;
 }
 
 interface GenericTableProps<T> {
@@ -74,8 +81,14 @@ export function GenericTable<T extends Record<string, any>>({
         search: debouncedQuery,
         status: statusFilter,
       });
-      setData(result.data || []);
-      setTotal(result.total || 0);
+      console.log("result", result);
+      // If current page is now empty after deletion, go back one page
+      if (result.data.length === 0 && page > 1) {
+        setPage(page - 1);
+      } else {
+        setData(result.data || []);
+        setTotal(result.total || 0);
+      }
     } catch (err: any) {
       toast.error(err?.message || "Failed to load data");
     } finally {
@@ -90,10 +103,13 @@ export function GenericTable<T extends Record<string, any>>({
   const handleDelete = async (id: string) => {
     if (!deleteItem) return;
     try {
-      await deleteItem(id);
+      const dd = await deleteItem(id);
+      console.log("dd", dd);
       toast.success("Deleted successfully");
       setSelectedIds((prev) => prev.filter((i) => i !== id));
-      loadData();
+      console.log("setSelectedIds", setSelectedIds);
+      const ff = loadData(); // 🔹 This reloads table data
+      console.log("ff", ff);
     } catch (err: any) {
       toast.error(err?.message || "Failed to delete item");
     }
@@ -137,22 +153,36 @@ export function GenericTable<T extends Record<string, any>>({
         </div>
         <div className="flex flex-wrap gap-2 items-center">
           {headerActions}
-          <Button variant="outline" onClick={async () => {
-            const result = await fetchData({ isDownload: true });
-            const exportData = (result.data || []).map((item: any) =>
-              columns.reduce((acc, col) => {
-                acc[col.label] = col.render ? col.render(item) : item[col.key];
-                return acc;
-              }, {} as Record<string, any>)
-            );
-            const ws = XLSX.utils.json_to_sheet(exportData);
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, ws, title);
-            const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-            saveAs(new Blob([buf]), `${title}_${Date.now()}.xlsx`);
-          }}>
+          <Button
+            variant="outline"
+            onClick={async () => {
+              try {
+                const result = await fetchData({ isDownload: true });
+                const exportData = (result.data || []).map((item: any) =>
+                  columns.reduce((acc, col) => {
+                    acc[col.label] = col.exportValue
+                      ? col.exportValue(item)
+                      : col.render
+                      ? item[col.key] // fallback for JSX
+                      : item[col.key];
+                    return acc;
+                  }, {} as Record<string, any>)
+                );
+
+                const ws = XLSX.utils.json_to_sheet(exportData);
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, title);
+                const buf = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+                saveAs(new Blob([buf]), `${title}_${Date.now()}.xlsx`);
+                toast.success("Exported successfully");
+              } catch (err: any) {
+                toast.error(err?.message || "Export failed");
+              }
+            }}
+          >
             Export
           </Button>
+
           {bulkDeleteItems && selectedIds.length > 0 && (
             <ConfirmDialog
               title="Delete Selected"
@@ -177,26 +207,24 @@ export function GenericTable<T extends Record<string, any>>({
             className="max-w-sm"
           />
         )}
-       {filters && (
-  <Select
-  value={statusFilter || "all"}
-  onValueChange={(val) => setStatusFilter(val === "all" ? "" : val)}
->
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder="Filter by status" />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value="all">All</SelectItem>
-    {filters.map((f) => (
-      <SelectItem key={f.value} value={f.value}>
-        {f.label}
-      </SelectItem>
-    ))}
-  </SelectContent>
-</Select>
-
-)}
-
+        {filters && (
+          <Select
+            value={statusFilter || "all"}
+            onValueChange={(val) => setStatusFilter(val === "all" ? "" : val)}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter by status" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              {filters.map((f) => (
+                <SelectItem key={f.value} value={f.value}>
+                  {f.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       {/* Table */}
@@ -204,26 +232,53 @@ export function GenericTable<T extends Record<string, any>>({
         <table className="w-full table-fixed text-sm">
           <thead className="bg-gray-50">
             <tr>
-              {bulkDeleteItems && <th className="w-10 p-3 text-center">
-                <Checkbox
-                  checked={selectedIds.length === data.length && data.length > 0}
-                  onCheckedChange={(checked) =>
-                    setSelectedIds(checked ? data.map((d) => d[rowKey] as string) : [])
-                  }
-                />
-              </th>}
+              {bulkDeleteItems && (
+                <th className="w-10 p-3 text-center">
+                  <Checkbox
+                    checked={
+                      selectedIds.length === data.length && data.length > 0
+                    }
+                    onCheckedChange={(checked) =>
+                      setSelectedIds(
+                        checked ? data.map((d) => d[rowKey] as string) : []
+                      )
+                    }
+                  />
+                </th>
+              )}
               {columns.map((col) => (
-                <th key={col.key} className={`p-3 text-left ${col.width || ""}`}>{col.label}</th>
+                <th
+                  key={col.key}
+                  className={`p-3 text-left ${col.width || ""}`}
+                >
+                  {col.label}
+                </th>
               ))}
-              {statusToggleEnabled && <th className="w-20 p-3 text-center">Status</th>}
+              {statusToggleEnabled && (
+                <th className="w-20 p-3 text-center">Status</th>
+              )}
               <th className="w-20 p-3 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
             {loading ? (
-              <tr><td colSpan={columns.length + 3} className="p-6 text-center text-gray-500">Loading...</td></tr>
+              <tr>
+                <td
+                  colSpan={columns.length + 3}
+                  className="p-6 text-center text-gray-500"
+                >
+                  Loading...
+                </td>
+              </tr>
             ) : data.length === 0 ? (
-              <tr><td colSpan={columns.length + 3} className="p-6 text-center text-gray-500">No records found</td></tr>
+              <tr>
+                <td
+                  colSpan={columns.length + 3}
+                  className="p-6 text-center text-gray-500"
+                >
+                  No records found
+                </td>
+              </tr>
             ) : (
               data.map((item) => (
                 <tr key={item[rowKey]} className="hover:bg-gray-50">
@@ -255,22 +310,32 @@ export function GenericTable<T extends Record<string, any>>({
                     </td>
                   )}
                   <td className="p-3 text-right">
-                    {rowActions ? rowActions(item) : (
-                      <div className="flex justify-end gap-2">
-                        <Link to={`/categories/${item._id}/edit`}>
-                          <Edit className="w-4 h-4 text-blue-600 hover:text-blue-800" />
-                        </Link>
-                        <ConfirmDialog
-                          title="Delete Item"
-                          description={`Are you sure you want to delete "${item.name || item.title}"?`}
-                          confirmText="Delete"
-                          onConfirm={() => handleDelete(item[rowKey] as string)}
-                          danger
+                    {rowActions ? (
+                      rowActions(item)
+                    ) : (
+                      <div className="flex justify-end items-center gap-2">
+                        {/* Edit button */}
+                        <Link
+                          to={`/${title.toLowerCase()}/${item[rowKey]}/edit`}
+                          className="p-1 rounded hover:bg-gray-100 flex items-center justify-center"
                         >
-                          <button>
-                            <Trash className="w-4 h-4 text-red-600 hover:text-red-800" />
-                          </button>
-                        </ConfirmDialog>
+                          <Edit className="w-5 h-5 text-blue-600 hover:text-blue-800" />
+                        </Link>
+
+                        {/* Delete button with ConfirmDialog */}
+                        {deleteItem && (
+                          <ConfirmDialog
+                            title={`Delete ${title.slice(0, -1)}`} // singular
+                            description={`Are you sure you want to delete "${item.name}"?`}
+                            confirmText="Delete"
+                            danger
+                            onConfirm={() =>
+                              handleDelete(item[rowKey] as string)
+                            }
+                          >
+                            <Trash className="w-5 h-5 text-red-600 hover:text-red-800" />
+                          </ConfirmDialog>
+                        )}
                       </div>
                     )}
                   </td>
@@ -284,7 +349,13 @@ export function GenericTable<T extends Record<string, any>>({
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex justify-end items-center gap-2 mt-4">
-          <Button size="sm" onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={page === 1}>Prev</Button>
+          <Button
+            size="sm"
+            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </Button>
           {Array.from({ length: totalPages }, (_, i) => (
             <Button
               key={i}
@@ -295,7 +366,13 @@ export function GenericTable<T extends Record<string, any>>({
               {i + 1}
             </Button>
           ))}
-          <Button size="sm" onClick={() => setPage((p) => Math.min(p + 1, totalPages))} disabled={page === totalPages}>Next</Button>
+          <Button
+            size="sm"
+            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            Next
+          </Button>
         </div>
       )}
     </div>

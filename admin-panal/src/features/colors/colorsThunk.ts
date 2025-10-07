@@ -59,6 +59,21 @@ export const updateColor = createAsyncThunk(
   }
 );
 
+// ✅ Update color status
+export const updateColorStatus = createAsyncThunk(
+  "colors/updateColorStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.colors.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+
 // Delete color
 export const deleteColor = createAsyncThunk(
   "colors/deleteColor",

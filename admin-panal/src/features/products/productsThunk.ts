@@ -5,10 +5,20 @@ import { ROUTES } from "@/services/routes";
 // Fetch products with pagination/search
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (params: { page?: number; limit?: number; search?: string; isDownload?: boolean } = {}, { rejectWithValue }) => {
+  async (
+    params: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      isDownload?: boolean;
+    } = {},
+    { rejectWithValue }
+  ) => {
     try {
       const { isDownload = false, ...query } = params;
-      const res = await api.get(ROUTES.products.getAll, { params: { ...query, isDownload } });
+      const res = await api.get(ROUTES.products.getAll, {
+        params: { ...query, isDownload },
+      });
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to fetch products");
     } catch (err: any) {
@@ -53,6 +63,23 @@ export const updateProduct = createAsyncThunk(
       const res = await api.put(ROUTES.products.update(id), data);
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to update product");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+// ✅ Update product status
+export const updateProductStatus = createAsyncThunk(
+  "products/updateProductStatus",
+  async (
+    { id, status }: { id: string; status: "active" | "inactive" },
+    { rejectWithValue }
+  ) => {
+    try {
+      const res = await api.put(ROUTES.products.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }

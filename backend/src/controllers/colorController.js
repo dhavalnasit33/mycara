@@ -67,6 +67,32 @@ const updateColor = async (req, res) => {
   }
 };
 
+const updateColorStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const color = await Color.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!color) {
+      return sendResponse(res, false, null, "Color not found");
+    }
+
+    sendResponse(res, true, color, "Color status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete color
 const deleteColor = async (req, res) => {
   try {
@@ -98,4 +124,5 @@ module.exports = {
   updateColor,
   deleteColor,
   bulkDeleteColors,
+  updateColorStatus
 };

@@ -62,6 +62,20 @@ export const updateBrand = createAsyncThunk(
   }
 );
 
+// ✅ Update brand status
+export const updateBrandStatus = createAsyncThunk(
+  "brands/updateBrandStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.brands.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // Delete brand
 export const deleteBrand = createAsyncThunk(
   "brands/deleteBrand",

@@ -65,6 +65,32 @@ const updateProductLabel = async (req, res) => {
   }
 };
 
+const updateProductLabelStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const productLabel = await ProductLabel.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!productLabel) {
+      return sendResponse(res, false, null, "Product Label not found");
+    }
+
+    sendResponse(res, true, productLabel, "Product Label status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 const deleteProductLabel = async (req, res) => {
   try {
     const deletedLabel = await ProductLabel.findByIdAndDelete(req.params.id);
@@ -94,4 +120,5 @@ module.exports = {
   updateProductLabel,
   deleteProductLabel,
   bulkDeleteProductLabels,
+  updateProductLabelStatus
 };

@@ -213,15 +213,9 @@ export default function Products() {
                           ? product.category.name
                           : "-"}
                       </td>
-                      <td className="p-3 text-gray-500 truncate">
-                        { "-"}
-                      </td>
-                      <td className="p-3 text-gray-500 truncate">
-                        { "-"}
-                      </td>
-                      <td className="p-3 text-gray-500 truncate">
-                        { "-"}
-                      </td>
+                      <td className="p-3 text-gray-500 truncate">{"-"}</td>
+                      <td className="p-3 text-gray-500 truncate">{"-"}</td>
+                      <td className="p-3 text-gray-500 truncate">{"-"}</td>
                       <td className="p-3">
                         <span
                           className={`px-2 py-1 rounded-full text-xs font-semibold ${

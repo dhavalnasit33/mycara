@@ -59,6 +59,20 @@ export const updateSize = createAsyncThunk(
   }
 );
 
+// ✅ Update sizes status
+export const updateSizeStatus = createAsyncThunk(
+  "sizes/updateSizeStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.sizes.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // Delete size
 export const deleteSize = createAsyncThunk(
   "sizes/deleteSize",

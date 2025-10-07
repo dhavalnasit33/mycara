@@ -339,6 +339,34 @@ const updateProduct = async (req, res) => {
   }
 };
 
+// ✅ Update product status (active/inactive)
+const updateProductStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const updated = await Product.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!updated) {
+      return sendResponse(res, false, null, "Product not found");
+    }
+
+    sendResponse(res, true, updated, `Product status updated to ${status}`);
+  } catch (err) {
+    console.error("❌ updateProductStatus error:", err);
+    sendResponse(res, false, null, err.message);
+  }
+};
+
+
 // Delete product
 const deleteProduct = async (req, res) => {
   try {
@@ -386,4 +414,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   bulkDeleteProducts,
+  updateProductStatus
 };
