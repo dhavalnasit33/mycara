@@ -3,13 +3,28 @@ import img2 from "../../assets/Mojari.png";
 import img3 from "../../assets/Girls full sleave fancy t shirt.png";
 import remove from "../../assets/remove.png";
 import { Minus, Plus } from "lucide-react";
+import { useState } from "react";
 
 export default function CartItem() {
-  const items = [
-    { image: img1, name: "Women Floral Printed Anarkali Kurta", price: 1430, quantity: 1 },
-    { image: img2, name: "Women Latest Trendy Pink Mojari", price: 1200, quantity: 2 },
-    { image: img3, name: "Women Trendy Cream T-Shirt", price: 1000, quantity: 1 },
-  ];
+    const [items, setItems] = useState([
+    { image: img1, name: "Women Floral Printed Anarkali Kurta", price: 1430, quantity:1 },
+    { image: img2, name: "Women Latest Trendy Pink Mojari", price: 1200,quantity:1 },
+    { image: img3, name: "Women Trendy Cream T-Shirt", price: 1000, quantity:1},
+  ]);
+
+  const handleIncrease = (index) => {
+    const updatedItems = [...items];
+    updatedItems[index].quantity += 1;
+    setItems(updatedItems);
+  };
+
+  const handleDecrease = (index) => {
+    const updatedItems = [...items];
+    if (updatedItems[index].quantity > 1) {
+      updatedItems[index].quantity -= 1;
+      setItems(updatedItems);
+    }
+  };
 
   return (
     <div className="w-full">
@@ -39,12 +54,17 @@ export default function CartItem() {
               <td className="p-4 break">{item.name}</td>
               <td className="p-4">
                 <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] border-[#BCBCBC] border text-black rounded-[20px] leading">
-                  <button><Minus size={14}/></button>
-                  <span>{item.quantity}</span>
-                  <button><Plus size={14}/></button>
+                  <button onClick={() => handleDecrease(index)}>
+                    <Minus size={14} />
+                  </button>
+                  <span>{item.quantity ?? 1}</span>
+
+                  <button onClick={() => handleIncrease(index)}>
+                    <Plus size={14} />
+                  </button>
                 </div>
               </td>
-              <td className="p-4 text-left">₹{item.price}</td>
+              <td className="p-4 text-left">₹{item.price}*{item.quantity}</td>
               <td className="p-4 text-center">₹{item.price * item.quantity}</td>
             </tr>
           ))}
@@ -63,15 +83,15 @@ export default function CartItem() {
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break">{item.name}</div>
-                <div className="text-p mb-[12px] text-color">₹{item.price}</div>
+                <div className="text-p mb-[12px] text-color">₹{item.price * item.quantity}</div>
 
                 <div className="flex items-center gap-[10px] text-14">
-                <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] border border-gray-300">
-                    <Minus size={12} />
+                <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] ">
+                    <Minus size={12} onClick={() => handleDecrease(index)} />
                 </button>
                 <span>{item.quantity}</span>
                 <button className="bg-color-100 rounded-[2px] flex items-center justify-center p-[2px] text-white">
-                    <Plus size={12} />
+                    <Plus size={12} onClick={() => handleIncrease(index)}/>
                 </button>
                 </div>
             </div>
