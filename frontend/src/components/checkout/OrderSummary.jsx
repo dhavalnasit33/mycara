@@ -15,7 +15,7 @@ export default function OrderSummary() {
         <div className="pb-[10px] text-p">1 item</div>
         <div className="flex border-b border-[#BCBCBC] pb-[10px] mb-[30px]">
             <div className="relative w-[80px] md:w-[105px] h-auto flex-shrink-0">
-                <img src={cartitem} alt="Product" className="w-full h-[122px] md:h-[150px] object-cover rounded-md" />
+                <img src={cartitem} alt="Product" className="w-full h-[122px] md:h-[150px] object-contain rounded-md" />
                 <span className="absolute top-[-6px] right-[-6px] w-[22px] h-[22px] bg-white text-black text-p  rounded-full flex items-center justify-center">
                     1
                 </span>
@@ -94,7 +94,7 @@ export default function OrderSummary() {
          </div>
 
         <div className="text-center mt-[50px]">
-            <Button variant="common" >
+            <Button variant="common"   className="min-w-auto sm:min-w-[300px] uppercase" >
                 PLACE ORDER
             </Button>
         </div>

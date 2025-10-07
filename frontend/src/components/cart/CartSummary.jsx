@@ -39,7 +39,7 @@ export default function CartSummary() {
       </div>
         <div className="text-center">
       <Link to="/checkout">
-        <Button variant="common"  className="!min-w-[211px] mt-[50px] uppercase">
+        <Button variant="common"  className="min-w-auto sm:min-w-[211px] mt-[50px] uppercase">
           PROCEED CHECKOUT
         </Button>
       </Link>

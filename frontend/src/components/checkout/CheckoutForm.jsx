@@ -1,5 +1,4 @@
 import { ArrowLeft, Plus } from "lucide-react";
-import React from "react";
 import { Link } from "react-router-dom";
 
 export default function CheckoutForm() {
@@ -60,7 +59,7 @@ export default function CheckoutForm() {
                 className="accent-[#F43297] w-5 h-5 rounded-full cursor-pointer"
                 />
 
-            <span>Free Shipping</span>
+            <span className="text-[#BCBCBC]">Free Shipping</span>
           </label>
           <span className="text-p sec-text-color">FREE</span>
         </div>

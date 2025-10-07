@@ -9,7 +9,7 @@ export default function ContactSection() {
     <section className="w-full bg-white py-12" 
     style={{ backgroundImage: `url(${formBg})` }}
      >
-      <Row className=" grid grid-cols-1 md:grid-cols-2 gap-[30px]">
+      <Row className=" grid grid-cols-1 md:grid-cols-2 gap-[30px] ">
         <div>
           <h2 className="text-[36px]  font-semibold text-dark mb-[18px] leading">
             Get In Touch
@@ -26,14 +26,11 @@ export default function ContactSection() {
               placeholder="Name*"
               className="input-common"
             />
-
-    
             <input
               type="email"
               placeholder="E-mail*"
               className="input-common"
             />
-
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
@@ -42,8 +39,8 @@ export default function ContactSection() {
               />
               <input
                 type="date"
-                placeholder="DD/MM/YY"
-                className="input-common"
+                placeholder="D/M/Y"
+                className="input-common  placeholder-[#BCBCBC]"
               />
             </div>
 

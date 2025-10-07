@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import offerbg from '../../assets/offer-1.png';
 import Button from '../ui/Button';
 import Row from '../ui/Row';
@@ -23,7 +24,7 @@ export default function OfferBanner() {
                     Women are afraid to try something new at work because they think that they will no...
                 </p>
                 <Button variant="common">
-                    Shop Now!
+                    <Link to="/shop">Shop Now!</Link>
                 </Button>
             </div>
 

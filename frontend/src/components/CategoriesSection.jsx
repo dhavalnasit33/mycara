@@ -52,12 +52,9 @@ const CategoriesSection = () => {
   };
 
   return (
-    <Section >
-       <Row>
-        <SectionHeading title=" Shop By Categories" />
-      </Row>
-        {/* Slider */}
-        <Row >
+    < >
+
+        {/* <Row > */}
           <Slider ref={sliderRef} {...settings}>
             {categories.map((category, index) => (
               <div key={index} className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]">
@@ -72,7 +69,7 @@ const CategoriesSection = () => {
             ))}
           </Slider>
 
-        </Row>
+        {/* </Row> */}
 
         {/* Custom Dots */}
         <div className="flex justify-center mt-[35px] sm:mt-[65px] space-x-[5px]">
@@ -88,7 +85,7 @@ const CategoriesSection = () => {
             ></button>
           ))}
         </div>
-    </Section>
+    </>
   );
 };
 
