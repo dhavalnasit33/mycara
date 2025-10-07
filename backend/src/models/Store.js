@@ -5,16 +5,19 @@ const storeSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     slug: { type: String, unique: true },
-    email: { type: String, required: true }, // store contact email
-    phone: { type: String },                 // store phone
-    website: { type: String },               // optional
-    logo: { type: String },                  // URL to logo
-    banner: { type: String },                // URL to banner
+    email: { type: String, required: true }, 
+    phone: { type: String },                 
+    website: { type: String },             
+    logo: { type: String },                
+    banner: { type: String },            
     description: { type: String },
-    theme: {
-      primaryColor: { type: String, default: "#000000" },
-      secondaryColor: { type: String, default: "#ffffff" },
-      fontFamily: { type: String, default: "Roboto" },
+     theme: {
+      primaryColor: { type: String, default: "#000000" },   
+      secondaryColor: { type: String, default: "#ffffff" }, 
+      buttonColor: { type: String, default: "#007bff" },    
+      faviconUrl: { type: String },                         
+      logoUrl: { type: String },                            
+      fontFamily: { type: String, default: "Roboto" },      
     },
     address: {
       street: String,

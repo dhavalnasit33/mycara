@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["super_admin", "store_owner", "store_user"],
+      enum: ["admin", "store_owner", "store_user"],
       default: "store_user",
     },
 
@@ -28,8 +28,6 @@ const userSchema = new mongoose.Schema(
     gender: { type: String, enum: ["male", "female", "other"] },
     date_of_birth: { type: Date },
     is_active: { type: Boolean, default: true },
-
-    storeId: { type: mongoose.Schema.Types.ObjectId, ref: "Store" }, // linked store
   },
   { timestamps: true }
 );

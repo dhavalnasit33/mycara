@@ -24,7 +24,7 @@ export default function StoreFormPage() {
   const { id } = useParams<{ id: string }>();
   const isEditMode = Boolean(id);
 
-  // Form states
+  // Store fields
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,17 +32,25 @@ export default function StoreFormPage() {
   const [logo, setLogo] = useState("");
   const [banner, setBanner] = useState("");
   const [description, setDescription] = useState("");
+
+  // Theme fields
   const [primaryColor, setPrimaryColor] = useState("#000000");
   const [secondaryColor, setSecondaryColor] = useState("#ffffff");
+  const [buttonColor, setButtonColor] = useState("#007bff");
   const [fontFamily, setFontFamily] = useState("Roboto");
+  const [faviconUrl, setFaviconUrl] = useState("");
+  const [themeLogoUrl, setThemeLogoUrl] = useState("");
+
+  // Address fields
   const [street, setStreet] = useState("");
   const [city, setCity] = useState("");
   const [stateField, setStateField] = useState("");
   const [country, setCountry] = useState("");
   const [zipCode, setZipCode] = useState("");
+
   const [status, setStatus] = useState(true);
 
-  // Fetch existing store in edit mode
+  // Load existing store in edit mode
   useEffect(() => {
     if (isEditMode && id) {
       dispatch(getStoreById(id)).then((res: any) => {
@@ -55,14 +63,20 @@ export default function StoreFormPage() {
           setLogo(store.logo || "");
           setBanner(store.banner || "");
           setDescription(store.description || "");
+
           setPrimaryColor(store.theme?.primaryColor || "#000000");
           setSecondaryColor(store.theme?.secondaryColor || "#ffffff");
+          setButtonColor(store.theme?.buttonColor || "#007bff");
           setFontFamily(store.theme?.fontFamily || "Roboto");
+          setFaviconUrl(store.theme?.faviconUrl || "");
+          setThemeLogoUrl(store.theme?.logoUrl || "");
+
           setStreet(store.address?.street || "");
           setCity(store.address?.city || "");
           setStateField(store.address?.state || "");
           setCountry(store.address?.country || "");
           setZipCode(store.address?.zip_code || "");
+
           setStatus(store.status === "active");
         }
       });
@@ -86,7 +100,10 @@ export default function StoreFormPage() {
       theme: {
         primaryColor,
         secondaryColor,
+        buttonColor,
         fontFamily,
+        faviconUrl,
+        logoUrl: themeLogoUrl,
       },
       address: {
         street,
@@ -174,7 +191,7 @@ export default function StoreFormPage() {
                 <Textarea value={description} onChange={(e) => setDescription(e.target.value)} />
               </div>
 
-              {/* Theme */}
+              {/* Theme Section */}
               <div>
                 <Label>Primary Color</Label>
                 <Input type="color" value={primaryColor} onChange={(e) => setPrimaryColor(e.target.value)} />
@@ -184,8 +201,20 @@ export default function StoreFormPage() {
                 <Input type="color" value={secondaryColor} onChange={(e) => setSecondaryColor(e.target.value)} />
               </div>
               <div>
+                <Label>Button Color</Label>
+                <Input type="color" value={buttonColor} onChange={(e) => setButtonColor(e.target.value)} />
+              </div>
+              <div>
                 <Label>Font Family</Label>
                 <Input value={fontFamily} onChange={(e) => setFontFamily(e.target.value)} />
+              </div>
+              <div>
+                <Label>Favicon</Label>
+                <ImageUpload value={faviconUrl} onChange={(url) => setFaviconUrl(url as string)} size={64} />
+              </div>
+              <div>
+                <Label>Theme Logo</Label>
+                <ImageUpload value={themeLogoUrl} onChange={(url) => setThemeLogoUrl(url as string)} size={150} />
               </div>
 
               {/* Address */}

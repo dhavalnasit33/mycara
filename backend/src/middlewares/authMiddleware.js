@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { sendResponse } = require("../utils/response");
 
+// =======================
+// AUTH MIDDLEWARE
+// =======================
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -23,6 +26,9 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
+// =======================
+// ROLE-BASED AUTHORIZATION
+// =======================
 const authorizeRoles = (...allowedRoles) => (req, res, next) => {
   if (!req.user) return sendResponse(res, false, null, "Unauthorized: No user attached");
 
@@ -35,9 +41,9 @@ const authorizeRoles = (...allowedRoles) => (req, res, next) => {
 
 const roleHierarchy = {
   store_user: 1,
-  store_owner: 2,
-  super_admin: 3,
+  admin: 2,
 };
+
 const authorizeMinRole = (minRole) => (req, res, next) => {
   if (!req.user) return sendResponse(res, false, null, "Unauthorized: User not found");
 
@@ -48,21 +54,4 @@ const authorizeMinRole = (minRole) => (req, res, next) => {
   next();
 };
 
-// Check resource belongs to same store (for store owners)
-const checkStoreOwnership = (model, idParam = "id") => async (req, res, next) => {
-  try {
-    const resource = await model.findById(req.params[idParam]);
-    if (!resource) return sendResponse(res, false, null, "Resource not found");
-
-    if (req.user.role === "store_owner" && resource.storeId.toString() !== req.user.storeId.toString()) {
-      return sendResponse(res, false, null, "Forbidden: Cannot access resource from another store");
-    }
-
-    req.resource = resource;
-    next();
-  } catch (err) {
-    sendResponse(res, false, null, err.message);
-  }
-};
-
-module.exports = { authMiddleware, authorizeRoles, authorizeMinRole,checkStoreOwnership };
+module.exports = { authMiddleware, authorizeRoles, authorizeMinRole };

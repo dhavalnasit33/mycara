@@ -22,6 +22,7 @@ interface Store {
     country: string;
     zip_code: string;
   };
+  assignedName?:string;
   status?: "active" | "inactive";
   createdAt: string;
   updatedAt: string;

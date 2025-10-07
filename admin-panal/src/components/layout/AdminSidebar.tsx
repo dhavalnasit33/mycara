@@ -1,4 +1,3 @@
-import { NavLink, useLocation } from "react-router-dom";
 import {
   LayoutDashboard,
   Package,
@@ -7,56 +6,45 @@ import {
   Shirt,
   Palette,
   Tags,
+  Droplet,
+  Ruler,
   Percent,
   Ticket,
   ShoppingCart,
   CreditCard,
   Users,
   Star,
-  Settings,
-  MessageSquare,
-  ChevronDown,
-  Layers,
-  Droplet,
-  Ruler,
   Heart,
   ShoppingBasket,
+  Layers,
   Navigation,
   Columns,
-  Home,
-  Shield,
-  FileText,
-  BarChart2,
+  MessageSquare,
+  Settings,
+  ChevronDown
 } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarHeader,
   useSidebar,
 } from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { RootState } from "@/store";
-import { useSelector } from "react-redux";
+
 
 const mainNavItems = [{ title: "Dashboard", url: "/", icon: LayoutDashboard }];
 
-const superAdminItems = [
-  { title: "All Stores", url: "/stores", icon: Home },             
-  { title: "Store Owners", url: "/store-owners", icon: Users },   
-];
-
 const catalogItems = [
-  { title: "Products", url: "/products", icon: Package },
   { title: "Categories", url: "/categories", icon: FolderTree },
   { title: "Brands", url: "/brands", icon: Tag },
   { title: "Types", url: "/types", icon: Shirt },
@@ -64,6 +52,7 @@ const catalogItems = [
   { title: "Product Labels", url: "/product-labels", icon: Tags },
   { title: "Colors", url: "/colors", icon: Droplet },
   { title: "Sizes", url: "/sizes", icon: Ruler },
+  { title: "Products", url: "/products", icon: Package },
 ];
 
 const promotionItems = [
@@ -88,17 +77,18 @@ const systemItems = [
   { title: "Navbar", url: "/navbar", icon: Navigation },
   { title: "Footer", url: "/footer", icon: Columns },
   { title: "Contact Messages", url: "/contact-messages", icon: MessageSquare },
-  // { title: "Settings", url: "/settings", icon: Settings },
+  { title: "Settings", url: "/settings", icon: Settings },
 ];
-
 
 export function AdminSidebar() {
   const { state } = useSidebar();
   const location = useLocation();
-const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  const isCollapsed = state === "collapsed";
 
   const isActive = (path: string) => location.pathname === path;
-  const isGroupActive = (items: typeof mainNavItems) =>
+  const isGroupActive = (items: any[]) =>
     items.some(
       (item) => location.pathname.startsWith(item.url) && item.url !== "/"
     );
@@ -112,7 +102,26 @@ const { user } = useSelector((state: RootState) => state.auth);
     }`;
   };
 
-  const isCollapsed = state === "collapsed";
+  // ✅ Role-based allowed sections
+  const getAllowedSections = () => {
+    if (!user) return [];
+
+    switch (user.role) {
+      case "admin":
+        return [
+          { label: "Main", items: mainNavItems },
+          { label: "Catalog", items: catalogItems },
+          { label: "Promotions", items: promotionItems },
+          { label: "Sales", items: salesItems },
+          { label: "Customers", items: customerItems },
+          { label: "System", items: systemItems },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const allowedSections = getAllowedSections();
 
   return (
     <Sidebar className={isCollapsed ? "w-16" : "w-64"} collapsible="icon">
@@ -123,9 +132,7 @@ const { user } = useSelector((state: RootState) => state.auth);
           </div>
           {!isCollapsed && (
             <div>
-              <h2 className="text-lg font-semibold text-sidebar-foreground">
-                Mycra
-              </h2>
+              <h2 className="text-lg font-semibold text-sidebar-foreground">Mycra</h2>
               <p className="text-xs text-muted-foreground">Admin Dashboard</p>
             </div>
           )}
@@ -133,209 +140,39 @@ const { user } = useSelector((state: RootState) => state.auth);
       </SidebarHeader>
 
       <SidebarContent className="px-2 py-4">
-        {/* Main Navigation */}
-        <SidebarGroup>
-          <SidebarMenu>
-            {mainNavItems.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <NavLink to={item.url} className={getNavClass(item.url)}>
-                    <item.icon className="h-4 w-4" />
-                    {!isCollapsed && <span>{item.title}</span>}
-                  </NavLink>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
-        </SidebarGroup>
-
-        {!isCollapsed && (
-          <>
-            {/* Catalog Management */}
-            <Collapsible defaultOpen={isGroupActive(catalogItems)}>
-              <SidebarGroup>
+        {allowedSections.map((section) => (
+          <Collapsible
+            key={section.label}
+            defaultOpen={isGroupActive(section.items)}
+          >
+            <SidebarGroup>
+              {!isCollapsed && (
                 <CollapsibleTrigger className="flex w-full items-center justify-between">
                   <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Catalog
+                    {section.label}
                   </SidebarGroupLabel>
                   <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {catalogItems.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink
-                              to={item.url}
-                              className={getNavClass(item.url)}
-                            >
-                              <item.icon className="h-4 w-4" />
-                              <span>{item.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-
-            {/* Promotions */}
-            <Collapsible defaultOpen={isGroupActive(promotionItems)}>
-              <SidebarGroup>
-                <CollapsibleTrigger className="flex w-full items-center justify-between">
-                  <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Promotions
-                  </SidebarGroupLabel>
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {promotionItems.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink
-                              to={item.url}
-                              className={getNavClass(item.url)}
-                            >
-                              <item.icon className="h-4 w-4" />
-                              <span>{item.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-
-            {/* Sales */}
-            <Collapsible defaultOpen={isGroupActive(salesItems)}>
-              <SidebarGroup>
-                <CollapsibleTrigger className="flex w-full items-center justify-between">
-                  <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Sales
-                  </SidebarGroupLabel>
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {salesItems.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink
-                              to={item.url}
-                              className={getNavClass(item.url)}
-                            >
-                              <item.icon className="h-4 w-4" />
-                              <span>{item.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-
-            {/* Customers */}
-            <Collapsible defaultOpen={isGroupActive(customerItems)}>
-              <SidebarGroup>
-                <CollapsibleTrigger className="flex w-full items-center justify-between">
-                  <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    Customers
-                  </SidebarGroupLabel>
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {customerItems.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink
-                              to={item.url}
-                              className={getNavClass(item.url)}
-                            >
-                              <item.icon className="h-4 w-4" />
-                              <span>{item.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-
-            {/* System */}
-            <Collapsible defaultOpen={isGroupActive(systemItems)}>
-              <SidebarGroup>
-                <CollapsibleTrigger className="flex w-full items-center justify-between">
-                  <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    System
-                  </SidebarGroupLabel>
-                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarGroupContent>
-                    <SidebarMenu>
-                      {systemItems.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                          <SidebarMenuButton asChild>
-                            <NavLink
-                              to={item.url}
-                              className={getNavClass(item.url)}
-                            >
-                              <item.icon className="h-4 w-4" />
-                              <span>{item.title}</span>
-                            </NavLink>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      ))}
-                    </SidebarMenu>
-                  </SidebarGroupContent>
-                </CollapsibleContent>
-              </SidebarGroup>
-            </Collapsible>
-
-             {user?.role === "super_admin" && (
-        <Collapsible defaultOpen={isGroupActive(superAdminItems)}>
-          <SidebarGroup>
-            <CollapsibleTrigger className="flex w-full items-center justify-between">
-              <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                Super Admin
-              </SidebarGroupLabel>
-              <ChevronDown className="h-4 w-4 text-muted-foreground" />
-            </CollapsibleTrigger>
-            <CollapsibleContent>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {superAdminItems.map((item) => (
-                    <SidebarMenuItem key={item.title}>
-                      <SidebarMenuButton asChild>
-                        <NavLink to={item.url} className={getNavClass(item.url)}>
-                          <item.icon className="h-4 w-4" />
-                          <span>{item.title}</span>
-                        </NavLink>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </CollapsibleContent>
-          </SidebarGroup>
-        </Collapsible>
-      )}
-          </>
-        )}
+              )}
+              <CollapsibleContent>
+                <SidebarGroupContent>
+                  <SidebarMenu>
+                    {section.items.map((item) => (
+                      <SidebarMenuItem key={item.title}>
+                        <SidebarMenuButton asChild>
+                          <NavLink to={item.url} className={getNavClass(item.url)}>
+                            <item.icon className="h-4 w-4" />
+                            {!isCollapsed && <span>{item.title}</span>}
+                          </NavLink>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    ))}
+                  </SidebarMenu>
+                </SidebarGroupContent>
+              </CollapsibleContent>
+            </SidebarGroup>
+          </Collapsible>
+        ))}
       </SidebarContent>
     </Sidebar>
   );

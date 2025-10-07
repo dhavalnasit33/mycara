@@ -13,11 +13,11 @@ const {
 router.use(authMiddleware);
 
 // Public route: get all stores
-router.get("/",authorizeMinRole("super_admin"), getStores);
-router.get("/:id", authorizeMinRole("super_admin"), getStoreById);
-router.post("/", authorizeMinRole("super_admin"), createStore);
-router.put("/:id", authorizeMinRole("super_admin"), updateStore);
-router.delete("/:id", authorizeMinRole("super_admin"), deleteStore);
-router.post("/bulk-delete", authorizeMinRole("super_admin"), bulkDeleteStores);
+router.get("/",authorizeMinRole("admin"), getStores);
+router.get("/:id", authorizeMinRole("admin"), getStoreById);
+router.post("/", authorizeMinRole("admin"), createStore);
+router.put("/:id", authorizeMinRole("admin"), updateStore);
+router.delete("/:id", authorizeMinRole("admin"), deleteStore);
+router.post("/bulk-delete", authorizeMinRole("admin"), bulkDeleteStores);
 
 module.exports = router;

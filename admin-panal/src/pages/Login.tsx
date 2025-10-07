@@ -24,10 +24,8 @@ export default function Login() {
       toast.success("Logged in successfully!");
 
       const userRole = result.payload.user.role;
-      if (userRole === "super_admin") navigate("/");
-      else if (userRole === "store_owner") navigate("/");
-      else navigate("/"); // store_user
-
+      if (userRole === "admin") navigate("/");
+      else navigate("/store_user"); // store_user
     } else {
       const message =
         (result.payload as string) || "Login failed: Invalid credentials";
@@ -110,12 +108,12 @@ export default function Login() {
           </button>
         </form>
 
-        <p className="mt-6 text-center text-gray-500 text-sm">
+        {/* <p className="mt-6 text-center text-gray-500 text-sm">
           Don't have an account?{" "}
           <a href="/register" className="text-blue-600 hover:underline">
             Register
           </a>
-        </p>
+        </p> */}
       </div>
     </div>
   );

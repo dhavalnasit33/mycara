@@ -47,6 +47,7 @@ import Settings from "./pages/Settings/Settings";
 import Register from "./pages/Register";
 import Stores from "./pages/Stores/Store";
 import StoreFormPage from "./pages/Stores/StoreForm";
+import StoreOwnerFormPage from "./pages/StoreOwner/StoreOwnerForm";
 
 
 const queryClient = new QueryClient();
@@ -59,9 +60,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* <Route path="/register" element={<Register />} /> */}
 
-          <Route element={<ProtectedRoute />}>
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
             <Route path="/" element={<AdminLayout />}>
               <Route index element={<VelzonDashboard />} />
               <Route path="products" element={<Products />} />
@@ -115,6 +116,8 @@ const App = () => (
                 <Route path="stores" element={<Stores />} />
                  <Route path="stores/add" element={<StoreFormPage />} />
                   <Route path="/stores/:id/edit" element={<StoreFormPage />} />
+                   <Route path="/store-owners/add" element={<StoreOwnerFormPage />} />
+                  <Route path="/store-owners/:id/edit" element={<StoreOwnerFormPage />} />
             
             </Route>
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

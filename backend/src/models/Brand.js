@@ -3,7 +3,6 @@ const slugify = require("slugify");
 
 const brandSchema = new mongoose.Schema(
   {
-    storeId: { type: mongoose.Schema.Types.ObjectId, ref: "Store", required: true },
     name: { type: String, required: true },
     slug: { type: String, unique: true }, 
     image_url: { type: String, required: true },

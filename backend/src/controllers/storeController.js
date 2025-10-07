@@ -8,31 +8,70 @@ const getStores = async (req, res) => {
     let { page = 1, limit = 10, search = "", isDownload = "false", status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
-    // Build query
-    const query = {};
-    if (search) query.name = { $regex: search, $options: "i" };
-    if (status && ["active", "inactive"].includes(status)) query.status = status;
+    page = parseInt(page);
+    limit = parseInt(limit);
 
+    // Build match query for aggregation
+    const matchQuery = {};
+    if (search) matchQuery.name = { $regex: search, $options: "i" };
+    if (status && ["active", "inactive"].includes(status)) matchQuery.status = status;
+
+    // 🟡 Aggregation pipeline with reverse lookup to users
+    const pipeline = [
+      { $match: matchQuery },
+      {
+        $lookup: {
+          from: "users",             // collection name of User
+          localField: "_id",         // Store._id
+          foreignField: "storeId",   // User.storeId
+          as: "assignedUsers"
+        }
+      },
+      {
+        $addFields: {
+          assignedName: {
+            $cond: [
+              { $gt: [{ $size: "$assignedUsers" }, 0] },
+              { $arrayElemAt: ["$assignedUsers.name", 0] }, // take first user's name
+              null
+            ]
+          }
+        }
+      },
+      { $project: { assignedUsers: 0 } }, // remove raw user array
+      { $sort: { createdAt: -1 } }
+    ];
+
+    // If download, return all results without pagination
     if (download) {
-      const stores = await Store.find(query).sort({ createdAt: -1 });
+      const stores = await Store.aggregate(pipeline);
       return sendResponse(res, true, { stores }, "All stores retrieved for download");
     }
 
-    page = parseInt(page);
-    limit = parseInt(limit);
-    const total = await Store.countDocuments(query);
+    // For pagination
+    const totalPipeline = [...pipeline, { $count: "total" }];
+    const totalResult = await Store.aggregate(totalPipeline);
+    const total = totalResult.length > 0 ? totalResult[0].total : 0;
 
-    const stores = await Store.find(query)
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({ createdAt: -1 });
+    const paginatedPipeline = [
+      ...pipeline,
+      { $skip: (page - 1) * limit },
+      { $limit: limit },
+    ];
 
-    sendResponse(res, true, { stores, total, page, pages: Math.ceil(total / limit) });
+    const stores = await Store.aggregate(paginatedPipeline);
+
+    sendResponse(res, true, {
+      stores,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
   } catch (err) {
+    console.error("Error in getStores:", err);
     sendResponse(res, false, null, err.message);
   }
 };
-
 // Get all stores (for dropdowns, etc.)
 const getAllStores = async (req, res) => {
   try {
