@@ -14,7 +14,7 @@ export default function CartItem() {
   return (
     <div className="w-full">
       {/* Desktop View */}
-      <table className="w-full hidden lg:table">
+      <table className="w-full hidden custom-lg:table">
         <thead className="table-header-group">
           <tr className="border-b border-black font-18">
             <th></th>
@@ -52,7 +52,7 @@ export default function CartItem() {
       </table>
 
       {/* Mobile View */}
-      <div className="lg:hidden space-y-[20px]">
+      <div className="custom-lg:hidden space-y-[20px]">
         {items.map((item, index) => (
         <div key={index} className="bg-white p-4 rounded-[5px] box-shadow relative flex  sm:flex-nowrap gap-[20px] items-start">
             <div className="flex items-center gap-[10px] flex-shrink-0">

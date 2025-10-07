@@ -24,33 +24,33 @@ export default function ContactSection() {
             <input
               type="text"
               placeholder="Name*"
-              className="w-full border-b light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow"
+              className="input-common"
             />
 
     
             <input
               type="email"
               placeholder="E-mail*"
-              className="w-full border-b light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow"
+              className="input-common"
             />
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="Order Number"
-                className="w-full border-b light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow"
+                className="input-common"
               />
               <input
                 type="date"
                 placeholder="DD/MM/YY"
-                className="w-full border-b light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow"
+                className="input-common"
               />
             </div>
 
             <textarea
               rows="4"
               placeholder="Description"
-              className="w-full border-b light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow"
+              className="input-common"
             ></textarea>
 
      

@@ -8,7 +8,11 @@ module.exports = {
     fontSize: {
       base: '16px', // default base font-size = 16px
     },
-    extend: {},
+    extend: {
+      screens: {
+        'custom-lg': '980px', 
+      },
+    },
   },
   plugins: [],
 };

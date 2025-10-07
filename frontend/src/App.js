@@ -20,6 +20,7 @@ import MyAccount from "./pages/Account";
 import Orders from "./components/userAccount/Orders";
 import Dashboard from "./components/userAccount/Dashbord";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 function App() {
   const RouterWrapper = () => {
     const location = useLocation();
@@ -47,6 +48,7 @@ function App() {
             <Route path="logout" />
           </Route>
           <Route path="/cart" element={<Cart />}></Route>
+          <Route path="/checkout" element={<Checkout />}></Route>
         </Routes>
         <Footer />
       </>
