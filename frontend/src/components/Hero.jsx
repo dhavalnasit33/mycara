@@ -38,7 +38,7 @@ const settings = {
     speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     autoplaySpeed: 3000,
     arrows: false,
     appendDots: dots => (
@@ -54,65 +54,72 @@ const settings = {
     return (
         <div className="relative  w-full">
             {/* Left Vertical Strip */}
-            <div className="hidden sm:flex absolute items-center left-[-50px] top-0 bottom-0 flex-col justify-between    z-20">
-                    
-                    {/* A new div to group the rotated text and the line */}
-                    <div className="flex flex-col items-center gap-2">
-                        {/* The vertical line goes first */}
-                        <div className="w-[1px] h-[50px] bg-[#D2AF9F]"></div>
-                        {/* Text: Women's Collection */}
-                        <span className="rotate-[-90deg] text-[#D2AF9F] text-xs sm:text-sm tracking-widest mt-[60px]">
-                            Winter Collection
-                        </span>
-                    </div>
-                    
-                    <span className="rotate-[-90deg] text-[#D2AF9F] text-xs sm:text-sm mb-[30px]">
-                        2024
+           {/* Left Vertical Strip - Hidden on mobile/tablet, shown from 'lg' (desktop) breakpoint */}
+            <div className="hidden lg:flex absolute items-center left-[-50px] top-0 bottom-0 flex-col justify-between z-20">
+                
+                {/* Rotated Text and Line Group */}
+                <div className="flex flex-col items-center gap-2">
+                    {/* The vertical line goes first */}
+                    <div className="w-[1px] h-[50px] bg-[#D2AF9F]"></div>
+                    {/* Text: Winter Collection */}
+                    <span className="rotate-[-90deg] text-[#D2AF9F] text-xs sm:text-sm tracking-widest mt-[60px]">
+                        Winter Collection
                     </span>
-                    
-                    <div className="flex flex-col items-center space-y-4">
-                        {/* Twitter Icon */}
-                        <a href="#" aria-label="Twitter">
-                             <FaTwitter size={20} className="text-black-600 hover:text-gray-500 transition-colors duration-300" />
-                        </a>
-                        {/* Heart Icon */}
-                        <a href="#" aria-label="Heart">
-                            <FaRegHeart size={20} className="text-black hover:text-gray-500" />
-                        </a>
-                    </div>
                 </div>
+                
+                {/* Year Text */}
+                <span className="rotate-[-90deg] text-[#D2AF9F] text-xs sm:text-sm mb-[30px]">
+                    2024
+                </span>
+                
+                {/* Social Icons */}
+                <div className="flex flex-col items-center space-y-4">
+                    {/* Twitter Icon */}
+                    <a href="#" aria-label="Twitter">
+                           <FaTwitter size={20} className="text-black-600 hover:text-gray-500 transition-colors duration-300" />
+                    </a>
+                    {/* Heart Icon */}
+                    <a href="#" aria-label="Heart">
+                        <FaRegHeart size={20} className="text-black hover:text-gray-500" />
+                    </a>
+                </div>
+            </div>
 
             {/*  Hero Section */}
             <section
-                className="relative min-h-[360px] sm:min-h-[716px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 ml-[0px] sm:ml-[50px] mt-4"
-                style={{ maxWidth: "1855px" }}
+                className="relative min-h-[360px] sm:min-h-[230px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 sm:ml-[0px] lg:ml-[50px] mt-4"
+                
             >
-                <Slider {...settings} className="w-full h-full">
+                <Slider {...settings} className="w-full container-1440 h-full">
                     {heroSlides.map((slide, index) => (
                         <div key={index}>
                             {/* This is the Flexbox container for a single slide */}
-                            <div className="w-full flex flex-row md:flex-row items-center justify-between px-1 sm:px-10">
+                            <div className="w-full flex  flex-row md:flex-row items-center justify-between px-10 sm:px-10">
                                 {/* Left Text: This item will take up space in the flex row */}
-                                <div className="flex-1 text-left space-y-4 sm:space-y-6 p-[10px] sm:p-[80px]">
+                                <div className="flex-1 text-left gap-[30px] ">
                     <h1 className=" text-stroke text-shadow-custom">
                     <span
-                        className="font-sans italic font-bold text-[26px] sm:text-[80px] text-black "
+                        className="font-sans italic font-bold  text-[26px] lg:text-[80px] text-black "
                         dangerouslySetInnerHTML={{ __html: slide.title }}
                     />
                     </h1>
 
 
-                                  <p className="text-black relative text-[8px] sm:text-[24px]">
-                                    {slide.subtitle}
-                                    <span className="absolute left-0 -bottom-1 w-[60px] sm:w-[90px] h-[1px] bg-gray-800"></span>
-                                    </p>
+ <div className="flex flex-col gap-[30px]">
+  <span className="text-black text-[8px] md:text-[8px] lg:text-[24px] leading-[19px] relative">
+    {slide.subtitle}
+    <span className="absolute left-0 -bottom-1 w-[60px] sm:w-[90px] h-[1px] bg-gray-800"></span>
+  </span>
 
-                                    <button
-                                        className="px-[10px] py-[5px] sm:px-[20px] sm:py-[10px]  text-white font-medium rounded shadow-md duration-300 hover:opacity-90"
-                                        style={{ backgroundColor: "var(--theme-color)" }}
-                                    >
-                                        Shop Now!
-                                    </button>
+  <button
+    className="lg:w-[160px] sm:w-[72px] lg:h-[54px] sm:h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color"
+ 
+  >
+    Shop Now!
+  </button>
+</div>
+
+
                                 </div>
 
                                 {/* Right Image: This item will also take up space in the flex row */}
@@ -120,7 +127,7 @@ const settings = {
                                     <img
                                         src={slide.image}
                                         alt="Fashion"
-                                        className="h-[220px] sm:h-[400px] lg:h-[600px] object-contain"
+                                        className="sm:w-[132.02px] sm:h-[170.18px] lg:w-[398px]  lg:h-[600px] object-contain"
                                     />
                                 </div>
                             </div>

@@ -18,7 +18,7 @@ const Bestsellers = () => {
   ];
 
   return (
-    <div className="max-w-[1440px] mx-auto w-full cursor-pointer py-3 sm:py-8 px-4 sm:px-6 lg:px-8">
+    <div className="container-1440 w-[90%] md:w-[90%] mx-auto w-full cursor-pointer lg:py-0 sm:py-8  sm:px-6 lg:px-0">
 
       {/* Title Section */}
         <div className="relative flex justify-center items-center w-full">
@@ -40,7 +40,7 @@ const Bestsellers = () => {
           <div className="w-[50px] border-t border-black"></div>
         </div>
       {/* Product Grid - Corrected for responsiveness */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {products.map((product, index) => (
           <ProductCard key={index} product={product} />
         ))}

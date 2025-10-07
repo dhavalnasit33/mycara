@@ -11,8 +11,8 @@ const Button = ({
 }) => {
   // Variant styles
   const variants = {
-    common: "bg-color-100 text-white text-[22px] min-w-[200px] py-3  ",
-    secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
+    common: "bg-color-100 text-white text-[18px] min-w-[200px] py-[8px] md:py-[15px]  ",
+    secondary: "bg-white text-black text-[18px] min-w-[200px] py-[8px] md:py-[15px] box-shadow",
     danger: "bg-red-600 text-white hover:bg-red-700",
   };
 
@@ -20,15 +20,28 @@ const Button = ({
   const sizes = {
     sm: "py-1 px-3 text-sm",
     md: "py-2 px-6 text-base",
-    lg: "py-3 px-8 text-lg",
+    lg: "py-3 px-8 text-[18px]",
   };
+
+//   const variants = {
+//   common: "bg-color-100 text-white text-[16px] lg:text-[18px] min-w-[200px] py-[12px] sm:py-[13.5px]",
+//   secondary: "bg-white text-black text-[16px] lg:text-[18px] min-w-[200px] py-[12px] sm:py-[13.5px] box-shadow",
+//   danger: "bg-red-600 text-white hover:bg-red-700 text-[16px] sm:text-[18px]",
+// };
+
+// // Size styles (optional)
+// const sizes = {
+//   sm: "py-1 px-3 text-sm lg:text-base",
+//   md: "py-[8px] px-[10px] text-base lg:text-[18px]",
+//   lg: "py-3 px-8 text-[16px] lg:text-[18px]",
+// };
 
   return (
     <button
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`rounded  inline-flex  justify-center transition duration-300 ${variants[variant]} ${sizes[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
+      className={`rounded-[3px]  inline-flex  justify-center transition duration-300 ${variants[variant]} ${sizes[size]} ${disabled ? "opacity-50 cursor-not-allowed" : ""} ${className}`}
     >
       {children}
     </button>

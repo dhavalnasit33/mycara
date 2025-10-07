@@ -30,7 +30,7 @@ const ContactUs = () => {
           </Row>
         </Section>
       <Section >
-        <Row className='xl:max-w-[1122px] grid grid-cols-1 md:grid-cols-3 gap-[30px]'>
+        <Row className='xl:max-w-[1122px] grid grid-cols-1 md:grid-cols-3 gap-[30px] py-[25px] md:py-[50px]'>
           {/* <div className="max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-[30px]"> */}
             <ContactCard
               icon={<MapPinIcon />}

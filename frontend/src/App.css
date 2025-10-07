@@ -58,6 +58,8 @@
  --theme-bg-100: #f32f94;      /* light background */
  --text-light: rgba(0,0,0,0.70);
  
+   --ef3a96-9: rgba(239, 58, 150, 0.09);
+
  --theme-bg-rgba: rgba(210, 175, 159, 0.3);
  --theme-light-border:#BCBCBC;
  --text-break:break-word;
@@ -94,6 +96,10 @@
     --font-size-h5: 70px;    /* ~text-xl */
 
   
+}
+/* Classes */
+.bg-ef3a96-9 {
+  background-color: var(--ef3a96-9) !important;
 }
 .theme-bg-light
 {
@@ -384,10 +390,32 @@
 .sec-text-color{
   color: var( --text-p-light);
 }
+.font-18{
+  font-size: var(--font-size-h4);
+}
+.input-common {
+  @apply w-full border-b light-border rounded-[5px] px-[10px] py-[8px] md:px-[20px] md:py-[13px] focus:outline-none focus:ring-2 focus:ring-pink-400 form-shadow placeholder-[#BCBCBC];
+}
 
 
-@media (max-width: 640px) {
+
+@media (max-width: 767px) {
 .font-h2{
   font-size: var(--font-mobile-h2);
 }
+}
+
+
+.container-1440 {
+  @apply w-full mx-auto lg:max-w-[1440px];
+}
+
+/* Custom radial gradient background */
+.bg-radial-custom {
+  background: radial-gradient(
+    circle,
+    rgba(210, 175, 159, 0.6) 0%,   
+    rgba(210, 175, 159, 0.6) 30%,  
+    rgba(210, 175, 159, 0.6) 100%  
+  );
 }

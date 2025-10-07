@@ -1,18 +1,19 @@
 import Row from "../ui/Row";
 import { NavLink, useLocation } from "react-router-dom";
-import { FaTachometerAlt, FaShoppingBag, FaMapMarkerAlt, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { FaTachometerAlt, FaShoppingBag, FaUser } from "react-icons/fa";
 
 import Orders from "./Orders";
 import Dashboard from "./Dashbord";
 import Section from "../ui/Section";
+import { LogOut, MapPin } from "lucide-react";
 
 
 const tabs = [
   { name: "Dashboard", path: "/my-account/dashboard", icon: <FaTachometerAlt />, component: Dashboard },
   { name: "Orders", path: "/my-account/orders", icon: <FaShoppingBag />, component: Orders },
-  { name: "Address", path: "/my-account/address", icon: <FaMapMarkerAlt />, component: () => <p>Address content goes here.</p> },
-  { name: "Account Details", path: "/my-account/account-details", icon: <FaUser />, component: () => <p>Account details content goes here.</p> },
-  { name: "Log out", path: "/my-account/logout", icon: <FaSignOutAlt />, component: null },
+  { name: "Address", path: "/my-account/address", icon: <MapPin />, component: () => <p>Address content goes here.</p> },
+  { name: "Account Details", path: "/my-account/account-details", icon: <FaUser/>, component: () => <p>Account details content goes here.</p> },
+  { name: "Log out", path: "/my-account/logout", icon: <LogOut />, component: null },
 ];
 
 export default function AccountTabs() {
@@ -39,8 +40,9 @@ export default function AccountTabs() {
                     }
                     >
                     <span className="flex-shrink-0">{tab.icon}</span>
+                      {/* <img src={tab.icon} alt={tab.name} className="w-5 h-5" /> */}
                     {/* <span className="hidden md:inline">{tab.name}</span> */}
-                    <span className="hidden [@media(min-width:980px)]:inline">{tab.name}</span>
+                    <span className="hidden custom-lg:inline">{tab.name}</span>
                     </NavLink>
                 ))}
                 </div>

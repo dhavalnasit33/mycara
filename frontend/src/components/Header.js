@@ -14,7 +14,7 @@ import FeaturesIcon from "./icons/Features";
 import MoreIcon from "./icons/More"; 
 import LoginIcon from "./icons/login"; 
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -60,9 +60,9 @@ const Header = ({ hideOnMobileShopPage }) => {
 
   
   return (
-    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
+    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sm:mb-[0px] sec-theme  box-shadow ">
     
-      <div className="bg-primary-50   hidden lg:flex justify-between items-center max-w-[1280px] w-full h-[80px] md:h-[100px] mx-auto ">
+      <div className=" container-1440  mx-auto md:h-[100px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           <img
@@ -110,61 +110,58 @@ const Header = ({ hideOnMobileShopPage }) => {
         </nav>
 
         <div className="flex items-center space-x-4 relative">
-          <div className="relative hidden sm:block">
-            <Button onClick={() => { setIsLoginOpen(!isLoginOpen); }} variant="common" className="!min-w-[113px] !py-[7px] !px-[10px] !rounded-[10px] ">    
-              <a href="/login" className="flex ">
-                <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
-                <span>Login</span>
-              </a>
-            </Button>
-
-
-            {isLoginOpen && (
-              <div className="absolute right-0 mt-2 w-60 bg-white rounded-[10px] shadow-lg z-50">
-                <div className="px-4 py-2 text-sm text-gray-600 flex justify-between border-b">
+          {/* <div className="relative  sm:block"> */}
+            <div className="relative group ">
+              <Link to="/login">
+                <Button  variant="common" className="!min-w-[113px] !py-[7px] !px-[10px] !rounded-[10px] flex items-center">
+                  <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
+                  <span>Login</span>
+                </Button>
+              </Link>
+              <div className="absolute right-0 mt-2 w-[280px] bg-white rounded-[10px] form-shadow z-50 opacity-0 group-hover:opacity-100   transition-all duration-300">
+                <div className="p-[17px] text-light text-p flex justify-between border-b border-[#989696]">
                   <span>Welcome User !</span>
                   <span className="text-color cursor-pointer font-medium">
-                    <a href="/register">Sign Up</a>
+                    <Link to="/register">Sign Up</Link>
                   </span>
                 </div>
 
-                <ul className="text-gray-700 text-sm">
-                  <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
-                    <img src={LoginIcon} alt="My Profile" className="w-5 h-5" />
-                    <span><a href="/my-account">My Profile</a></span>
+                <ul className="text-light text-p p-[17px] space-x-[2px] cursor-pointer">
+                  <li className="hover:bg-[var(--theme-bg-rgba)] flex items-center space-x-[15px] py-[10px] ">
+                    <LoginIcon/>
+                    <Link to="/my-account">My Profile</Link>
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
-                    <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />
-                    <span>Orders</span>
+                  <li className="hover:bg-[var(--theme-bg-rgba)] py-[10px] flex items-center space-x-[15px] ">
+                    <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
+                    <Link to="/my-account/orders"><span>Orders</span></Link>
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
+                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex  py-[10px] items-center space-x-[15px] ">
                     <FontAwesomeIcon icon={farHeart} />
                     <span>Wishlist</span>
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
+                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex py-[10px] items-center space-x-[15px]">
                     <SvgComponent />
                     <span>Gift Cards</span>
                   </li>
-                  <li className="px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 cursor-pointer">
+                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex  py-[10px] items-center space-x-[15px] ">
                     <FontAwesomeIcon icon={faGift} />
                     <span>Coupons</span>
                   </li>
                 </ul>
-
-                
               </div>
-            )}
-          </div>
+            </div>
+
+          {/* </div> */}
 
           {/* Icons */}
           <MagnifyingGlassIcon 
               className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] " 
             />
 
-            <FontAwesomeIcon
+            <Link to="/cart"><FontAwesomeIcon
               icon={faCartShopping}
               className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] hidden lg:block"
-            />
+            /></Link>
 
           <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer hidden lg:block" />
           <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer hidden lg:block" />
@@ -305,11 +302,11 @@ const Header = ({ hideOnMobileShopPage }) => {
           {/* Extra Menu */}
           <div className="">
               <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
-                <FaUser /> <span>My Profile</span>
+                <FaUser /><Link to="/my-account"><span>My Profile</span></Link>
               </div>
             <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
               <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />
-              <span>Orders</span>
+              <Link to="/my-account/orders"><span>Orders</span></Link>
             </div>
             <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
               
@@ -356,23 +353,20 @@ const Header = ({ hideOnMobileShopPage }) => {
                 </div>
             </div>
         </div>
-
-
-  <div className="flex justify-end px-4 py-3 border-t">
-      <button
-        className="text-gray-600 transition-colors duration-300"
-        style={{ color: "var(--theme-color)" }}
-        onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
-        onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-      >
-        {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-      </button>
+      <div className="flex justify-end px-4 py-3 border-t">
+          <button
+            className="text-gray-600 transition-colors duration-300"
+            style={{ color: "var(--theme-color)" }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          >
+            {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          </button>
+        </div>
+          </div>
     </div>
-      </div>
-</div>
-          
-       
+        
         </div>
      
     </header>

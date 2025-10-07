@@ -17,11 +17,16 @@ import googlePlay from "../assets/googlePlay.png";
 import appleStore from "../assets/appleStore.png";
 import Row from "./ui/Row";
 import Section from "./ui/Section";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" text-gray-700" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
-      <div className="max-w-[1440px] mx-auto w-full py-[50px] md:py-[80px] px-4 sm:px-2 lg:px-0 grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className=" text-gray-700 mt-[25px] md:mt-[50px]" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
+
+<div className="max-w-[1440px] mx-auto w-full py-[50px] md:py-[80px] px-4 sm:px-2 lg:px-0 grid grid-cols-1 md:grid-cols-4 gap-8">
+
+    
+
         {/* Logo & Contact */}
         <div className="space-y-4">
           <div>
@@ -57,10 +62,10 @@ const Footer = () => {
               <a href="#" className="text-light text-[15px]">About</a>
             </li>
             <li>
-              <a href="/contact-us" className="text-light text-[15px]">Contact Us</a>
+              <Link to="/contact-us" className="text-light text-[15px]">Contact Us</Link>
             </li>
             <li>
-              <a href="/offer" className="text-light text-[15px]">Offers</a>
+              <Link to="/offer" className="text-light text-[15px]">Offers</Link>
             </li>
             <li>
               <a href="#" className="text-light text-[15px]">Women</a>
