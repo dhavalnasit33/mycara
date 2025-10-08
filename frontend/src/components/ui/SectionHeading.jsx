@@ -1,5 +1,4 @@
 import FlowerIcon from "../icons/FlowerIcon";
-import Row from "./Row";
 
 
 export default function SectionHeading({ title }) {

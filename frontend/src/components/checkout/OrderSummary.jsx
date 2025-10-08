@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 
 export default function OrderSummary() {
   return (
-    <div className="w-full  custom-lg:w-[407px]  rounded-[3px] py-[45px] px-[22px] light-color ">
+    <div className="w-full  rounded-[3px] py-[45px] px-[22px] light-color ">
       <h2 className="text-[22px] text-black mb-[50px] text-center">
          Order Summary
         <div className=" flex justify-center">
