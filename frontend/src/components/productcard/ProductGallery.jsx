@@ -4,11 +4,9 @@ import img1 from "../../assets/gallary1.png";
 import img2 from "../../assets/gallary2.png";
 import img3 from "../../assets/gallary3.png";
 
-export default function ProductGallery() {
-  // ✅ Define images only once (don’t override props)
+export default function ProductGallery() { 
   const images = [img1, img2, img3];
-
-  // ✅ Set first image as default selected
+ 
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
   const sliderSettings = {
@@ -37,10 +35,10 @@ export default function ProductGallery() {
         {images.map((img, index) => (
           <img
             key={index}
-            src={img} // ✅ fixed
+            src={img} 
             alt={`Thumbnail ${index}`}
             onClick={() => setSelectedImage(img)} 
-            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer border transition-all ${
+            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer  transition-all  ${
               selectedImage === img ? "border-pink-500" : "border-gray-300"
             }`}
           />
@@ -52,7 +50,7 @@ export default function ProductGallery() {
         <img
           src={selectedImage} 
           alt="Main product"
-          className="w-full h-[727px]  rounded-[10px]"
+          className="w-full h-[727px] rounded-[10px]"
         />
       </div>
 

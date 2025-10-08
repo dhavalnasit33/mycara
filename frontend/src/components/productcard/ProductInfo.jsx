@@ -1,7 +1,9 @@
 import React from "react";
-import { Handbag, HeartPlus } from "lucide-react";
+import { Handbag } from "lucide-react";
 import Button from "../ui/Button";
 import { Link } from "react-router-dom";
+import HeartIcon from "../icons/HeartIcon"
+
 
 export default function ProductInfo() {
   const sizes = [
@@ -61,7 +63,7 @@ export default function ProductInfo() {
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
-                <HeartPlus size={22} />Wishlist
+                <HeartIcon size={22} />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]">
                 <Link to='/cart' className="flex items-center gap-[10px]">

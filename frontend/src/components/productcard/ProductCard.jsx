@@ -1,5 +1,5 @@
 import React from "react";
-import { Heart, HeartPlus } from "lucide-react";
+import HeartIcon from "../icons/HeartIcon"
 
 export default function ProductCard({ product }) {
   return (
@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
           className="w-full h-[355px] object-cover"
         />
         <button className="absolute top-3 right-3 h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full shadow-md">
-            <HeartPlus size={20}/>
+          <HeartIcon width={28} height={24} />
         </button>
       </div>
 
@@ -41,7 +41,7 @@ export default function ProductCard({ product }) {
               <span
                 key={i}
                 className={`text-sm ${
-                  i < product.rating ? "text-pink-600" : "text-gray-300"
+                  i < product.rating ? "text-theme" : "text-gray-300"
                 }`}
               >
                 ★

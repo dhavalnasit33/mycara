@@ -3,11 +3,9 @@ import React from "react";
 import { FiFacebook } from "react-icons/fi";
 import { TfiTwitter } from "react-icons/tfi";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
-import { IoLocationOutline } from "react-icons/io5";
+import send from "../assets/send.png";
 import { TfiEmail } from "react-icons/tfi";
 import { BsTelephone } from "react-icons/bs";
-
-import { IoIosSend } from "react-icons/io";
 
 import visaImg from "../assets/visa.png";
 import mastercardImg from "../assets/mastercard.png";
@@ -18,38 +16,43 @@ import appleStore from "../assets/appleStore.png";
 import Row from "./ui/Row";
 import Section from "./ui/Section";
 import { Link } from "react-router-dom";
+import { MapPin } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className=" text-gray-700 mt-[25px] md:mt-[50px]" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
 
-<div className="container-1440  mx-auto w-full py-[50px] md:py-[80px] px-4 sm:px-2 md:px-2 lg:px-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-8">
-
-    
-
+<Row className=" py-[50px] md:py-[80px]  grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Logo & Contact */}
-        <div className="space-y-4">
-          <div>
-            <img
-              src={require("../assets/my_logo.png")}
-              alt="MYcra Logo"
-              className="w-[190px] h-[58.52px]  md:mx-0  mb-[35px]"
-            />
-          </div>
-          <p className="flex py-[5px] gap-[20px] text-sm items-start md:items-center">
-            <IoLocationOutline className="text-gray-600 w-[30px] h-[30px]" />
-            215, Dhara Arcade near Lajamani Chowk, Surat
-          </p>
-          <p className="flex py-[5px] items-center gap-[20px] text-sm">
-            <TfiEmail className="text-gray w-[25px] h-[20px]" />
-            <a href="mailto:info@gmail.com" className="hover:underline break-words">
-              Info@gmail.com
-            </a>
-          </p>
-          <p className="flex py-[5px] items-center gap-[20px] text-sm">
-            <BsTelephone className="text-gray w-[25px] h-[20px]" /> +1[155]000-01000
-          </p>
+       <div className="space-y-[22px] max-w-[280px] w-full">
+        <div>
+          <img
+            src={require("../assets/my_logo.png")}
+            alt="MYcra Logo"
+            className="w-[190px] h-[58.52px] mb-[35px]"
+          />
         </div>
+
+        {/* Address */}
+        <div className="flex items-start gap-[20px] text-sm text-light">
+          <MapPin size={20} className=" mt-1" />
+          <p>215, Dhara Arcade near Lajamani Chowk, Surat</p>
+        </div>
+
+        {/* Email */}
+        <div className="flex items-start gap-5 text-sm text-light">
+          <TfiEmail className=" mt-1" />
+          <a href="mailto:info@gmail.com" className="underline break-words ">
+            info@gmail.com
+          </a>
+        </div>
+
+        {/* Phone */}
+        <div className="flex items-start gap-5 text-sm text-light">
+          <BsTelephone className="mt-1" />
+          <p>+1 [155] 000-01000</p>
+        </div>
+    </div>
 
         {/* Navigation Links */}
         <div>
@@ -113,23 +116,23 @@ const Footer = () => {
                   <input
                     type="email"
                     placeholder="Enter Your E-mail Address"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none pr-12"
+                    className="input-common !py-[7px] !rounded-[3px] "
                   />
-                  <IoIosSend 
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-pink-500 text-6xl cursor-pointer"
+                  <img src={send} 
+                    className="absolute right-4 top-1/2 h-[20px] w-[20px] transform -translate-y-1/2 text-pink-500 cursor-pointer"
                   />
                 </div>
               </div>
 
-<div className="flex flex-wrap gap-3  sm:justify-start items-center">
-  <img src={visaImg} alt="Visa" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
-  <img src={mastercardImg} alt="Mastercard" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
-  <img src={discoverImg} alt="Discover" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
-  <img src={paypalImg} alt="Paypal" className="w-[100px] sm:w-[70px] h-[54px] sm:h-[72px] object-contain" />
-</div>
+            <div className="flex flex-wrap gap-[15px]  ">
+              <img src={visaImg} alt="Visa" className="w-[62px]  h-[36px]  object-contain" />
+              <img src={mastercardImg} alt="Mastercard" className="w-[62px]  h-[36px]  object-contain" />
+              <img src={discoverImg} alt="Discover" className="w-[62px]  h-[36px]  object-contain" />
+              <img src={paypalImg} alt="Paypal" className="w-[62px]  h-[36px]  object-contain" />
+            </div>
 
         </div>
-      </div>
+      </Row>
 
       <Section  style={{ backgroundColor: "rgba(210, 175, 159, 0.5)" }}>
       <Row>

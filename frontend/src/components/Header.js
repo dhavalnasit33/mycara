@@ -1,6 +1,6 @@
 // D:\mycara\frontend\src\components\Header.js
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   FaUser,
 
@@ -33,30 +33,40 @@ import Notification from "./icons/notification";
 
 import SvgComponent from "./icons/SvgComponent";
 import Button from "./ui/Button";
+import { ChevronDown, Ellipsis } from "lucide-react";
 //  Menu List
 const navItems = [
- {
+  {
     name: "Home",
-    path: "/Home",
-    // 👇 Home icon + text only desktop ma show thase
+    path: "/home",
     icon: <ShopIcon className="w-5 h-6 hidden lg:block" />,
   },
   { name: "Shop", path: "/shop", icon: <ShopIcon className="w-5 h-6" /> },
-   { name: "Collections", path: "/collections", icon: <CollectionsIcon className="w-5 h-5" /> },
-   { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
-  { name: "Features", path: "/features", icon: <FeaturesIcon className="w-5 h-5" /> },
-{ name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
+  {
+    name: "Collections",
+    path: "/collections",
+    icon: <CollectionsIcon className="w-5 h-5" />,
+    hasDropdown: true, // 👈 indicates dropdown
+    dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />, // arrow after text
+  },
+  { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
+  {
+    name: "Features",
+    path: "/features",
+    icon: <FeaturesIcon className="w-5 h-5" />,
+    hasDropdown: true,
+    dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />,
+  },
+  { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
 ];
 
-
 const Header = ({ hideOnMobileShopPage }) => {
-  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const headerClasses = `
-    bg-primary-50 shadow-md 
-    ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
-  `;
+  // const headerClasses = `
+  //   bg-primary-50 shadow-md 
+  //   ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
+  // `;
 
   
   return (
@@ -74,7 +84,7 @@ const Header = ({ hideOnMobileShopPage }) => {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:block">
-          <ul className="flex space-x-6 text-base font-normal">
+          <ul className="flex gap-[32px] text-base font-normal">
             {navItems.map((item, i) => (
               <li key={i} className="relative group">
                 <NavLink
@@ -91,16 +101,15 @@ const Header = ({ hideOnMobileShopPage }) => {
                     <>
                       {item.name}
                       <span
-                        className={`absolute left-1/2 -translate-x-1/2 -bottom-2 flex space-x-1 transition-opacity duration-300 ${
+                        className={`absolute left-1/2 -translate-x-1/2 -bottom-5 flex space-x-1 transition-opacity duration-300 ${
                           isActive
                             ? "opacity-100"
                             : "opacity-0 group-hover:opacity-100"
                         }`}
                       >
-                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
-                        <span className="w-1 h-1 bg-[var(--theme-color)] rounded-full"></span>
+                         <span ><Ellipsis className="text-xl"/></span>
                       </span>
+                      {item.hasDropdown && item.dropdownIcon} 
                     </>
                   )}
                 </NavLink>
@@ -109,50 +118,55 @@ const Header = ({ hideOnMobileShopPage }) => {
           </ul>
         </nav>
 
-        <div className="flex items-center space-x-4 relative">
+        <div className="flex items-center gap-[20px] relative">
           {/* <div className="relative  sm:block"> */}
-            <div className="relative group ">
+            <div className="relative group">
               <Link to="/login">
-                <Button  variant="common" className="!min-w-[113px] !py-[7px] !px-[10px] !rounded-[10px] flex items-center">
+                <Button
+                  variant="common"
+                  className="!min-w-[113px] !py-[7px] !px-[8px] !rounded-[10px] flex items-center"
+                >
                   <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
                   <span>Login</span>
+                  <span className="ml-1 transition-transform duration-300 group-hover:rotate-180">
+                    <ChevronDown size={18} />
+                  </span>
                 </Button>
               </Link>
-              <div className="absolute right-0 mt-2 w-[280px] bg-white rounded-[10px] form-shadow z-50 opacity-0 group-hover:opacity-100   transition-all duration-300">
+
+              {/* Dropdown Menu */}
+              <div className="absolute right-0 mt-2 w-[280px] bg-white rounded-[10px] form-shadow z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
                 <div className="p-[17px] text-light text-p flex justify-between border-b border-[#989696]">
                   <span>Welcome User !</span>
-                  <span className="text-color cursor-pointer font-medium">
+                  <span className="text-color cursor-pointer font-18 font-medium">
                     <Link to="/register">Sign Up</Link>
                   </span>
                 </div>
 
-                <ul className="text-light text-p p-[17px] space-x-[2px] cursor-pointer">
-                  <li className="hover:bg-[var(--theme-bg-rgba)] flex items-center space-x-[15px] py-[10px] ">
-                    <LoginIcon/>
+                <ul className="text-light text-p p-[17px] cursor-pointer">
+                  <li className="flex items-center space-x-[15px] py-[10px] hover:text-[#F43297]">
+                    <LoginIcon />
                     <Link to="/my-account">My Profile</Link>
                   </li>
-                  <li className="hover:bg-[var(--theme-bg-rgba)] py-[10px] flex items-center space-x-[15px] ">
+                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
                     <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
                     <Link to="/my-account/orders"><span>Orders</span></Link>
                   </li>
-                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex  py-[10px] items-center space-x-[15px] ">
+                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
                     <FontAwesomeIcon icon={farHeart} />
                     <span>Wishlist</span>
                   </li>
-                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex py-[10px] items-center space-x-[15px]">
+                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
                     <SvgComponent />
                     <span>Gift Cards</span>
                   </li>
-                  <li className=" hover:bg-[var(--theme-bg-rgba)] flex  py-[10px] items-center space-x-[15px] ">
+                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
                     <FontAwesomeIcon icon={faGift} />
                     <span>Coupons</span>
                   </li>
                 </ul>
               </div>
             </div>
-
-          {/* </div> */}
-
           {/* Icons */}
           <MagnifyingGlassIcon 
               className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] " 
