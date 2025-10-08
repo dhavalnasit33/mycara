@@ -6,11 +6,12 @@ import LinearColorIcon from './icons/LinearColorIcon';
 import ShippingIcon from '../assets/Shipping.svg';
 import ReturnIcon from '../assets/Return.png';
 import SecurityIcon from '../assets/Security.svg';
+import Row from './ui/Row';
 
 const Features = () => {
   return (
     <section className="py-12 px-4">
-      <div className="container mx-auto flex flex-wrap justify-center gap-6 md:gap-10">
+      <Row>
         
         {/* Shipping Worldwide */}
         <div className="flex items-start max-w-sm">
@@ -49,7 +50,7 @@ const Features = () => {
           </div>
         </div>
         
-      </div>
+      </Row>
     </section>
   );
 };
