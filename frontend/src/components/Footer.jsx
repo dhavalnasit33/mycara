@@ -21,7 +21,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className=" text-gray-700" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
+    <footer className=" text-gray-700 mt-[25px] md:mt-[50px]" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
 
 <div className="container-1440  mx-auto w-full py-[50px] md:py-[80px] px-4 sm:px-2 md:px-2 lg:px-0 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 gap-8">
 

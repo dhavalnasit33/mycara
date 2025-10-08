@@ -127,17 +127,13 @@ const Header = ({ hideOnMobileShopPage }) => {
                 </div>
 
                 <ul className="text-light text-p p-[17px] space-x-[2px] cursor-pointer">
-                  {/* <li className="hover:bg-[var(--theme-bg-rgba)] flex items-center space-x-[15px] py-[10px] ">
-                    <img src={LoginIcon} alt="My Profile" className="w-[18px] h-[18px]" />
-                    <Link to="/my-account">My Profile</Link>
-                  </li> */}
                   <li className="hover:bg-[var(--theme-bg-rgba)] flex items-center space-x-[15px] py-[10px] ">
-    <LoginIcon className="w-[18px] h-[18px]" />  
-    <Link to="/my-account">My Profile</Link>
-  </li>
+                    <LoginIcon/>
+                    <Link to="/my-account">My Profile</Link>
+                  </li>
                   <li className="hover:bg-[var(--theme-bg-rgba)] py-[10px] flex items-center space-x-[15px] ">
                     <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
-                    <span>Orders</span>
+                    <Link to="/my-account/orders"><span>Orders</span></Link>
                   </li>
                   <li className=" hover:bg-[var(--theme-bg-rgba)] flex  py-[10px] items-center space-x-[15px] ">
                     <FontAwesomeIcon icon={farHeart} />
@@ -306,11 +302,11 @@ const Header = ({ hideOnMobileShopPage }) => {
           {/* Extra Menu */}
           <div className="">
               <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
-                <FaUser /> <span>My Profile</span>
+                <FaUser /><Link to="/my-account"><span>My Profile</span></Link>
               </div>
             <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
               <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />
-              <span>Orders</span>
+              <Link to="/my-account/orders"><span>Orders</span></Link>
             </div>
             <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
               

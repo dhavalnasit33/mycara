@@ -11,6 +11,9 @@ import Bestsellers from '../components/Bestsellers';
 import RecommendedSection from '../components/RecommendedSection';
 import BannerClothes from '../components/bannerclothes.jsx';
 import Features from '../components/Features.jsx';
+import Row from "../components/ui/Row.jsx";
+import SectionHeading from "../components/ui/SectionHeading.jsx";
+import Section from "../components/ui/Section.jsx";
 
 
 const Home = () => {
@@ -18,7 +21,14 @@ const Home = () => {
     <div>
       <Hero />
       
-      <CategoriesSection />
+      <Section>
+        <Row className="pt-[25px] md:pt-[50px]">
+            <SectionHeading title=" Shop By Categories" />
+          </Row>
+          <Row>
+        <CategoriesSection />
+        </Row>
+      </Section>
       <NewArrivals />
       <FeaturedProducts />
       <TrendingClothes />

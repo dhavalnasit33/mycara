@@ -1,9 +1,10 @@
 import React from "react";
 import Button from "../ui/Button";
+import { Link } from "react-router-dom";
 
 export default function CartSummary() {
   return (
-    <div className="w-full  lg:w-[320px]  rounded-[3px] py-[45px] px-[22px] light-color ">
+    <div className="w-full  custom-lg:w-[320px]  rounded-[3px] py-[45px] px-[22px] light-color ">
       <h2 className="text-[22px] text-black mb-[50px] text-center">
          Subtotal
         <div className=" flex justify-center">
@@ -37,9 +38,11 @@ export default function CartSummary() {
         />
       </div>
         <div className="text-center">
-      <Button variant="common" className="!min-w-[211px] mt-[50px] uppercase">
-        PROCEED CHECKOUT
-      </Button>
+      <Link to="/checkout">
+        <Button variant="common"  className="min-w-auto sm:min-w-[211px] mt-[50px] uppercase">
+          PROCEED CHECKOUT
+        </Button>
+      </Link>
     </div>
     </div>
   );
