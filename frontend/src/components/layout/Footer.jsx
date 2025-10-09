@@ -4,16 +4,17 @@ import { TfiTwitter, TfiEmail } from "react-icons/tfi";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
 import { BsTelephone } from "react-icons/bs";
 import { ChevronDown, MapPin } from "lucide-react";
-import send from "../assets/send.png";
-import visaImg from "../assets/visa.png";
-import mastercardImg from "../assets/mastercard.png";
-import discoverImg from "../assets/discover.png";
-import paypalImg from "../assets/paypal.png";
-import googlePlay from "../assets/googlePlay.png";
-import appleStore from "../assets/appleStore.png";
-import Row from "./ui/Row";
-import Section from "./ui/Section";
+import send from "../../assets/send.png";
+import visaImg from "../../assets/visa.png";
+import mastercardImg from "../../assets/mastercard.png";
+import discoverImg from "../../assets/discover.png";
+import paypalImg from "../../assets/paypal.png";
+import googlePlay from "../../assets/googlePlay.png";
+import appleStore from "../../assets/appleStore.png";
+import Row from "../ui/Row";
+import Section from "../ui/Section";
 import { Link } from "react-router-dom";
+import mylogo from "../../assets/my_logo.png"
 
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -72,7 +73,7 @@ const Footer = () => {
             {/* Logo & Contact */}
             <div className="space-y-[22px] max-w-[280px] w-full">
               <Link to="/home"><img
-                src={require("../assets/my_logo.png")}
+                src={mylogo}
                 alt="MYcra Logo"
                 className="w-[190px] h-[58.52px] mb-[35px]"
               /></Link>

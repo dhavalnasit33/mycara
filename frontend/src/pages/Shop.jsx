@@ -8,7 +8,6 @@ import WomenCollections from '../components/WomenCollections';
 const Shop = () => {
     return (
         <div>
-            
               <ShopBanner />
             <WomenCollections />
         </div>

@@ -195,7 +195,7 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
                 checked={isChecked}
 
                 onChange={() => onChange(name)}
-                className={` w-5 h-5 rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
+                className={` w-[15px] h-[15px] rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
             <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
         </div>
 
@@ -915,19 +915,6 @@ const WomenCollections = () => {
 
             <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                 <div className=" w-full">
-                    {/* -------- Status Bar (Top Row) -------- */}
-                    <div className="flex justify-between items-center py-2 ">
-                        {/* Left Side - Time */}
-                        <div className="sfpro  text-black">9:41</div>
-
-                        {/* Right Side - Icons */}
-                        <div className="flex items-center space-x-3">
-                            <IoCellular className="w-6 h-6 text-black cursor-pointer" />
-                            <IoIosWifi className="w-6 h-6 text-black cursor-pointer" />
-                            <Battery className="w-7 h-5 text-GRAY cursor-pointer" />
-                        </div>
-                    </div>
-
                     <div className="flex items-center py-2  space-x-2">
                         {/* Left Arrow Icon (Wrapped in a responsive button) */}
                         <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
@@ -948,32 +935,29 @@ const WomenCollections = () => {
                 </div>
             </div>
 
-            <h1 className="text-22px font-semibold font-inter mb-2 ">Women's Collections</h1>
+            <h1 className="text-[22px] font-semibold font-inter mb-2 ">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
-                <span className="text-black border-b border-black lg:border-none">Home</span>
+                <span className="text-black border-b border-black lg:border-none"><Link to="/home">Home</Link></span>
                 <span className="text-black "> / </span>
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
             {/* Main Content: Filter Sidebar and Products Grid */}
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row gap-[30px]">
 
                 {/* 1. Filter Sidebar (Desktop Only) */}
-                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white  rounded-lg border border-gray-200">
+                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white rounded-[20px] box-shadow">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
-
-                    {/* Category Filter Section (Desktop) */}
                     <CollapsibleFilter
                         title="Category"
                         defaultOpen={true}
 
                         isSelected={isCategorySelected}
                         onReset={handleResetCategories}
-                        showButtons={false} // Hide buttons inside for desktop
+                        showButtons={false}
                     >
-                        {/* Filter Content */}
                         <div className="space-y-1 px-2 overflow-y-auto">
                             {mockCategories.map(cat => (
                                 <FilterItemCheckbox
@@ -987,7 +971,6 @@ const WomenCollections = () => {
                         </div>
                     </CollapsibleFilter>
 
-                    {/* Price Range Filter (Desktop) */}
                     <PriceRangeFilter
                         minPrice={minPrice}
                         maxPrice={maxPrice}
@@ -996,10 +979,9 @@ const WomenCollections = () => {
                         isMobile={false}
                     />
 
-                    {/* Size Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Size"
-                        defaultOpen={false} // Keep closed on desktop by default for cleaner view
+                        defaultOpen={false}
                         isSelected={selectedSizes.length > 0}
                         onReset={handleResetSizes}
                         showButtons={false}
@@ -1016,7 +998,6 @@ const WomenCollections = () => {
                         </div>
                     </CollapsibleFilter>
 
-                    {/* Color Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Color"
                         defaultOpen={false}

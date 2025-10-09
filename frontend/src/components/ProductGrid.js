@@ -178,25 +178,20 @@ const ProductCard = ({ product }) => {
         setCurrentImageIndex(index);
     };
     
-    // ઇમેજ સોર્સ લોજિક
     const displayedImage = isSlider 
         ? product.allImages[currentImageIndex] 
         : product.image;
 
     return (
-        // Card container: removed max-w-sm to allow grid to control width
         <div className="group w-full bg-white border border-gray-100 shadow-md transition duration-300 ease-in-out hover:shadow-xl cursor-pointer overflow-hidden">
             
             {/* --- Image Section --- */}
             <div className="relative">
-                {/* 1. displayedImage નો ઉપયોગ કરીને ઇમેજ સોર્સ બદલો */}
                 <img 
                     className="w-full object-cover aspect-[4/5] min-h-[227px] sm:min-h-[300px] lg:min-h-[350px] transition duration-300" 
                     src={displayedImage} 
                     alt={product.name} 
                 />
-                
-                {/* Icons (Icons are now fixed and don't rely on complex hover logic) */}
                 <div className="absolute top-3 right-3 flex flex-col space-y-2">
                     <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
                         <HeartIcon width={28} height={26} />
@@ -214,7 +209,6 @@ const ProductCard = ({ product }) => {
                                 key={index}
                                 className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors duration-300 
                                     ${index === currentImageIndex ? 'bg-white' : 'bg-gray-400'}`}
-                                // 3. Dot Click Handler
                                 onClick={() => handleDotClick(index)}
                             ></div>
                         ))}
