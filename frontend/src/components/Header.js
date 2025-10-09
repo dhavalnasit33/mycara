@@ -26,14 +26,16 @@ import OrdersIcon from "../assets/orders.svg";
 import WhiteLogin from "../assets/white login.png";
 import MenuIcon from "../assets/menu.png";
 import PayImg from "../assets/pay.png";
-import Logo from "../assets/logo.png";
+import Logo from "../assets/my_logo.png";
 import bannerImg from "../assets/banner.png";
 
 import Notification from "./icons/notification";
 
 import SvgComponent from "./icons/SvgComponent";
 import Button from "./ui/Button";
-import { ChevronDown, Ellipsis } from "lucide-react";
+import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
+import Row from "./ui/Row";
+
 //  Menu List
 const navItems = [
   {
@@ -49,15 +51,18 @@ const navItems = [
     hasDropdown: true, // 👈 indicates dropdown
     dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />, // arrow after text
   },
-  { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
-  {
-    name: "Features",
-    path: "/features",
-    icon: <FeaturesIcon className="w-5 h-5" />,
-    hasDropdown: true,
-    dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />,
-  },
-  { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
+  // { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
+  // {
+  //   name: "Features",
+  //   path: "/features",
+  //   icon: <FeaturesIcon className="w-5 h-5" />,
+  //   hasDropdown: true,
+  //   dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />,
+  // },
+  // { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
+  { name: "Offers", path: "/offer", icon: <MoreIcon className="w-5 h-5" /> },
+   { name: "Contact", path: "/contact-us", icon: <MoreIcon className="w-5 h-5" /> },
+    { name: "About", path: "/", icon: <MoreIcon className="w-5 h-5" /> },
 ];
 
 const Header = ({ hideOnMobileShopPage }) => {
@@ -72,19 +77,21 @@ const Header = ({ hideOnMobileShopPage }) => {
   return (
     <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
-      <div className=" container-1440  mx-auto md:h-[100px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
+      <Row className="  md:h-[100px] gap-[10px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
+          {/* <Link to="/home"> */}
           <img
             src={Logo}
             alt="Logo"
             className="w-[160px] md:w-[228px] h-auto"
           />
+          {/* </Link> */}
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:block">
-          <ul className="flex gap-[32px] text-base font-normal">
+          <ul className="flex gap-[15px] xl:gap-[32px] text-base font-normal">
             {navItems.map((item, i) => (
               <li key={i} className="relative group">
                 <NavLink
@@ -180,20 +187,20 @@ const Header = ({ hideOnMobileShopPage }) => {
           <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer hidden lg:block" />
           <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer hidden lg:block" />
         </div>
-      </div>
+      </Row>
 
             {/* Mobile Menu Button */}
       {!hideOnMobileShopPage && (
         <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
             {/* Left: Hamburger */}
             <button
-                className="text-gray-600 transition-colors duration-300"
-                style={{ color: "var(--theme-color)" }}
-                onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
-                onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+                className="text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-3 border-[#D2AF9F]"
+                style={{ color: "var(--text-light)" }}
+                onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-light)"}
+                onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-light)"}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-            {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+            {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
 
             {/* Center: Logo */}
@@ -229,13 +236,13 @@ const Header = ({ hideOnMobileShopPage }) => {
         
         <div className="flex justify-between bg-theme items-center px-4 py-3 border-b ">
            <button
-              className="text-gray-600 transition-colors duration-300"
-              style={{ color: "var(--theme-color)" }} // icon default color
-              onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"} // optional hover same color
-              onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"} // same color back
+              className="text-gray-600 transition-colors duration-300 border border-3 rounded-[3px] p-[5px] border-[#D2AF9F]"
+              style={{ color: "var(--text-light)" }} // icon default color
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-light)"} // optional hover same color
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-light)"} // same color back
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-          {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
         </button>
           <img src={Logo} alt="Logo" className="mx-auto h-10" />
          <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer  lg:block" />
@@ -369,13 +376,13 @@ const Header = ({ hideOnMobileShopPage }) => {
         </div>
       <div className="flex justify-end px-4 py-3 border-t">
           <button
-            className="text-gray-600 transition-colors duration-300"
-            style={{ color: "var(--theme-color)" }}
-            onMouseEnter={(e) => e.currentTarget.style.color = "var(--theme-color)"}
-            onMouseLeave={(e) => e.currentTarget.style.color = "var(--theme-color)"}
+            className="text-gray-600 transition-colors duration-300 rounded-[3px] p-[5px] border border-3 border-[#D2AF9F]"
+            style={{ color: "var(--text-light)" }}
+            onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-light)"}
+            onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-light)"}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
-            {isMenuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+            {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
           </button>
         </div>
           </div>

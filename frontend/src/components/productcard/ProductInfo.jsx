@@ -63,7 +63,7 @@ export default function ProductInfo() {
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
-                <HeartIcon size={22} />Wishlist
+                <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]">
                 <Link to='/cart' className="flex items-center gap-[10px]">

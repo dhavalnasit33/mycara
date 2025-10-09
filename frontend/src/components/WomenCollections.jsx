@@ -334,60 +334,42 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
 
 
 
-
 const ProductCard = ({ product }) => (
+  <div className="relative group overflow-hidden bg-white">
+    {/* Image Section with dynamic route */}
+    {/* <Link */}
+      <div className="w-full h-auto overflow-hidden">
+        <img
+          src={product.imageSrc}
+          alt={product.name}
+          className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
+        />
+      </div>
+    {/* </Link> */}
 
-    <div className="relative group overflow-hidden bg-white">
-
-        {/* 1. Image Container (Ensuring full responsiveness) */}
-        <div className="w-full h-auto overflow-hidden">
-            <img
-                src={product.imageSrc}
-                alt={product.name}
-                // Image should be fluid (w-full, h-full) and use aspect ratio for consistent height
-                // w-full and h-auto ensures it scales with the parent grid item
-                className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500 "
-            />
+    {/* Overlay */}
+    <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
+                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
+                    bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+                    flex flex-col justify-between">
+      <div className="flex justify-between items-start">
+        <div className="pr-2 sm:pr-4">
+          <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
+            {product.name}
+          </h3>
         </div>
+        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
+          <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+        </button>
+      </div>
 
-
-        {/* 2. Responsive Overlay Div (The Fix) */}
-        <div
-            // W/H FIX: Use responsive percentage/auto instead of fixed pixels.
-            // PADDING FIX: Use smaller padding on mobile.
-            // Positioning: right/bottom is slightly reduced on mobile for better fit.
-            className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                        w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
-                        bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                        flex flex-col justify-between"
-        >
-
-            <div className="flex justify-between items-start">
-
-                {/* Text (Title) */}
-                <div className="pr-2 sm:pr-4">
-                    {/* Text size adjusted for mobile (text-xs) to tablet/desktop (text-sm/base) */}
-                    <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
-                        {product.name}
-                    </h3>
-                </div>
-
-                {/* The Add/Plus Button */}
-                <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
-
-                    <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
-                </button>
-            </div>
-
-
-            <div>
-                {/* Price text size adjusted for mobile (text-sm) */}
-                <p className="text-sm font-medium font-inter text-black">
-                    RS {product.price ? product.price.toFixed(2) : '0.00'}
-                </p>
-            </div>
-        </div>
+      <div>
+        <p className="text-sm font-medium font-inter text-black">
+          RS {product.price ? product.price.toFixed(2) : "0.00"}
+        </p>
+      </div>
     </div>
+  </div>
 );
 
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
