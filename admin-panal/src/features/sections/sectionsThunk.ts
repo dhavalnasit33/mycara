@@ -61,6 +61,20 @@ export const updateSection = createAsyncThunk(
   }
 );
 
+// ✅ Update section status
+export const updateSectionStatus = createAsyncThunk(
+  "sections/updateSectionStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.sections.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // ✅ Delete section
 export const deleteSection = createAsyncThunk(
   "sections/deleteSection",

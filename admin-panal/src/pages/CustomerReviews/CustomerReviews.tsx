@@ -1,241 +1,93 @@
-// pages/dashboard/customer-reviews/page.tsx
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/store";
+import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Search, Trash2, Download } from "lucide-react";
-import * as XLSX from "xlsx";
-import { saveAs } from "file-saver";
-import { toast } from "sonner";
+import { Plus } from "lucide-react";
+
+import { AppDispatch } from "@/store";
 import {
   fetchCustomerReviews,
   deleteCustomerReview,
   bulkDeleteCustomerReviews,
+  updateReviewsStatus,
 } from "@/features/customerReviews/customerReviewsThunk";
-import { ConfirmDialog } from "@/components/ui/confirmDialog";
+import { GenericTable } from "@/components/ui/adminTable";
 
 export default function CustomerReviewsPage() {
   const dispatch = useDispatch<AppDispatch>();
-  const { customerReviews, total, loading } = useSelector(
-    (state: RootState) => state.customerReviews
-  );
 
-  const [searchQuery, setSearchQuery] = useState("");
-  const [page, setPage] = useState(1);
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const limit = 5;
-
-  useEffect(() => {
-    dispatch(fetchCustomerReviews({ page, limit, search: searchQuery }));
-  }, [dispatch, page, searchQuery]);
-
-  const handleDelete = async (id: string) => {
-    try {
-      await dispatch(deleteCustomerReview(id)).unwrap();
-      toast.success("Review deleted.");
-    } catch (err) {
-      toast.error("Failed to delete.");
-    }
-  };
-
-  const handleBulkDelete = async () => {
-    if (!selectedIds.length) return;
-    try {
-      await dispatch(bulkDeleteCustomerReviews(selectedIds)).unwrap();
-      toast.success("Selected reviews deleted.");
-      setSelectedIds([]);
-    } catch {
-      toast.error("Bulk delete failed.");
-    }
-  };
-
-  const handleDownload = async () => {
-    const res = await dispatch(fetchCustomerReviews({ isDownload: true })).unwrap();
-    const data = res.customerReviews.map((r: any) => ({
-      "User Name": r.user_id?.name,
-      "User Email": r.user_id?.email,
-      "Product": r.product_id?.title,
-      "Rating": r.rating,
-      "Comment": r.comment,
-      "Status": r.is_approved ? "Approved" : "Pending",
-      "Created At": new Date(r.createdAt).toLocaleString(),
-    }));
-    const ws = XLSX.utils.json_to_sheet(data);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "CustomerReviews");
-    const buffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    saveAs(new Blob([buffer]), `customer_reviews_${Date.now()}.xlsx`);
-  };
-
-  if (loading) return <div className="p-6">Loading...</div>;
-
-  const totalPages = Math.ceil(total / limit);
+  const columns = [
+    {
+      key: "user_id",
+      label: "User",
+      render: (item: any) => item.user_id?.name || "-",
+    },
+    {
+      key: "user_id",
+      label: "Email",
+      render: (item: any) => item.user_id?.email || "-",
+    },
+    {
+      key: "product_id",
+      label: "Product",
+      render: (item: any) => item.product_id?.name || "-",
+    },
+    { key: "rating", label: "Rating" },
+    { key: "comment", label: "Comment" },
+  ];
 
   return (
-    <div className="space-y-8 p-6 mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h1>
-          <p className="text-sm text-gray-500">Manage Customer Reviews</p>
-        </div>
-         <div className="flex gap-2">
-                   <Button variant="outline" onClick={handleDownload} className="flex items-center gap-2">
-          <Download className="h-4 w-4 mr-2" /> Export
-        </Button>
-                </div>
-      </div>
+    <GenericTable
+      title="Customer Reviews"
+      columns={columns}
+      rowKey="_id"
+      searchEnabled
+      statusToggleEnabled
+      filters={[
+        { label: "Approved", value: "true" },
+        { label: "Pending", value: "false" },
+      ]}
+      fetchData={async ({ page, limit, search, status }) => {
+        const boolStatus =
+          status === "true" ? true : status === "false" ? false : undefined;
 
-       <Card className="shadow-sm border border-gray-200">
-       <CardContent className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 p-4">
-          <div className="relative w-full md:max-w-sm">
-           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-            <Input
-              placeholder="Search..."
-              className="pl-10"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
+        try {
+          const res = await dispatch(
+            fetchCustomerReviews({ page, limit, search, is_approved: boolStatus })
+          ).unwrap();
 
-          {selectedIds.length > 0 && (
-            <ConfirmDialog
-              title="Delete Selected"
-              description={`Delete ${selectedIds.length} reviews permanently.`}
-              confirmText="Delete"
-              onConfirm={handleBulkDelete}
-              danger
-            >
-              <Button variant="destructive">
-                <Trash2 className="h-4 w-4 mr-2" /> Delete Selected
-              </Button>
-            </ConfirmDialog>
-          )}
-        </CardContent>
-      </Card>
-
-     <Card className="shadow-sm border border-gray-200">
-      <CardHeader className="pb-2">
-           <CardTitle className="text-lg font-semibold">
-            Reviews <span className="text-gray-400 font-normal">({total})</span>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto rounded-lg border border-gray-200">
-  <table className="w-full text-sm table-fixed">
-    <thead className="bg-gray-50 text-gray-700 text-sm font-medium">
-      <tr>
-        <th className="p-3 w-10 text-left">
-          <Checkbox
-            checked={
-              selectedIds.length === customerReviews.length &&
-              customerReviews.length > 0
-            }
-            onCheckedChange={(checked) =>
-              setSelectedIds(
-                checked ? customerReviews.map((r) => r._id) : []
-              )
-            }
-          />
-        </th>
-        <th className="p-3 text-left">User</th>
-        <th className="p-3 text-left">Email</th>
-        <th className="p-3 text-left">Product</th>
-        <th className="p-3 text-left">Rating</th>
-        <th className="p-3 text-left">Comment</th>
-        <th className="p-3 text-right">Actions</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      {customerReviews.length > 0 ? (
-        customerReviews.map((r) => (
-          <tr key={r._id} className="border-t hover:bg-gray-50">
-            <td className="p-3">
-              <Checkbox
-                checked={selectedIds.includes(r._id)}
-                onCheckedChange={() =>
-                  setSelectedIds((prev) =>
-                    prev.includes(r._id)
-                      ? prev.filter((id) => id !== r._id)
-                      : [...prev, r._id]
-                  )
-                }
-              />
-            </td>
-            <td className="p-3">{r.user_id?.name}</td>
-            <td className="p-3">{r.user_id?.email}</td>
-            <td className="p-3">{r.product_id?.name}</td>
-            <td className="p-3">{r.rating}</td>
-            <td className="p-3 truncate max-w-xs">{r.comment}</td>
-            <td className="p-3 text-right">
-              <ConfirmDialog
-                title="Delete Review"
-                description="Are you sure?"
-                confirmText="Delete"
-                onConfirm={() => handleDelete(r._id)}
-                danger
-              >
-                <button className="text-red-600 hover:bg-red-50 p-1 rounded">
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </ConfirmDialog>
-            </td>
-          </tr>
-        ))
-      ) : (
-        <tr>
-          <td
-            colSpan={7}
-            className="p-4 text-center text-gray-500"
-          >
-            No customer reviews found.
-          </td>
-        </tr>
-      )}
-    </tbody>
-  </table>
-</div>
-
-
-          {totalPages > 1 && (
-            <div className="flex justify-end gap-2 mt-4">
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setPage((p) => Math.max(p - 1, 1))}
-                disabled={page === 1}
-              >
-                Prev
-              </Button>
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setPage(i + 1)}
-                  className={`px-3 py-1 rounded ${
-                    page === i + 1 ? "bg-blue-600 text-white" : "bg-gray-100"
-                  }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
-                disabled={page === totalPages}
-              >
-                Next
-              </Button>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+          return { data: res.customerReviews, total: res.total };
+        } catch (err: any) {
+          console.error("fetchData error:", err);
+          throw new Error(err || "Failed to load reviews");
+        }
+      }}
+      deleteItem={async (id) => {
+        try {
+          await dispatch(deleteCustomerReview(id)).unwrap();
+        } catch (err: any) {
+          throw new Error(err || "Failed to delete review");
+        }
+      }}
+      bulkDeleteItems={async (ids) => {
+        try {
+          await dispatch(bulkDeleteCustomerReviews(ids)).unwrap();
+        } catch (err: any) {
+          throw new Error(err || "Failed to delete reviews");
+        }
+      }}
+      onStatusToggle={async (id, newStatus) => {
+        try {
+          await dispatch(
+            updateReviewsStatus({ id, is_approved: newStatus })
+          ).unwrap();
+        } catch (err: any) {
+          throw new Error(err?.message || "Failed to update status");
+        }
+      }}
+      
+    />
   );
 }

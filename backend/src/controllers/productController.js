@@ -14,14 +14,13 @@ const getProducts = async (req, res) => {
       isDownload = "false",
       status,
       categories,
-      labels,
       brands,
       sizes,
       types,
       fabrics,
       colors,
       minPrice,
-      maxPrice
+      maxPrice,
     } = req.query;
 
     const download = isDownload.toLowerCase() === "true";
@@ -29,82 +28,36 @@ const getProducts = async (req, res) => {
     limit = parseInt(limit);
 
     // ============================
-    // 🧭 1️⃣ Base match query
+    // 1️⃣ Base Product Match Query
     // ============================
-    const matchQuery = {};
-    if (search) matchQuery.name = { $regex: search, $options: "i" };
-    if (status && ["active", "inactive"].includes(status)) matchQuery.status = status;
-
-    // ============================
-    // 🧭 2️⃣ Category Filter
-    // ============================
+    const productMatch = {};
+    if (search) productMatch.name = { $regex: search, $options: "i" };
+    if (status && ["active", "inactive"].includes(status)) productMatch.status = status;
     if (categories) {
-      const catArray = categories.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery.category_id = { $in: catArray };
+      const catArray = categories.split(",").map((id) => new mongoose.Types.ObjectId(id));
+      productMatch.category_id = { $in: catArray };
     }
 
     // ============================
-    // 🧭 3️⃣ Product Labels Filter
+    // 2️⃣ Variants Match Query
     // ============================
-    if (labels) {
-      const labelArray = labels.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery.labels = { $in: labelArray };
-    }
-
-    // ============================
-    // 🧭 4️⃣ Brand Filter
-    // ============================
-    if (brands) {
-      const brandArray = brands.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery["variants.brand_id"] = { $in: brandArray };
-    }
-
-    // ============================
-    // 🧭 5️⃣ Size Filter
-    // ============================
-    if (sizes) {
-      const sizeArray = sizes.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery["variants.size_id"] = { $in: sizeArray };
-    }
-
-    // ============================
-    // 🧭 6️⃣ Type Filter
-    // ============================
-    if (types) {
-      const typeArray = types.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery["variants.type_id"] = { $in: typeArray };
-    }
-
-    // ============================
-    // 🧭 7️⃣ Fabric Filter
-    // ============================
-    if (fabrics) {
-      const fabricArray = fabrics.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery["variants.fabric_id"] = { $in: fabricArray };
-    }
-
-    // ============================
-    // 🧭 8️⃣ Color Filter
-    // ============================
-    if (colors) {
-      const colorArray = colors.split(",").map(id => new mongoose.Types.ObjectId(id));
-      matchQuery["variants.color_id"] = { $in: colorArray };
-    }
-
-    // ============================
-    // 🧭 9️⃣ Price Filter
-    // ============================
+    const variantMatch= {};
+    if (brands) variantMatch.brand_id = { $in: brands.split(",").map((id) => new mongoose.Types.ObjectId(id)) };
+    if (sizes) variantMatch.size_id = { $in: sizes.split(",").map((id) => new mongoose.Types.ObjectId(id)) };
+    if (types) variantMatch.type_id = { $in: types.split(",").map((id) => new mongoose.Types.ObjectId(id)) };
+    if (fabrics) variantMatch.fabric_id = { $in: fabrics.split(",").map((id) => new mongoose.Types.ObjectId(id)) };
+    if (colors) variantMatch.color_id = { $in: colors.split(",").map((id) => new mongoose.Types.ObjectId(id)) };
     if (minPrice || maxPrice) {
-      matchQuery["variants.price"] = {};
-      if (minPrice) matchQuery["variants.price"].$gte = Number(minPrice);
-      if (maxPrice) matchQuery["variants.price"].$lte = Number(maxPrice);
+      variantMatch.price = {};
+      if (minPrice) variantMatch.price.$gte = Number(minPrice);
+      if (maxPrice) variantMatch.price.$lte = Number(maxPrice);
     }
 
     // ============================
-    // 🧭 🔟 Aggregation Pipeline
+    // 3️⃣ Aggregation Pipeline
     // ============================
-    const pipeline = [
-      { $match: matchQuery },
+    const pipeline= [
+      { $match: productMatch },
 
       // Populate category
       {
@@ -112,99 +65,42 @@ const getProducts = async (req, res) => {
           from: "categories",
           localField: "category_id",
           foreignField: "_id",
-          as: "category"
-        }
+          as: "category",
+        },
       },
       { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
 
-      // Populate product labels
-      {
-        $lookup: {
-          from: "productlabels",
-          localField: "labels",
-          foreignField: "_id",
-          as: "labelsInfo"
-        }
-      },
-
-      // Populate variants with nested lookups
+      // Lookup matching variants
       {
         $lookup: {
           from: "productvariants",
           let: { productId: "$_id" },
           pipeline: [
-            { $match: { $expr: { $eq: ["$product_id", "$$productId"] } } },
+            { $match: { $expr: { $eq: ["$product_id", "$$productId"] }, ...variantMatch } },
 
-            // Convert labels strings to ObjectId if needed
+            // Populate variant relations
+            { $lookup: { from: "brands", localField: "brand_id", foreignField: "_id", as: "brand" } },
+            { $lookup: { from: "types", localField: "type_id", foreignField: "_id", as: "type" } },
+            { $lookup: { from: "fabrics", localField: "fabric_id", foreignField: "_id", as: "fabric" } },
+            { $lookup: { from: "colors", localField: "color_id", foreignField: "_id", as: "color" } },
+            { $lookup: { from: "sizes", localField: "size_id", foreignField: "_id", as: "size" } },
+
+            // Labels
             {
               $addFields: {
-                labels: {
-                  $map: {
-                    input: "$labels",
-                    as: "labelId",
-                    in: { $toObjectId: "$$labelId" }
-                  }
-                }
-              }
+                labels: { $map: { input: "$labels", as: "l", in: { $toObjectId: "$$l" } } },
+              },
             },
-
-            // Populate variant labels
-            {
-              $lookup: {
-                from: "labels",
-                localField: "labels",
-                foreignField: "_id",
-                as: "labelsInfo"
-              }
-            },
-
-            // Populate brand, type, fabric, color, size
-            {
-              $lookup: {
-                from: "brands",
-                localField: "brand_id",
-                foreignField: "_id",
-                as: "brand"
-              }
-            },
-            {
-              $lookup: {
-                from: "types",
-                localField: "type_id",
-                foreignField: "_id",
-                as: "type"
-              }
-            },
-            {
-              $lookup: {
-                from: "fabrics",
-                localField: "fabric_id",
-                foreignField: "_id",
-                as: "fabric"
-              }
-            },
-            {
-              $lookup: {
-                from: "colors",
-                localField: "color_id",
-                foreignField: "_id",
-                as: "color"
-              }
-            },
-            {
-              $lookup: {
-                from: "sizes",
-                localField: "size_id",
-                foreignField: "_id",
-                as: "size"
-              }
-            }
+            { $lookup: { from: "labels", localField: "labels", foreignField: "_id", as: "labelsInfo" } },
           ],
-          as: "variants"
-        }
+          as: "variants",
+        },
       },
 
-      { $sort: { createdAt: -1 } }
+      // Only keep products that have at least 1 matching variant
+      { $match: { "variants.0": { $exists: true } } },
+
+      { $sort: { createdAt: -1 } },
     ];
 
     if (!download) {
@@ -212,34 +108,47 @@ const getProducts = async (req, res) => {
     }
 
     // ============================
-    // 🧭 11️⃣ Execute Query
+    // 4️⃣ Execute Query
     // ============================
     const products = await Product.aggregate(pipeline);
-    const total = await Product.countDocuments(matchQuery);
+
+    // Total count of products that have matching variants
+    const total = await Product.aggregate([
+      { $match: productMatch },
+      {
+        $lookup: {
+          from: "productvariants",
+          let: { productId: "$_id" },
+          pipeline: [{ $match: { $expr: { $eq: ["$product_id", "$$productId"] }, ...variantMatch } }],
+          as: "variants",
+        },
+      },
+      { $match: { "variants.0": { $exists: true } } },
+      { $count: "total" },
+    ]);
+    const totalCount = total[0]?.total || 0;
 
     sendResponse(
       res,
       true,
-      { products, total, page, pages: Math.ceil(total / limit) },
+      { products, total: totalCount, page, pages: Math.ceil(totalCount / limit) },
       "Products retrieved successfully"
     );
-
   } catch (err) {
     console.error("❌ getProducts error:", err);
     sendResponse(res, false, null, err.message);
   }
 };
 
-
 const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
-      .populate("category_id labels", "name")
+      .populate("category_id", "name")
       .lean();
     if (!product) return sendResponse(res, false, null, "Product not found");
 
     const variants = await ProductVariant.find({ product_id: product._id })
-      .populate("brand_id fabric_id type_id color_id size_id labels", "name")
+      .populate("brand_id fabric_id type_id color_id size_id", "name")
       .lean();
 
     sendResponse(res, true, { ...product, variants }, "Product retrieved successfully");
@@ -254,15 +163,13 @@ const createProduct = async (req, res) => {
       name,
       description,
       category_id,
-      labels,
       status,
-      is_featured,
-      is_best_seller,
-      is_trending,
+      discount_id,
       variants,
     } = req.body;
 
-    // Handle product images (uploaded files or URLs)
+
+    // Handle product images
     let productImages = [];
     if (req.files && req.files.length > 0) {
       productImages = req.files.map(file => `/uploads/${file.filename}`);
@@ -270,42 +177,53 @@ const createProduct = async (req, res) => {
       productImages = Array.isArray(req.body.images) ? req.body.images : [req.body.images];
     }
 
+    
+
     // Create Product
     const product = new Product({
       name,
       slug: slugify(name, { lower: true, strict: true }),
       description,
       category_id,
-      labels: Array.isArray(labels) ? labels : [],
+      discount_id: discount_id || null,
       status: status || "active",
-      is_featured: !!is_featured,
-      is_best_seller: !!is_best_seller,
-      is_trending: !!is_trending,
       images: productImages,
     });
 
     const savedProduct = await product.save();
   
+
     // Create Variants
     let savedVariants = [];
     if (Array.isArray(variants) && variants.length > 0) {
-      const variantDocs = variants.map((v, idx) => ({
-        ...v,
-        product_id: savedProduct._id,
-        status: v.status || "active",
-        images: Array.isArray(v.images) ? v.images : [],
-        labels: Array.isArray(v.labels) ? v.labels : [],
-        sku: v.sku || `SKU-${Date.now()}-${idx}`,
-        price: Number(v.price),
-        stock_quantity: Number(v.stock_quantity),
-      }));
+      const variantDocs = variants.map((v, idx) => {
+        return {
+          ...v,
+          product_id: savedProduct._id,
+          status: v.status || "active",
+          images: Array.isArray(v.images) ? v.images : [],
+          labels: Array.isArray(v.labels) ? v.labels : [],
+          sku: v.sku || `SKU-${Date.now()}-${idx}`,
+          price: Number(v.price),
+          stock_quantity: Number(v.stock_quantity),
+          is_featured: !!v.is_featured,
+          is_best_seller: !!v.is_best_seller,
+          is_trending: !!v.is_trending,
+        };
+      });
 
       savedVariants = await ProductVariant.insertMany(variantDocs);
     }
 
     // Return product + variants
-    sendResponse(res, true, { product: savedProduct, variants: savedVariants }, "Product created with variants successfully");
+    sendResponse(
+      res,
+      true,
+      { product: savedProduct, variants: savedVariants },
+      "Product created with variants successfully"
+    );
   } catch (err) {
+    console.error("Error creating product:", err);
     sendResponse(res, false, null, err.message);
   }
 };

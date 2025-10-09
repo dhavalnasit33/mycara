@@ -5,20 +5,18 @@ const bcrypt = require("bcryptjs");
 // ---------------- GET ALL USERS ----------------
 const getUsers = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false",is_active  } = req.query;
     const download = isDownload.toLowerCase() === "true";
-
-    // 🔒 Only admin can access this
-    if (req.user.role !== "admin") {
-      return sendResponse(res, false, null, "Forbidden: You do not have access");
-    }
-
+   
     const baseQuery = {};
 
     // 🔍 Optional search
     if (search) {
       baseQuery.name = { $regex: search, $options: "i" };
     }
+
+     if (is_active === "true") baseQuery.is_active = true;
+    else if (is_active === "false") baseQuery.is_active = false;
 
     // ⬇ Download mode: return all users without pagination
     if (download) {
@@ -54,11 +52,7 @@ const getUsers = async (req, res) => {
 // ---------------- GET USER BY ID ----------------
 const getUserById = async (req, res) => {
   try {
-    // admin can view anyone; customer can only view their own
-    if (req.user.role !== "admin" && req.user._id.toString() !== req.params.id) {
-      return sendResponse(res, false, null, "Forbidden: You cannot view this user");
-    }
-
+   
     const user = await User.findById(req.params.id).select("-password");
     if (!user) return sendResponse(res, false, null, "User not found");
 
@@ -71,10 +65,7 @@ const getUserById = async (req, res) => {
 // ---------------- CREATE USER ----------------
 const createUser = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
-      return sendResponse(res, false, null, "Forbidden: Only super admin can create users");
-    }
-
+  
     const {
       name,
       email,
@@ -126,11 +117,6 @@ const updateUser = async (req, res) => {
     const existingUser = await User.findById(userId);
     if (!existingUser) return sendResponse(res, false, null, "User not found");
 
-    // admin can update anyone, customer can only update their own
-    if (req.user.role !== "admin" && req.user._id.toString() !== userId) {
-      return sendResponse(res, false, null, "Forbidden: You cannot update this user");
-    }
-
     const {
       name,
       email,
@@ -160,11 +146,7 @@ const updateUser = async (req, res) => {
       updateData.password = await bcrypt.hash(password, salt);
     }
 
-    // Prevent customers from changing their role
-    if (req.user.role !== "admin" && role && role !== existingUser.role) {
-      return sendResponse(res, false, null, "You cannot change your own role");
-    }
-
+  
     if (role && req.user.role === "admin") {
       updateData.role = role;
     }
@@ -188,10 +170,7 @@ const deleteUser = async (req, res) => {
       return sendResponse(res, false, null, "You cannot delete your own account");
     }
 
-    if (req.user.role !== "admin") {
-      return sendResponse(res, false, null, "Forbidden: Only super admin can delete users");
-    }
-
+  
     await User.findByIdAndDelete(user._id);
     return sendResponse(res, true, null, "User deleted successfully");
   } catch (err) {
@@ -199,13 +178,31 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const updateUserStatus = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { is_active } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) return sendResponse(res, false, null, "User not found");
+
+    // Prevent self-deactivation
+    if (req.user._id.toString() === userId) {
+      return sendResponse(res, false, null, "You cannot change your own status");
+    }
+
+    user.is_active = Boolean(is_active);
+    await user.save();
+
+    return sendResponse(res, true, { user }, "User status updated successfully");
+  } catch (err) {
+    return sendResponse(res, false, null, "Failed to update user status: " + err.message);
+  }
+};
 // ---------------- BULK DELETE USERS ----------------
 const bulkDeleteUsers = async (req, res) => {
   try {
-    if (req.user.role !== "admin") {
-      return sendResponse(res, false, null, "Forbidden: Only super admin can delete users");
-    }
-
+   
     const { ids } = req.body;
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
       return sendResponse(res, false, null, "No user IDs provided for deletion");
@@ -278,4 +275,5 @@ module.exports = {
   getOwnProfile,
   updateOwnProfile,
   deleteOwnProfile,
+  updateUserStatus
 };

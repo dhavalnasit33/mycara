@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteFooterItems, createFooterItem, deleteFooterItem, fetchFooter, updateFooterItem } from "./footerThunk";
-
+import {
+  bulkDeleteFooterItems,
+  createFooterItem,
+  deleteFooterItem,
+  fetchFooter,
+  updateFooterItem,
+  updateFooterItemStatus,
+} from "./footerThunk";
 
 interface FooterItem {
   _id: string;
@@ -55,8 +61,19 @@ const footerSlice = createSlice({
 
       // Update
       .addCase(updateFooterItem.fulfilled, (state, action) => {
-        const index = state.footers.findIndex((i) => i._id === action.payload._id);
+        const index = state.footers.findIndex(
+          (i) => i._id === action.payload._id
+        );
         if (index !== -1) state.footers[index] = action.payload;
+      })
+
+      .addCase(updateFooterItemStatus.fulfilled, (state, action) => {
+        const index = state.footers.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.footers[index] = action.payload;
+        }
       })
 
       // Delete
@@ -67,7 +84,9 @@ const footerSlice = createSlice({
 
       // Bulk delete
       .addCase(bulkDeleteFooterItems.fulfilled, (state, action) => {
-        state.footers = state.footers.filter((i) => !action.payload.includes(i._id));
+        state.footers = state.footers.filter(
+          (i) => !action.payload.includes(i._id)
+        );
         state.total -= action.payload.length;
       });
   },

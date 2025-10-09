@@ -14,10 +14,12 @@ const generateCouponCode = (length = 8) => {
 // Get all coupons with pagination & search / optional download
 const getCoupons = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false",status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
     const query = search ? { code: { $regex: search, $options: "i" } } : {};
+
+    if (status && ["active", "inactive"].includes(status)) query.status = status;
 
     if (download) {
       const coupons = await Coupon.find(query).sort({ createdAt: -1 });

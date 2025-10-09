@@ -7,7 +7,7 @@ import { ROUTES } from "@/services/routes";
 export const fetchCustomerReviews = createAsyncThunk(
   "customerReviews/fetchAll",
   async (
-    params: { page?: number; limit?: number; search?: string; isDownload?: boolean } = {},
+    params: { page?: number; limit?: number; search?: string; isDownload?: boolean;is_approved?: boolean } = {},
     { rejectWithValue }
   ) => {
     try {
@@ -30,6 +30,20 @@ export const getCustomerReviewById = createAsyncThunk(
       return rejectWithValue(res.data.message || "Not found");
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Server error");
+    }
+  }
+);
+
+// ✅ Update review status
+export const updateReviewsStatus = createAsyncThunk(
+  "customerReviews/updateReviewsStatus",
+  async ({ id, is_approved }: { id: string; is_approved?: boolean }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.customerReviews.updateStatus(id), { is_approved });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
     }
   }
 );

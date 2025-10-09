@@ -5,7 +5,7 @@ import { ROUTES } from "@/services/routes";
 // Fetch navbar items
 export const fetchNavbar = createAsyncThunk(
   "navbar/fetchNavbar",
-  async (params: { page?: number; limit?: number; search?: string } = {}, { rejectWithValue }) => {
+  async (params: { page?: number; limit?: number; search?: string;status?: "active" | "inactive"; } = {}, { rejectWithValue }) => {
     try {
       const res = await api.get(ROUTES.navbar.getAll, { params });
       if (res.data.success) return res.data.data;
@@ -52,6 +52,20 @@ export const updateNavbarItem = createAsyncThunk(
       const res = await api.put(ROUTES.navbar.update(id), data);
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to update navbar item");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+// ✅ Update navbar status
+export const updateNavbarItemStatus = createAsyncThunk(
+  "navbar/updateNavbarItemStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.navbar.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }

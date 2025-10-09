@@ -39,6 +39,7 @@ interface GenericTableProps<T> {
   rowActions?: (item: T) => React.ReactNode;
   statusToggleEnabled?: boolean;
   onStatusToggle?: (id: string, newStatus: boolean) => Promise<void>;
+   editEnabled?: boolean; 
 }
 
 export function GenericTable<T extends Record<string, any>>({
@@ -55,6 +56,7 @@ export function GenericTable<T extends Record<string, any>>({
   rowActions,
   onStatusToggle,
   statusToggleEnabled = false,
+   editEnabled = true, 
 }: GenericTableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [total, setTotal] = useState(0);
@@ -81,7 +83,7 @@ export function GenericTable<T extends Record<string, any>>({
         search: debouncedQuery,
         status: statusFilter,
       });
-      console.log("result", result);
+  
       // If current page is now empty after deletion, go back one page
       if (result.data.length === 0 && page > 1) {
         setPage(page - 1);
@@ -140,7 +142,8 @@ export function GenericTable<T extends Record<string, any>>({
   };
 
   const totalPages = Math.ceil(total / pageSize);
-
+  const extraCols =
+    (bulkDeleteItems ? 1 : 0) + (statusToggleEnabled ? 1 : 0) + 1;
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -159,14 +162,17 @@ export function GenericTable<T extends Record<string, any>>({
               try {
                 const result = await fetchData({ isDownload: true });
                 const exportData = (result.data || []).map((item: any) =>
-                  columns.reduce((acc, col) => {
-                    acc[col.label] = col.exportValue
-                      ? col.exportValue(item)
-                      : col.render
-                      ? item[col.key] // fallback for JSX
-                      : item[col.key];
-                    return acc;
-                  }, {} as Record<string, any>)
+                  columns.reduce(
+                    (acc, col) => {
+                      acc[col.label] = col.exportValue
+                        ? col.exportValue(item)
+                        : col.render
+                          ? item[col.key] // fallback for JSX
+                          : item[col.key];
+                      return acc;
+                    },
+                    {} as Record<string, any>
+                  )
                 );
 
                 const ws = XLSX.utils.json_to_sheet(exportData);
@@ -264,7 +270,7 @@ export function GenericTable<T extends Record<string, any>>({
             {loading ? (
               <tr>
                 <td
-                  colSpan={columns.length + 3}
+                  colSpan={columns.length + extraCols}
                   className="p-6 text-center text-gray-500"
                 >
                   Loading...
@@ -273,7 +279,7 @@ export function GenericTable<T extends Record<string, any>>({
             ) : data.length === 0 ? (
               <tr>
                 <td
-                  colSpan={columns.length + 3}
+                  colSpan={columns.length + extraCols}
                   className="p-6 text-center text-gray-500"
                 >
                   No records found
@@ -315,18 +321,23 @@ export function GenericTable<T extends Record<string, any>>({
                     ) : (
                       <div className="flex justify-end items-center gap-2">
                         {/* Edit button */}
-                        <Link
-                          to={`/${title.toLowerCase()}/${item[rowKey]}/edit`}
-                          className="p-1 rounded hover:bg-gray-100 flex items-center justify-center"
-                        >
-                          <Edit className="w-5 h-5 text-blue-600 hover:text-blue-800" />
-                        </Link>
+                       {editEnabled && (
+  <Link
+    to={`/${title.toLowerCase()}/${item[rowKey]}/edit`}
+    className="p-1 rounded hover:bg-gray-100 flex items-center justify-center"
+  >
+    <Edit className="w-5 h-5 text-blue-600 hover:text-blue-800" />
+  </Link>
+)}
+
 
                         {/* Delete button with ConfirmDialog */}
                         {deleteItem && (
                           <ConfirmDialog
                             title={`Delete ${title.slice(0, -1)}`} // singular
-                            description={`Are you sure you want to delete "${item.name}"?`}
+                           description={`Are you sure you want to delete "${
+    item.title || item.name || item[rowKey] || ""
+  }"?`}
                             confirmText="Delete"
                             danger
                             onConfirm={() =>

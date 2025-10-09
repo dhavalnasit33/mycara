@@ -47,6 +47,20 @@ export const updateOrder = createAsyncThunk(
   }
 );
 
+// ✅ Update order status
+export const updateOrderStatus = createAsyncThunk(
+  "orders/updateOrderStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.orders.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // ✅ Delete order
 export const deleteOrder = createAsyncThunk(
   "orders/deleteOrder",

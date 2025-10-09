@@ -4,12 +4,19 @@ const { sendResponse } = require("../utils/response");
 // Get all reviews
 const getReviews = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false", is_approved } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
-    const query = search
-      ? { title: { $regex: search, $options: "i" } }
-      : {};
+    const query = {};
+
+    // Search filter
+    if (search) {
+      query.title = { $regex: search, $options: "i" };
+    }
+
+    // is_approved filter
+    if (is_approved === "true") query.is_approved = true;
+    else if (is_approved === "false") query.is_approved = false;
 
     if (download) {
       const customerReviews = await CustomerReview.find(query)
@@ -67,6 +74,30 @@ const updateReview = async (req, res) => {
   }
 };
 
+const updateReviewStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { is_approved } = req.body; 
+    if (typeof is_approved !== "boolean") {
+      return res.status(400).json({ success: false, message: "is_approved must be a boolean" });
+    }
+
+    const review = await CustomerReview.findByIdAndUpdate(
+      id,
+      { is_approved },
+      { new: true }
+    );
+
+    if (!review) {
+      return res.status(404).json({ success: false, message: "Review not found" });
+    }
+
+    res.json({ success: true, data: review, message: "Review status updated successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 // Delete review
 const deleteReview = async (req, res) => {
   try {
@@ -98,4 +129,5 @@ module.exports = {
   updateReview,
   deleteReview,
   bulkDeleteReviews,
+  updateReviewStatus
 };

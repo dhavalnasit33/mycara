@@ -5,6 +5,7 @@ import {
   updateOrder,
   deleteOrder,
   bulkDeleteOrders,
+  updateOrderStatus,
 } from "./ordersThunk";
 
 interface OrderItem {
@@ -17,7 +18,6 @@ interface OrderItem {
   quantity: number;
   price_at_order: number;
 }
-
 
 interface Order {
   _id: string;
@@ -84,9 +84,21 @@ const ordersSlice = createSlice({
 
       // Update order
       .addCase(updateOrder.fulfilled, (state, action) => {
-        const index = state.orders.findIndex((o) => o._id === action.payload._id);
+        const index = state.orders.findIndex(
+          (o) => o._id === action.payload._id
+        );
         if (index !== -1) state.orders[index] = action.payload;
-        if (state.selectedOrder?._id === action.payload._id) state.selectedOrder = action.payload;
+        if (state.selectedOrder?._id === action.payload._id)
+          state.selectedOrder = action.payload;
+      })
+
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        const index = state.orders.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.orders[index] = action.payload;
+        }
       })
 
       // Delete order
@@ -97,7 +109,9 @@ const ordersSlice = createSlice({
 
       // Bulk delete orders
       .addCase(bulkDeleteOrders.fulfilled, (state, action) => {
-        state.orders = state.orders.filter((o) => !action.payload.includes(o._id));
+        state.orders = state.orders.filter(
+          (o) => !action.payload.includes(o._id)
+        );
         state.total -= action.payload.length;
       });
   },

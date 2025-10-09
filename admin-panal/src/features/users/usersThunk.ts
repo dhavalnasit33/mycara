@@ -6,17 +6,21 @@ import { ROUTES } from "../../services/routes";
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (
-    params: { page?: number; limit?: number; search?: string; isDownload?: boolean; role?: string } = {},
+    params: { page?: number; limit?: number; search?: string; isDownload?: boolean; role?: string; is_active?: boolean } = {},
     { rejectWithValue }
   ) => {
     try {
       const { role, ...query } = params;
-      const url =
-        role === "store_owner"
-          ? ROUTES.users.getStoreCustomers
-          : ROUTES.users.getAll;
 
-      const res = await api.get(url, { params: query });
+      const queryParams: Record<string, any> = { ...query };
+      if (query.is_active !== undefined) {
+        queryParams.is_active = query.is_active.toString(); 
+      }
+
+      const url =ROUTES.users.getAll;
+
+      const res = await api.get(url, { params: queryParams });
+
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to fetch users");
     } catch (err: any) {
@@ -24,6 +28,7 @@ export const fetchUsers = createAsyncThunk(
     }
   }
 );
+
 
 // Other CRUD thunks
 export const getUserById = createAsyncThunk(
@@ -59,6 +64,20 @@ export const updateUser = createAsyncThunk(
       const res = await api.put(ROUTES.users.update(id), data);
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to update user");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+// ✅ Update user status
+export const updateUserStatus = createAsyncThunk(
+  "users/updateUserStatus",
+  async ({ id, is_active }: { id: string; is_active?: boolean }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.users.updateStatus(id), { is_active });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }

@@ -10,4 +10,10 @@ const navbarSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+navbarSchema.pre("save", function (next) {
+  if (this.order == null) this.order = 1; 
+  next();
+});
+
+
 module.exports = mongoose.model("Navbar", navbarSchema);

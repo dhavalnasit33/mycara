@@ -46,6 +46,7 @@ export default function ProductFormPage() {
   const { fabrics } = useSelector((state: RootState) => state.fabrics);
   const { colors } = useSelector((state: RootState) => state.colors);
   const { sizes } = useSelector((state: RootState) => state.sizes);
+   const { discounts } = useSelector((state: RootState) => state.discounts);
   const { labels: productLabels } = useSelector(
     (state: RootState) => state.productLabels
   );
@@ -53,12 +54,12 @@ export default function ProductFormPage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [labels, setLabels] = useState<string[]>([]);
+
   const [images, setImages] = useState<string[]>([]);
   const [status, setStatus] = useState(true);
-  const [isFeatured, setIsFeatured] = useState(false);
-  const [isBestSeller, setIsBestSeller] = useState(false);
-  const [isTrending, setIsTrending] = useState(false);
+
+  const [discountId, setDiscountId] = useState<string | null>(null);
+
 
 
   const [variants, setVariants] = useState<any[]>([
@@ -73,7 +74,10 @@ export default function ProductFormPage() {
       sku: "",
       images: [],
       labels: [],
-          status: "active", 
+      status: "active",
+       is_featured: false,
+    is_best_seller: false,
+    is_trending: false, 
     },
   ]);
 
@@ -88,46 +92,53 @@ export default function ProductFormPage() {
     dispatch(fetchProductLabels({ page: 1, limit: 100, status: "active" }));
   }, [dispatch]);
 
- useEffect(() => {
+useEffect(() => {
   if (isEditMode && id) {
     dispatch(getProductById(id)).then((res: any) => {
       if (res.payload) {
         const p = res.payload;
 
+
         setName(p.name || "");
         setDescription(p.description || "");
-        setCategoryId(p.category_id?._id || null); // <-- extract _id
-        setLabels(p.labels?.map((l: any) => l._id) || []); // <-- correct
+        setCategoryId(p.category_id?._id || null);
+      setDiscountId(p.discount_id || null);
+       
+
         setImages(p.images || []);
         setStatus(p.status === "active");
-        setIsFeatured(!!p.is_featured);
-        setIsBestSeller(!!p.is_best_seller);
-        setIsTrending(!!p.is_trending);
 
         // Map variants
         if (Array.isArray(p.variants) && p.variants.length > 0) {
+       
           setVariants(
-  p.variants.map((v: any) => ({
-    _id: v._id, // <-- add this
-    brand_id: v.brand_id?._id || "",
-    fabric_id: v.fabric_id?._id || "",
-    type_id: v.type_id?._id || "",
-    color_id: v.color_id?._id || "",
-    size_id: v.size_id?._id || "",
-    price: v.price || "",
-    stock_quantity: v.stock_quantity || "",
-    sku: v.sku || "",
-    status: v.status || "active",
-    images: v.images || [],
-    labels: Array.isArray(v.labels) ? v.labels.map((l: any) => l._id) : [],
-  }))
-);
-
+            p.variants.map((v: any) => {
+           
+              return {
+                _id: v._id,
+                brand_id: v.brand_id?._id || "",
+                fabric_id: v.fabric_id?._id || "",
+                type_id: v.type_id?._id || "",
+                color_id: v.color_id?._id || "",
+                size_id: v.size_id?._id || "",
+                price: v.price || "",
+                stock_quantity: v.stock_quantity || "",
+                sku: v.sku || "",
+                status: v.status || "active",
+                images: v.images || [],
+                labels: Array.isArray(v.labels) ? v.labels : [], 
+                is_featured: !!v.is_featured,
+                is_best_seller: !!v.is_best_seller,
+                is_trending: !!v.is_trending,
+              };
+            })
+          );
         }
       }
     });
   }
 }, [dispatch, id, isEditMode]);
+
 
   const handleVariantChange = (index: number, field: string, value: any) => {
     const updated = [...variants];
@@ -149,7 +160,10 @@ export default function ProductFormPage() {
         sku: "",
         images: [],
         labels: [],
-        status:"active"
+        status:"active",
+         is_featured: false,
+      is_best_seller: false,
+      is_trending: false,
       },
     ]);
   };
@@ -187,12 +201,10 @@ export default function ProductFormPage() {
       name,
       description,
       category_id: categoryId,
-      labels,
+      // labels,
       images,
       status: status ? "active" : "inactive",
-      is_featured: isFeatured,
-      is_best_seller: isBestSeller,
-      is_trending: isTrending,
+      discount_id: discountId,
       variants,
     };
 
@@ -280,32 +292,23 @@ export default function ProductFormPage() {
             </div>
 
             <div>
-              <Label>Labels</Label>
-              <div className="flex flex-wrap gap-2 mt-1">
-                {productLabels.map((label) => (
-                  <label
-                    key={label._id}
-                    className="inline-flex items-center gap-2 cursor-pointer"
-                  >
-                    <input
-                      type="checkbox"
-                      value={label._id}
-                      checked={labels.includes(label._id)}
-                      onChange={(e) => {
-                        const checked = e.target.checked;
-                        setLabels((prev) =>
-                          checked
-                            ? [...prev, label._id]
-                            : prev.filter((id) => id !== label._id)
-                        );
-                      }}
-                      className="form-checkbox h-4 w-4 text-blue-600"
-                    />
-                    <span>{label.name}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
+  <Label>Discount</Label>
+  <Select value={discountId ?? ""} onValueChange={setDiscountId}>
+    <SelectTrigger>
+      <SelectValue placeholder="Select discount" />
+    </SelectTrigger>
+    <SelectContent>
+      {discounts.map((d) => (
+        <SelectItem key={d._id} value={d._id}>
+          {d.name}
+        </SelectItem>
+      ))}
+    </SelectContent>
+  </Select>
+</div>
+
+
+         
 
             <div>
               <Label>Product Images</Label>
@@ -497,6 +500,32 @@ export default function ProductFormPage() {
                       }
                     />
                   </div>
+
+
+<div className="flex flex-wrap gap-6 mt-4 col-span-2">
+  <div className="flex items-center gap-2">
+    <Label>Featured</Label>
+    <Switch
+      checked={v.is_featured}
+      onCheckedChange={(val) => handleVariantChange(idx, "is_featured", val)}
+    />
+  </div>
+  <div className="flex items-center gap-2">
+    <Label>Best Seller</Label>
+    <Switch
+      checked={v.is_best_seller}
+      onCheckedChange={(val) => handleVariantChange(idx, "is_best_seller", val)}
+    />
+  </div>
+  <div className="flex items-center gap-2">
+    <Label>Trending</Label>
+    <Switch
+      checked={v.is_trending}
+      onCheckedChange={(val) => handleVariantChange(idx, "is_trending", val)}
+    />
+  </div>
+</div>
+
 
                   <div className="col-span-2 flex items-center justify-between mt-2">
                     <Label htmlFor={`variant-status-${idx}`}>Status</Label>

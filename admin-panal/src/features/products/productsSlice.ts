@@ -13,6 +13,8 @@ interface ProductVariant {
   product_id: string;
   brand?: { _id: string; name: string }[];
   type?: { _id: string; name: string }[];
+   color?: { _id: string; name: string }[];  
+  size?: { _id: string; name: string }[];   
   fabric?: { _id: string; name: string }[];
   color_id: { _id: string; name: string } | string;
   size_id: { _id: string; name: string } | string;

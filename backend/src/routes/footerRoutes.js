@@ -7,6 +7,7 @@ const {
   updateFooter,
   deleteFooter,
   bulkDeleteFooters,
+  updateFooterStatus,
 } = require("../controllers/footerController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
@@ -20,6 +21,7 @@ router.use(authMiddleware);
 router.get("/:id", authorizeMinRole("admin"), getFooterById);
 router.post("/", authorizeMinRole("admin"), createFooter);
 router.put("/:id", authorizeMinRole("admin"), updateFooter);
+router.put("/:id/status", authorizeMinRole("admin"), updateFooterStatus);
 router.delete("/:id", authorizeMinRole("admin"), deleteFooter);
 router.post("/bulk-delete", authorizeMinRole("admin"), bulkDeleteFooters);
 

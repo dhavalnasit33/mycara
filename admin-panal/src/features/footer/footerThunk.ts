@@ -5,7 +5,7 @@ import { ROUTES } from "@/services/routes";
 // Fetch footer items
 export const fetchFooter = createAsyncThunk(
   "footer/fetchFooter",
-  async (params: { page?: number; limit?: number; search?: string } = {}, { rejectWithValue }) => {
+  async (params: { page?: number; limit?: number; search?: string;status?: "active" | "inactive"; } = {}, { rejectWithValue }) => {
     try {
       const res = await api.get(ROUTES.footer.getAll, { params });
       if (res.data.success) return res.data.data;
@@ -52,6 +52,20 @@ export const updateFooterItem = createAsyncThunk(
       const res = await api.put(ROUTES.footer.update(id), data);
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to update footer item");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+// ✅ Update brand status
+export const updateFooterItemStatus = createAsyncThunk(
+  "footer/updateFooterItemStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.footer.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
     } catch (err: any) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }

@@ -6,15 +6,16 @@ import {
   updateSection,
   deleteSection,
   bulkDeleteSections,
+  updateSectionStatus,
 } from "./sectionsThunk";
 
 interface Section {
   _id: string;
   title: string;
-  order:string;
-  is_button:boolean;
+  order: string;
+  is_button: boolean;
   button_name: string;
-  button_link:string;
+  button_link: string;
   description: string;
   status?: "active" | "inactive";
   createdAt: string;
@@ -64,8 +65,19 @@ const sectionsSlice = createSlice({
 
       // ✅ Update
       .addCase(updateSection.fulfilled, (state, action) => {
-        const index = state.sections.findIndex((s) => s._id === action.payload._id);
+        const index = state.sections.findIndex(
+          (s) => s._id === action.payload._id
+        );
         if (index !== -1) state.sections[index] = action.payload;
+      })
+
+      .addCase(updateSectionStatus.fulfilled, (state, action) => {
+        const index = state.sections.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.sections[index] = action.payload;
+        }
       })
 
       // ✅ Delete
@@ -76,7 +88,9 @@ const sectionsSlice = createSlice({
 
       // ✅ Bulk Delete
       .addCase(bulkDeleteSections.fulfilled, (state, action) => {
-        state.sections = state.sections.filter((s) => !action.payload.includes(s._id));
+        state.sections = state.sections.filter(
+          (s) => !action.payload.includes(s._id)
+        );
         state.total -= action.payload.length;
       });
   },

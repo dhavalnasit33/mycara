@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema(
       default: "pending" 
     },
     coupon_id: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon", required: false },
-    
+    discount_id: { type: mongoose.Schema.Types.ObjectId, ref: "Discount", default: null },
     // New order number field
     order_number: { type: String, unique: true },
   },

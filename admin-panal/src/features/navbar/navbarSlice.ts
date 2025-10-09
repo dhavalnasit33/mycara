@@ -5,6 +5,7 @@ import {
   updateNavbarItem,
   deleteNavbarItem,
   bulkDeleteNavbarItems,
+  updateNavbarItemStatus,
 } from "./navbarThunk";
 
 interface NavbarItem {
@@ -61,8 +62,19 @@ const navbarSlice = createSlice({
 
       // Update
       .addCase(updateNavbarItem.fulfilled, (state, action) => {
-        const index = state.navbars.findIndex((i) => i._id === action.payload._id);
+        const index = state.navbars.findIndex(
+          (i) => i._id === action.payload._id
+        );
         if (index !== -1) state.navbars[index] = action.payload;
+      })
+
+      .addCase(updateNavbarItemStatus.fulfilled, (state, action) => {
+        const index = state.navbars.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.navbars[index] = action.payload;
+        }
       })
 
       // Delete
@@ -73,7 +85,9 @@ const navbarSlice = createSlice({
 
       // Bulk delete
       .addCase(bulkDeleteNavbarItems.fulfilled, (state, action) => {
-        state.navbars = state.navbars.filter((i) => !action.payload.includes(i._id));
+        state.navbars = state.navbars.filter(
+          (i) => !action.payload.includes(i._id)
+        );
         state.total -= action.payload.length;
       });
   },

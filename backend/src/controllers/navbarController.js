@@ -4,7 +4,7 @@ const { sendResponse } = require("../utils/response");
 // Get all navbars with pagination & search / optional full download
 const getNavbars = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false",status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
     const query = search
@@ -15,6 +15,7 @@ const getNavbars = async (req, res) => {
       const navbars = await Navbar.find(query).sort({ order: 1 });
       return sendResponse(res, true, { navbars }, "All navbars retrieved for download");
     }
+     if (status && ["active", "inactive"].includes(status)) query.status = status;
 
     page = parseInt(page);
     limit = parseInt(limit);
@@ -73,6 +74,32 @@ const updateNavbar = async (req, res) => {
   }
 };
 
+const updateNavbarStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const navbar = await Navbar.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!navbar) {
+      return sendResponse(res, false, null, "Navbar not found");
+    }
+
+    sendResponse(res, true, navbar, "Navbar status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete navbar
 const deleteNavbar = async (req, res) => {
   try {
@@ -104,4 +131,5 @@ module.exports = {
   updateNavbar,
   deleteNavbar,
   bulkDeleteNavbars,
+  updateNavbarStatus
 };
