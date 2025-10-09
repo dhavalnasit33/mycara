@@ -23,19 +23,6 @@ const Button = ({
     lg: "py-3 px-8 text-[18px]",
   };
 
-//   const variants = {
-//   common: "bg-color-100 text-white text-[16px] lg:text-[18px] min-w-[200px] py-[12px] sm:py-[13.5px]",
-//   secondary: "bg-white text-black text-[16px] lg:text-[18px] min-w-[200px] py-[12px] sm:py-[13.5px] box-shadow",
-//   danger: "bg-red-600 text-white hover:bg-red-700 text-[16px] sm:text-[18px]",
-// };
-
-// // Size styles (optional)
-// const sizes = {
-//   sm: "py-1 px-3 text-sm lg:text-base",
-//   md: "py-[8px] px-[10px] text-base lg:text-[18px]",
-//   lg: "py-3 px-8 text-[16px] lg:text-[18px]",
-// };
-
   return (
     <button
       type={type}

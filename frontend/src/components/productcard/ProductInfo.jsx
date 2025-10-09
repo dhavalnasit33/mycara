@@ -1,7 +1,9 @@
 import React from "react";
-import { Handbag, HeartPlus } from "lucide-react";
+import { Handbag } from "lucide-react";
 import Button from "../ui/Button";
 import { Link } from "react-router-dom";
+import HeartIcon from "../icons/HeartIcon"
+
 
 export default function ProductInfo() {
   const sizes = [
@@ -14,7 +16,7 @@ export default function ProductInfo() {
 
   return (
     <>
-      <p className="text-theme text-p pb-[25px]">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
+      <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
       <h1 className="text-[24px] uppercase">ORANGE scissor</h1>
       <p className="text-p text-light pb-[12px]">Floral plain Ethnic Anarkali Gown</p>
 
@@ -27,7 +29,7 @@ export default function ProductInfo() {
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b border-[#BCBCBC]">
         <div className="flex items-center ">
-            <p className="text-[26px] text-blck">₹1,430</p>
+            <p className="text-[26px] text-black">₹1,430</p>
             <p className="text-theme font-18 ml-[7px]">35% Off</p>
         </div>
         <p className="sec-text-color">MRP <span className="line-through">₹2,199</span> Inclusive of all taxes</p>
@@ -59,9 +61,9 @@ export default function ProductInfo() {
             ))}
         </div>
 
-        <div className="flex items-center gap-[17px] pt-[10px]">
-            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px]">
-                <HeartPlus size={22} />Wishlist
+        <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
+            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
+                <HeartIcon size={22} />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]">
                 <Link to='/cart' className="flex items-center gap-[10px]">

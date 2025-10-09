@@ -328,6 +328,10 @@
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 .no-scrollbar {
   -ms-overflow-style: none;  
   scrollbar-width: none;    
@@ -418,4 +422,11 @@
     rgba(210, 175, 159, 0.6) 30%,  
     rgba(210, 175, 159, 0.6) 100%  
   );
+}
+
+
+/* ultra thin dashed border */
+.thin-border {
+  border-width: 0.5px !important;
+  border-style: dashed !important;
 }

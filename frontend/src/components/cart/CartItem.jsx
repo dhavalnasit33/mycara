@@ -74,12 +74,12 @@ export default function CartItem() {
       {/* Mobile View */}
       <div className="custom-lg:hidden space-y-[20px]">
         {items.map((item, index) => (
-        <div key={index} className="bg-white p-4 rounded-[5px] box-shadow relative flex  sm:flex-nowrap gap-[20px] items-start">
+        <div key={index} className="bg-white p-4 rounded-[5px] box-shadow relative flex sm:flex-nowrap gap-[20px] items-start">
             <div className="flex items-center gap-[10px] flex-shrink-0">
                 <button className="w-[10px] h-[10px] flex items-center justify-center">
                     <img src={remove} alt="remove" className="w-full h-full object-contain" />
                 </button>
-                <img src={item.image} alt={item.name} className="box-shadow object-cover p-[5px] h-[109px] w-[87px] " />
+                <img src={item.image} alt={item.name} className="box-shadow object-cover p-[5px] h-[80px] sm:h-[109px] w-[50px] sm:w-[87px] " />
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break">{item.name}</div>

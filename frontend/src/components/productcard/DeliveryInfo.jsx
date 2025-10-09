@@ -1,10 +1,102 @@
 import React from "react";
 import { Truck, RefreshCcw, Package } from "lucide-react";
+import Slider from "react-slick";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import delivery from "../../assets/delivery.png";
+import exchange from "../../assets/exchange.png";
+import cod from "../../assets/cod.png";
+
+function PrevArrow({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute left-0 top-1/2 -translate-y-1/2  -translate-x-[150%] z-10"
+    >
+      <ChevronLeft size={20} />
+    </button>
+  );
+}
+
+function NextArrow({ onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="absolute right-0 top-1/2 -translate-y-1/2  translate-x-[150%] z-10"
+    >
+      <ChevronRight size={20} />
+    </button>
+  );
+}
 
 export default function DeliveryInfo() {
+  const deliveryItems = [
+    {
+      icon: cod,
+      title: (
+       <>
+          COD <span className="font-medium">available</span>
+        </>
+      ),
+      subtitle: "Know More",
+    },
+    {
+      icon: exchange,
+      title: (
+       <>
+          7-day return <span className="font-medium">&</span> size exchange 
+        </>
+      ),
+      subtitle: "Know More",
+    },
+    {
+      icon: delivery,
+      title: (
+       <>
+          Usally ships in <span className="font-medium">1 day</span>
+        </>
+      ),
+      subtitle: "Know More",
+    },
+    {
+      icon: exchange,
+      title: (
+       <>
+          7-day return <span className="font-medium">&</span> size exchange 
+        </>
+      ),
+      subtitle: "Know More",
+    },
+  ];
+
+  const sliderSettings = {
+    dots: false,
+    arrows: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,  
+    slidesToScroll: 1,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
+    responsive: [
+    {
+      breakpoint: 1281,
+      settings: { slidesToShow: 2 },
+    },
+    {
+      breakpoint: 768,
+      settings: { slidesToShow: 2 },
+    },
+    {
+      breakpoint: 480,
+      settings: { slidesToShow: 1 },
+    },
+],
+
+  };
+
   return (
-    <div className="">
-    <h4 className="text-[24px] pb-[20px] leading">Select Delivery Location</h4>
+    <>
+      <h4 className="text-[24px] pb-[20px] leading">Select Delivery Location</h4>
       <p className="text-14 text-light pb-[10px]">
         Enter your pincode to check product availability and delivery options.
       </p>
@@ -17,23 +109,24 @@ export default function DeliveryInfo() {
         <button className="text-[#BCBCBC] text-14">Apply</button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-        <div className="flex flex-col items-center text-center">
-          <Package size={24} className="text-pink-500 mb-2" />
-          <p className="font-medium">COD available</p>
-          <p className="text-sm text-gray-500">Know More</p>
-        </div>
-        <div className="flex flex-col items-center text-center">
-          <RefreshCcw size={24} className="text-pink-500 mb-2" />
-          <p className="font-medium">7-day return & size exchange</p>
-          <p className="text-sm text-gray-500">Know More</p>
-        </div>
-        <div className="flex flex-col items-center text-center">
-          <Truck size={24} className="text-pink-500 mb-2" />
-          <p className="font-medium">Usually ships in 1 day</p>
-          <p className="text-sm text-gray-500">Know More</p>
-        </div>
+      <div className="pt-6 mx-[2rem]">
+        <Slider {...sliderSettings}>
+          {deliveryItems.map((item, index) => (
+            <div key={index} className="!w-full px-2">
+              <div className="flex flex-col  bg-white p-4 rounded-md text-left h-full">
+                <div className="mb-[15px] h-[40px] ">
+                  <img src={item.icon} alt="" className="max-h-[30px]" />
+                </div>
+                <div className="flex flex-col justify-between h-[120px]">
+                  <p className="text-20px font-light">{item.title}</p>
+                  <p className="text-p text-theme">{item.subtitle}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Slider>
       </div>
-    </div>
+
+    </>
   );
 }

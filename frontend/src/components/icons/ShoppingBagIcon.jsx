@@ -2,10 +2,9 @@ import * as React from "react"
 const SvgComponent = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={28}
-    height={26}
     fill="none"
-    {...props}
+    viewBox="0 0 28 26"
+    {...props} // This allows width/height via className or style
   >
     <path
       stroke="#000"

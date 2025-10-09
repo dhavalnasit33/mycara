@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function CartSummary() {
   return (
-    <div className="w-full  custom-lg:w-[320px]  rounded-[3px] py-[45px] px-[22px] light-color ">
+    <div className="w-full  rounded-[3px] py-[45px] px-[22px] light-color ">
       <h2 className="text-[22px] text-black mb-[50px] text-center">
          Subtotal
         <div className=" flex justify-center">

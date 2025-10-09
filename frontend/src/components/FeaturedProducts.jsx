@@ -1,23 +1,25 @@
 // src/components/FeaturedProducts.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
-import SectionHeading from './ui/SectionHeading';
-import Row from './ui/Row.jsx';
+import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
-// Local images
-import FlowerIcon from "../components/icons/FlowerIcon";
-
-// assets
+// ✅ Importing custom UI components
+import SectionHeading from "./ui/SectionHeading";
+import Row from "./ui/Row";
 import ShoppingBagIcon from "./icons/ShoppingBagIcon";
 import HeartIcon from "./icons/HeartIcon";
+import ArrowleftIcon from "./icons/ArrowleftIcon";
+import ArrowRightIcon from "./icons/ArrowRightIcon";
 
-// slick slider
-import Slider from "react-slick";
+
+import FlowerIcon from "../components/icons/FlowerIcon"; // optional
+
+// ✅ Slick carousel styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// product images
+// ✅ Product images
 import kurtiImg from "../assets/Women floral Cotton jaipuri kurta.png";
 import pinkKurtaImg from "../assets/Wommen kurta and Trouser.png";
 import blueKurtaImg from "../assets/Women all over printed kurta.png";
@@ -27,7 +29,7 @@ import cotsetImg from "../assets/Wommen ordenaree cotset.png";
 import fanceytshirtImg from "../assets/Girls full sleave fancy t shirt.png";
 import banarasiImg from "../assets/Self design banarasi silk bland.png";
 
-// categories
+// ✅ Category list
 const categories = [
   { name: "Cotton Kurti", path: "/category/cotton-kurti" },
   { name: "Jeans", path: "/category/jeans" },
@@ -40,7 +42,7 @@ const categories = [
   { name: "Shoes", path: "/category/shoes" },
 ];
 
-// products
+// ✅ Product data
 const products = [
   {
     img: kurtiImg,
@@ -108,26 +110,26 @@ const products = [
   },
 ];
 
-// FeaturedProducts component
+// ✅ Main Component
 const FeaturedProducts = () => {
   const [mounted, setMounted] = useState(false);
   const [slidesToShow, setSlidesToShow] = useState(9);
   const [showArrows, setShowArrows] = useState(true);
-   const [activeCategory, setActiveCategory] = useState("cotton-kurti"); 
+  const [activeCategory, setActiveCategory] = useState("Cotton Kurti");
   const sliderRef = useRef();
 
+  // 🔹 Handle screen size changes
   const updateSlider = () => {
     const width = window.innerWidth;
-
-    if (width >= 1440) {
+    if (width >= 1024) {
       setSlidesToShow(9);
-      setShowArrows(false); // Desktop - hide arrows
+      setShowArrows(false);
     } else if (width >= 768) {
       setSlidesToShow(4);
-      setShowArrows(true); // Tablet - show arrows
+      setShowArrows(true);
     } else {
       setSlidesToShow(4);
-      setShowArrows(true); // Mobile - show arrows
+      setShowArrows(true);
     }
   };
 
@@ -140,133 +142,139 @@ const FeaturedProducts = () => {
 
   if (!mounted) return null;
 
+  // ✅ Slick Slider Settings
   const settings = {
     dots: false,
     infinite: true,
     speed: 500,
     slidesToShow,
     slidesToScroll: 1,
-    arrows: false, // slick arrows hidden
+    arrows: false,
     swipeToSlide: true,
   };
 
-   // 👇 filter products based on activeCategory
+  // ✅ Filtered products (optional)
   const filteredProducts =
-    activeCategory === "cotton-kurti"
+    activeCategory === "Cotton Kurti"
       ? products
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="w-full bg-white font-sans">
+    <div className="w-full bg-white font-sans ">
       <div className="flex flex-col items-center">
+        {/* Section Heading */}
+        <Row>
+          <SectionHeading title="Featured Products" />
+        </Row>
 
-          {/* Title Section */}
-        <div className="relative  flex justify-center items-center w-full">
-                {/* Title Section */}
-                 <div className="relative  flex justify-center items-center w-full">
-         
-                <Row>
-                 <SectionHeading title=" Featured Products" />
-               </Row>
-         
-                 </div>
-        </div>
-        
+        {/* Category Slider (wrapped in Row) */}
+        <Row className="relative  mb-5 lg:px-0 sm:px-4">
+         {showArrows && (
+  <>
+    {/* Left Arrow */}
+    <button
+      className="absolute top-1/2 -translate-y-1/2 left-[-20px] z-20 w-9 h-9 flex items-center justify-center "
+      onClick={() => sliderRef.current.slickPrev()}
+    >
+      <ArrowleftIcon
+        className="text-black"
+        style={{ width: "9.71px", height: "6px" }}
+      />
+    </button>
 
-        {/* Categories Slider with inside arrows */}
-        <div className="relative container-1440 mx-auto w-full mb-6 px-0 sm:px-4">
-          {showArrows && (
-            <>
-              <button
-                className="absolute top-1/2 left-0 -translate-y-1/2 z-20 w-9 h-9   flex items-center justify-center"
-                onClick={() => sliderRef.current.slickPrev()}
-              >
-                <FaArrowLeftLong className="text-black" />
-              </button>
-              <button
-                className="absolute top-1/2 right-0 -translate-y-1/2 z-20 w-9 h-9   flex items-center justify-center"
-                onClick={() => sliderRef.current.slickNext()}
-              >
-                <FaArrowRightLong className="text-black" />
-              </button>
-            </>
-          )}
+    {/* Right Arrow */}
+    <button
+      className="absolute top-1/2 -translate-y-1/2 right-[-20px] z-20 w-9 h-9 flex items-center justify-center "
+      onClick={() => sliderRef.current.slickNext()}
+    >
+      <ArrowRightIcon
+        className="text-black"
+        style={{ width: "9.71px", height: "6px" }}
+      />
+    </button>
+  </>
+)}
+
+
           <Slider ref={sliderRef} {...settings}>
             {categories.map((item, i) => (
-              <div key={i} className="px-[6px] sm:px-[1px]">
-       <button onClick={() => setActiveCategory(item.name)}
-                className={`  border rounded-[30px] flex items-center justify-center  w-[65px] h-[22px]  md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
-                text-center transition-colors duration-300  mx-auto
-                ${activeCategory === item.name
-                  ? "bg-color text-white button:hover hover:text-white"
-                  : "text-black button:hover"}
-          `}
-  style={{
-    boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
-  }}
->
-              <p className="font-h4 text-[10px] md:text-[18px] lg:text-[18px]">{item.name}</p>
-            </button>
-
+              <div key={i} className="px-[0px] sm:px-[0px]">
+                <button
+                  onClick={() => setActiveCategory(item.name)}
+                  className={`border rounded-[30px] flex items-center justify-center 
+                    w-[65px] h-[22px] md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
+                    text-center transition-colors duration-300 mx-auto
+                    ${
+                      activeCategory === item.name
+                        ? "bg-color text-white hover:text-white"
+                        : "text-black hover:bg-gray-100"
+                    }`}
+                  style={{
+                    boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
+                  }}
+                >
+                  <p className="font-h4 text-[10px] md:text-[18px] lg:text-[18px]">
+                    {item.name}
+                  </p>
+                </button>
               </div>
             ))}
           </Slider>
-        </div>
+        </Row>
 
-        {/* Products Grid */}
-        <div className="max-w-[1440px] mx-auto w-full grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-4 gap-4 px-2 sm:px-4 mt-6">
-          {products.map((p, index) => (
+        {/*  Products Grid Section (inside Row) */}
+        <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4  gap-[14px] lg:gap-[20px] lg:px-0 sm:px-2 mt-6">
+          {filteredProducts.map((p, index) => (
             <div
               key={index}
               className="relative border overflow-hidden transform transition-transform duration-300 hover:scale-95"
             >
+              {/* 🔹 Product Image */}
               <div className="relative group overflow-hidden">
-                {/* Product Image */}
                 <img
                   src={p.img}
                   alt={p.name}
-                  className="w-full h-[250px]  md:h-[320px] lg:h-[350px] transform transition-transform duration-300 hover:scale-105"
+                  className="w-full h-[227px] md:h-[227px] lg:h-[355px] transform transition-transform duration-300 hover:scale-105"
                 />
 
-                {/* Heart Icon */}
+                {/*  Heart Icon */}
                 <div className="absolute top-3 right-3 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
-                  <button className="p-2 bg-white text-black rounded-full border hover:scale-110 transition">
-                    <HeartIcon width={28} height={26} />
+                 <button className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border hover:scale-110 transition">
+                    <HeartIcon className="w-[12px] h-[12px] sm:w-[12px] sm:h-[12px] lg:w-[26px] lg:h-[24px] text-black" />
                   </button>
                 </div>
 
-                {/* Shopping Bag Icon */}
-                <div className="absolute top-[60px] right-3 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
-                  <button className="p-2 bg-white text-black rounded-full border hover:scale-110 transition">
-                    <ShoppingBagIcon width={28} height={26} />
+
+                {/*  Shopping Bag Icon */}
+                <div className="absolute top-[38px] md:top-[38px] lg:top-[60px] right-3 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
+                  <button className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border hover:scale-110 transition">
+                    <ShoppingBagIcon className="w-[12px] h-[12px] sm:w-[12px] sm:h-[12px] lg:w-[26px] lg:h-[24px] text-black" />
                   </button>
                 </div>
+
 
                 {/* Hover Overlay */}
-  <div
-    className="absolute inset-3
-               bg-[rgba(12,11,11,0.3)] border border-white
-               flex items-center justify-center 
-               opacity-0 group-hover:opacity-100 
-               transition-opacity duration-500 "
-  >
-
-                  <p className="text-white font-semibold text-center">View product</p>
+                <div className="absolute inset-3 bg-[rgba(12,11,11,0.3)] border border-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <p className="text-white font-semibold text-center">
+                    View product
+                  </p>
                 </div>
               </div>
 
-              {/* Product Info */}
+              {/* 🔹 Product Info */}
               <div className="p-4 text-center">
-                <p className="text-black text-[12px] md:text-[15px]  lg:text-[15px] font-regular mb-1">{p.name}</p>
-                <p className="text-black text-[12px]  md:text-[15px] lg:text-[15px] font-regular mb-1">
-                  {p.price}{" "}
-                  <span className="line-through text-gray-400 text-[10px] md:text-[12px]  lg:text-[12px] font-regular">{p.oldPrice}</span>
+                <p className="text-black text-[12px] md:text-[15px] lg:text-[15px] font-regular mb-1">
+                  {p.name}
                 </p>
-                <></>
-                <p className="mx-auto w-[60px] h-[19px] flex justify-center items-center text-theme text-[10px] lg:text-[12px] bg-ef3a96-9 font-regular rounded">
-  {p.discount}
-</p>
-
+                <p className="text-black text-[12px] md:text-[15px] lg:text-[15px] font-regular mb-1">
+                  {p.price}{" "}
+                  <span className="line-through text-gray-400 text-[10px] md:text-[12px] lg:text-[12px] font-regular">
+                    {p.oldPrice}
+                  </span>
+                </p>
+                <p className="mx-auto w-[60px] h-[19px] flex justify-center items-center text-theme text-[10px] lg:text-[12px] font-regular rounded">
+                  {p.discount}
+                </p>
                 <div className="flex gap-2 mt-2 justify-center">
                   {p.colors.map((c, i) => (
                     <span
@@ -279,7 +287,7 @@ const FeaturedProducts = () => {
               </div>
             </div>
           ))}
-        </div>
+        </Row>
       </div>
     </div>
   );

@@ -10,15 +10,11 @@
 //   );
 // }
 
-export default function Row({ children, className = "" , style = {}}) {
+export default function Row({ children, className = "" , style = {}, ...props }) {
   return (
-    // <div className={`w-full md:max-w-[1440px] mx-auto mx-[10px] 2xl:mx-auto ${className}`}>
-    //   {children}
-    // </div>
-   <div className={`w-[90%] md:w-[90%] lg:max-w-[1440px] mx-auto ${className}`} style={style}>
+   <div className={`w-[90%] md:w-[90%] lg:max-w-[1440px] mx-auto ${className}`} style={style} {...props}>
   {children}
 </div>
-
-
   );
 }
+

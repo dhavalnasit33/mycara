@@ -18,7 +18,7 @@ export default function Cart() {
             Home / <span className="font-light">Cart</span>
           </h2>
         </Row>
-        <Row className="flex flex-col lg:flex-row gap-[30px]">
+        <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[3fr_1fr]  gap-[30px]">
           <div className="flex-1">
             <CartItem/>
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-[12px] mt-[20px] md:mt-[30px]">

@@ -37,7 +37,7 @@ const products = [
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="w-10 h-10 flex items-center justify-center bg-color text-white rounded-full mx-2 hover:bg-pink-600 transition"
+    className="w-[16px] h-[16px] flex items-center justify-center bg-color text-white rounded-full mx-2 hover:bg-pink-600 transition"
   >
     &gt;
   </button>
@@ -46,7 +46,7 @@ const NextArrow = ({ onClick }) => (
 const PrevArrow = ({ onClick }) => (
   <button
     onClick={onClick}
-    className="w-10 h-10 flex items-center justify-center bg-color text-white rounded-full mx-2 hover:bg-pink-600 transition"
+    className="w-[16px] h-[16px] flex items-center justify-center bg-color text-white rounded-full mx-2 hover:bg-pink-600 transition"
   >
     &lt;
   </button>
@@ -82,7 +82,7 @@ const sliderSettings = {
                 </Row>
       </div>
 
- <div className="max-w-[1440px] mx-auto w-full cursor-pointer">
+ <Row className="cursor-pointer">
         
   {/* Desktop Grid */}
   <div className="hidden lg:grid grid-cols-3 gap-8">
@@ -95,17 +95,15 @@ const sliderSettings = {
         <div className="relative rounded-lg overflow-visible p-2">
 
             
-          {/* Dashed border */}
-          <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
-          <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
-          <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
-          <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
+        {/* Dashed corner borders */}
+<span className="absolute top-0 left-0 w-[139px] border-t-[0.5px] border-dashed border-black"></span>
+<span className="absolute top-0 left-0 h-[177px] border-l-[0.5px] border-dashed border-black"></span>
+<span className="absolute bottom-0 right-0 w-[139px] border-b-[0.5px] border-dashed border-black"></span>
+<span className="absolute bottom-0 right-0 h-[177px] border-r-[0.5px] border-dashed border-black"></span>
 
           {/* FLOWER ICON: Use standard Tailwind size classes (e.g., w-10, h-10) and Z-index */}
           {/* Use -top-6 and -left-6 to push it outside the p-2 padding and the dashed border */}
-         <FlowerIcon 
-    className="absolute -top-6 -left-6 w-[100px] h-[100px] pointer-events-none z-20" 
-/>
+  <FlowerIcon className="absolute -top-5 -left-5 sm:-left-6 w-[40px] sm:w-[50px] h-[40px] text-pink-300 pointer-events-none" />
           
           {/* === END MODIFIED BLOCK (DESKTOP) === */}
 
@@ -123,7 +121,7 @@ const sliderSettings = {
         </div>
 
         <div className="p-2 text-left">
-          <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] mb-2">{product.name}</h3>
+          <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] mb-2 ">{product.name}</h3>
           <p className="text-gray-500 mb-2">
             <span className="mr-2 text-[10px] md:text-[14px] lg:text-[14px]" style={{ color: "#989696" }}>
               {product.price}
@@ -145,20 +143,21 @@ const sliderSettings = {
             {products.map((product) => (
               <div key={product.id} className="px-2">
                 <div className="group">
-                  <div className="relative rounded-lg overflow-hidden p-2">
+                  <div className="relative  overflow-hidden p-2">
                     {/* Dashed border */}
-                    <span className="absolute top-0 left-0 w-1/2 border-t-2 border-dashed border-black"></span>
-                    <span className="absolute top-0 left-0 h-1/2 border-l-2 border-dashed border-black"></span>
-                    <span className="absolute bottom-0 right-0 w-1/2 border-b-2 border-dashed border-black"></span>
-                    <span className="absolute bottom-0 right-0 h-1/2 border-r-2 border-dashed border-black"></span>
+<span className="absolute top-0 left-0 w-[60px] border-t-[0.5px] border-dashed border-black"></span>
+<span className="absolute top-0 left-0 h-[85px] border-l-[0.5px] border-dashed border-black"></span>
+<span className="absolute bottom-0 right-0 w-[60px] border-b-[0.5px] border-dashed border-black"></span>
+<span className="absolute bottom-0 right-0 h-[85px] border-r-[0.5px] border-dashed border-black"></span>
 
                     {/* Flower Icon outside top-left */}
-                    <FlowerIcon className="absolute -top-3 -left-3 w-10 h-10 pointer-events-none z-10" />
+                              {/* Use -top-6 and -left-6 to push it outside the p-2 padding and the dashed border */}
+  <FlowerIcon className="absolute -top-5 -left-5 sm:-left-6 w-[40px] sm:w-[50px] h-[40px] text-pink-300 pointer-events-none" />
 
                     <img
                       src={product.img}
                       alt={product.name}
-                      className="w-full h-[400px] "
+                      className="w-full h-[239px] "
                     />
 
                     {product.sale && (
@@ -169,9 +168,9 @@ const sliderSettings = {
                   </div>
 
                   <div className="p-2 text-left">
-                    <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] mb-2">{product.name}</h3>
-                    <p className="text-gray-500 mb-2">
-                      <span className=" text-[10px] md:text-[14px] lg:text-[14px]" style={{ color: "#989696" }}>
+                    <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] lg:mb-2 sm:mb-0">{product.name}</h3>
+                    <p className="text-[#989696] lg:mb-2 sm:mb-0">
+                      <span className=" text-[10px] md:text-[14px] lg:text-[14px] " style={{ color: "#989696" }}>
                         {product.price}
                       </span>
                     </p>
@@ -192,7 +191,7 @@ const sliderSettings = {
             <NextArrow onClick={() => sliderRef.current.slickNext()} />
           </div>
         </div>
-      </div>
+      </Row>
     </div>
   );
 };

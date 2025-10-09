@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react'; // 👈 React માંથી useState ઇમ્પોર્ટ કરો
 
 import shopsaree3 from '../assets/shopsaree3.jpg';
 import shopsaree4 from '../assets/shopsaree4.jpg';
@@ -16,20 +16,22 @@ import shopsaree14 from '../assets/shopsaree14.jpg';
 import ShoppingBagIcon from "./icons/ShoppingBagIcon";
 import HeartIcon from "./icons/HeartIcon";
 
-
 const products = [
-       {
+    {
         id: 1,
         brand: "Phataakaa",
         name: "Women Plain Tar Work Fancy Saree",
         price: "₹1,137",
         originalPrice: "₹4,575",
         discount: "75%",
-        image: shopsaree3,
+        // સ્લાઇડર માટેની ઇમેજીસ
+        image: shopsaree3, 
+        allImages: [shopsaree3, shopsaree4, shopsaree5], 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
         expressShipping: true,
         isSale: false
     },
+    // ... બાકીના products ડેટાને અહીં જ રાખો
     {
         id: 2,
         brand: "Zillika",
@@ -42,6 +44,7 @@ const products = [
         expressShipping: false,
         isSale: true 
     },
+    // ... બાકીના બધા products ડેટા (id 3 થી 12 સુધી) અહીં આવશે.
     {
         id: 3,
         brand: "Gajara Gang",
@@ -90,7 +93,7 @@ const products = [
         expressShipping: true,
         isSale: false
     },
-        {
+    {
         id: 7,
         brand: "Phataakaa",
         name: "Women Plain Tar Work Fancy Saree",
@@ -126,7 +129,7 @@ const products = [
         expressShipping: true,
         isSale: false
     },
-           {
+    {
         id: 10,
         brand: "Phataakaa",
         name: "Women Plain Tar Work Fancy Saree",
@@ -162,134 +165,138 @@ const products = [
         expressShipping: false,
         isSale: false
     },
-   
 ];
+
 // --- Product Card Component ---
 const ProductCard = ({ product }) => {
-  return (
-    // Card container with shadow and hover effect
-    <div className="w-full max-w-sm bg-white border border-gray-100 shadow-md transition duration-300 ease-in-out hover:shadow-xl cursor-pointer  overflow-hidden">
-      
-      {/* --- Image Section --- */}
-      <div className="relative">
-        <img 
-          className="w-full object-cover aspect-[4/5] min-h-[227px] sm:min-h-[300px] lg:min-h-[350px] transition duration-500 group-hover:scale-95" 
-          src={product.image} 
-          alt={product.name} 
-        />
-        
-        {/* Wishlist & Bag Icons */}
-        <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          {/* Wishlist Icon (Heart) */}
-                {/* Heart Icon */}
-                <div className="absolute top-1 right-1 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
-                  <button className="p-2 bg-white text-black rounded-full border  transition">
-                    <HeartIcon width={28} height={26} />
-                  </button>
+    // 🚀 સ્ટેટ અને લોજિકને કમ્પોનન્ટની અંદર મૂકો 🚀
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    const isSlider = product.id === 1 && product.allImages && product.allImages.length > 1;
+
+    const handleDotClick = (index) => {
+        setCurrentImageIndex(index);
+    };
+    
+    // ઇમેજ સોર્સ લોજિક
+    const displayedImage = isSlider 
+        ? product.allImages[currentImageIndex] 
+        : product.image;
+
+    return (
+        // Card container: removed max-w-sm to allow grid to control width
+        <div className="group w-full bg-white border border-gray-100 shadow-md transition duration-300 ease-in-out hover:shadow-xl cursor-pointer overflow-hidden">
+            
+            {/* --- Image Section --- */}
+            <div className="relative">
+                {/* 1. displayedImage નો ઉપયોગ કરીને ઇમેજ સોર્સ બદલો */}
+                <img 
+                    className="w-full object-cover aspect-[4/5] min-h-[227px] sm:min-h-[300px] lg:min-h-[350px] transition duration-300" 
+                    src={displayedImage} 
+                    alt={product.name} 
+                />
+                
+                {/* Icons (Icons are now fixed and don't rely on complex hover logic) */}
+                <div className="absolute top-3 right-3 flex flex-col space-y-2">
+                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
+                        <HeartIcon width={28} height={26} />
+                    </div>
+                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
+                        <ShoppingBagIcon width={28} height={26} />
+                    </div>
+                </div>
+                
+                {/* 2. Product Dots (Slider Controls) */}
+                {isSlider && (
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1 p-1 bg-black/20 rounded-full">
+                        {product.allImages.map((_, index) => (
+                            <div 
+                                key={index}
+                                className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors duration-300 
+                                    ${index === currentImageIndex ? 'bg-white' : 'bg-gray-400'}`}
+                                // 3. Dot Click Handler
+                                onClick={() => handleDotClick(index)}
+                            ></div>
+                        ))}
+                    </div>
+                )}
+            </div> 
+
+            {/* --- Product Details Section --- */}
+            <div className="p-4">
+                {product.expressShipping && (
+                    <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
+                        Express Shipping
+                    </div>
+                )}
+
+                {product.isSale && ( 
+                    <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
+                        Sale
+                    </div>
+                )}     
+
+                {/* Brand Name */}
+                <h3 className="text-[14px] sm:text-[16px] font-regular font-sans text-black truncate py-0 sm:py-0.5">
+                    {product.brand}
+                </h3>
+                
+                {/* Product Name */}
+                <p className="text-[12px] sm:text-[14px] text-[#989696] font-regular font-sans truncate py-0 sm:py-0.5">
+                    {product.name}
+                </p>
+
+                {/* Pricing */}
+                <div className="flex items-center space-x-2 mb-1 sm:mb-2 py-0.5">
+                    <span className="text-[12px] sm:text-[16px] font-regular font-sans text-black py-0 sm:py-0.5">
+                        {product.price}
+                    </span>
+                    <span className="text-[12px] sm:text-[14px] text-[#BCBCBC] line-through font-regular font-sans py-0 sm:py-0.5">
+                        {product.originalPrice}
+                    </span>
+                    <span className="text-[12px] sm:text-[16px] font-regular font-sans text-theme">
+                        {product.discount}
+                    </span>
                 </div>
 
-                {/* Shopping Bag Icon */}
-                <div className="absolute top-[50px] right-1 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
-                  <button className="p-2 bg-white text-black rounded-full border  transition">
-                    <ShoppingBagIcon width={28} height={26} />
-                  </button>
+                {/* Color Options */}
+                <div className="flex space-x-1">
+                    {product.colorOptions.map((colorClass, index) => (
+                        <div 
+                            key={index}
+                            className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full border border-gray-200 cursor-pointer`}
+                        ></div>
+                    ))}
                 </div>
-        </div>
-
-
-        
-        {/* Product Dots for the first card (can be a carousel indicator) */}
-        {product.id === 1 && (
-          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1">
-            <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
-            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-            <div className="w-1.5 h-1.5 bg-gray-400 rounded-full"></div>
-          </div>
-        )}
-      </div>
-
-      {/* --- Product Details Section --- */}
-      <div className="p-4">
-
-
-        {product.expressShipping && (
-          <div className="mb-2 inline-block text-theme theme-bg-light  text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
-            Express Shipping
-          </div>
-        )}
-
-        {product.isSale && ( // જો Express Shipping ન હોય અને isSale હોય તો આ દેખાશે
-           <div className="mb-2 inline-block text-theme theme-bg-light  text-[12px] sm:text-[14px] px-3 font-regular font-sans px-2 py-0.5 rounded-sm">
-               Sale
             </div>
-        )}      
-
-        {/* Brand Name */}
-        <h3 className="text-[14px] sm:text-[16px] font-regular font-sans text-black truncate py-0 sm:py-0.5">
-          {product.brand}
-        </h3>
-        
-        {/* Product Name */}
-        <p className="text-[12px] sm:text-[14px] text-[#989696] font-regular font-sans  truncate py-0 sm:py-0.5">
-          {product.name}
-        </p>
-
-        {/* Pricing */}
-        <div className="flex items-center space-x-2 mb-1 sm:mb-2 py-0.5">
-          {/* Current Price */}
-          <span className="text-[12px] sm:text-[16px] font-regular font-sans text-black py-0 sm:py-0.5">
-            {product.price}
-          </span>
-          {/* Original Price (Strikethrough) */}
-          <span className="text-[12px] sm:text-[14px]  text-[#BCBCBC] line-through font-regular font-sans py-0 sm:py-0.5">
-            {product.originalPrice}
-          </span>
-          {/* Discount Percentage */}
-          <span className="text-[12px] sm:text-[16px] font-regular font-sans text-theme">
-            {product.discount}
-          </span>
         </div>
-
-        {/* Color Options */}
-        <div className="flex space-x-1">
-          {product.colorOptions.map((colorClass, index) => (
-            <div 
-              key={index}
-              className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full border border-gray-200 cursor-pointer`}
-            ></div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 // --- Main Grid Component ---
 const ProductGrid = () => {
-  return (
-    <div className="py-10 ">
-      <div className="max-w-7xl mx-auto">
-        {/* Grid layout for the products */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+    return (
+        <div className="py-10 ">
+            <div className="max-w-7xl mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-6 w-full mx-auto"> {/* px-4 for side spacing */}
+                    {products.map((product) => (
+                        <ProductCard key={product.id} product={product} />
+                    ))}
+                </div>
+                {/* --- Load More Button Section --- */}
+                <div className="flex justify-center mt-10 ">
+                    <button
+                        className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
+                        style={{
+                            boxShadow: "inset 0px 0px 30px rgba(244, 50, 151, 0.25)",
+                        }}
+                    >
+                        Load More
+                    </button>
+                </div>
+            </div>
         </div>
-          {/* --- Load More Button Section --- */}
-           <div className="flex justify-center mt-10 ">
-  <button
-    className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
-    style={{
-      boxShadow: "inset 0px 0px 30px rgba(244, 50, 151, 0.25)",
-    }}
-  >
-    Load More
-  </button>
-</div>
-
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ProductGrid;

@@ -16,7 +16,7 @@ export default function Checkout() {
                 Home / <span className="font-light ">Checkout</span>
                 </h2>
             </Row>
-            <Row className="flex flex-col custom-lg:flex-row gap-[30px]">
+            <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[2fr_1fr] gap-[30px]">
                 <CheckoutForm />
                 <OrderSummary />
             </Row>
