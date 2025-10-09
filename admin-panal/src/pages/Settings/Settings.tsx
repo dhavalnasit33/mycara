@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Settings as SettingsIcon, Upload, Save, Palette } from "lucide-react";
+import { Settings as SettingsIcon, Upload, Save, Palette, Trash, Plus } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { fetchMe, updateMe } from "@/features/profile/profileThunk";
 import { useEffect, useState } from "react";
@@ -33,8 +33,7 @@ export default function Settings() {
   const [zip, setZip] = useState("");
   const [country, setCountry] = useState("");
 
-  // --- Settings state ---
-  const [siteName, setSiteName] = useState("");
+   const [siteName, setSiteName] = useState("");
   const [logo, setLogo] = useState<string | null>(null);
   const [favicon, setFavicon] = useState<string | null>(null);
   const [primaryColor, setPrimaryColor] = useState("#3b82f6");
@@ -43,14 +42,29 @@ export default function Settings() {
   const [footerText, setFooterText] = useState("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
+  const [metaKeyphrase, setMetaKeyphrase] = useState("");
+  const [seoImage, setSeoImage] = useState<string | null>(null);
   const [fontFamily, setFontFamily] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactStreet, setContactStreet] = useState("");
+  const [contactCity, setContactCity] = useState("");
+  const [contactState, setContactState] = useState("");
+  const [contactCountry, setContactCountry] = useState("");
+  const [contactPostal, setContactPostal] = useState("");
+  const [socialLinks, setSocialLinks] = useState<{ platform: string; url: string }[]>([]);
+  const [copyrightText, setCopyrightText] = useState("");
+  const [customCss, setCustomCss] = useState("");
+  const [customJs, setCustomJs] = useState("");
 
 
   // --- Fetch profile ---
   useEffect(() => {
     dispatch(fetchMe()).then((res: any) => {
       if (res.payload) {
-        const u = res.payload;
+       
+        const u = res.payload.user;
+
         setName(u.name || "");
         setEmail(u.email || "");
         setPhone(u.mobile_number || "");
@@ -83,9 +97,22 @@ export default function Settings() {
         setSecondaryColor(s.secondary_color || "#64748b");
         setButtonColor(s.button_color || "#3b82f6");
         setFooterText(s.footer_text || "");
-        setFontFamily(s.fontFamily || "")
+        setFontFamily(s.font_family || "");
         setMetaTitle(s.meta_title || "");
         setMetaDescription(s.meta_description || "");
+        setMetaKeyphrase(s.meta_keyphrase || "");
+        setSeoImage(s.seo_image || null);
+        setContactEmail(s.contact_email || "");
+        setContactPhone(s.contact_phone || "");
+        setContactStreet(s.contact_address?.street || "");
+        setContactCity(s.contact_address?.city || "");
+        setContactState(s.contact_address?.state || "");
+        setContactCountry(s.contact_address?.country || "");
+        setContactPostal(s.contact_address?.postal_code || "");
+        setSocialLinks(s.social_links || []);
+        setCopyrightText(s.copyright_text || "");
+        setCustomCss(s.custom_css || "");
+        setCustomJs(s.custom_js || "");
       }
     });
   }, [dispatch]);
@@ -115,33 +142,51 @@ export default function Settings() {
     }
   };
 
+   // --- Save Settings ---
   const handleSaveSettings = async () => {
     const payload = {
       site_name: siteName,
       logo_url: logo,
-      font_family: fontFamily, 
       favicon_url: favicon,
       primary_color: primaryColor,
       secondary_color: secondaryColor,
       button_color: buttonColor,
+      font_family: fontFamily,
       footer_text: footerText,
       meta_title: metaTitle,
       meta_description: metaDescription,
+      meta_keyphrase: metaKeyphrase,
+      seo_image: seoImage,
+      contact_email: contactEmail,
+      contact_phone: contactPhone,
+      contact_address: {
+        street: contactStreet,
+        city: contactCity,
+        state: contactState,
+        country: contactCountry,
+        postal_code: contactPostal,
+      },
+      social_links: socialLinks,
+      copyright_text: copyrightText,
+      custom_css: customCss,
+      custom_js: customJs,
     };
 
     const result = await dispatch(updateSettings(payload));
     if (updateSettings.fulfilled.match(result)) {
-      toast({
-        title: "Settings Updated",
-        description: "Settings saved successfully.",
-      });
+      toast({ title: "Settings Updated", description: "Settings saved successfully." });
     } else {
-      toast({
-        title: "Update Failed",
-        description: result.payload as string,
-        variant: "destructive",
-      });
+      toast({ title: "Update Failed", description: result.payload as string, variant: "destructive" });
     }
+  };
+
+    // --- Social Links handlers ---
+  const addSocialLink = () => setSocialLinks([...socialLinks, { platform: "", url: "" }]);
+  const removeSocialLink = (index: number) => setSocialLinks(socialLinks.filter((_, i) => i !== index));
+  const updateSocialLink = (index: number, key: "platform" | "url", value: string) => {
+    const updated = [...socialLinks];
+    updated[index][key] = value;
+    setSocialLinks(updated);
   };
 
   return (
@@ -164,6 +209,10 @@ export default function Settings() {
             <Palette className="h-4 w-4" />
             Appearance
           </TabsTrigger>
+           <TabsTrigger value="contact">Contact</TabsTrigger>
+          <TabsTrigger value="social">Social Links</TabsTrigger>
+          <TabsTrigger value="seo">SEO</TabsTrigger>
+          <TabsTrigger value="advanced">Advanced</TabsTrigger>
         </TabsList>
 
         <TabsContent value="general">
@@ -399,25 +448,6 @@ export default function Settings() {
         />
       </div>
 
-      {/* Meta Info */}
-      <div className="grid gap-4 md:grid-cols-2">
-        <div className="space-y-2">
-          <Label>Meta Title</Label>
-          <Input
-            value={metaTitle}
-            onChange={(e) => setMetaTitle(e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <Label>Meta Description</Label>
-          <Textarea
-            value={metaDescription}
-            onChange={(e) => setMetaDescription(e.target.value)}
-            className="min-h-[80px]"
-          />
-        </div>
-      </div>
-
       {/* Save Button */}
       <div className="flex justify-end">
         <Button onClick={handleSaveSettings} className="gap-2">
@@ -428,6 +458,129 @@ export default function Settings() {
     </CardContent>
   </Card>
 </TabsContent>
+
+    <TabsContent value="contact">
+          <Card>
+            <CardHeader><CardTitle>Contact Information</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <Label>Email</Label>
+                  <Input value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} />
+                </div>
+                <div>
+                  <Label>Phone</Label>
+                  <Input value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label>Street</Label>
+                <Input value={contactStreet} onChange={(e) => setContactStreet(e.target.value)} />
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <Label>City</Label>
+                  <Input value={contactCity} onChange={(e) => setContactCity(e.target.value)} />
+                </div>
+                <div>
+                  <Label>State</Label>
+                  <Input value={contactState} onChange={(e) => setContactState(e.target.value)} />
+                </div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <Label>Country</Label>
+                  <Input value={contactCountry} onChange={(e) => setContactCountry(e.target.value)} />
+                </div>
+                <div>
+                  <Label>Postal Code</Label>
+                  <Input value={contactPostal} onChange={(e) => setContactPostal(e.target.value)} />
+                </div>
+              </div>
+              <Button onClick={handleSaveSettings}>Save Contact Info</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* SOCIAL LINKS */}
+        <TabsContent value="social">
+          <Card>
+            <CardHeader><CardTitle>Social Media Links</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              {socialLinks.map((link, index) => (
+                <div key={index} className="grid grid-cols-3 gap-2 items-center">
+                  <Input
+                    placeholder="Platform (e.g. Facebook)"
+                    value={link.platform}
+                    onChange={(e) => updateSocialLink(index, "platform", e.target.value)}
+                  />
+                  <Input
+                    placeholder="URL"
+                    value={link.url}
+                    onChange={(e) => updateSocialLink(index, "url", e.target.value)}
+                  />
+                  <Button variant="destructive" onClick={() => removeSocialLink(index)}>
+                    <Trash className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button variant="outline" onClick={addSocialLink} className="gap-2">
+                <Plus className="h-4 w-4" /> Add Social Link
+              </Button>
+              <div className="flex justify-end">
+                <Button onClick={handleSaveSettings}>Save Social Links</Button>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* SEO TAB */}
+        <TabsContent value="seo">
+          <Card>
+            <CardHeader><CardTitle>SEO Configuration</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label>Meta Title</Label>
+                <Input value={metaTitle} onChange={(e) => setMetaTitle(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Meta Description</Label>
+                <Textarea value={metaDescription} onChange={(e) => setMetaDescription(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label>Meta Keyphrase</Label>
+                <Input value={metaKeyphrase} onChange={(e) => setMetaKeyphrase(e.target.value)} />
+              </div>
+              <div className="space-y-2">
+                <Label>SEO Image</Label>
+                <ImageUpload value={seoImage} onChange={(val) => setSeoImage(val as string | null)} />
+              </div>
+              <Button onClick={handleSaveSettings}>Save SEO Settings</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ADVANCED TAB */}
+        <TabsContent value="advanced">
+          <Card>
+            <CardHeader><CardTitle>Advanced Customization</CardTitle></CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label>Copyright Text</Label>
+                <Input value={copyrightText} onChange={(e) => setCopyrightText(e.target.value)} />
+              </div>
+              <div>
+                <Label>Custom CSS</Label>
+                <Textarea value={customCss} onChange={(e) => setCustomCss(e.target.value)} />
+              </div>
+              <div>
+                <Label>Custom JS</Label>
+                <Textarea value={customJs} onChange={(e) => setCustomJs(e.target.value)} />
+              </div>
+              <Button onClick={handleSaveSettings}>Save Advanced Settings</Button>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
       </Tabs>
     </div>

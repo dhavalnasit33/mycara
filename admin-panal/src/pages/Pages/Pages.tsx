@@ -5,28 +5,28 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { useDispatch } from "react-redux";
-
 import { AppDispatch } from "@/store";
-import {
-  fetchSections,
-  deleteSection,
-  bulkDeleteSections,
-  updateSectionStatus,
-} from "@/features/sections/sectionsThunk";
 import { GenericTable } from "@/components/ui/adminTable";
+import {
+  bulkDeletePages,
+  deletePage,
+  fetchPages,
+  updatePageStatus,
+} from "@/features/pages/pagesThunk";
 
-export default function Sections() {
+export default function Pages() {
   const dispatch = useDispatch<AppDispatch>();
 
   const columns = [
-    { key: "title", label: "Title" },
-    { key: "description", label: "Description" },
-    { key: "order", label: "Order" },
+    { key: "page_name", label: "Page Name" },
+    { key: "slug", label: "Slug" },
     {
-      key: "is_button",
-      label: "Button",
+      key: "description",
+      label: "Description",
       render: (item: any) =>
-        item.is_button ? `${item.button_name} (${item.button_link})` : "No",
+        item.description?.length > 80
+          ? item.description.substring(0, 80) + "..."
+          : item.description || "-",
     },
     {
       key: "createdAt",
@@ -38,7 +38,7 @@ export default function Sections() {
 
   return (
     <GenericTable
-      title="Sections"
+      title="Pages"
       columns={columns}
       rowKey="_id"
       searchEnabled
@@ -50,44 +50,44 @@ export default function Sections() {
       fetchData={async ({ page, limit, search, status }) => {
         try {
           const res = await dispatch(
-            fetchSections({ page, limit, search, status })
+            fetchPages({ page, limit, search, status })
           ).unwrap();
-          return { data: res.sections, total: res.total };
+          return { data: res.pages, total: res.total };
         } catch (err: any) {
-          console.error("Failed to fetch sections:", err);
-          throw new Error(err?.message || "Failed to fetch sections");
+          console.error("Failed to fetch pages:", err);
+          throw new Error(err?.message || "Failed to fetch pages");
         }
       }}
       deleteItem={async (id) => {
         try {
-          await dispatch(deleteSection(id)).unwrap();
+          await dispatch(deletePage(id)).unwrap();
         } catch (err: any) {
-          throw new Error(err?.message || "Failed to delete section");
+          throw new Error(err?.message || "Failed to delete page");
         }
       }}
       bulkDeleteItems={async (ids) => {
         try {
-          await dispatch(bulkDeleteSections(ids)).unwrap();
+          await dispatch(bulkDeletePages(ids)).unwrap();
         } catch (err: any) {
-          throw new Error(err?.message || "Failed to delete sections");
+          throw new Error(err?.message || "Failed to delete pages");
         }
       }}
       onStatusToggle={async (id, newStatus) => {
         try {
           await dispatch(
-            updateSectionStatus({
+            updatePageStatus({
               id,
               status: newStatus ? "active" : "inactive",
             })
           ).unwrap();
         } catch (err: any) {
-          throw new Error(err?.message || "Failed to update status");
+          throw new Error(err?.message || "Failed to update page status");
         }
       }}
       headerActions={
-        <Link to="/sections/add">
+        <Link to="/pages/add">
           <Button className="flex items-center gap-2">
-            <Plus className="h-4 w-4" /> Add Section
+            <Plus className="h-4 w-4" /> Add Page
           </Button>
         </Link>
       }

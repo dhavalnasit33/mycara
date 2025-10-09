@@ -73,7 +73,7 @@ const customerItems = [
 ];
 
 const systemItems = [
-  { title: "Sections", url: "/sections", icon: Layers },
+  { title: "Pages", url: "/pages", icon: Layers },
   { title: "Navbar", url: "/navbar", icon: Navigation },
   { title: "Footer", url: "/footer", icon: Columns },
   { title: "Contact Messages", url: "/contact-messages", icon: MessageSquare },

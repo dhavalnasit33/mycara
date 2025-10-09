@@ -37,8 +37,7 @@ import CustomerReviews from "./pages/CustomerReviews/CustomerReviews";
 import Cart from "./pages/carts/carts";
 import Wishlist from "./pages/Wishlists/Wishlist";
 import ContactUs from "./pages/ContactUs/ContactUs";
-import Sections from "./pages/Sections/Sections";
-import SectionFormPage from "./pages/Sections/SectionForm";
+
 import Navbar from "./pages/Navbar/Navbar";
 import NavbarFormPage from "./pages/Navbar/NavbarForm";
 import Footer from "./pages/Footer/Footer";
@@ -48,6 +47,8 @@ import Register from "./pages/Register";
 import Stores from "./pages/Stores/Store";
 import StoreFormPage from "./pages/Stores/StoreForm";
 import StoreOwnerFormPage from "./pages/StoreOwner/StoreOwnerForm";
+import Pages from "./pages/Pages/Pages";
+import PageFormPage from "./pages/Pages/PagesForm";
 
 
 const queryClient = new QueryClient();
@@ -104,9 +105,9 @@ const App = () => (
                     <Route path="wishlists" element={<Wishlist />} />
              <Route path="carts" element={<Cart />} />
               <Route path="contact-messages" element={<ContactUs />} />
-              <Route path="sections" element={<Sections />} />
-                 <Route path="sections/add" element={<SectionFormPage />} />
-                  <Route path="/sections/:id/edit" element={<SectionFormPage />} />
+              <Route path="pages" element={<Pages />} />
+                 <Route path="pages/add" element={<PageFormPage />} />
+                  <Route path="/pages/:id/edit" element={<PageFormPage />} />
                   <Route path="navbar" element={<Navbar />} />
                  <Route path="navbar/add" element={<NavbarFormPage />} />
                   <Route path="/navbar/:id/edit" element={<NavbarFormPage />} />

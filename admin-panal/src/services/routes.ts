@@ -156,14 +156,14 @@ contactUs: {
   delete: (id: string) => `/contact-us/${id}`,  
   bulkDelete: "/contact-us/bulk-delete",        
 },
-sections: {
-  getAll: "/sections",
-  getById: (id: string) => `/sections/${id}`,
-  create: "/sections",
-  update: (id: string) => `/sections/${id}`,
-  updateStatus: (id: string) => `/sections/${id}/status`, 
-  delete: (id: string) => `/sections/${id}`,
-  bulkDelete: "/sections/bulk-delete",
+pages: {
+  getAll: "/pages",
+  getById: (id: string) => `/pages/${id}`,
+  create: "/pages",
+  update: (id: string) => `/pages/${id}`,
+  updateStatus: (id: string) => `/pages/${id}/status`, 
+  delete: (id: string) => `/pages/${id}`,
+  bulkDelete: "/pages/bulk-delete",
 },
 navbar: {
   getAll: "/navbar",

@@ -16,12 +16,12 @@ import customerReviewsReducer from "./features/customerReviews/customerReviewsSl
 import cartsReducer from "./features/carts/cartSlice";
 import wishlistsReducer from "./features/wishlists/wishlistSlice";
 import contactUsReducer from "./features/contactUs/contactUsSlice";
-import sectionsReducer from "./features/sections/sectionsSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
 import footerReducer from "./features/footer/footerSlice";
 import profileReducer from "./features/profile/profileSlice";
 import settingReducer from "./features/settings/settingsSlice";
 import storesReducer from "./features/stores/storeSlice";
+import pagesReducer from "./features/pages/pagesSlice";
 
 export const rootReducer = {
   auth: authReducer,
@@ -42,7 +42,7 @@ export const rootReducer = {
   carts: cartsReducer,
   wishlists: wishlistsReducer,
   contactUs: contactUsReducer,
-  sections: sectionsReducer,
+  pages: pagesReducer,
   navbar: navbarReducer,
   footer: footerReducer,
   profile: profileReducer,
