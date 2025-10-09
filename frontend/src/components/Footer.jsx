@@ -78,7 +78,7 @@ const Footer = () => {
               /></Link>
 
               <div className="flex items-start gap-[20px] text-sm text-light">
-                <MapPin size={20} className="mt-1" />
+                <MapPin size={24} className="mt-1" />
                 <p>215, Dhara Arcade near Lajamani Chowk, Surat</p>
               </div>
 

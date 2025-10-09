@@ -11,7 +11,7 @@ export default function ProductCard({ product }) {
           className="w-full h-[355px] object-cover"
         />
         <button className="absolute top-3 right-3 h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full ">
-          <HeartIcon width={28} height={24} />
+          <HeartIcon className="w-[26px] h-[24px]"/>
         </button>
       </div>
 

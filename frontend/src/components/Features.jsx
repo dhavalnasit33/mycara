@@ -1,58 +1,53 @@
-// D:\mycara\frontend\src\components\Features.jsx
+import React from "react";
+import Section from "./ui/Section";
+import Row from "./ui/Row";
+import feature1 from "../assets/feature1.png";
+import feature2 from "../assets/feature2.png";
+import feature3 from "../assets/feature3.png";
 
-import React from 'react';
-import LinearColorIcon from './icons/LinearColorIcon';
+const features = [
+  {
+    icon: feature1,
+    title: "Shipping Worldwide",
+    description: "We deliver to all the locations across the world.",
+  },
+  {
+    icon: feature2,
+    title: "14 Days Return",
+    description: "We believe in satisfying and delighting our customers",
+  },
+  {
+    icon: feature3,
+    title: "Security Payment",
+    description: "Security is a priority at MYcra.in and we make every effort to...",
+  },
+];
 
-import ShippingIcon from '../assets/Shipping.svg';
-import ReturnIcon from '../assets/Return.png';
-import SecurityIcon from '../assets/Security.svg';
-import Row from './ui/Row';
-
-const Features = () => {
+export default function FeatureSection() {
   return (
-    <section className="py-12 px-4">
-      <Row>
-        
-        {/* Shipping Worldwide */}
-        <div className="flex items-start max-w-sm">
-          <div className="relative w-[49px] h-[49px] p-2 flex-shrink-0 flex items-center justify-center rounded-full">
-            {/* Linear gradient background icon */}
-          <LinearColorIcon width={48} height={48} id="icon-a-1" /> 
-            <img src={ShippingIcon} alt="Shipping Worldwide" className="w-12 h-12 relative z-10" />
-          </div>
-          <div className="ml-4">
-            <h4 className="font-medium text-[20px] md:text-xl">Shipping Worldwide</h4>
-            <p className="text-[#989696] mt-1">We deliver to all the locations across the world.</p>
-          </div>
-        </div>
-        
-        {/* 14 Days Return */}
-        <div className="flex items-start max-w-sm">
-          <div className="relative w-[49px] h-[49px] p-2 flex-shrink-0 flex items-center justify-center rounded-full">
-            <LinearColorIcon width={48} height={48} id="icon-a-2" /> 
-            <img src={SecurityIcon} alt="14 Days Return" className="w-9 h-10 relative z-10" />
-          </div>
-          <div className="ml-4">
-            <h4 className="font-semibold text-lg md:text-xl">14 Days Return</h4>
-            <p className="text-gray-600 mt-1">We believe in satisfying and delighting our customers.</p>
-          </div>
-        </div>
-        
-        {/* Security Payment */}
-        <div className="flex items-start max-w-sm">
-          <div className="relative w-[49px] h-[49px] p-2 flex-shrink-0 flex items-center justify-center rounded-full">
-            <LinearColorIcon width={48} height={48} id="icon-a-3" />  
-            <img src={ReturnIcon} alt="Security Payment" className="w-12 h-10 relative " />
-          </div>
-          <div className="ml-4">
-            <h4 className="font-semibold text-lg md:text-xl">Security Payment</h4>
-            <p className="text-gray-600 mt-1">Security is a priority at MYcra.in and we make every effort to..</p>
-          </div>
-        </div>
-        
-      </Row>
-    </section>
-  );
-};
+    <Section >
+      <Row className="grid grid-cols-1 md:grid-cols-3 gap-[40px] pt-[25px] md:pt-[50px] !max-w-[935px] mx-auto">
+        {features.map((feature, index) =>   (
+          <div key={index} className="flex items-start gap-[22px]">
+            {/* Gradient Box */}
+            <div className="w-[62px] h-[50px] rounded-bl-[20px] bg-[linear-gradient(90deg,#F43297_0%,#ffffff_80%)] relative overflow-hidden flex-shrink-0">
+              <img
+                src={feature.icon}
+                className="h-[42px] w-[42px] object-contain absolute bottom-0 right-0"
+                alt="feature icon"
+              />
+            </div>
 
-export default Features;
+            {/* Text */}
+            <div className="flex-1">
+              <h3 className="font-medium text-20px mb-[10px] leading">
+                {feature.title}
+              </h3>
+              <p className="text-14 sec-text-color">{feature.description}</p>
+            </div>
+          </div>
+        ))}
+      </Row>
+    </Section>
+  );
+}

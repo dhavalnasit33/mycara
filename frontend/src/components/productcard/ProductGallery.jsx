@@ -6,6 +6,10 @@ import img3 from "../../assets/gallary3.png";
 
 export default function ProductGallery() { 
   const images = [img1, img2, img3];
+  const product = {
+  colors: ["#6267D9", "#406144", "#DC0A0A", "#3DAFD3"], // example colors
+};
+
  
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
@@ -52,7 +56,17 @@ export default function ProductGallery() {
           alt="Main product"
           className="w-full h-[727px] rounded-[10px]"
         />
+        <div className="flex gap-[8px] mt-[30px] justify-center">
+          {product.colors.map((c, i) => (
+            <span
+              key={i}
+              className="w-[24px] h-[24px] rounded-full"
+              style={{ backgroundColor: c }}
+            ></span>
+          ))}
+        </div>
       </div>
+     
 
       {/* Mobile Slider */}
       <div className="block md:hidden w-full rounded-[10px]">
