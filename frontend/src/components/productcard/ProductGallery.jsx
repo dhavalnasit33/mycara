@@ -38,8 +38,8 @@ export default function ProductGallery() {
             src={img} 
             alt={`Thumbnail ${index}`}
             onClick={() => setSelectedImage(img)} 
-            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer  transition-all  ${
-              selectedImage === img ? "border-pink-500" : "border-gray-300"
+            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer transition-all  ${
+              selectedImage === img ? "" : ""
             }`}
           />
         ))}
@@ -62,7 +62,7 @@ export default function ProductGallery() {
               <img
                 src={img}
                 alt={`Slide ${index}`}
-                className="w-full h-auto "
+                className="w-full h-auto"
               />
             </div>
           ))}

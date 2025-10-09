@@ -79,8 +79,8 @@ export default function DeliveryInfo() {
     nextArrow: <NextArrow />,
     responsive: [
     {
-      breakpoint: 1024,
-      settings: { slidesToShow: 3 },
+      breakpoint: 1281,
+      settings: { slidesToShow: 2 },
     },
     {
       breakpoint: 768,
@@ -117,9 +117,9 @@ export default function DeliveryInfo() {
                 <div className="mb-[15px] h-[40px] ">
                   <img src={item.icon} alt="" className="max-h-[30px]" />
                 </div>
-                <div className="flex flex-col justify-between h-[100px]">
-                  <p className="text-[16px] font-light">{item.title}</p>
-                  <p className="text-[14px] text-theme">{item.subtitle}</p>
+                <div className="flex flex-col justify-between h-[120px]">
+                  <p className="text-20px font-light">{item.title}</p>
+                  <p className="text-p text-theme">{item.subtitle}</p>
                 </div>
               </div>
             </div>

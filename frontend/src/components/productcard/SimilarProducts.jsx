@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
@@ -7,7 +7,6 @@ import img1 from "../../assets/similer1.png";
 import img2 from "../../assets/similer2.png";
 import img3 from "../../assets/similer3.png";
 import img4 from "../../assets/similer4.png";
-
 
 export const products = [
   {
@@ -59,7 +58,7 @@ export const products = [
     express: true,
     image: img1,
   },
-   {
+  {
     id: 6,
     title: "Rangita",
     subtitle: "Printed Cotton A-Line Kurta...",
@@ -68,24 +67,27 @@ export const products = [
     express: true,
     image: img3,
   },
+  
 ];
 
-function PrevArrow({ onClick }) {
+function PrevArrow({ onClick, disabled }) {
   return (
     <button
-      onClick={onClick}
-      className="absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center bg-white rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px] "
+      onClick={!disabled ? onClick : undefined}
+      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronLeft size={22} />
     </button>
   );
 }
 
-function NextArrow({ onClick }) {
+function NextArrow({ onClick, disabled }) {
   return (
     <button
-      onClick={onClick}
-      className="absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center bg-white rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]"
+      onClick={!disabled ? onClick : undefined}
+      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronRight size={22} />
     </button>
@@ -93,6 +95,9 @@ function NextArrow({ onClick }) {
 }
 
 export default function SimilarProducts() {
+  const sliderRef = useRef(null);
+  const [slideState, setSlideState] = useState({ current: 0, total: 0 });
+
   const settings = {
     dots: false,
     infinite: false,
@@ -100,8 +105,20 @@ export default function SimilarProducts() {
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    beforeChange: (current, next) =>
+      setSlideState({ current: next, total: products.length }),
+    nextArrow: (
+      <NextArrow
+        disabled={
+          slideState.current >= products.length - 4 // disable if last visible
+        }
+      />
+    ),
+    prevArrow: (
+      <PrevArrow
+        disabled={slideState.current === 0}
+      />
+    ),
     responsive: [
       {
         breakpoint: 1024,
@@ -119,13 +136,12 @@ export default function SimilarProducts() {
   };
 
   return (
-      <Row >
-        <Slider {...settings}>
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </Slider>
-      </Row>
-
+    <Row>
+      <Slider ref={sliderRef} {...settings}>
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </Slider>
+    </Row>
   );
 }

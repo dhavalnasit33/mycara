@@ -10,7 +10,7 @@ export default function ProductCard({ product }) {
           alt={product.title}
           className="w-full h-[355px] object-cover"
         />
-        <button className="absolute top-3 right-3 h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full shadow-md">
+        <button className="absolute top-3 right-3 h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full ">
           <HeartIcon width={28} height={24} />
         </button>
       </div>
