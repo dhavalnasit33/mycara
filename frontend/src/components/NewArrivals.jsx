@@ -67,22 +67,22 @@ const NewArrivals = () => {
 
 const earrings = {
   ...newArrivalItems[0],
-  classes: " lg:w-[428px] lg:h-[578px] max-sm:w-[340px] max-sm:h-[240px]",
+  classes: " lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
 };
 
 const shoes = {
   ...newArrivalItems[1],
-  classes: "lg:w-[568px] lg:h-[285px] max-sm:w-[340px] max-sm:h-[169px]",
+  classes: "lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
 };
 
 const watch = {
   ...newArrivalItems[2],
-  classes: " lg:w-[568px] lg:h-[285px] max-sm:w-[340px] max-sm:h-[169px]",
+  classes: " lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
 };
 
 const winterClothes = {
   ...newArrivalItems[3],
-  classes: "lg:w-[428px] lg:h-[578px] max-sm:w-[340px] max-sm:h-[240px]",
+  classes: "lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
 };
 
 
