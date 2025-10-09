@@ -9,8 +9,6 @@ import {
 } from "react-icons/fa";
 import ShopIcon from "./icons/shop";
 import CollectionsIcon from "./icons/Collections";
-import BlogsIcon from "./icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
-import FeaturesIcon from "./icons/Features";
 import MoreIcon from "./icons/More"; 
 import LoginIcon from "./icons/login"; 
 
@@ -24,7 +22,6 @@ import BagIcon from "../assets/bag.png";
 import OrdersIcon from "../assets/orders.svg";
 
 import WhiteLogin from "../assets/white login.png";
-import MenuIcon from "../assets/menu.png";
 import PayImg from "../assets/pay.png";
 import Logo from "../assets/my_logo.png";
 import bannerImg from "../assets/banner.png";
@@ -33,7 +30,7 @@ import Notification from "./icons/notification";
 
 import SvgComponent from "./icons/SvgComponent";
 import Button from "./ui/Button";
-import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
+import { ChevronDown, Contact, Ellipsis, HandCoins, Heart, Menu, SearchX, X } from "lucide-react";
 import Row from "./ui/Row";
 
 //  Menu List
@@ -60,12 +57,13 @@ const navItems = [
   //   dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />,
   // },
   // { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
-  { name: "Offers", path: "/offer", icon: <MoreIcon className="w-5 h-5" /> },
-   { name: "Contact", path: "/contact-us", icon: <MoreIcon className="w-5 h-5" /> },
-    { name: "About", path: "/", icon: <MoreIcon className="w-5 h-5" /> },
+  { name: "Offers", path: "/offer", icon: <HandCoins className="w-5 h-5" /> },
+      { name: "About", path: "/", icon: <SearchX className="w-5 h-5" /> },
+   { name: "Contact", path: "/contact-us", icon: <Contact className="w-5 h-5"  /> },
+
 ];
 
-const Header = ({ hideOnMobileShopPage }) => {
+const Header = ({ hideOnMobileShopPage  }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // const headerClasses = `
@@ -77,21 +75,22 @@ const Header = ({ hideOnMobileShopPage }) => {
   return (
     <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
-      <Row className="  md:h-[100px] gap-[10px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
+      <Row className=" md:h-[100px] gap-[10px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
         {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           {/* <Link to="/home"> */}
-          <img
+          <Link to="/home"><img
             src={Logo}
             alt="Logo"
             className="w-[160px] md:w-[228px] h-auto"
           />
+          </Link>
           {/* </Link> */}
         </div>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:block">
-          <ul className="flex gap-[15px] xl:gap-[32px] text-base font-normal">
+          <ul className="flex gap-[26px] xl:gap-[32px] text-base font-normal">
             {navItems.map((item, i) => (
               <li key={i} className="relative group">
                 <NavLink
@@ -175,24 +174,25 @@ const Header = ({ hideOnMobileShopPage }) => {
               </div>
             </div>
           {/* Icons */}
-          <MagnifyingGlassIcon 
-              className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] " 
-            />
-
-            <Link to="/cart"><FontAwesomeIcon
-              icon={faCartShopping}
-              className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] hidden lg:block"
-            /></Link>
-
-          <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer hidden lg:block" />
-          <img src={MenuIcon} alt="Menu" className="w-5 h-5 cursor-pointer hidden lg:block" />
+          <span className="text-light">
+            <Heart size={22}/>
+          </span>
+            <span className="text-light">
+              <Link to="/cart">
+                <FontAwesomeIcon
+                  icon={faCartShopping}
+                  className="w-[22px] h-[22px] text-black/70 cursor-pointer hover:text-[var(--theme-color)] hidden lg:block"
+                />
+              </Link>
+                <div className="absolute top-1.5 right-1 bg-[#D2AF9F] text-black text-[10px] rounded-full w-[16px] h-[16px] flex items-center justify-center -mt-2 -mr-2">
+                  0
+                </div>
+            </span>
         </div>
       </Row>
 
-            {/* Mobile Menu Button */}
       {!hideOnMobileShopPage && (
-        <div className="flex items-center justify-between w-full h-[80px] px-4 lg:hidden">
-            {/* Left: Hamburger */}
+        <div className="flex items-center  gap-[10px] justify-between w-full h-[80px] px-4 lg:hidden">
             <button
                 className="text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-3 border-[#D2AF9F]"
                 style={{ color: "var(--text-light)" }}
@@ -202,58 +202,50 @@ const Header = ({ hideOnMobileShopPage }) => {
             >
             {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
-
-            {/* Center: Logo */}
             <img src={Logo} alt="Logo" className="h-10 mx-auto" />
             
-            {/* Right: Optional icons */}
-            <div className="flex items-center space-x-3">
-              <MagnifyingGlassIcon 
-                  className="w-6 h-6 sm:w-6 sm:h-6 md:w-7 md:h-7 text-black/70 stroke-[2] cursor-pointer hover:text-[var(--theme-color)] block" 
-              />
-              <FontAwesomeIcon
+            <div className="flex items-center gap-[10px]">
+              <span className="text-light">
+                <Heart size={22}/>
+              </span>
+            <span className="text-light">
+              <Link to="/cart">
+                <FontAwesomeIcon
                   icon={faCartShopping}
-                  className="w-6 h-6 text-black/70 cursor-pointer hover:text-[var(--theme-color)] lg:block"
-              />
-              <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer" />
+                  className="w-[24px] h-[24px] text-black/70 cursor-pointer hover:text-[var(--theme-color)]"
+                />
+              </Link>
+                <div className="absolute top-7 right-4 bg-[#D2AF9F] text-black text-[10px] rounded-full w-[16px] h-[16px] flex items-center justify-center -mt-2 -mr-2">
+                  0
+                </div>
+            </span>
             </div>
         </div>
       )}
-          {/*  */}
-          {/*  */}
-             {/*  */} 
-             {/*  */}
+         
 
 
              
         {/* Sidebar Header */}
-          <div
-            className={`fixed top-0 left-0 w-full h-screen bg-white shadow-lg z-50 transform transition-transform duration-300 ${
-              isMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
-          >
-
-        
+        <div
+          className={`fixed top-0 left-0 w-full h-screen bg-white shadow-lg z-50 transform transition-transform duration-300 ${
+            isMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
         <div className="flex justify-between bg-theme items-center px-4 py-3 border-b ">
-           <button
+          <button
               className="text-gray-600 transition-colors duration-300 border border-3 rounded-[3px] p-[5px] border-[#D2AF9F]"
-              style={{ color: "var(--text-light)" }} // icon default color
-              onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-light)"} // optional hover same color
-              onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-light)"} // same color back
+              style={{ color: "var(--text-light)" }}
+              onMouseEnter={(e) => e.currentTarget.style.color = "var(--text-light)"} 
+              onMouseLeave={(e) => e.currentTarget.style.color = "var(--text-light)"} 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
-          {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
-        </button>
-          <img src={Logo} alt="Logo" className="mx-auto h-10" />
-         <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer  lg:block" />
+            {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
+          </button>
+            <img src={Logo} alt="Logo" className="mx-auto h-10" />
+          <img src={BagIcon} alt="Bag" className="w-5 h-5 cursor-pointer  lg:block" />
         </div>
-
-
-
-
       <div className="flex h-full overflow-y-auto no-scrollbar">
-
-        {/* Mobile Wrapper - Max width 450px & White background */}
         <div className=" w-[430px]  mx-left bg-white relative flex-1 flex-col  "
         style={{
             boxShadow: "0px 0px 4px rgba(0,0,0,0.25)",
@@ -284,19 +276,12 @@ const Header = ({ hideOnMobileShopPage }) => {
             FASHION
           </h1>
         </div>
-
-
-
-
         {/* Menu Items */}
         <nav className=" py-3">
           {navItems.map((item, i) => {
           if (item.name === "Home") 
-            return null; // mobile ma render nai thase
-
-          // Mobile only background for specific items
-            const isMobileHighlight = ["Shop", "Blogs", "More"].includes(item.name);
-
+            return null; 
+            const isMobileHighlight = ["Shop", "Offers", "Contact"].includes(item.name);
             return (
             <NavLink
               key={i}
@@ -313,15 +298,14 @@ const Header = ({ hideOnMobileShopPage }) => {
               <span className="ml-auto">›</span>
             </NavLink>
           );
-        })}
+          })}
 
-        <div className="flex items-center justify-center h-[60px]">
-          <hr className="w-full border-t border-dashed border-gray-400" />
-        </div>
-
+          <div className="flex items-center justify-center h-[60px]">
+            <hr className="w-full border-t border-dashed border-gray-400" />
+          </div>
 
           {/* Extra Menu */}
-          <div className="">
+          <div className="text-light">
               <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
                 <FaUser /><Link to="/my-account"><span>My Profile</span></Link>
               </div>
@@ -349,31 +333,23 @@ const Header = ({ hideOnMobileShopPage }) => {
           </div>
         </nav>
 
-
-        {/* Bottom Banner */}
-
    {/* --- 2D. Bottom App Banner Section (Image Matched) --- */}
-        <div className="mt-auto px-4 py-4 border-t border-gray-200">
-            <div className="flex items-center gap-4">
-                {/* Left: Image */}
-                <img src={PayImg} alt="App Promo" className="w-[80px] h-auto object-contain" /> 
-
-                {/* Right: Text + Button */}
-                <div className="flex-1">
-                    <p className="text-sm font-medium mb-2 text-gray-700">
-                        Enjoy The Best Shopping Experience !
-                    </p>
-                    {/* Button: Pink background, white text, full width */}
-                    <button 
-                        className="w-full text-white bg-pink-600 hover:bg-pink-700 font-semibold py-2 rounded-lg transition-colors shadow-md"
-                        // Using inline style for the specific pink shade if needed
-                        style={{ backgroundColor: '#DB447C' }} 
-                    >
-                        Get MYcra App
-                    </button>
-                </div>
-            </div>
-        </div>
+      <div className="mt-auto px-4 py-4 border-t border-gray-200">
+          <div className="flex items-center gap-4">
+              <img src={PayImg} alt="App Promo" className="w-[80px] h-auto object-contain" /> 
+              <div className="flex-1">
+                  <p className="text-sm font-medium mb-2 text-gray-700">
+                      Enjoy The Best Shopping Experience !
+                  </p>
+                  <button 
+                      className="w-full text-white bg-pink-600 hover:bg-pink-700 font-semibold py-2 rounded-lg transition-colors shadow-md"
+                      style={{ backgroundColor: '#DB447C' }} 
+                  >
+                      Get MYcra App
+                  </button>
+              </div>
+          </div>
+      </div>
       <div className="flex justify-end px-4 py-3 border-t">
           <button
             className="text-gray-600 transition-colors duration-300 rounded-[3px] p-[5px] border border-3 border-[#D2AF9F]"

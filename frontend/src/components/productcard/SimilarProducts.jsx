@@ -110,7 +110,7 @@ export default function SimilarProducts() {
     nextArrow: (
       <NextArrow
         disabled={
-          slideState.current >= products.length - 4 // disable if last visible
+          slideState.current >= products.length - 4 
         }
       />
     ),

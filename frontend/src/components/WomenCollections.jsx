@@ -16,6 +16,7 @@ import OriginalSortByIcon from "./icons/SortByIcon";
 import { IoCellular } from "react-icons/io5";
 import { IoIosWifi } from "react-icons/io";
 import Battery from "./icons/Battery";
+import { Link } from 'react-router-dom';
 
 // Define a custom Tailwind color for the active buttons/elements
 // Note: 'bg-color' is used throughout your code. Assuming it's defined elsewhere (e.g., in index.css) 
@@ -335,7 +336,11 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
 
 
 const ProductCard = ({ product }) => (
-  <div className="relative group overflow-hidden bg-white">
+//   <div className="relative group overflow-hidden bg-white">
+ <Link
+    to="/products"
+    className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
+  >
     {/* Image Section with dynamic route */}
     {/* <Link */}
       <div className="w-full h-auto overflow-hidden">
@@ -369,7 +374,7 @@ const ProductCard = ({ product }) => (
         </p>
       </div>
     </div>
-  </div>
+ </Link>
 );
 
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
