@@ -3,21 +3,18 @@ import herobannerImage from "../assets/herobanner.png";
 import DiscountStarIcon from './icons/DiscountStarIcon';
 
 // This is the updated DiscountBadge component using the imported SVG
-const DiscountBadge = ({ text = "50% off" }) => {
+const DiscountBadge = ({ text = "50% off", size = 120 }) => {
   return (
-    <div className="absolute top-5 left-5 w-[120px] h-[120px] z-20 flex items-center justify-center">
-      {/* SVG Icon - અહીં સ્ટાર આકાર દેખાશે */}
-      <DiscountStarIcon 
-          // SVG ની સાઈઝ તેના કન્ટેનર જેટલી રાખવા માટે
-          width="100%" 
-          height="100%" 
-          // સ્ટારને ત્રાસો કરવા માટે Tailwind rotation class
-          className="transform rotate-[0deg]" 
-      />
-      
-      {/* Text Overlay - સ્ટારની ઉપર ટેક્સ્ટ મૂકવા માટે */}
-      <div className="absolute text-white text-xl font-bold transform rotate-[-50deg]">
-          {text}
+    <div
+      className="absolute top-5 left-5 z-20 flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
+      {/* Star */}
+      <DiscountStarIcon className="transform rotate-0" />
+
+      {/* Text */}
+      <div className="absolute text-white text-xl font-bold transform -rotate-12">
+        {text}
       </div>
     </div>
   );
@@ -42,7 +39,8 @@ const HeroBanner = () => {
 
   return (
     // The main container is now a flex row on all screen sizes
-    <div className="flex justify-center items-center bg-red-50 px-0 sm:px-5  h-[200px] sm:h-[570px] font-sans">
+    <section className=" w-full py-[25px] md:py-[50px] ">
+    <div className="flex justify-center items-center bg-red-50 px-0 sm:px-5   sm:h-[213px] md:h-[213px] lg:h-[594px] font-sans">
       {/* Left Image Section */}
       <div className="relative flex-1">
         {/* Discount Badge (now uses SVG) */}
@@ -53,7 +51,7 @@ const HeroBanner = () => {
           src={herobannerImage}
           alt="Stylish woman in a trench coat and hat"
           // Image size is now controlled by flexbox, ensuring it doesn't break the layout
-          className="w-[400px] sm:w-[900px] h-[200px] sm:h-[570px]"
+          className=" sm:w-[213px]  sm:h-[173.26px]   md:w-[213px]  md:h-[173.26px]  lg:w-[747px]  lg:h-[577.13px] " 
         />
 
         {/* Half Blur Overlay */}
@@ -86,6 +84,7 @@ const HeroBanner = () => {
         </div>
       </div>
     </div>
+    </section>
   );
 };
 

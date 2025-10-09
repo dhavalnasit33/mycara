@@ -160,8 +160,11 @@ const FeaturedProducts = () => {
       : products.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="w-full bg-white font-sans ">
+    <section className="w-full py-[25px] md:py-[50px] ">
+    
+      
       <div className="flex flex-col items-center">
+        
         {/* Section Heading */}
         <Row>
           <SectionHeading title="Featured Products" />
@@ -288,8 +291,10 @@ const FeaturedProducts = () => {
             </div>
           ))}
         </Row>
+        
       </div>
-    </div>
+   
+    </section>
   );
 };
 
