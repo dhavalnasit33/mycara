@@ -1,7 +1,6 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 
 import React, { useState } from 'react';
-<<<<<<< HEAD:frontend/src/components/shop/WomenCollections.jsx
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 
@@ -15,7 +14,7 @@ import shopsaree2 from '../../assets/shopsaree2.jpg';
 
 import OriginalSortByIcon from "../icons/SortByIcon";
 
-=======
+
 import { ChevronDown, X, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 
@@ -25,7 +24,6 @@ import shopsaree1 from '../assets/shopsaree1.jpg';
 import shopsaree2 from '../assets/shopsaree2.jpg';
 import OriginalSortByIcon from "./icons/SortByIcon";
 import { Link } from 'react-router-dom';
->>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/WomenCollections.jsx
 
 const TEXT_COLOR_CLASS = "text-pink-600";
 const BORDER_COLOR_CLASS = "border-pink-600";
@@ -791,11 +789,6 @@ const WomenCollections = () => {
 
             <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                 <div className=" w-full">
-<<<<<<< HEAD:frontend/src/components/shop/WomenCollections.jsx
-
-
-=======
->>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/WomenCollections.jsx
                     <div className="flex items-center py-2  space-x-2">
                         <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
                             <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
