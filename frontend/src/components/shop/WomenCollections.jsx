@@ -1,28 +1,13 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 
 import React, { useState } from 'react';
-import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
-import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
-
-import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
-
 import ProductGrid from './ProductGrid';
-
-
 import shopsaree1 from '../../assets/shopsaree1.jpg';
 import shopsaree2 from '../../assets/shopsaree2.jpg';
-
 import OriginalSortByIcon from "../icons/SortByIcon";
-
-
 import { ChevronDown, X, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
-
-import FilterIconComponent from "./icons/filter";
-import ProductGrid from '../components/ProductGrid';
-import shopsaree1 from '../assets/shopsaree1.jpg';
-import shopsaree2 from '../assets/shopsaree2.jpg';
-import OriginalSortByIcon from "./icons/SortByIcon";
+import FilterIconComponent from "../icons/filter";
 import { Link } from 'react-router-dom';
 
 const TEXT_COLOR_CLASS = "text-pink-600";
@@ -285,7 +270,7 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
     );
 };
 
-const ProductCard = ({ product }) => (
+const SingleCard = ({ product }) => (
  <Link
     to="/products"
     className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
@@ -1019,7 +1004,7 @@ const WomenCollections = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                            <SingleCard key={product.id} product={product} />
                         ))}
                     </div>
                     {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-6 w-full mx-auto"> */}

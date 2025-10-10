@@ -3,34 +3,20 @@
 import React, { useState } from "react";
 import {
   FaUser,
-
-  FaBars,
-  FaTimes, 
 } from "react-icons/fa";
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
-// <<<<<<<< HEAD:frontend/src/components/common/Header.js
-import BlogsIcon from "../icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
-import FeaturesIcon from "../icons/Features";
-// ========
-// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
-import MoreIcon from "../icons/More"; 
 import LoginIcon from "../icons/login"; 
 
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 import BagIcon from "../../assets/bag.png";
 import OrdersIcon from "../../assets/orders.svg";
 
 import WhiteLogin from "../../assets/white login.png";
-// <<<<<<<< HEAD:frontend/src/components/common/Header.js
-import MenuIcon from "../../assets/menu.png";
-// ========
-// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import PayImg from "../../assets/pay.png";
 import HeaderLogo from "../../assets/logo.png";
 import Logo from "../../assets/my_logo.png";
@@ -40,11 +26,7 @@ import Notification from "../icons/notification";
 
 import SvgComponent from "../icons/SvgComponent";
 import Button from "../ui/Button";
-// <<<<<<<< HEAD:frontend/src/components/common/Header.js
-// import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
-// ========
 import { ChevronDown, Contact, Ellipsis, HandCoins, Heart, Menu, SearchX, X } from "lucide-react";
-// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import Row from "../ui/Row";
 
 //  Menu List
@@ -62,15 +44,6 @@ const navItems = [
     hasDropdown: true, // 👈 indicates dropdown
     dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />, // arrow after text
   },
-  // { name: "Blogs", path: "/blogs", icon: <BlogsIcon className="w-5 h-5" /> },
-  // {
-  //   name: "Features",
-  //   path: "/features",
-  //   icon: <FeaturesIcon className="w-5 h-5" />,
-  //   hasDropdown: true,
-  //   dropdownIcon: <ChevronDown className="w-4 h-4 ml-1 inline-block" />,
-  // },
-  // { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
   { name: "Offers", path: "/offer", icon: <HandCoins className="w-5 h-5" /> },
   { name: "About", path: "", icon: <SearchX className="w-5 h-5" /> },
   { name: "Contact", path: "/contact-us", icon: <Contact className="w-5 h-5"  /> },
