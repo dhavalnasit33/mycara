@@ -9,11 +9,11 @@ import {
 } from "react-icons/fa";
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
-<<<<<<<< HEAD:frontend/src/components/common/Header.js
+// <<<<<<<< HEAD:frontend/src/components/common/Header.js
 import BlogsIcon from "../icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
 import FeaturesIcon from "../icons/Features";
-========
->>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
+// ========
+// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import MoreIcon from "../icons/More"; 
 import LoginIcon from "../icons/login"; 
 
@@ -27,10 +27,10 @@ import BagIcon from "../../assets/bag.png";
 import OrdersIcon from "../../assets/orders.svg";
 
 import WhiteLogin from "../../assets/white login.png";
-<<<<<<<< HEAD:frontend/src/components/common/Header.js
+// <<<<<<<< HEAD:frontend/src/components/common/Header.js
 import MenuIcon from "../../assets/menu.png";
-========
->>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
+// ========
+// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import PayImg from "../../assets/pay.png";
 import HeaderLogo from "../../assets/logo.png";
 import Logo from "../../assets/my_logo.png";
@@ -40,11 +40,11 @@ import Notification from "../icons/notification";
 
 import SvgComponent from "../icons/SvgComponent";
 import Button from "../ui/Button";
-<<<<<<<< HEAD:frontend/src/components/common/Header.js
-import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
-========
+// <<<<<<<< HEAD:frontend/src/components/common/Header.js
+// import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
+// ========
 import { ChevronDown, Contact, Ellipsis, HandCoins, Heart, Menu, SearchX, X } from "lucide-react";
->>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
+// >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import Row from "../ui/Row";
 
 //  Menu List
