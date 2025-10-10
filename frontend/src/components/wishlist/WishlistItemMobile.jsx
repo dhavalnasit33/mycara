@@ -48,7 +48,7 @@ const WishlistItemMobile = ({ product }) => {
                     </span>
                     )}
                 </div>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-2 gap-2">
+                <div className="flex justify-between items-center mt-2 gap-2 max-[360px]:flex-col max-[360px]:items-start">
                     <div className="flex gap-2">
                         <Eye size={24} className="border p-1 rounded-md" />
                         <Trash2 size={24} className="border p-1 rounded-md" />

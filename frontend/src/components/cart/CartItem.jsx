@@ -79,7 +79,7 @@ export default function CartItem() {
                 <button className="w-[10px] h-[10px] flex items-center justify-center">
                     <img src={remove} alt="remove" className="w-full h-full object-contain" />
                 </button>
-                <img src={item.image} alt={item.name} className="box-shadow object-cover p-[5px] h-[80px] sm:h-[109px] w-[50px] sm:w-[87px] " />
+                <img src={item.image} alt={item.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break">{item.name}</div>
