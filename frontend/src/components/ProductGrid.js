@@ -12,267 +12,164 @@ import shopsaree11 from '../assets/shopsaree11.jpg';
 import shopsaree12 from '../assets/shopsaree12.jpg';
 import shopsaree13 from '../assets/shopsaree13.jpg';
 import shopsaree14 from '../assets/shopsaree14.jpg';
-// assets
-import ShoppingBagIcon from "./icons/ShoppingBagIcon";
-import HeartIcon from "./icons/HeartIcon";
+
+import ProductCard from './productcard/ProductCard';
 
 const products = [
     {
         id: 1,
         brand: "Phataakaa",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         // સ્લાઇડર માટેની ઇમેજીસ
         image: shopsaree3, 
         allImages: [shopsaree3, shopsaree4, shopsaree5], 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     // ... બાકીના products ડેટાને અહીં જ રાખો
     {
         id: 2,
         brand: "Zillika",
-        name: "Women Georgette Floral Black an...",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Georgette Floral Black an...",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree4,
         colorOptions: ['bg-[#16D5FF]', 'bg-[#E45BE7]', 'bg-[#ECF01D]'],
-        expressShipping: false,
+        express: false,
         isSale: true 
     },
     // ... બાકીના બધા products ડેટા (id 3 થી 12 સુધી) અહીં આવશે.
     {
         id: 3,
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree5,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 4,
         brand: "Phataakaa",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree6,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 5, 
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree7, 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: false, 
+        express: false, 
         isSale: true 
     },
     {
         id: 6,
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree8,
         colorOptions: ['bg-[#16D5FF]', 'bg-[#E45BE7]', 'bg-[#ECF01D]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 7,
         brand: "Phataakaa",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree9,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 8, 
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree10, 
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: false, 
+        express: false, 
         isSale: false 
     },
     {
         id: 9,
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree11,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 10,
         brand: "Phataakaa",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree12,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: true,
+        express: true,
         isSale: false
     },
     {
         id: 11, 
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree13, 
         colorOptions: ['bg-[#16D5FF]', 'bg-[#E45BE7]', 'bg-[#ECF01D]'],
-        expressShipping: false, 
+        express: false, 
         isSale: true 
     },
     {
         id: 12,
         brand: "Gajara Gang",
-        name: "Women Plain Tar Work Fancy Saree",
-        price: "₹1,137",
-        originalPrice: "₹4,575",
+        subtitle: "Women Plain Tar Work Fancy Saree",
+        price: "1,137",
+        oldPrice: "4,575",
         discount: "75%",
         image: shopsaree14,
         colorOptions: ['bg-[#A51414]', 'bg-[#458754]'],
-        expressShipping: false,
+        express: false,
         isSale: false
     },
 ];
-
-// --- Product Card Component ---
-const ProductCard = ({ product }) => {
-    // 🚀 સ્ટેટ અને લોજિકને કમ્પોનન્ટની અંદર મૂકો 🚀
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-    const isSlider = product.id === 1 && product.allImages && product.allImages.length > 1;
-
-    const handleDotClick = (index) => {
-        setCurrentImageIndex(index);
-    };
-    
-    const displayedImage = isSlider 
-        ? product.allImages[currentImageIndex] 
-        : product.image;
-
-    return (
-        <div className="group w-full bg-white border border-gray-100 shadow-md transition duration-300 ease-in-out hover:shadow-xl cursor-pointer overflow-hidden">
-            
-            {/* --- Image Section --- */}
-            <div className="relative">
-                <img 
-                    className="w-full object-cover aspect-[4/5] min-h-[227px] sm:min-h-[300px] lg:min-h-[350px] transition duration-300" 
-                    src={displayedImage} 
-                    alt={product.name} 
-                />
-                <div className="absolute top-3 right-3 flex flex-col space-y-2">
-                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
-                        <HeartIcon width={28} height={26} />
-                    </div>
-                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
-                        <ShoppingBagIcon width={28} height={26} />
-                    </div>
-                </div>
-                
-                {/* 2. Product Dots (Slider Controls) */}
-                {isSlider && (
-                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-1 p-1 bg-black/20 rounded-full">
-                        {product.allImages.map((_, index) => (
-                            <div 
-                                key={index}
-                                className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors duration-300 
-                                    ${index === currentImageIndex ? 'bg-white' : 'bg-gray-400'}`}
-                                onClick={() => handleDotClick(index)}
-                            ></div>
-                        ))}
-                    </div>
-                )}
-            </div> 
-
-            {/* --- Product Details Section --- */}
-            <div className="p-4">
-                {product.expressShipping && (
-                    <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
-                        Express Shipping
-                    </div>
-                )}
-
-                {product.isSale && ( 
-                    <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
-                        Sale
-                    </div>
-                )}     
-
-                {/* Brand Name */}
-                <h3 className="text-[14px] sm:text-[16px] font-regular font-sans text-black truncate py-0 sm:py-0.5">
-                    {product.brand}
-                </h3>
-                
-                {/* Product Name */}
-                <p className="text-[12px] sm:text-[14px] text-[#989696] font-regular font-sans truncate py-0 sm:py-0.5">
-                    {product.name}
-                </p>
-
-                {/* Pricing */}
-                <div className="flex items-center space-x-2 mb-1 sm:mb-2 py-0.5">
-                    <span className="text-[12px] sm:text-[16px] font-regular font-sans text-black py-0 sm:py-0.5">
-                        {product.price}
-                    </span>
-                    <span className="text-[12px] sm:text-[14px] text-[#BCBCBC] line-through font-regular font-sans py-0 sm:py-0.5">
-                        {product.originalPrice}
-                    </span>
-                    <span className="text-[12px] sm:text-[16px] font-regular font-sans text-theme">
-                        {product.discount}
-                    </span>
-                </div>
-
-                {/* Color Options */}
-                <div className="flex space-x-1">
-                    {product.colorOptions.map((colorClass, index) => (
-                        <div 
-                            key={index}
-                            className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full border border-gray-200 cursor-pointer`}
-                        ></div>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-};
-
 // --- Main Grid Component ---
 const ProductGrid = () => {
     return (
         <div className="py-10 ">
-            <div className="max-w-7xl mx-auto">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-6 w-full mx-auto"> {/* px-4 for side spacing */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mx-auto"> {/* px-4 for side spacing */}
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
@@ -288,7 +185,6 @@ const ProductGrid = () => {
                         Load More
                     </button>
                 </div>
-            </div>
         </div>
     );
 };

@@ -58,8 +58,8 @@ const navItems = [
   // },
   // { name: "More", path: "/more", icon: <MoreIcon className="w-5 h-5" /> },
   { name: "Offers", path: "/offer", icon: <HandCoins className="w-5 h-5" /> },
-      { name: "About", path: "/", icon: <SearchX className="w-5 h-5" /> },
-   { name: "Contact", path: "/contact-us", icon: <Contact className="w-5 h-5"  /> },
+  { name: "About", path: "", icon: <SearchX className="w-5 h-5" /> },
+  { name: "Contact", path: "/contact-us", icon: <Contact className="w-5 h-5"  /> },
 
 ];
 
@@ -174,6 +174,7 @@ const Header = ({ hideOnMobileShopPage  }) => {
               </div>
             </div>
           {/* Icons */}
+          
           <span className="text-light">
             <Heart size={22}/>
           </span>
@@ -202,9 +203,14 @@ const Header = ({ hideOnMobileShopPage  }) => {
             >
             {isMenuOpen ? <X size={16} /> : <Menu size={16} />}
             </button>
-            <img src={Logo} alt="Logo" className="h-10 mx-auto" />
+            <img src={Logo} alt="Logo" className="h-10 w-[120px] mx-auto" />
             
             <div className="flex items-center gap-[10px]">
+            <span className="text-light">
+              <Link to="/login">
+                <LoginIcon />
+              </Link>
+            </span>
               <span className="text-light">
                 <Heart size={22}/>
               </span>

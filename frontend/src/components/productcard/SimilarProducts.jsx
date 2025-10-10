@@ -11,7 +11,7 @@ import img4 from "../../assets/similer4.png";
 export const products = [
   {
     id: 1,
-    title: "BLACK SCISSOR",
+    brand: "BLACK SCISSOR",
     subtitle: "Women Georgette Floral Black and...",
     price: 1137,
     oldPrice: 4575,
@@ -22,7 +22,7 @@ export const products = [
   },
   {
     id: 2,
-    title: "Indibellie",
+    brand: "Indibellie",
     subtitle: "Cotton Floral Printed Anarkali Kurta..",
     price: 2137,
     oldPrice: 4755,
@@ -33,7 +33,7 @@ export const products = [
   },
   {
     id: 3,
-    title: "Indya",
+    brand: "Indya",
     subtitle: "Women Reyon Lining Red An...",
     price: 1537,
     rating: 3,
@@ -42,7 +42,7 @@ export const products = [
   },
   {
     id: 4,
-    title: "Rangita",
+    brand: "Rangita",
     subtitle: "Chanderi Coral Sequine Yoke calf...",
     price: 1537,
     rating: 4,
@@ -51,7 +51,7 @@ export const products = [
   },
   {
     id: 5,
-    title: "Libas",
+    brand: "Libas",
     subtitle: "Printed Cotton A-Line Kurta...",
     price: 1937,
     rating: 5,
@@ -60,7 +60,7 @@ export const products = [
   },
   {
     id: 6,
-    title: "Rangita",
+    brand: "Rangita",
     subtitle: "Printed Cotton A-Line Kurta...",
     price: 2937,
     rating: 3,
@@ -139,7 +139,9 @@ export default function SimilarProducts() {
     <Row>
       <Slider ref={sliderRef} {...settings}>
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <div className="px-[15px] flex h-full">
+            <ProductCard key={product.id} product={product} />
+          </div>
         ))}
       </Slider>
     </Row>
