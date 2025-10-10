@@ -32,6 +32,7 @@ import MenuIcon from "../../assets/menu.png";
 ========
 >>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Header.js
 import PayImg from "../../assets/pay.png";
+import HeaderLogo from "../../assets/logo.png";
 import Logo from "../../assets/my_logo.png";
 import bannerImg from "../../assets/banner.png";
 
@@ -79,21 +80,15 @@ const navItems = [
 const Header = ({ hideOnMobileShopPage  }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // const headerClasses = `
-  //   bg-primary-50 shadow-md 
-  //   ${hideOnMobileShopPage ? 'hidden lg:block' : 'block'} 
-  // `;
 
-  
   return (
     <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
     
       <Row className=" md:h-[100px] gap-[10px] lg:h-[100px] hidden lg:flex justify-between items-center  ">
-        {/* Logo */}
         <div className="hidden lg:flex items-center space-x-2">
           {/* <Link to="/home"> */}
           <Link to="/home"><img
-            src={Logo}
+            src={HeaderLogo}
             alt="Logo"
             className="w-[160px] md:w-[228px] h-auto"
           />

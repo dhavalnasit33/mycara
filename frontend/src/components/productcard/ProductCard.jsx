@@ -84,13 +84,11 @@ export default function ProductCard({ product }) {
                   className={`text-sm ${
                     i < product.rating ? "text-theme" : "text-gray-300"
                   }`}
-                >
-                  ★
+                >★
                 </span>
               ))}
           </div>
         )}
-
       </div>
     </div>
   );
