@@ -1,5 +1,5 @@
 import React from 'react';
-import clothesBanner from '../assets/clothes-banner.png'; 
+import clothesBanner from '../../assets/clothes-banner.png'; 
 
 const BannerClothes = () => {
   return (
@@ -12,7 +12,7 @@ const BannerClothes = () => {
     >
       {/* Transparent glass effect box */}
       <div 
-        className="absolute inset-0 flex items-center justify-center px-4"
+        className="absolute inset-0 flex items-center justify-center"
       >
         <div 
           className="relative w-full max-w-[1440px] h-[250px] sm:h-[400px] md:h-[563px]"

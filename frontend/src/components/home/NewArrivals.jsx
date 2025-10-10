@@ -1,10 +1,11 @@
 import React from "react";
-import SectionHeading from "./ui/SectionHeading";
-import Row from "./ui/Row";
-import earringsImg from "../assets/earrings.png";
-import shoesImg from "../assets/shoes.png";
-import watchImg from "../assets/watch.png";
-import winterClothesImg from "../assets/winter-clothes.png";
+import SectionHeading from "../ui/SectionHeading";
+import Row from "../ui/Row";
+import earringsImg from '../../assets/earrings.png';
+import shoesImg from '../../assets/shoes.png';
+import watchImg from '../../assets/watch.png';
+import winterClothesImg from '../../assets/winter-clothes.png';
+
 
 
 const ImageCard = ({ name, img, textColor = "text-black" }) => {

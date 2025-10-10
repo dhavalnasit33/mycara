@@ -7,12 +7,12 @@ import {
   FaBars,
   FaTimes, 
 } from "react-icons/fa";
-import ShopIcon from "./icons/shop";
-import CollectionsIcon from "./icons/Collections";
-import BlogsIcon from "./icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
-import FeaturesIcon from "./icons/Features";
-import MoreIcon from "./icons/More"; 
-import LoginIcon from "./icons/login"; 
+import ShopIcon from "../icons/shop";
+import CollectionsIcon from "../icons/Collections";
+import BlogsIcon from "../icons/Blogs"; // 👈 tamaru Blogs.jsx import karo
+import FeaturesIcon from "../icons/Features";
+import MoreIcon from "../icons/More"; 
+import LoginIcon from "../icons/login"; 
 
 import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,21 +20,21 @@ import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
-import BagIcon from "../assets/bag.png";
-import OrdersIcon from "../assets/orders.svg";
+import BagIcon from "../../assets/bag.png";
+import OrdersIcon from "../../assets/orders.svg";
 
-import WhiteLogin from "../assets/white login.png";
-import MenuIcon from "../assets/menu.png";
-import PayImg from "../assets/pay.png";
-import Logo from "../assets/my_logo.png";
-import bannerImg from "../assets/banner.png";
+import WhiteLogin from "../../assets/white login.png";
+import MenuIcon from "../../assets/menu.png";
+import PayImg from "../../assets/pay.png";
+import Logo from "../../assets/my_logo.png";
+import bannerImg from "../../assets/banner.png";
 
-import Notification from "./icons/notification";
+import Notification from "../icons/notification";
 
-import SvgComponent from "./icons/SvgComponent";
-import Button from "./ui/Button";
+import SvgComponent from "../icons/SvgComponent";
+import Button from "../ui/Button";
 import { ChevronDown, Ellipsis, Menu, X } from "lucide-react";
-import Row from "./ui/Row";
+import Row from "../ui/Row";
 
 //  Menu List
 const navItems = [

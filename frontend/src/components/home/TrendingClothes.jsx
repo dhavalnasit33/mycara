@@ -2,15 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 
 // Local images
-import FlowerIcon from "../components/icons/FlowerIcon"; 
+import FlowerIcon from "../icons/FlowerIcon"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import SpainImg from "../assets/Spain tincid.png";
-import LatestLookImg from "../assets/Leatest Look cort collection.png";
-import StylishImg from "../assets/Leatest look stylish.png";
-import SectionHeading from './ui/SectionHeading';
-import Row from './ui/Row.jsx';
+import SpainImg from "../../assets/Spain tincid.png";
+import LatestLookImg from "../../assets/Leatest Look cort collection.png";
+import StylishImg from "../../assets/Leatest look stylish.png";
+import SectionHeading from '../ui/SectionHeading';
+import Row from '../ui/Row.jsx';
 const products = [
   {
     id: 1,

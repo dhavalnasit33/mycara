@@ -6,11 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaTwitter } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
-// Import your hero images here
-import heroImg1 from "../assets/hero.png";
-import heroImg2 from "../assets/hero2.png"; 
-import heroImg3 from "../assets/hero3.png"; 
-
+import heroImg1 from '../../assets/hero.png';
+import heroImg2 from '../../assets/hero2.png';
+import heroImg3 from '../../assets/hero3.png';
 
 export default function Hero() {
     // Array to hold the data for each slider item

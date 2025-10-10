@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import shopBannerImage from '../assets/shopBannerImage.jpg'; 
+import shopBannerImage from '../../assets/shopBannerImage.jpg'; 
 
 
 const ShopBanner = () => {

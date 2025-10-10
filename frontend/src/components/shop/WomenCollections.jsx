@@ -1,26 +1,19 @@
-// src/components/WomenCollections.jsx
+// D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 
 import React, { useState } from 'react';
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 
-import FilterIconComponent from "./icons/filter"; // Import it with a unique, capitalized name
+import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
 
-import ProductGrid from '../components/ProductGrid';
+import ProductGrid from './ProductGrid';
 
-import shopsaree1 from '../assets/shopsaree1.jpg';
-import shopsaree2 from '../assets/shopsaree2.jpg';
 
-import OriginalSortByIcon from "./icons/SortByIcon";
+import shopsaree1 from '../../assets/shopsaree1.jpg';
+import shopsaree2 from '../../assets/shopsaree2.jpg';
 
-import { IoCellular } from "react-icons/io5";
-import { IoIosWifi } from "react-icons/io";
-import Battery from "./icons/Battery";
+import OriginalSortByIcon from "../icons/SortByIcon";
 
-// Define a custom Tailwind color for the active buttons/elements
-// Note: 'bg-color' is used throughout your code. Assuming it's defined elsewhere (e.g., in index.css) 
-// or it refers to a pink/rose color based on the images. Using 'bg-pink-600' as a safe alternative if 'bg-color' isn't defined.
-// Replaced 'bg-color' with 'bg-pink-600' for clarity in CollapsibleFilter
 
 const TEXT_COLOR_CLASS = "text-pink-600";
 const BORDER_COLOR_CLASS = "border-pink-600";
@@ -910,18 +903,7 @@ const WomenCollections = () => {
 
             <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                 <div className=" w-full">
-                    {/* -------- Status Bar (Top Row) -------- */}
-                    <div className="flex justify-between items-center py-2 ">
-                        {/* Left Side - Time */}
-                        <div className="sfpro  text-black">9:41</div>
 
-                        {/* Right Side - Icons */}
-                        <div className="flex items-center space-x-3">
-                            <IoCellular className="w-6 h-6 text-black cursor-pointer" />
-                            <IoIosWifi className="w-6 h-6 text-black cursor-pointer" />
-                            <Battery className="w-7 h-5 text-GRAY cursor-pointer" />
-                        </div>
-                    </div>
 
                     <div className="flex items-center py-2  space-x-2">
                         {/* Left Arrow Icon (Wrapped in a responsive button) */}

@@ -3,15 +3,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 // Local images
-import shoppingImg from "../assets/shopping.png";
-import KurtiImg from "../assets/Kurti.png";
-import CropTopsImg from "../assets/Crop Tops.png";
-import JeansImg from "../assets/Jeans.png";
-import NightwareImg from "../assets/Nightware.png";
-import jewelleryimg from "../assets/jewellery.png";
-import Section from "./ui/Section";
-import SectionHeading from "./ui/SectionHeading";
-import Row from "./ui/Row";
+import shoppingImg from "../../assets/shopping.png";
+import KurtiImg from "../../assets/Kurti.png";
+import CropTopsImg from "../../assets/Crop Tops.png";
+import JeansImg from "../../assets/Jeans.png";
+import NightwareImg from "../../assets/Nightware.png";
+import jewelleryimg from "../../assets/jewellery.png";
+import Section from "../ui/Section";
+import SectionHeading from "../ui/SectionHeading";
+import Row from "../ui/Row";
 const categories = [
   { name: "Saree", img: shoppingImg },
   { name: "Kurti", img: KurtiImg },

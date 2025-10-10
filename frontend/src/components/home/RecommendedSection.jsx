@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 // Import your local images
-import shararaPairImage from '../assets/Sharara Pair.png';
-import chaniyaCholiImage from '../assets/Chaniya Choli.png';
-import mojariImage from '../assets/Mojari.png';
-import SectionHeading from './ui/SectionHeading';
-import Row from './ui/Row.jsx';
+import shararaPairImage from '../../assets/Sharara Pair.png';
+import chaniyaCholiImage from '../../assets/Chaniya Choli.png';
+import mojariImage from '../../assets/Mojari.png';
+import SectionHeading from '../ui/SectionHeading';
+import Row from '../ui/Row.jsx';
 
 
 const recommendedItems = [

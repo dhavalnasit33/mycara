@@ -1,13 +1,14 @@
 import React from 'react';
-import Image1 from '../assets/Short top.png';
-import Image2 from '../assets/dangali.png';
-import Image3 from '../assets/vanpees.png';
-import Image4 from '../assets/suit.png';
-import SectionHeading from './ui/SectionHeading';
-import Row from './ui/Row.jsx';
-import { IoIosArrowRoundForward } from "react-icons/io";
+import Image1 from '../../assets/Short top.png';
+import Image2 from '../../assets/dangali.png';
+import Image3 from '../../assets/vanpees.png';
+import Image4 from '../../assets/suit.png';
+import SectionHeading from '../ui/SectionHeading';
+import Row from '../ui/Row.jsx';
 
-import IoIosArrow from "../components/icons/IoIosArrow"; 
+
+import IoIosArrow from '../icons/IoIosArrow';
+
 
 // Local images
 

@@ -5,29 +5,29 @@ import { Link } from "react-router-dom";
 import Slider from "react-slick";
 
 // ✅ Importing custom UI components
-import SectionHeading from "./ui/SectionHeading";
-import Row from "./ui/Row";
-import ShoppingBagIcon from "./icons/ShoppingBagIcon";
-import HeartIcon from "./icons/HeartIcon";
-import ArrowleftIcon from "./icons/ArrowleftIcon";
-import ArrowRightIcon from "./icons/ArrowRightIcon";
+import SectionHeading from "../ui/SectionHeading";
+import Row from "../ui/Row";
+import ShoppingBagIcon from "../icons/ShoppingBagIcon";
+import HeartIcon from "../icons/HeartIcon";
+import ArrowleftIcon from "../icons/ArrowleftIcon";
+import ArrowRightIcon from "../icons/ArrowRightIcon";
 
 
-import FlowerIcon from "../components/icons/FlowerIcon"; // optional
+
 
 // ✅ Slick carousel styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 // ✅ Product images
-import kurtiImg from "../assets/Women floral Cotton jaipuri kurta.png";
-import pinkKurtaImg from "../assets/Wommen kurta and Trouser.png";
-import blueKurtaImg from "../assets/Women all over printed kurta.png";
-import anarkaliImg from "../assets/Pink floral handwork anarkali.png";
-import sareeImg from "../assets/Women floral Cotton jaipuri saree.png";
-import cotsetImg from "../assets/Wommen ordenaree cotset.png";
-import fanceytshirtImg from "../assets/Girls full sleave fancy t shirt.png";
-import banarasiImg from "../assets/Self design banarasi silk bland.png";
+import kurtiImg from "../../assets/Women floral Cotton jaipuri kurta.png";
+import pinkKurtaImg from "../../assets/Wommen kurta and Trouser.png";
+import blueKurtaImg from "../../assets/Women all over printed kurta.png";
+import anarkaliImg from "../../assets/Pink floral handwork anarkali.png";
+import sareeImg from "../../assets/Women floral Cotton jaipuri saree.png";
+import cotsetImg from "../../assets/Wommen ordenaree cotset.png";
+import fanceytshirtImg from "../../assets/Girls full sleave fancy t shirt.png";
+import banarasiImg from "../../assets/Self design banarasi silk bland.png";
 
 // ✅ Category list
 const categories = [
@@ -202,20 +202,18 @@ const FeaturedProducts = () => {
           <Slider ref={sliderRef} {...settings}>
             {categories.map((item, i) => (
               <div key={i} className="px-[0px] sm:px-[0px]">
-                <button
-                  onClick={() => setActiveCategory(item.name)}
-                  className={`border rounded-[30px] flex items-center justify-center 
-                    w-[65px] h-[22px] md:w-[133px] md:h-[38px] lg:w-[133px] lg:h-[38px]
-                    text-center transition-colors duration-300 mx-auto
-                    ${
-                      activeCategory === item.name
-                        ? "bg-color text-white hover:text-white"
-                        : "text-black hover:bg-gray-100"
-                    }`}
-                  style={{
-                    boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)",
-                  }}
-                >
+<button
+  onClick={() => setActiveCategory(item.name)}
+  className={`button border rounded-[30px] flex items-center justify-center 
+    w-[65px] h-[22px] md:w-[133px] md:h-[38px]
+    text-center transition-colors duration-300 mx-auto
+    ${
+      activeCategory === item.name
+        ? "bg-color text-white"
+        : "text-black"
+    }`}
+  style={{ boxShadow: "inset 0 0 4px rgba(0, 0, 0, 0.25)" }}
+>
                   <p className="font-h4 text-[10px] md:text-[18px] lg:text-[18px]">
                     {item.name}
                   </p>
@@ -230,7 +228,7 @@ const FeaturedProducts = () => {
           {filteredProducts.map((p, index) => (
             <div
               key={index}
-              className="relative border overflow-hidden transform transition-transform duration-300 hover:scale-95"
+              className="relative border overflow-hidden transform transition-transform duration-300 hover:scale-95 cursor-pointer"
             >
               {/* 🔹 Product Image */}
               <div className="relative group overflow-hidden">

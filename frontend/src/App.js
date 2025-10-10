@@ -10,8 +10,11 @@ import Collections from "./pages/Collections";
 import Blogs from "./pages/Blogs";
 import Features from "./pages/Features";
 import More from "./pages/More";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+
+import Header from './components/common/Header';
+import Footer from './components/common/Footer';
+
+
 import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";

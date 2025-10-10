@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import herobannerImage from "../assets/herobanner.png";
-import sale from '../assets/sale.png';
-import Row from "./ui/Row";
-import Section from "./ui/Section";
-import Button from "./ui/Button";
+import herobannerImage from "../../assets/herobanner.png";
+import sale from '../../assets/sale.png';
+import Row from "../ui/Row";
+import Section from "../ui/Section";
+import Button from "../ui/Button";
 const DiscountBadge = ({ text = "50% off" }) => {
   return (
     <div className="absolute top-3 left-3 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] z-30 flex items-center justify-center">

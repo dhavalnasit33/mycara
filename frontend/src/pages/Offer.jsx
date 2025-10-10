@@ -1,4 +1,4 @@
-import CategoriesSection from "../components/CategoriesSection";
+import CategoriesSection from '../components/home/CategoriesSection';
 import OfferBanner from "../components/offers/offerBanner";
 import SizeSection from "../components/offers/SizeSection";
 import Row from "../components/ui/Row";

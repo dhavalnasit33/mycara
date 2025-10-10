@@ -1,20 +1,21 @@
-import React, { useState } from 'react'; // 👈 React માંથી useState ઇમ્પોર્ટ કરો
+// D:\mycara\frontend\src\components\shop\ProductGrid.js
+import React, { useState } from 'react'; 
 
-import shopsaree3 from '../assets/shopsaree3.jpg';
-import shopsaree4 from '../assets/shopsaree4.jpg';
-import shopsaree5 from '../assets/shopsaree5.jpg';
-import shopsaree6 from '../assets/shopsaree6.jpg';
-import shopsaree7 from '../assets/shopsaree7.jpg';
-import shopsaree8 from '../assets/shopsaree8.jpg';
-import shopsaree9 from '../assets/shopsaree9.jpg';
-import shopsaree10 from '../assets/shopsaree10.jpg';
-import shopsaree11 from '../assets/shopsaree11.jpg';
-import shopsaree12 from '../assets/shopsaree12.jpg';
-import shopsaree13 from '../assets/shopsaree13.jpg';
-import shopsaree14 from '../assets/shopsaree14.jpg';
+import shopsaree3 from '../../assets/shopsaree3.jpg';
+import shopsaree4 from '../../assets/shopsaree4.jpg';
+import shopsaree5 from '../../assets/shopsaree5.jpg';
+import shopsaree6 from '../../assets/shopsaree6.jpg';
+import shopsaree7 from '../../assets/shopsaree7.jpg';
+import shopsaree8 from '../../assets/shopsaree8.jpg';
+import shopsaree9 from '../../assets/shopsaree9.jpg';
+import shopsaree10 from '../../assets/shopsaree10.jpg';
+import shopsaree11 from '../../assets/shopsaree11.jpg';
+import shopsaree12 from '../../assets/shopsaree12.jpg';
+import shopsaree13 from '../../assets/shopsaree13.jpg';
+import shopsaree14 from '../../assets/shopsaree14.jpg';
 // assets
-import ShoppingBagIcon from "./icons/ShoppingBagIcon";
-import HeartIcon from "./icons/HeartIcon";
+import ShoppingBagIcon from "../icons/ShoppingBagIcon";
+import HeartIcon from "../icons/HeartIcon";
 
 const products = [
     {
@@ -198,12 +199,20 @@ const ProductCard = ({ product }) => {
                 
                 {/* Icons (Icons are now fixed and don't rely on complex hover logic) */}
                 <div className="absolute top-3 right-3 flex flex-col space-y-2">
-                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
-                        <HeartIcon width={28} height={26} />
-                    </div>
-                    <div className="p-2 bg-white text-black rounded-full border transition hover:bg-gray-100 shadow-md">
-                        <ShoppingBagIcon width={28} height={26} />
-                    </div>
+    {/*  Heart Icon */}
+                <div className="absolute top-2 right-2 opacity-100  duration-300 z-10">
+                 <button className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border ">
+                    <HeartIcon className="w-[12px] h-[12px] sm:w-[12px] sm:h-[12px] lg:w-[26px] lg:h-[24px] text-black" />
+                  </button>
+                </div>
+
+
+                {/*  Shopping Bag Icon */}
+                <div className="absolute top-[38px]  lg:top-[60px] right-2 opacity-100 duration-300 z-10">
+                  <button className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border ">
+                    <ShoppingBagIcon className="w-[12px] h-[12px] sm:w-[12px] sm:h-[12px] lg:w-[26px] lg:h-[24px] text-black" />
+                  </button>
+                </div>
                 </div>
                 
                 {/* 2. Product Dots (Slider Controls) */}
@@ -274,7 +283,7 @@ const ProductCard = ({ product }) => {
 };
 
 // --- Main Grid Component ---
-const ProductGrid = () => {
+const ProductGrid  = () => {
     return (
         <div className="py-10 ">
             <div className="max-w-7xl mx-auto">
