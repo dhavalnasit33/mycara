@@ -72,12 +72,8 @@ const Footer = () => {
           <Row className="py-[50px] md:py-[80px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 md:grid-cols-4 gap-8">
             {/* Logo & Contact */}
             <div className="space-y-[22px] max-w-[280px] w-full">
-              <Link to="/home"><img
-<<<<<<<< HEAD:frontend/src/components/common/Footer.jsx
-                src={require("../../assets/my_logo.png")}
-========
+              <Link to="/home"><img 
                 src={mylogo}
->>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/layout/Footer.jsx
                 alt="MYcra Logo"
                 className="w-[190px] h-[58.52px] mb-[35px]"
               /></Link>
