@@ -74,7 +74,7 @@ function PrevArrow({ onClick, disabled }) {
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border h-[20px] w-[20px] md:h-[40px] md:w-[40px]
       ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronLeft size={22} />
@@ -86,7 +86,7 @@ function NextArrow({ onClick, disabled }) {
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border h-[20px] w-[20px] md:h-[40px] md:w-[40px]
       ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronRight size={22} />

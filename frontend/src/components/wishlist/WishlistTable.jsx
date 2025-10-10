@@ -9,7 +9,7 @@ const WishlistItemDesktop = ({ product }) => {
   const decrement = () => setQuantity(prev => (prev > 1 ? prev - 1 : 1));
 
   return (
-    <tr className="hidden custom-lg:table-row border-b border-[#BCBCBC]">
+    <tr className="hidden custom-lg:table-row border-b light-border">
       <td className="py-4">
         <input type="checkbox" className="w-4 h-4" />
       </td>
@@ -29,7 +29,7 @@ const WishlistItemDesktop = ({ product }) => {
       </td>
 
       <td className="p-4 text-center">
-        <div className="inline-flex items-center gap-[10px] px-[8px] py-[6px] border-[#BCBCBC] border text-black rounded-[3px]">
+        <div className="inline-flex items-center gap-[10px] px-[8px] py-[6px] light-border border text-black rounded-[3px]">
           <button onClick={decrement}>
             <Minus size={14} />
           </button>
@@ -90,15 +90,15 @@ const WishlistTable = ({ products }) => {
       {/* Desktop Table */}
       <table className="w-full hidden custom-lg:table">
         <thead className="table-header-group">
-          <tr className="border-b border-black font-18">
-            <th className="text-left">
-              <input type="checkbox" className="w-4 h-4" />
+          <tr className="border-b border-black font-18 ">
+            <th className="text-left pb-[16px]">
+              <input type="checkbox" className="w-4 h-4 " />
             </th>
-            <th className="text-left pt-0 p-4 font-normal">PRODUCT</th>
-            <th className="text-center pt-0 p-4 font-normal">QUANTITY</th>
-            <th className="text-left pt-0 p-4 font-normal">PRICE</th>
-            <th className="text-left pt-0 p-4 font-normal">STOCK STATUS</th>
-            <th className="text-right pt-0 p-4 font-normal">ACTION</th>
+            <th className="text-left pt-0 p-4 font-normal ">Product</th>
+            <th className="text-center pt-0 p-4 font-normal">Quantity</th>
+            <th className="text-left pt-0 p-4 font-normal">Price</th>
+            <th className="text-left pt-0 p-4 font-normal">StockStatus</th>
+            <th className="text-right pt-0 p-4 font-normal">Action</th>
           </tr>
         </thead>
         <tbody>

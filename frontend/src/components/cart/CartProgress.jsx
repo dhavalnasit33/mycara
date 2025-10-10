@@ -43,19 +43,3 @@ export default function CartProgress() {
 }
 
 
-// //  <div
-// // className={`flex items-center justify-center w-[50px] h-[50px] rounded-full text-white ${
-// //     isCompleted ? "bg-color-100" : isActive ? "bg-color-100" : "sec-theme text-light"
-// //     }`}
-// // >
-// //     {isCompleted ? <Check size={20} /> : item.step}
-// // </div>
-
-// // {/* Connecting Line */}
-// // {i < steps.length - 1 && (
-// //     <div
-// //     className={`absolute top-1/2 left-[100%] w-20 h-[3px] rounded-full transform -translate-y-1/2 z-[-1] ${
-// //         i < activeStep - 1 ? "bg-color-100" : "sec-theme"
-// //     }`}
-// //     ></div>
-// // )}
