@@ -42,7 +42,7 @@ export default function CartItem() {
         </thead>
         <tbody>
           {items.map((item, index) => (
-            <tr key={index} className="border-b border-[#BCBCBC] font-18 sec-text-color">
+            <tr key={index} className="border-b light-border font-18 sec-text-color">
               <td className="py-4">
                 <button className="w-[20px] h-[20px]">
                   <img src={remove} />
@@ -53,7 +53,7 @@ export default function CartItem() {
               </td>
               <td className="p-4 break">{item.name}</td>
               <td className="p-4">
-                <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] border-[#BCBCBC] border text-black rounded-[20px] leading">
+                <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] light-border border text-black rounded-[20px] leading">
                   <button onClick={() => handleDecrease(index)}>
                     <Minus size={14} />
                   </button>
