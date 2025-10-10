@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
@@ -67,7 +67,7 @@ export const products = [
     express: true,
     image: img3,
   },
-  
+
 ];
 
 function PrevArrow({ onClick, disabled }) {
@@ -97,11 +97,27 @@ function NextArrow({ onClick, disabled }) {
 export default function SimilarProducts() {
   const sliderRef = useRef(null);
   const [slideState, setSlideState] = useState({ current: 0, total: 0 });
+  useEffect(() => {
+    const setEqualHeight = () => {
+      const slides = document.querySelectorAll(".slick-slide .card-content");
+      let maxHeight = 0;
+      slides.forEach(slide => {
+        slide.style.height = "auto";
+        if (slide.offsetHeight > maxHeight) maxHeight = slide.offsetHeight;
+      });
+      slides.forEach(slide => slide.style.height = `${maxHeight}px`);
+    };
+
+    setEqualHeight();
+    window.addEventListener("resize", setEqualHeight);
+    return () => window.removeEventListener("resize", setEqualHeight);
+  }, []);
 
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
+    adaptiveHeight: false,
     slidesToShow: 4,
     slidesToScroll: 1,
     autoplay: false,
@@ -110,7 +126,7 @@ export default function SimilarProducts() {
     nextArrow: (
       <NextArrow
         disabled={
-          slideState.current >= products.length - 4 
+          slideState.current >= products.length - 4
         }
       />
     ),
@@ -139,10 +155,11 @@ export default function SimilarProducts() {
     <Row>
       <Slider ref={sliderRef} {...settings}>
         {products.map((product) => (
-          <div className="px-[15px] flex h-full">
-            <ProductCard key={product.id} product={product} />
+          <div className="px-[15px] ">
+            <ProductCard key={product.id} product={product} className="border" />
           </div>
         ))}
+
       </Slider>
     </Row>
   );

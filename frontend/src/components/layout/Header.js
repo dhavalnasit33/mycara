@@ -130,35 +130,48 @@ const Header = ({ hideOnMobileShopPage  }) => {
                   </span>
                 </div>
 
-                <ul className="text-light text-p p-[17px] cursor-pointer">
-                  <li className="flex items-center space-x-[15px] py-[10px] hover:text-[#F43297]">
-                    <LoginIcon />
-                    <Link to="/my-account">My Profile</Link>
+                <ul className="text-light text-p p-[17px]">
+                  <li className=" py-[10px] hover:text-[#F43297]">
+                    <Link to="/my-account" className="flex items-center gap-[15px] w-full">
+                      <LoginIcon />
+                      <span>My Profile</span>
+                    </Link>
                   </li>
-                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
-                    <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
-                    <Link to="/my-account/orders"><span>Orders</span></Link>
+                  <li className=" py-[8px] hover:text-[#F43297]">
+                    <Link to="/my-account/orders" className="flex items-center  gap-[15px] w-full">
+                      <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px] " />
+                      <span>Orders</span>
+                    </Link>
                   </li>
-                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
-                    <FontAwesomeIcon icon={farHeart} />
-                    <span>Wishlist</span>
+                  <li className=" py-[8px] hover:text-[#F43297]">
+                    <Link to="/wishlist" className="flex items-center  gap-[15px] w-full">
+                      <FontAwesomeIcon icon={farHeart} />
+                      <span>Wishlist</span>
+                    </Link>
                   </li>
-                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
-                    <SvgComponent />
-                    <span>Gift Cards</span>
+                  <li className=" py-[8px] hover:text-[#F43297]">
+                    <Link to="/gift-cards" className="flex items-center  gap-[15px] w-full">
+                      <SvgComponent />
+                      <span>Gift Cards</span>
+                    </Link>
                   </li>
-                  <li className="flex items-center space-x-[15px] py-[8px] hover:text-[#F43297]">
-                    <FontAwesomeIcon icon={faGift} />
-                    <span>Coupons</span>
+                  <li className="py-[8px] hover:text-[#F43297]">
+                    <Link to="/coupons" className="flex items-center  gap-[15px] w-full">
+                      <FontAwesomeIcon icon={faGift} />
+                      <span>Coupons</span>
+                    </Link>
                   </li>
                 </ul>
+
               </div>
             </div>
           {/* Icons */}
-          
-          <span className="text-light">
-            <Heart size={22}/>
-          </span>
+            <span className="text-light">
+              <Link to="/wishlist">
+                <Heart size={22}/>
+              </Link>            
+            </span>
+
             <span className="text-light">
               <Link to="/cart">
                 <FontAwesomeIcon
@@ -193,7 +206,9 @@ const Header = ({ hideOnMobileShopPage  }) => {
               </Link>
             </span>
               <span className="text-light">
-                <Heart size={22}/>
+                <Link to="/wishlist">
+                  <Heart size={22}/>
+                </Link>
               </span>
             <span className="text-light">
               <Link to="/cart">
@@ -266,26 +281,25 @@ const Header = ({ hideOnMobileShopPage  }) => {
         {/* Menu Items */}
         <nav className=" py-3">
           {navItems.map((item, i) => {
-          if (item.name === "Home") 
-            return null; 
-            const isMobileHighlight = ["Shop", "Offers", "Contact"].includes(item.name);
-            return (
-            <NavLink
-              key={i}
-              to={item.path}
-              onClick={() => setIsMenuOpen(false)}
-            
+              if (item.name === "Home") return null;
+              const isMobileHighlight = ["Shop", "Offers", "Contact"].includes(item.name);
+              return (
+                <NavLink
+                  key={item.id || i}  
+                  to={item.path}
+                  onClick={() => setIsMenuOpen(false)}
                   className={`
-                  flex items-center gap-3 py-4 px-4 text-gray-700
-                  ${isMobileHighlight ? "bg-theme sm:bg-transparent" : "bg-white "}
-                `}
-            >
-              {item.icon}
-              <span>{item.name}</span>
-              <span className="ml-auto">›</span>
-            </NavLink>
-          );
-          })}
+                    flex items-center gap-3 py-4 px-4 text-gray-700
+                    ${isMobileHighlight ? "bg-theme sm:bg-transparent" : "bg-white "}
+                  `}
+                >
+                  {item.icon}
+                  <span>{item.name}</span>
+                  <span className="ml-auto">›</span>
+                </NavLink>
+              );
+            })}
+
 
           <div className="flex items-center justify-center h-[60px]">
             <hr className="w-full border-t border-dashed border-gray-400" />
@@ -293,29 +307,35 @@ const Header = ({ hideOnMobileShopPage  }) => {
 
           {/* Extra Menu */}
           <div className="text-light">
-              <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
-                <FaUser /><Link to="/my-account"><span>My Profile</span></Link>
-              </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
-              <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />
-              <Link to="/my-account/orders"><span>Orders</span></Link>
+            <div className=" py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
+              <Link to="/my-account" className="flex items-center gap-[15px]">
+                <FaUser />My Profile
+              </Link>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
-              
-              <FontAwesomeIcon icon={farHeart} />
-                    <span>Wishlist</span>
+            <div className=" py-4 px-4  cursor-pointer  ">
+              <Link to="/my-account/orders" className="flex items-center gap-[15px]">
+                <img src={OrdersIcon} alt="Orders" className="w-5 h-5 " />Orders
+              </Link>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
-              <SvgComponent />
-                  <span>Gift Cards</span>
+            <div className="py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">           
+              <Link to="/wishlist" className="flex items-center gap-[15px]">
+                <FontAwesomeIcon icon={farHeart} />Wishlist
+              </Link>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
-              <FontAwesomeIcon icon={faGift} />
-                    <span>Coupons</span>
+            <div className="py-4 px-4  cursor-pointer  ">
+              <Link to="#" className="flex items-center gap-[15px]">
+                <SvgComponent />Gift Cards
+              </Link>
             </div>
-            <div className="flex items-center space-x-2 py-4 px-4  cursor-pointer  ">
-              <Notification className="w-5 h-5" /> 
-               <span>Notifications</span>
+            <div className="py-4 px-4  cursor-pointer bg-theme sm:bg-transparent ">
+              <Link to="#" className="flex items-center gap-[15px]">
+                <FontAwesomeIcon icon={faGift} />Coupons
+              </Link>
+            </div>
+            <div className="py-4 px-4  cursor-pointer  ">
+              <Link to="#" className="flex items-center gap-[15px]">
+                <Notification className="w-5 h-5" />Notifications
+               </Link>
             </div>
           </div>
         </nav>

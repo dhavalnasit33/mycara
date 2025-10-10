@@ -4,10 +4,6 @@ import './App.css';
 import './index.css';
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
-import Collections from "./pages/Collections";
-import Blogs from "./pages/Blogs";
-import Features from "./pages/Features";
-import More from "./pages/More";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import LoginForm from "./pages/Login";
@@ -20,6 +16,7 @@ import Dashboard from "./components/userAccount/Dashbord";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Product from "./pages/ProductPage";
+import Wishlist from "./pages/Wishlist";
 function App() {
   const RouterWrapper = () => {
     const location = useLocation();
@@ -31,10 +28,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/collections" element={<Collections />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/features" element={<Features />} />
-          <Route path="/more" element={<More />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegistrationForm />} />
           <Route path="/offer" element={<Offer/>}/>
@@ -49,6 +42,7 @@ function App() {
           <Route path="/cart" element={<Cart />}></Route>
           <Route path="/checkout" element={<Checkout />}></Route>
           <Route path="/products" element={<Product />}></Route>
+          <Route path="/wishlist" element={<Wishlist />}></Route>
         </Routes>
         <Footer />
       </>

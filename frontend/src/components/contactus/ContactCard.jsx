@@ -12,7 +12,7 @@ const ContactCard = ({ icon, title, description, linkText, linkHref }) => {
       <div className="text-left flex-1">
         <h3 className="text-dark text-20px font-semibold mb-[7px] leading">{title}</h3>
         
-        <div className="min-h-[82px] flex flex-col justify-between items-star">
+        <div className="flex flex-col justify-between items-start h-[80px] custom-lg:min-h-[82px] md:min-h-[135px]  ">
           <p className="text-[#989696] text-14 break">{description}</p>
           <a 
             href={linkHref} 
