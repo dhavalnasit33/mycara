@@ -1,6 +1,7 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 
 import React, { useState } from 'react';
+<<<<<<< HEAD:frontend/src/components/shop/WomenCollections.jsx
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 
@@ -14,6 +15,17 @@ import shopsaree2 from '../../assets/shopsaree2.jpg';
 
 import OriginalSortByIcon from "../icons/SortByIcon";
 
+=======
+import { ChevronDown, X, Plus, Minus } from 'lucide-react';
+import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
+
+import FilterIconComponent from "./icons/filter";
+import ProductGrid from '../components/ProductGrid';
+import shopsaree1 from '../assets/shopsaree1.jpg';
+import shopsaree2 from '../assets/shopsaree2.jpg';
+import OriginalSortByIcon from "./icons/SortByIcon";
+import { Link } from 'react-router-dom';
+>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/WomenCollections.jsx
 
 const TEXT_COLOR_CLASS = "text-pink-600";
 const BORDER_COLOR_CLASS = "border-pink-600";
@@ -32,47 +44,31 @@ const Filter = (props) => (
 
 // --- 1. Mobile Responsive UI (Filter Bar) ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
-    // કિનારીઓથી અંતર જાળવવા માટે w-full અને justify-center નો ઉપયોગ
     <div className="flex justify-center items-center w-full mx-auto gap-4 sm:gap-2">
-        {/* Sort By Button */}
-        <div
-
-            className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
+        <div className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
             onClick={onSortClick}
         >
-
             <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4">
                 <div>
-
                     <div className="text-base sm:text-lg font-inter font-semibold text-black/70">Sort By</div>
-
                     <div className="text-xs sm:text-sm font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
                 </div>
-
                 <SortByIcon className="h-5 w-5 sm:h-6 sm:w-6 text-black/70" />
             </div>
         </div>
-
-        <div
-
-            className={`bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white w-[140px] sm:w-[180px] md:w-[200px]`}
+        <div className={`bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white w-[140px] sm:w-[180px] md:w-[200px]`}
             onClick={onFilterClick}
         >
-
             <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4">
                 <div>
-                    {/* Main Text: Filter */}
                     <div className="text-base sm:text-lg font-inter font-semibold">Filter</div>
                     <div className="flex items-center mt-0.5">
                         <span className="text-xs sm:text-sm font-inter font-medium">Applied</span>
-
-                        {/* Filter Count Badge: Set explicit background for white */}
                         <span className="ml-2 px-2 py-0.5 bg-white text-black/70 font-semibold rounded-full text-xs">
                             {filterCount}
                         </span>
                     </div>
                 </div>
-                {/* Filter Icon */}
                 <Filter className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
             </div>
         </div>
@@ -82,14 +78,11 @@ const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) =>
 // --- 2. Desktop UI (Refactored to accept props) ---
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
     <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">
-        {/* SortByIcon no upyog kariyo chhe */}
         <SortByIcon />
         <span className="text-base font-medium text-gray-700">Sort By</span>
         <div className="relative">
             <select
-                // Using passed prop 'sortBy'
                 value={sortBy}
-                // Using passed prop 'setSortBy'
                 onChange={(e) => setSortBy(e.target.value)}
                 className="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm transition duration-150 ease-in-out"
             >
@@ -98,7 +91,6 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
                 <option value="Price: Low to High">Price: Low to High</option>
                 <option value="Price: High to Low">Price: High to Low</option>
             </select>
-            {/* Using the globally defined CustomChevronDown */}
             <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
         </div>
     </div>
@@ -124,21 +116,21 @@ const mockCategories = [
 const mockSizes = ['4XL', '3XL', 'XXL', 'XL', 'L', 'M', 'S', 'XS', 'XXS', 'All Size'];
 
 const mockColors = [
-    { name: 'Black', hex: '#000000', border: true }, // Added border for Black/White
+    { name: 'Black', hex: '#000000', border: true }, 
     { name: 'Peach', hex: '#FFD379' },
     { name: 'Brown', hex: '#964B00' },
     { name: 'Red', hex: '#E10404' },
     { name: 'Gray', hex: '#808080' },
     { name: 'Orange', hex: '#FF9000' },
-    { name: 'Rust', hex: '#289E3A' }, // This hex looks like Green, changed to a typical rust color for mock
-    { name: 'Beige', hex: '#FFC0CB' }, // This hex looks like Pink, changed to a typical beige for mock
-    { name: 'Teal', hex: '#800080' }, // This hex looks like Maroon, changed to a typical Teal for mock
-    { name: 'Magnt', hex: '#FF00FF' }, // Magenta
+    { name: 'Rust', hex: '#289E3A' }, 
+    { name: 'Beige', hex: '#FFC0CB' }, 
+    { name: 'Teal', hex: '#800080' },
+    { name: 'Magnt', hex: '#FF00FF' }, 
     { name: 'Green', hex: '#008000' },
-    { name: 'Pink', hex: '#A363E2' }, // This hex looks like Purple, using typical pink for mock
+    { name: 'Pink', hex: '#A363E2' },
     { name: 'Maruti', hex: '#A0392F' },
     { name: 'Blue', hex: '#0000FF' },
-    { name: 'White', hex: '#FFFFFF', border: true }, // Added border for Black/White
+    { name: 'White', hex: '#FFFFFF', border: true }, 
     { name: 'Purple', hex: '#800080' },
 ];
 
@@ -176,8 +168,6 @@ const mockProducts = [
 ];
 
 // --------------------- Sub-Components ---------------------
-
-// Category, Brand, Type, Fabric, Discount, Label mate
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
     <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
         <div className="flex items-center">
@@ -187,7 +177,7 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
                 checked={isChecked}
 
                 onChange={() => onChange(name)}
-                className={` w-5 h-5 rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
+                className={` w-[15px] h-[15px] rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
             <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
         </div>
 
@@ -197,19 +187,13 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
     </label>
 );
 
-
-// Size mate
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
     <label className="flex items-center cursor-pointer p-1 rounded w-1/2">
         <input
             type="checkbox"
             name={name}
             checked={isChecked}
-
-
-            //    જે WomenCollections માં handleSizeChange(size) તરીકે વ્યાખ્યાયિત છે.
             onChange={onChange}
-
             className={`
              w-5 h-5 rounded border border-gray-400 cursor-pointer
              appearance-none
@@ -221,13 +205,8 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
     </label>
 );
 
-
-
 const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
-
-
     const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
-
     return (
         <div
             className="flex flex-col items-center p-1 cursor-pointer w-1/6"
@@ -249,16 +228,11 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
     );
 };
 
-
 const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick, onApplyClick, defaultOpen = false, showButtons = true }) => {
-
     const [isOpen, setIsOpen] = useState(defaultOpen);
-
     const handleToggle = () => {
         setIsOpen(!isOpen);
     };
-
-
     const handleClose = () => {
         setIsOpen(false);
         if (onCancelClick) {
@@ -278,10 +252,7 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
                 onClick={handleToggle}
             >
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
-
                 <div className="flex items-center space-x-2">
-
-
                     <div className="flex items-center space-x-2">
                         {isOpen ? (
                             <Minus className={`w-4 h-4 text-white bg-color`} />
@@ -293,24 +264,15 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
                 </div>
             </div>
 
-            {/* Filter Content */}
             {isOpen && (
                 <div className="p-4 space-y-1">
                     {children}
-
-                    {/* Footer Buttons (Conditional on prop) */}
                     {showButtons && (
                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-                            {/* Cancel Button */}
-                            <button
-
-                                onClick={onCancelClick || handleClose}
+                            <button onClick={onCancelClick || handleClose}
                                 className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
-                            >
-                                Cancel
+                            > Cancel
                             </button>
-
-                            {/* Apply Button */}
                             <button
                                 onClick={onApplyClick || onReset}
                                 className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
@@ -325,12 +287,11 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
     );
 };
 
-
-
 const ProductCard = ({ product }) => (
-  <div className="relative group overflow-hidden bg-white">
-    {/* Image Section with dynamic route */}
-    {/* <Link */}
+ <Link
+    to="/products"
+    className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
+  >
       <div className="w-full h-auto overflow-hidden">
         <img
           src={product.imageSrc}
@@ -338,9 +299,6 @@ const ProductCard = ({ product }) => (
           className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
         />
       </div>
-    {/* </Link> */}
-
-    {/* Overlay */}
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
                     w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
@@ -355,23 +313,19 @@ const ProductCard = ({ product }) => (
           <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
         </button>
       </div>
-
       <div>
         <p className="text-sm font-medium font-inter text-black">
           RS {product.price ? product.price.toFixed(2) : "0.00"}
         </p>
       </div>
     </div>
-  </div>
+ </Link>
 );
 
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
-
     const MAX_PRICE = 5000;
     const DEFAULT_MIN = 500;
     const DEFAULT_MAX = 2500;
-
-
     const isRangeSelected = minPrice !== DEFAULT_MIN || maxPrice !== DEFAULT_MAX;
 
     const handleSliderChange = (e) => {
@@ -392,21 +346,14 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
     return (
         <CollapsibleFilter
             title="Price"
-            defaultOpen={!isMobile} // Always open on desktop, controlled by modal state on mobile
+            defaultOpen={!isMobile} 
             isSelected={isRangeSelected}
             onReset={handleReset}
-            showButtons={false} // Price range doesn't need Cancel/Filter buttons inside on desktop
+            showButtons={false} 
         >
             <div className="px-2 py-2 space-y-6">
-
-
-                {/* Price Range Slider */}
                 <div className="relative h-1 w-full bg-gray-200 rounded-full ">
-
-                    {/* Background Bar */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-full"></div>
-
-                    {/* Highlighted Range Bar */}
                     <div
                         className={`absolute bg-color h-1 rounded-full top-0`}
                         style={{
@@ -414,8 +361,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                             right: `${100 - (maxPrice / MAX_PRICE) * 100}%`,
                         }}
                     ></div>
-
-                    {/* Min Range Input (Hidden) */}
                     <input
                         id="min"
                         type="range"
@@ -427,7 +372,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                         className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer"
                         style={{ zIndex: minPrice === MAX_PRICE ? 5 : 4 }}
                     />
-                    {/* Max Range Input (Hidden) */}
                     <input
                         id="max"
                         type="range"
@@ -437,24 +381,18 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                         onChange={handleSliderChange}
 
                         className="range-slider-thumb absolute top-0 w-full opacity-0 cursor-pointer"
-                    />
-
-                    {/* Min Price Thumb */}
+                    /> 
                     <div
                         className={`absolute w-4 h-4 rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md`}
                         style={{ left: `${(minPrice / MAX_PRICE) * 100}%`, marginLeft: '-8px' }}
                     ></div>
-                    {/* Max Price Thumb */}
                     <div
                         className={`absolute w-4 h-4 rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md`}
                         style={{ left: `${(maxPrice / MAX_PRICE) * 100}%`, marginLeft: '-8px' }}
                     ></div>
 
                 </div>
-
-                {/* Price Display Inputs */}
                 <div className="flex justify-between text-center">
-
                     <div className="flex flex-col items-start">
                         <span className="font-inter text-[#989696] text-[14px] font-regular">Min</span>
                         <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg text-black font-inter text-[14px] font-regular">
@@ -469,7 +407,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                         </div>
                     </div>
                 </div>
-
                 {isMobile && (
                     <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
                         <button
@@ -503,12 +440,9 @@ const MobileFilterModal = ({
     selectedDiscounts, handleDiscountChange, handleResetDiscounts,
     selectedLabels, handleLabelChange, handleResetLabels,
     minPrice, setMinPrice, maxPrice, setMaxPrice,
-    applyAllFilters,
-    onClearAll // Placeholder function to apply all filters
 }) => {
     if (!isOpen) return null;
 
-    // Helper function for the Mobile Filter/Cancel buttons inside the collapsible sections
     const MobileFilterButtons = ({ onCancel, onFilter }) => (
         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
             <button
@@ -526,19 +460,13 @@ const MobileFilterModal = ({
         </div>
     );
 
-
     return (
-
          <>
-            {/* 1. Backdrop/Overlay: આ DIV ઉમેરવાનો છે */}
-            {/* આ આખી સ્ક્રીનને (inset-0) 60% બ્લેક કલર (bg-black/60) થી ઢાંકશે. */}
-            <div 
-                className="fixed inset-0 z-40 bg-black/60 lg:hidden transition-opacity duration-300" 
-                onClick={onClose} // આના પર ક્લિક કરવાથી મોડલ બંધ થશે
-            ></div>
+            <div  className="fixed inset-0 z-40 bg-black/60 lg:hidden transition-opacity duration-300" 
+                onClick={onClose} >
+            </div>
        
                    <div 
-                // મુખ્ય ફેરફાર આ ક્લાસમાં છે:
                 className={`
                     fixed top-0 left-0 z-50 bg-white lg:hidden overflow-y-auto w-4/5 h-full max-w-md 
                     transition-transform duration-500 ease-in-out
@@ -547,36 +475,24 @@ const MobileFilterModal = ({
             >
             <div className="w-full h-full">
 
-                {/* Modal Header */}
-{/* Modal Header */}
-<div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-start items-center z-10">
-    
-    {/* 1. Left Side: 'X' Icon + 'CLOSE' Text */}
-    {/* 'flex items-center space-x-1' આઇકન અને ટેક્સ્ટ વચ્ચે થોડી જગ્યા રાખશે. */}
-    <button 
-        onClick={onClose} 
-        className="flex items-center space-x-1 p-1 font-inter text-base sm:text-lg font-semibold text-black/90 hover:text-black"
-    >
-        {/* 'X' Icon (ખાતરી કરો કે X કમ્પોનન્ટ આયાત કરેલ છે) */}
-        <X className="w-5 h-5 text-black" />
-        CLOSE
-    </button>
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-start items-center z-10">
+                <button 
+                    onClick={onClose} 
+                    className="flex items-center space-x-1 p-1 font-inter text-base sm:text-lg font-semibold text-black/90 hover:text-black"
+                >
+                    <X className="w-5 h-5 text-black" />
+                    CLOSE
+                </button>
+            </div>
 
-    {/* 2. Right Side: હવે અહીં કોઈ ટાઇટલ કે બીજો આઇકન નથી,
-       જેથી તે સ્ક્રીનશોટના ટોચના ડાબા ખૂણાના દેખાવ સાથે મેચ થાય. */}
-</div>
-
-                {/* Filter Content */}
-                <div className=""> {/* Add padding for bottom buttons */}
-
-                    {/* Category Filter */}
+                <div className="">
                     <CollapsibleFilter
                         title="Category"
                         defaultOpen={true}
                         isSelected={selectedCategories.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetCategories}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                        <div className="space-y-1 h-[130px] overflow-y-auto hide-scrollbar ">
             {mockCategories.map(cat => (
@@ -590,8 +506,6 @@ const MobileFilterModal = ({
             ))}
         </div>
                     </CollapsibleFilter>
-
-                    {/* Price Range Filter (using isMobile prop to conditionally render buttons inside) */}
                     <PriceRangeFilter
                         minPrice={minPrice}
                         maxPrice={maxPrice}
@@ -599,14 +513,12 @@ const MobileFilterModal = ({
                         setMaxPrice={setMaxPrice}
                         isMobile={true}
                     />
-
-                    {/* Size Filter */}
                     <CollapsibleFilter
                         title="Size"
                         isSelected={selectedSizes.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetSizes}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                         <div className="flex flex-wrap ">
                             {mockSizes.map(size => (
@@ -619,14 +531,12 @@ const MobileFilterModal = ({
                             ))}
                         </div>
                     </CollapsibleFilter>
-
-                    {/* Color Filter */}
                     <CollapsibleFilter
                         title="Color"
                         isSelected={selectedColors.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetColors}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                         <div className="">
                             <div className="flex flex-wrap">
@@ -644,13 +554,12 @@ const MobileFilterModal = ({
                         </div>
                     </CollapsibleFilter>
 
-                    {/* Brands Filter */}
                     <CollapsibleFilter
                         title="Brands"
                         isSelected={selectedBrands.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetBrands}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose}
                     >
                         {mockBrands.map(brand => (
                             <FilterItemCheckbox
@@ -669,7 +578,7 @@ const MobileFilterModal = ({
                         isSelected={selectedTypes.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetTypes}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose}
                     >
                         {mockTypes.map(type => (
                             <FilterItemCheckbox
@@ -681,13 +590,12 @@ const MobileFilterModal = ({
                         ))}
                     </CollapsibleFilter>
 
-                    {/* Fabric Filter */}
                     <CollapsibleFilter
                         title="Fabric"
                         isSelected={selectedFabrics.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetFabrics}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                         {mockFabrics.map(fabric => (
                             <FilterItemCheckbox
@@ -699,13 +607,12 @@ const MobileFilterModal = ({
                         ))}
                     </CollapsibleFilter>
 
-                    {/* Discounts Filter */}
                     <CollapsibleFilter
                         title="Discounts"
                         isSelected={selectedDiscounts.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetDiscounts}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                         {mockDiscounts.map(discount => (
                             <FilterItemCheckbox
@@ -717,13 +624,12 @@ const MobileFilterModal = ({
                         ))}
                     </CollapsibleFilter>
 
-                    {/* Product Label Filter */}
                     <CollapsibleFilter
                         title="Product Label"
                         isSelected={selectedLabels.length > 0}
                         showButtons={true}
                         onCancelClick={handleResetLabels}
-                        onApplyClick={onClose} // Simplified: apply and close modal on filter
+                        onApplyClick={onClose} 
                     >
                         {mockLabels.map(label => (
                             <FilterItemCheckbox
@@ -734,11 +640,7 @@ const MobileFilterModal = ({
                             />
                         ))}
                     </CollapsibleFilter>
-
                 </div>
-
-               
-
             </div>
         </div>
          </>
@@ -756,13 +658,11 @@ const WomenCollections = () => {
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
 
-    // 👇 નવા ફિલ્ટર્સના States
     const [selectedTypes, setSelectedTypes] = useState([]);
     const [selectedFabrics, setSelectedFabrics] = useState([]);
     const [selectedDiscounts, setSelectedDiscounts] = useState([]);
     const [selectedLabels, setSelectedLabels] = useState([]);
 
-    // 💡 Price Range States
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
 
@@ -776,18 +676,15 @@ const WomenCollections = () => {
         let count = selectedCategories.length + selectedSizes.length + selectedColors.length + selectedBrands.length +
             selectedTypes.length + selectedFabrics.length + selectedDiscounts.length + selectedLabels.length;
 
-        // Add 1 if the price range is modified from the default
         if (minPrice !== 500 || maxPrice !== 2500) {
             count += 1;
         }
         return count;
     };
 
-    const filterCount = calculateFilterCount(); // Placeholder for applied filter count
-
-
+    const filterCount = calculateFilterCount(); 
     // --- Filter Handlers ---
-    const createToggleHandler = (setState) => (name) => { // Modified to accept name directly
+    const createToggleHandler = (setState) => (name) => { 
         setState(prev =>
             prev.includes(name)
                 ? prev.filter(item => item !== name)
@@ -806,19 +703,13 @@ const WomenCollections = () => {
     const handleDiscountChange = createToggleHandler(setSelectedDiscounts);
     const handleLabelChange = createToggleHandler(setSelectedLabels);
 
-
-    // Dummy handlers for mobile clicks
     const handleSortClick = () => console.log('Mobile Sort Clicked. Implement modal/popup logic here.');
-    // OPEN THE MOBILE FILTER MODAL
     const handleFilterClick = () => {
         setIsMobileFilterOpen(true);
     }
-    // CLOSE THE MOBILE FILTER MODAL
     const handleCloseMobileFilter = () => {
         setIsMobileFilterOpen(false);
-        // Implement logic to apply changes if needed, but typically 'Apply Filters' button handles this.
     }
-    // Apply all filters (Placeholder for future logic)
     const handleApplyAllFilters = () => {
         console.log("Applying all filters and closing modal.");
         setIsMobileFilterOpen(false);
@@ -847,7 +738,7 @@ const WomenCollections = () => {
     const handleResetFabrics = () => setSelectedFabrics([]);
     const handleResetDiscounts = () => setSelectedDiscounts([]);
     const handleResetLabels = () => setSelectedLabels([]);
-    const handleResetPrice = () => { setMinPrice(500); setMaxPrice(2500); }; // Price reset handler
+    const handleResetPrice = () => { setMinPrice(500); setMaxPrice(2500); }; 
 
     // --- Clear All Filters ---
     const handleClearAllFilters = () => {
@@ -859,7 +750,7 @@ const WomenCollections = () => {
         handleResetFabrics();
         handleResetDiscounts();
         handleResetLabels();
-        handleResetPrice(); // Reset price range too
+        handleResetPrice();
     };
 
     const currentFilters = [
@@ -872,7 +763,6 @@ const WomenCollections = () => {
         ...selectedFabrics.map(fabric => ({ type: 'fabric', value: fabric })),
         ...selectedDiscounts.map(discount => ({ type: 'discount', value: discount })),
         ...selectedLabels.map(label => ({ type: 'label', value: label })),
-        // Add price range as an active filter tag if it's not default
         ...(minPrice !== 500 || maxPrice !== 2500 ? [{ type: 'price', value: `Rs ${minPrice} - Rs ${maxPrice}` }] : []),
     ];
 
@@ -882,8 +772,6 @@ const WomenCollections = () => {
 
     return (
         <div className=" w-full container-1440 mx-auto py-2 px-3 lg:px-0 lg:py-10  ">
-
-            {/* --- Mobile Filter Modal Component --- */}
             <MobileFilterModal
                 isOpen={isMobileFilterOpen}
                 onClose={handleCloseMobileFilter}
@@ -903,15 +791,16 @@ const WomenCollections = () => {
 
             <div className="flex justify-between items-center py-2  mb-4 lg:hidden">
                 <div className=" w-full">
+<<<<<<< HEAD:frontend/src/components/shop/WomenCollections.jsx
 
 
+=======
+>>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482:frontend/src/components/WomenCollections.jsx
                     <div className="flex items-center py-2  space-x-2">
-                        {/* Left Arrow Icon (Wrapped in a responsive button) */}
                         <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
                             <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
                         </button>
 
-                        {/* Search Bar */}
                         <div className="flex-1 mx-3 relative">
                             <input
                                 type="text"
@@ -925,32 +814,27 @@ const WomenCollections = () => {
                 </div>
             </div>
 
-            <h1 className="text-22px font-semibold font-inter mb-2 ">Women's Collections</h1>
+            <h1 className="text-[22px] font-semibold font-inter mb-2 ">Women's Collections</h1>
             <p className="text-sm text-gray-600 mb-8">
-                <span className="text-black border-b border-black lg:border-none">Home</span>
+                <span className="text-black border-b border-black lg:border-none"><Link to="/home">Home</Link></span>
                 <span className="text-black "> / </span>
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
-            {/* Main Content: Filter Sidebar and Products Grid */}
-            <div className="flex flex-col lg:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row gap-[30px]">
 
-                {/* 1. Filter Sidebar (Desktop Only) */}
-                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white  rounded-lg border border-gray-200">
+                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white rounded-[20px] box-shadow">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
-
-                    {/* Category Filter Section (Desktop) */}
                     <CollapsibleFilter
                         title="Category"
                         defaultOpen={true}
 
                         isSelected={isCategorySelected}
                         onReset={handleResetCategories}
-                        showButtons={false} // Hide buttons inside for desktop
+                        showButtons={false}
                     >
-                        {/* Filter Content */}
                         <div className="space-y-1 px-2 overflow-y-auto">
                             {mockCategories.map(cat => (
                                 <FilterItemCheckbox
@@ -964,7 +848,6 @@ const WomenCollections = () => {
                         </div>
                     </CollapsibleFilter>
 
-                    {/* Price Range Filter (Desktop) */}
                     <PriceRangeFilter
                         minPrice={minPrice}
                         maxPrice={maxPrice}
@@ -973,10 +856,9 @@ const WomenCollections = () => {
                         isMobile={false}
                     />
 
-                    {/* Size Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Size"
-                        defaultOpen={false} // Keep closed on desktop by default for cleaner view
+                        defaultOpen={false}
                         isSelected={selectedSizes.length > 0}
                         onReset={handleResetSizes}
                         showButtons={false}
@@ -993,7 +875,6 @@ const WomenCollections = () => {
                         </div>
                     </CollapsibleFilter>
 
-                    {/* Color Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Color"
                         defaultOpen={false}
@@ -1034,8 +915,6 @@ const WomenCollections = () => {
                             />
                         ))}
                     </CollapsibleFilter>
-
-                    {/* Type Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Type"
                         isSelected={selectedTypes.length > 0}
@@ -1051,8 +930,6 @@ const WomenCollections = () => {
                             />
                         ))}
                     </CollapsibleFilter>
-
-                    {/* Fabric Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Fabric"
                         isSelected={selectedFabrics.length > 0}
@@ -1068,8 +945,6 @@ const WomenCollections = () => {
                             />
                         ))}
                     </CollapsibleFilter>
-
-                    {/* Discounts Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Discounts"
                         isSelected={selectedDiscounts.length > 0}
@@ -1085,8 +960,6 @@ const WomenCollections = () => {
                             />
                         ))}
                     </CollapsibleFilter>
-
-                    {/* Product Label Filter (Desktop) */}
                     <CollapsibleFilter
                         title="Product Label"
                         isSelected={selectedLabels.length > 0}
@@ -1102,8 +975,6 @@ const WomenCollections = () => {
                             />
                         ))}
                     </CollapsibleFilter>
-
-                    {/* Global Desktop Clear/Apply Buttons */}
                     <div className="p-4 mt-4 flex gap-4 border-t border-gray-200">
                         <button
                             onClick={handleClearAllFilters}
@@ -1118,19 +989,13 @@ const WomenCollections = () => {
                             Apply
                         </button>
                     </div>
-
                 </aside>
 
-
                 <main className="w-full lg:w-3/4">
-
-                    {/* Top Bar: Results and Sorting */}
                     <div className="flex justify-between items-center mb-6">
                         <div className="hidden lg:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
-
-                        {/* Mobile Filter and Sort Bar (Hidden on Desktop) */}
                         <div className=" sm:flex lg:hidden">
                             <MobileFilterBar
                                 sortBy={sortBy}
@@ -1139,11 +1004,7 @@ const WomenCollections = () => {
                                 onFilterClick={handleFilterClick}
                             />
                         </div>
-
-
-                        {/* Desktop Sort Bar (Hidden on Mobile) */}
                         <div className="hidden lg:flex justify-end">
-                            {/* Passing state and setter as props */}
                             <DesktopSortBar sortBy={sortBy} setSortBy={setSortBy} />
                         </div>
                     </div>
@@ -1151,9 +1012,7 @@ const WomenCollections = () => {
                     {/* Active Filters Display */}
                     <div className="hidden sm:flex flex-wrap items-center gap-2 mb-6">
                         <span onClick={handleClearAllFilters} className={`text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer`}>Clear Filters:</span>
-
-
-                        {currentFilters.map((filter, index) => (
+                            {currentFilters.map((filter, index) => (
                             <span
                                 key={index}
                                 className={`theme-border ${TEXT_COLOR_CLASS} border border-gray-300 px-4 py-1 rounded-[5px] cursor-pointer inline-flex items-center `}
@@ -1165,14 +1024,14 @@ const WomenCollections = () => {
                             </span>
                         ))}
                     </div>
-
-                    {/* Products Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
+                    {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-6 w-full mx-auto"> */}
                     <ProductGrid />
+                    {/* </div> */}
 
                 </main>
 
