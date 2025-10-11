@@ -10,16 +10,14 @@ import Collections from "./pages/Collections";
 import Blogs from "./pages/Blogs";
 import Features from "./pages/Features";
 import More from "./pages/More";
-<<<<<<< HEAD
-
-import Header from './components/common/Header';
-import Footer from './components/common/Footer';
 
 
-=======
+
+
+
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
->>>>>>> 83d4d3b42e684b5022d514690a594c3242f9c482
+
 import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";

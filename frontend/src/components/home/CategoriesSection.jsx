@@ -52,7 +52,7 @@ const CategoriesSection = () => {
         {/* <Row > */}
           <Slider ref={sliderRef} {...settings}>
             {categories.map((category, index) => (
-              <div key={index} className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]">
+              <div key={index} className="flex flex-col group cursor-pointer px-[10px] sm:px-[26.5px]">
                 <div className="relative w-full aspect-square rounded-full overflow-hidden border-4 circle-border duration-300">
                   <img src={category.img} alt={category.name} className="w-full h-full object-cover rounded-full " />
                 </div>

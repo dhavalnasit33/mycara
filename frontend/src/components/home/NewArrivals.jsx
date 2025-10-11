@@ -68,24 +68,23 @@ const NewArrivals = () => {
 
 const earrings = {
   ...newArrivalItems[0],
-  classes: " lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
+  classes: "lg:w-[428px] lg:h-[578px]  w-[100%] h-[240px]",
 };
 
 const shoes = {
   ...newArrivalItems[1],
-  classes: "lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
+  classes: "lg:w-[568px] lg:h-[285px]  w-[100%] h-[169px]",
 };
 
 const watch = {
   ...newArrivalItems[2],
-  classes: " lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
+  classes: "lg:w-[568px] lg:h-[285px]  w-[100%] h-[169px]",
 };
 
 const winterClothes = {
   ...newArrivalItems[3],
-  classes: "lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
+  classes: "lg:w-[428px] lg:h-[578px]  w-[100%] h-[240px]",
 };
-
 
   return (
     <section className=" w-full py-[25px] md:py-[50px] ">
@@ -95,7 +94,7 @@ const winterClothes = {
 
    
       
-          <div className="grid gap-2 justify-center sm:grid-cols-1 lg:flex  ">
+          <div className="grid gap-2 justify-center sm:grid-cols-1 md:grid-cols-1 lg:flex sm:px-4 md:px-4  ">
             
             <div className={earrings.classes}>
               <ImageCard {...earrings} />

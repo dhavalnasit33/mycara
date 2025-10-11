@@ -111,7 +111,7 @@ const ProductCard = ({ item }) => {
         <img src={item.image} alt={item.name} className="w-full h-full " />
         <div className="absolute inset-0 bg-black opacity-30" style={{ mixBlendMode: 'luminosity' }}></div>
       </div>
-      <div className="absolute inset-0 flex justify-center items-center">
+      <div className="absolute inset-0 flex justify-center items-center cursor-pointer">
         <img src={item.image} alt={item.name} className="w-[90%] h-[92%] object-cover" />
       </div>
       <div className="absolute bottom-8 left-6 text-white z-20">

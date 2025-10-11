@@ -414,19 +414,22 @@
   @apply w-full mx-auto lg:max-w-[1440px];
 }
 
-/* Custom radial gradient background */
-.bg-radial-custom {
-  background: radial-gradient(
-    circle,
-    rgba(210, 175, 159, 0.6) 0%,   
-    rgba(210, 175, 159, 0.6) 30%,  
-    rgba(210, 175, 159, 0.6) 100%  
+
+/* app.css */
+/* app.css */
+.bg-gradient-custom {
+  background: linear-gradient(
+    90deg, 
+    rgba(210, 175, 159, 0.6) 0%,   /* 0% */
+    rgba(210, 175, 159, 0.6) 30%,  /* 30% */
+    rgba(210, 175, 159, 0.6) 100%  /* 100% */
   );
 }
-
 
 /* ultra thin dashed border */
 .thin-border {
   border-width: 0.5px !important;
   border-style: dashed !important;
 }
+
+
