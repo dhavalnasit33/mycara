@@ -9,11 +9,13 @@ const getPages = async (req, res) => {
 
     const query = {};
 
+    // 🔍 Search by page_name
     if (search) {
       query.page_name = { $regex: search, $options: "i" };
     }
 
-    if (status && ["draft", "published"].includes(status)) {
+    // ✅ Status filter (active / inactive)
+    if (status && ["active", "inactive"].includes(status)) {
       query.status = status;
     }
 
@@ -42,6 +44,7 @@ const getPages = async (req, res) => {
   }
 };
 
+
 // 📄 Get page by ID
 const getPageById = async (req, res) => {
   try {
@@ -53,28 +56,91 @@ const getPageById = async (req, res) => {
   }
 };
 
-// ➕ Create new page
-const createPage = async (req, res) => {
+// 🌐 Get page by slug
+const getPageBySlug = async (req, res) => {
   try {
-    const page = new Page(req.body);
-    const savedPage = await page.save();
-    sendResponse(res, true, savedPage, "Page created successfully");
+    const { slug } = req.params;
+    if (!slug) return sendResponse(res, false, null, "Slug is required");
+
+    const page = await Page.findOne({ slug });
+    if (!page) return sendResponse(res, false, null, "Page not found");
+
+    sendResponse(res, true, page, "Page retrieved successfully by slug");
   } catch (err) {
     sendResponse(res, false, null, err.message);
   }
 };
 
-// ✏️ Update page
+
+// ➕ Create new page
+const createPage = async (req, res) => {
+  try {
+    const data = req.body;
+
+    // 🧹 Clean up sections (remove empty ones)
+    if (Array.isArray(data.sections)) {
+      data.sections = data.sections.filter(
+        (sec) =>
+          sec.title?.trim() ||
+          sec.description?.trim() ||
+          sec.image_url?.trim() ||
+          sec.background_image_url?.trim()
+      );
+    }
+
+    // 🧠 Auto-generate slug if missing
+    if (!data.slug && data.page_name) {
+      data.slug = data.page_name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+    }
+
+    const page = new Page(data);
+    const savedPage = await page.save();
+
+    sendResponse(res, true, savedPage, "Page created successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message || "Failed to create page");
+  }
+};
+
+// ✏️ Update existing page
 const updatePage = async (req, res) => {
   try {
-    const updatedPage = await Page.findByIdAndUpdate(req.params.id, req.body, {
+    const data = req.body;
+
+    // 🧹 Clean up empty sections before update
+    if (Array.isArray(data.sections)) {
+      data.sections = data.sections.filter(
+        (sec) =>
+          sec.title?.trim() ||
+          sec.description?.trim() ||
+          sec.image_url?.trim() ||
+          sec.background_image_url?.trim()
+      );
+    }
+
+    // 🧠 Auto-update slug if page_name changed
+    if (!data.slug && data.page_name) {
+      data.slug = data.page_name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)+/g, "");
+    }
+
+    const updatedPage = await Page.findByIdAndUpdate(req.params.id, data, {
       new: true,
       runValidators: true,
     });
-    if (!updatedPage) return sendResponse(res, false, null, "Page not found");
+
+    if (!updatedPage) {
+      return sendResponse(res, false, null, "Page not found");
+    }
+
     sendResponse(res, true, updatedPage, "Page updated successfully");
   } catch (err) {
-    sendResponse(res, false, null, err.message);
+    sendResponse(res, false, null, err.message || "Failed to update page");
   }
 };
 
@@ -82,7 +148,7 @@ const updatePage = async (req, res) => {
 const updatePageStatus = async (req, res) => {
   try {
     const { status } = req.body;
-    if (!["draft", "published"].includes(status)) {
+    if (!["active", "inactive"].includes(status)) {
       return sendResponse(res, false, null, "Invalid status value");
     }
 
@@ -133,6 +199,7 @@ const bulkDeletePages = async (req, res) => {
 module.exports = {
   getPages,
   getPageById,
+  getPageBySlug,
   createPage,
   updatePage,
   updatePageStatus,

@@ -1,8 +1,26 @@
 const mongoose = require("mongoose");
 
+
+const slideSchema = new mongoose.Schema({
+  title: { type: String },
+  description: { type: String },
+  image_url: { type: String },
+  background_image_url: { type: String },
+  is_button: { type: Boolean, default: false },
+  button_name: { type: String },
+  button_link: { type: String },
+  order: { type: Number, default: 1 },
+});
+
 // Section Subschema (embedded inside Page)
 const sectionSchema = new mongoose.Schema(
   {
+    type: {
+      type: String,
+      enum: ["hero_slider", "content", "feature"],
+      default: "content",
+      required: true,
+    },
     title: { type: String, required: true },
     description: { type: String },
     image_url: { type: String },
@@ -12,6 +30,7 @@ const sectionSchema = new mongoose.Schema(
     button_name: { type: String },
     button_link: { type: String },
     status: { type: String, enum: ["active", "inactive"], default: "active" },
+     slides: [slideSchema],
   },
   { timestamps: true }
 );

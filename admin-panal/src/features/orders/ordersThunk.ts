@@ -2,15 +2,42 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 import { ROUTES } from "../../services/routes";
 
-// ✅ Fetch orders (with pagination/search)
+// ✅ Fetch orders (with pagination, search & all filters)
 export const fetchOrders = createAsyncThunk(
   "orders/fetchOrders",
   async (
-    params: { page?: number; limit?: number; search?: string; isDownload?: boolean } = {},
+    params: {
+      page?: number;
+      limit?: number;
+      search?: string;
+      isDownload?: boolean;
+      status?: "pending" | "processing" | "completed" | "cancelled" | "all";
+      startDate?: string;
+      endDate?: string;
+      minPrice?: number;
+      maxPrice?: number;
+      user?: string; // single or comma-separated IDs
+      product?: string; // single or comma-separated product IDs
+      color?: string; // color ID(s)
+      size?: string; // size ID(s)
+    } = {},
     { rejectWithValue }
   ) => {
     try {
-      const res = await api.get(ROUTES.orders.getAll, { params });
+      // Remove empty/undefined/null params
+      const filteredParams = Object.fromEntries(
+        Object.entries(params).filter(
+          ([, v]) => v !== undefined && v !== "" && v !== null
+        )
+      );
+
+      // Convert "all" status to undefined for backend
+      if (filteredParams.status === "all") {
+        delete filteredParams.status;
+      }
+
+      const res = await api.get(ROUTES.orders.getAll, { params: filteredParams });
+
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to fetch orders");
     } catch (err: any) {

@@ -2,15 +2,27 @@ const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema(
   {
-    user_id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    total_price: { type: Number, required: true },
-    status: { 
-      type: String, 
-      enum: ["pending", "processing", "completed", "cancelled"], 
-      default: "pending" 
+    user_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
-    coupon_id: { type: mongoose.Schema.Types.ObjectId, ref: "Coupon", required: false },
-    discount_id: { type: mongoose.Schema.Types.ObjectId, ref: "Discount", default: null },
+    total_price: { type: Number, required: true },
+    status: {
+      type: String,
+      enum: ["pending", "processing", "completed", "cancelled"],
+      default: "pending",
+    },
+    coupon_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Coupon",
+      required: false,
+    },
+    discount_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Discount",
+      default: null,
+    },
     // New order number field
     order_number: { type: String, unique: true },
   },
@@ -21,7 +33,10 @@ const orderSchema = new mongoose.Schema(
 orderSchema.pre("save", async function (next) {
   if (!this.order_number) {
     const randomPart = Math.floor(1000 + Math.random() * 9000); // 4 digit random
-    const datePart = new Date().toISOString().replace(/[-T:.Z]/g, "").slice(0, 8); // YYYYMMDD
+    const datePart = new Date()
+      .toISOString()
+      .replace(/[-T:.Z]/g, "")
+      .slice(0, 8); // YYYYMMDD
     this.order_number = `ORD-${datePart}-${randomPart}`;
   }
   next();

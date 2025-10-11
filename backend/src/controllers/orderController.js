@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 const Discount = require("../models/Discount");
 const Order = require("../models/Order");
 const OrderItem = require("../models/OrderItem");
@@ -13,78 +14,129 @@ const getOrders = async (req, res) => {
       search = "",
       isDownload = "false",
       status,
+      user,    
+      product, 
+      color,  
+      size,    
+      startDate,
+      endDate,
+      minPrice,
+      maxPrice,
     } = req.query;
-    const download = isDownload.toLowerCase() === "true";
-
-    const query = {};
-    if (search) query.status = { $regex: search, $options: "i" };
-
-    if (status && ["active", "inactive"].includes(status))
-      query.status = status;
-
-    const populateOrder = [
-      { path: "user_id", select: "name email" },
-      { path: "coupon_id", select: "code discount_value" },
-    ];
-
-    const populateOrderItems = [
-      { path: "product_id", select: "name price" },
-      {
-        path: "variant_id",
-        populate: [
-          { path: "color_id", select: "name hexCode" },
-          { path: "size_id", select: "name" },
-        ],
-      },
-    ];
-
-    if (download) {
-      // Fetch all orders
-      const orders = await Order.find(query)
-        .sort({ createdAt: -1 })
-        .populate(populateOrder);
-
-      // Fetch items for each order with variant details
-      const ordersWithItems = await Promise.all(
-        orders.map(async (order) => {
-          const items = await OrderItem.find({ order_id: order._id }).populate(
-            populateOrderItems
-          );
-          return { ...order.toObject(), items };
-        })
-      );
-
-      return sendResponse(
-        res,
-        true,
-        { orders: ordersWithItems },
-        "All orders retrieved for download"
-      );
-    }
-
+    
     page = parseInt(page);
     limit = parseInt(limit);
+    const download = isDownload.toLowerCase() === "true";
 
-    const total = await Order.countDocuments(query);
+    const orderMatch = {};
 
-    const orders = await Order.find(query)
-      .skip((page - 1) * limit)
-      .limit(limit)
-      .sort({ createdAt: -1 })
-      .populate(populateOrder);
+    // Search filter (status or order_number)
+    if (search) {
+      orderMatch.$or = [
+        { status: { $regex: search, $options: "i" } },
+        { order_number: { $regex: search, $options: "i" } },
+      ];
+    }
 
-    // Fetch items for each order with variant details
-    const ordersWithItems = await Promise.all(
-      orders.map(async (order) => {
-        const items = await OrderItem.find({ order_id: order._id }).populate(
-          populateOrderItems
-        );
-        return { ...order.toObject(), items };
-      })
-    );
+    // Status filter
+    if (status && ["pending", "processing", "completed", "cancelled"].includes(status)) {
+      orderMatch.status = status;
+    }
+
+    // User filter
+    if (user) {
+      const userArray = user.split(",").map((id) => new mongoose.Types.ObjectId(id));
+      orderMatch.user_id = { $in: userArray };
+    }
+
+    // Date range filter
+    if (startDate || endDate) {
+      orderMatch.createdAt = {};
+      if (startDate) orderMatch.createdAt.$gte = new Date(startDate);
+      if (endDate) orderMatch.createdAt.$lte = new Date(endDate);
+    }
+
+    // Total price filter
+    if (minPrice || maxPrice) {
+      orderMatch.total_price = {};
+      if (minPrice) orderMatch.total_price.$gte = Number(minPrice);
+      if (maxPrice) orderMatch.total_price.$lte = Number(maxPrice);
+    }
+
+
+    const itemMatch = {};
+    if (product) {
+      const productArray = product.split(",").map((id) => new mongoose.Types.ObjectId(id));
+      itemMatch.product_id = { $in: productArray };
+    }
+    if (color) {
+      const colorArray = color.split(",").map((id) => new mongoose.Types.ObjectId(id));
+      itemMatch["variant_id.color_id"] = { $in: colorArray };
+    }
+    if (size) {
+      const sizeArray = size.split(",").map((id) => new mongoose.Types.ObjectId(id));
+      itemMatch["variant_id.size_id"] = { $in: sizeArray };
+    }
+
+    const pipeline = [
+      { $match: orderMatch },
+      {
+        $lookup: {
+          from: "orderitems",
+          localField: "_id",
+          foreignField: "order_id",
+          as: "items",
+          pipeline: [
+            {
+              $lookup: {
+                from: "products",
+                localField: "product_id",
+                foreignField: "_id",
+                as: "product",
+              },
+            },
+            {
+              $lookup: {
+                from: "productvariants",
+                localField: "variant_id",
+                foreignField: "_id",
+                as: "variant",
+                pipeline: [
+                  { $lookup: { from: "colors", localField: "color_id", foreignField: "_id", as: "color" } },
+                  { $lookup: { from: "sizes", localField: "size_id", foreignField: "_id", as: "size" } },
+                ],
+              },
+            },
+            { $unwind: { path: "$product", preserveNullAndEmptyArrays: true } },
+            { $unwind: { path: "$variant", preserveNullAndEmptyArrays: true } },
+            { $match: Object.keys(itemMatch).length ? itemMatch : {} },
+          ],
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
+      { $sort: { createdAt: -1 } },
+    ];
+
+    // Pagination
+    if (!download) {
+      pipeline.push({ $skip: (page - 1) * limit }, { $limit: limit });
+    }
+
+    const orders = await Order.aggregate(pipeline);
+
+    const totalCountAgg = await Order.aggregate([{ $match: orderMatch }, { $count: "total" }]);
+    const total = totalCountAgg[0]?.total || 0;
 
     sendResponse(res, true, {
-      orders: ordersWithItems,
+      orders,
       total,
       page,
       pages: Math.ceil(total / limit),
@@ -202,7 +254,6 @@ const createOrder = async (req, res) => {
 
     sendResponse(res, true, savedOrder, "Order created successfully");
   } catch (err) {
-    console.error("Error creating order:", err);
     sendResponse(res, false, null, err.message);
   }
 };
@@ -285,7 +336,6 @@ const updateOrder = async (req, res) => {
 
     sendResponse(res, true, order, "Order updated successfully");
   } catch (err) {
-    console.error(err);
     sendResponse(res, false, null, err.message);
   }
 };

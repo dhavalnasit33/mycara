@@ -49,6 +49,10 @@ import {
   ArrowDownRight,
   Ticket,
 } from "lucide-react";
+import { AppDispatch, RootState } from "@/store";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchDashboard } from "@/features/dashboard/dashboardThunk";
 
 // Dummy data for charts and tables
 const salesData = [
@@ -118,48 +122,6 @@ const recentOrders = [
   },
 ];
 
-const statsCards = [
-  {
-    title: "Total Products",
-    value: "2,847",
-    change: "+12.5%",
-    trending: "up",
-    icon: Package,
-    bgClass: "stat-card-primary",
-  },
-  {
-    title: "Total Orders",
-    value: "1,234",
-    change: "+8.2%",
-    trending: "up",
-    icon: ShoppingCart,
-    bgClass: "stat-card-success",
-  },
-  {
-    title: "Total Users",
-    value: "8,945",
-    change: "+15.3%",
-    trending: "up",
-    icon: Users,
-    bgClass: "stat-card-info",
-  },
-  {
-    title: "Total Revenue",
-    value: "$45,231",
-    change: "-2.4%",
-    trending: "down",
-    icon: DollarSign,
-    bgClass: "stat-card-warning",
-  },
-  {
-    title: "Active Coupons",
-    value: "23",
-    change: "+5.1%",
-    trending: "up",
-    icon: Ticket,
-    bgClass: "stat-card-secondary",
-  },
-];
 
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -188,6 +150,72 @@ const chartConfig = {
 };
 
 export default function VelzonDashboard() {
+
+   const dispatch = useDispatch<AppDispatch>();
+   const { 
+    totalProducts, totalOrders, totalUsers, totalRevenue, activeCoupons,ordersByStatus,salesOverview,
+    recentOrders, topSellingProducts, loading, error 
+  } = useSelector((state: RootState) => state.dashboard);
+
+    useEffect(() => {
+    dispatch(fetchDashboard());
+  }, [dispatch]);
+
+   if (loading) return <p>Loading dashboard...</p>;
+  if (error) return <p className="text-red-500">{error}</p>;
+
+const statsCards = [
+  { title: "Total Products", value: totalProducts, icon: Package, bgClass: "stat-card-primary", trending: "up", change: "+0%" },
+  { title: "Total Orders", value: totalOrders, icon: ShoppingCart, bgClass: "stat-card-success", trending: "up", change: "+0%" },
+  { title: "Total Users", value: totalUsers, icon: Users, bgClass: "stat-card-info", trending: "up", change: "+0%" },
+  { title: "Total Revenue", value: `$${totalRevenue}`, icon: DollarSign, bgClass: "stat-card-warning", trending: "up", change: "+0%" },
+  { title: "Active Coupons", value: activeCoupons, icon: Ticket, bgClass: "stat-card-secondary", trending: "up", change: "+0%" },
+];
+
+// Map API ordersByStatus to chart data
+const orderStatusData = ordersByStatus.map((status) => {
+  let color = "";
+  switch (status._id) {
+    case "delivered":
+      color = "hsl(var(--success))";
+      break;
+    case "pending":
+      color = "hsl(var(--warning))";
+      break;
+    case "cancelled":
+      color = "hsl(var(--destructive))";
+      break;
+    case "processing":
+      color = "hsl(var(--info))";
+      break;
+    default:
+      color = "hsl(var(--secondary))";
+      break;
+  }
+
+  // Capitalize first letter for display
+  const name = status._id.charAt(0).toUpperCase() + status._id.slice(1);
+
+  return {
+    name,
+    value: status.count,
+    color,
+  };
+});
+
+// Map API salesOverview to chart data
+const salesData = salesOverview.map((item) => ({
+  month: new Date(item._id).toLocaleString("default", { month: "short" }),
+  sales: item.revenue,
+  orders: item.orders,
+}));
+
+const topProductsData = topSellingProducts.map((product) => ({
+  name: product.name,
+  sales: product.quantity,
+}));
+
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -242,19 +270,26 @@ export default function VelzonDashboard() {
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px]">
-              <LineChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Line
-                  type="monotone"
-                  dataKey="sales"
-                  stroke="hsl(var(--primary))"
-                  strokeWidth={3}
-                  dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
-                />
-              </LineChart>
+            <LineChart data={salesData}>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis dataKey="month" />
+  <YAxis />
+  <ChartTooltip content={<ChartTooltipContent />} />
+  <Line
+    type="monotone"
+    dataKey="sales"
+    stroke="hsl(var(--primary))"
+    strokeWidth={3}
+    dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
+  />
+  <Line
+    type="monotone"
+    dataKey="orders"
+    stroke="hsl(var(--info))"
+    strokeWidth={3}
+    dot={{ fill: "hsl(var(--info))", strokeWidth: 2, r: 4 }}
+  />
+</LineChart>
             </ChartContainer>
           </CardContent>
         </Card>
@@ -297,18 +332,18 @@ export default function VelzonDashboard() {
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px]">
               <BarChart data={topProductsData} layout="horizontal">
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis dataKey="name" type="category" width={100} />
-                <ChartTooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="sales" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
-              </BarChart>
+  <CartesianGrid strokeDasharray="3 3" />
+  <XAxis type="number" />
+  <YAxis dataKey="name" type="category" width={100} />
+  <ChartTooltip content={<ChartTooltipContent />} />
+  <Bar dataKey="sales" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
+</BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
 
         {/* Recent Orders */}
-        <Card>
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Orders</CardTitle>
             <Button variant="ghost" size="sm" className="gap-2">
@@ -320,12 +355,12 @@ export default function VelzonDashboard() {
             <div className="space-y-4">
               {recentOrders.map((order) => (
                 <div
-                  key={order.id}
+                  key={order._id}
                   className="flex items-center justify-between p-4 border border-card-border rounded-lg hover:bg-table-hover transition-colors"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">{order.id}</span>
+                      <span className="font-medium">{order._id}</span>
                       {getStatusBadge(order.status)}
                     </div>
                     <div className="text-sm text-muted-foreground">{order.customer}</div>
@@ -341,7 +376,7 @@ export default function VelzonDashboard() {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </Card> */}
       </div>
     </div>
   );

@@ -16,29 +16,30 @@ import {
   getPageById,
   updatePage,
 } from "@/features/pages/pagesThunk";
+import {  SectionType, Slide } from "@/features/pages/pagesSlice";
 
 export default function PageFormPage() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<any>();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const isEditMode = Boolean(id);
 
-  // 🧠 Page States
+  // Page fields
   const [pageName, setPageName] = useState("");
-  const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [status, setStatus] = useState("active");
   const [order, setOrder] = useState<number | "">("");
 
-  // 🧩 SEO States
+  // SEO fields
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
   const [metaKeyphrase, setMetaKeyphrase] = useState("");
   const [seoImage, setSeoImage] = useState("");
 
-  // 📦 Sections
-  const [sections, setSections] = useState([
+  // Sections
+  const [sections, setSections] = useState<SectionType[]>([
     {
+      type: "content",
       title: "",
       description: "",
       image_url: "",
@@ -51,25 +52,13 @@ export default function PageFormPage() {
     },
   ]);
 
-  // Auto-generate slug
-  useEffect(() => {
-    if (!isEditMode && pageName) {
-      const generated = pageName
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)+/g, "");
-      setSlug(generated);
-    }
-  }, [pageName, isEditMode]);
-
-  // Fetch existing page when editing
+  // Fetch page if edit mode
   useEffect(() => {
     if (isEditMode && id) {
       dispatch(getPageById(id)).then((res: any) => {
         if (res.payload) {
           const page = res.payload;
           setPageName(page.page_name || "");
-          setSlug(page.slug || "");
           setDescription(page.description || "");
           setMetaTitle(page.meta_title || "");
           setMetaDescription(page.meta_description || "");
@@ -77,50 +66,109 @@ export default function PageFormPage() {
           setSeoImage(page.seo_image || "");
           setStatus(page.status || "active");
           setOrder(page.order || 1);
-          setSections(page.sections || []);
+          setSections(page.sections.length ? page.sections : []);
         }
       });
     }
   }, [dispatch, id, isEditMode]);
 
-  // ➕ Add / Remove Section
-  const addSection = () => {
-    setSections([
-      ...sections,
-      {
-        title: "",
-        description: "",
-        image_url: "",
-        background_image_url: "",
-        order: sections.length + 1,
-        is_button: false,
-        button_name: "",
-        button_link: "",
-        status: "active",
-      },
-    ]);
+  // Add / remove sections
+  const addSection = (type: SectionType["type"] = "content") => {
+    const newSection: SectionType = {
+      type,
+      title: "",
+      description: "",
+      image_url: "",
+      background_image_url: "",
+      order: sections.length + 1,
+      is_button: false,
+      button_name: "",
+      button_link: "",
+      status: "active",
+    };
+    if (type === "hero_slider") newSection.slides = [];
+    setSections([...sections, newSection]);
   };
 
   const removeSection = (index: number) => {
     setSections(sections.filter((_, i) => i !== index));
   };
 
-  // 📝 Submit Handler
+  // Slide handlers
+  const addSlide = (sectionIndex: number) => {
+    const updated = [...sections];
+    if (!updated[sectionIndex].slides) updated[sectionIndex].slides = [];
+    updated[sectionIndex].slides!.push({
+      title: "",
+      description: "",
+      background_image_url: "",
+      is_button: false,
+      button_name: "",
+      button_link: "",
+      order: updated[sectionIndex].slides!.length + 1,
+    });
+    setSections(updated);
+  };
+
+const updateSlide = (
+  sectionIndex: number,
+  slideIndex: number,
+  field: keyof Slide,
+  value: Slide[keyof Slide]
+) => {
+  setSections(prev => {
+    const updated = [...prev];
+    if (!updated[sectionIndex].slides) return updated;
+    updated[sectionIndex].slides![slideIndex] = {
+      ...updated[sectionIndex].slides![slideIndex],
+      [field]: value,
+    };
+    return updated;
+  });
+};
+
+  const removeSlide = (sectionIndex: number, slideIndex: number) => {
+    const updated = [...sections];
+    updated[sectionIndex].slides!.splice(slideIndex, 1);
+    setSections(updated);
+  };
+
+const updateSection = (
+  index: number,
+  field: keyof SectionType,
+  value: SectionType[keyof SectionType]
+) => {
+  setSections(prev => {
+    const updated = [...prev];
+    updated[index] = {
+      ...updated[index],
+      [field]: value,
+    };
+    return updated;
+  });
+};
+  // Submit
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!pageName.trim()) return toast.error("Please enter page name");
 
     const payload = {
       page_name: pageName,
-      slug,
+      slug: pageName.toLowerCase().replace(/\s+/g, "-"),
       description,
       meta_title: metaTitle,
       meta_description: metaDescription,
       meta_keyphrase: metaKeyphrase,
       seo_image: seoImage,
-      sections,
       status,
       order,
+      sections: sections.map((section) => {
+        const { slides, ...rest } = section;
+        return {
+          ...rest,
+          slides: slides?.length ? slides.map((slide) => ({ ...slide })) : undefined,
+        };
+      }),
     };
 
     try {
@@ -135,11 +183,7 @@ export default function PageFormPage() {
         createPage.fulfilled.match(result) ||
         updatePage.fulfilled.match(result)
       ) {
-        toast.success(
-          isEditMode
-            ? "Page updated successfully!"
-            : "Page created successfully!"
-        );
+        toast.success(isEditMode ? "Page updated successfully!" : "Page created successfully!");
         navigate("/pages");
       } else {
         toast.error((result.payload as string) || "Something went wrong");
@@ -163,38 +207,25 @@ export default function PageFormPage() {
             {isEditMode ? "Edit Page" : "Add New Page"}
           </h1>
           <p className="text-gray-500 mt-1">
-            {isEditMode
-              ? "Update page content and sections."
-              : "Create a new dynamic page."}
+            {isEditMode ? "Update page content and sections." : "Create a new dynamic page."}
           </p>
         </div>
       </div>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="grid lg:grid-cols-3 gap-6">
-        {/* Left: Page & SEO */}
+        {/* Left */}
         <div className="lg:col-span-2 space-y-6">
-          {/* Page Info */}
+          {/* Page Details */}
           <Card className="shadow-md border border-gray-200">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold">
-                Page Details
-              </CardTitle>
+              <CardTitle className="text-lg font-semibold">Page Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
               <div>
                 <Label>Page Name *</Label>
-                <Input
-                  value={pageName}
-                  onChange={(e) => setPageName(e.target.value)}
-                />
+                <Input value={pageName} onChange={(e) => setPageName(e.target.value)} />
               </div>
-
-              <div>
-                <Label>Slug</Label>
-                <Input value={slug} onChange={(e) => setSlug(e.target.value)} />
-              </div>
-
               <div>
                 <Label>Description</Label>
                 <Textarea
@@ -206,20 +237,15 @@ export default function PageFormPage() {
             </CardContent>
           </Card>
 
-          {/* SEO Settings */}
+          {/* SEO Details */}
           <Card className="shadow-md border border-gray-200">
             <CardHeader>
-              <CardTitle className="text-lg font-semibold">
-                SEO Details
-              </CardTitle>
+              <CardTitle className="text-lg font-semibold">SEO Details</CardTitle>
             </CardHeader>
             <CardContent className="space-y-5">
               <div>
                 <Label>Meta Title</Label>
-                <Input
-                  value={metaTitle}
-                  onChange={(e) => setMetaTitle(e.target.value)}
-                />
+                <Input value={metaTitle} onChange={(e) => setMetaTitle(e.target.value)} />
               </div>
               <div>
                 <Label>Meta Description</Label>
@@ -230,119 +256,252 @@ export default function PageFormPage() {
               </div>
               <div>
                 <Label>Meta Keyphrase</Label>
-                <Input
-                  value={metaKeyphrase}
-                  onChange={(e) => setMetaKeyphrase(e.target.value)}
-                />
+                <Input value={metaKeyphrase} onChange={(e) => setMetaKeyphrase(e.target.value)} />
               </div>
               <div>
                 <Label>SEO Image</Label>
-                <ImageUpload
-                  value={seoImage}
-                  onChange={(url) => setSeoImage(url as string)}
-                />
+                <ImageUpload value={seoImage} onChange={(url) => setSeoImage(url as string)} />
               </div>
             </CardContent>
           </Card>
 
           {/* Sections */}
-          <Card className="shadow-md border border-gray-200">
-            <CardHeader className="flex justify-between items-center">
-              <CardTitle className="text-lg font-semibold">
-                Page Sections
-              </CardTitle>
-              <Button type="button" size="sm" onClick={addSection}>
-                <Plus className="w-4 h-4 mr-2" /> Add Section
-              </Button>
+          <Card className="shadow-sm border border-gray-100">
+            <CardHeader className="flex justify-between items-center pb-2">
+              <CardTitle className="text-lg font-semibold">Page Sections</CardTitle>
+              <div className="flex gap-2">
+                <Button type="button" size="sm" onClick={() => addSection("hero_slider")}>
+                  <Plus className="w-4 h-4" /> Add Hero Slide
+                </Button>
+                <Button type="button" size="sm" onClick={() => addSection("content")}>
+                  <Plus className="w-4 h-4" /> Add Content
+                </Button>
+              </div>
             </CardHeader>
-
-            <CardContent className="space-y-8">
-              {sections.map((section, index) => (
-                <div key={index} className="border p-4 rounded-lg relative">
-                  <button
-                    type="button"
-                    onClick={() => removeSection(index)}
-                    className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+            <CardContent className="space-y-6 pt-4">
+              {sections.length === 0 ? (
+                <p className="text-sm text-gray-500 text-center py-6 border rounded-md bg-gray-50">
+                  No sections added yet. Click “Add Section” to get started.
+                </p>
+              ) : (
+                sections.map((section, sectionIndex) => (
+                  <div
+                    key={sectionIndex}
+                    className="relative rounded-xl border border-gray-200 bg-white shadow-sm p-5 hover:shadow-md transition-shadow"
                   >
-                    <Trash className="h-4 w-4" />
-                  </button>
+                    {/* Remove Section */}
+                    <button
+                      type="button"
+                      onClick={() => removeSection(sectionIndex)}
+                      className="absolute top-3 right-3 text-gray-400 hover:text-red-500 transition"
+                    >
+                      <Trash className="h-4 w-4" />
+                    </button>
 
-                  <Label>Title</Label>
-                  <Input
-                    value={section.title}
-                    onChange={(e) => {
-                      const updated = [...sections];
-                      updated[index].title = e.target.value;
-                      setSections(updated);
-                    }}
-                  />
+                    <h4 className="text-base font-medium text-gray-800 mb-4">
+                      Section {sectionIndex + 1}
+                    </h4>
 
-                  <Label>Description</Label>
-                  <Textarea
-                    value={section.description}
-                    onChange={(e) => {
-                      const updated = [...sections];
-                      updated[index].description = e.target.value;
-                      setSections(updated);
-                    }}
-                  />
+                    {/* Section Type */}
+                    <div className="mb-4">
+                      <Label>Section Type</Label>
+                      <select
+                        value={section.type}
+                        onChange={(e) =>
+                          updateSection(sectionIndex, "type", e.target.value)
+                        }
+                        className="border rounded p-2 w-full"
+                      >
+                        <option value="hero_slider">Hero Slider</option>
+                        <option value="content">Content</option>
+                        <option value="feature">Feature</option>
+                      </select>
+                    </div>
 
-                  <Label>Image</Label>
-                  <ImageUpload
-                    value={section.image_url}
-                    onChange={(url) => {
-                      const updated = [...sections];
-                      updated[index].image_url = url as string;
-                      setSections(updated);
-                    }}
-                  />
+                    {/* Section Fields */}
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label>Title</Label>
+                        <Input
+                          value={section.title}
+                          placeholder="Enter section title"
+                          onChange={(e) =>
+                            updateSection(sectionIndex, "title", e.target.value)
+                          }
+                        />
+                      </div>
 
-                  <Label>Background Image</Label>
-                  <ImageUpload
-                    value={section.background_image_url}
-                    onChange={(url) => {
-                      const updated = [...sections];
-                      updated[index].background_image_url = url as string;
-                      setSections(updated);
-                    }}
-                  />
+                      <div className="space-y-2">
+                        <Label>Description</Label>
+                        <Textarea
+                          value={section.description}
+                          placeholder="Enter section description"
+                          onChange={(e) =>
+                            updateSection(sectionIndex, "description", e.target.value)
+                          }
+                        />
+                      </div>
 
-                  <div className="flex items-center justify-between">
-                    <Label>Include Button</Label>
-                    <Switch
-                      checked={section.is_button}
-                      onCheckedChange={(val) => {
-                        const updated = [...sections];
-                        updated[index].is_button = val;
-                        setSections(updated);
-                      }}
-                    />
+                      <div className="space-y-2">
+                        <Label>Image</Label>
+                        <ImageUpload
+                          value={section.image_url}
+                          onChange={(url) =>
+                            updateSection(sectionIndex, "image_url", url as string)
+                          }
+                        />
+                      </div>
+
+                      {section.type === "hero_slider" && (
+                        <div className="space-y-2">
+                          <Label>Background Image</Label>
+                          <ImageUpload
+                            value={section.background_image_url}
+                            onChange={(url) =>
+                              updateSection(sectionIndex, "background_image_url", url as string)
+                            }
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Include Button */}
+                    <div className="flex items-center justify-between mt-5 border-t pt-3">
+                      <div className="flex items-center gap-2">
+                        <Switch
+                          checked={section.is_button || false}
+                          onCheckedChange={(val) =>
+                            updateSection(sectionIndex, "is_button", val)
+                          }
+                        />
+                        <Label>Include Button</Label>
+                      </div>
+                    </div>
+
+                    {section.is_button && (
+                      <div className="grid md:grid-cols-2 gap-4 mt-4">
+                        <div className="space-y-2">
+                          <Label>Button Name</Label>
+                          <Input
+                            placeholder="e.g. Shop Now"
+                            value={section.button_name || ""}
+                            onChange={(e) =>
+                              updateSection(sectionIndex, "button_name", e.target.value)
+                            }
+                          />
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label>Button Link</Label>
+                          <Input
+                            placeholder="/shop"
+                            value={section.button_link || ""}
+                            onChange={(e) =>
+                              updateSection(sectionIndex, "button_link", e.target.value)
+                            }
+                          />
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Hero Slider Slides */}
+                    {section.type === "hero_slider" && (
+                      <div className="mt-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <Label>Slides</Label>
+                          <Button
+                            type="button"
+                            size="sm"
+                            onClick={() => addSlide(sectionIndex)}
+                          >
+                            <Plus className="w-4 h-4" /> Add Slide
+                          </Button>
+                        </div>
+
+                        {section.slides && section.slides.length === 0 && (
+                          <p className="text-sm text-gray-500">No slides yet</p>
+                        )}
+
+                        {section.slides?.map((slide, slideIndex) => (
+                          <div
+                            key={slideIndex}
+                            className="relative border border-gray-200 rounded p-4 mb-3"
+                          >
+                            <button
+                              type="button"
+                              onClick={() => removeSlide(sectionIndex, slideIndex)}
+                              className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+                            >
+                              <Trash className="h-4 w-4" />
+                            </button>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <Label>Slide Title</Label>
+                                <Input
+                                  value={slide.title}
+                                  onChange={(e) =>
+                                    updateSlide(sectionIndex, slideIndex, "title", e.target.value)
+                                  }
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label>Slide Description</Label>
+                                <Textarea
+                                  value={slide.description}
+                                  onChange={(e) =>
+                                    updateSlide(sectionIndex, slideIndex, "description", e.target.value)
+                                  }
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label>Background Image</Label>
+                                <ImageUpload
+                                  value={slide.background_image_url}
+                                  onChange={(url) =>
+                                    updateSlide(sectionIndex, slideIndex, "background_image_url", url as string)
+                                  }
+                                />
+                              </div>
+                              <div className="space-y-2">
+                                <Label>Include Button</Label>
+                                <Switch
+                                  checked={slide.is_button}
+                                  onCheckedChange={(val) =>
+                                    updateSlide(sectionIndex, slideIndex, "is_button", val)
+                                  }
+                                />
+                              </div>
+                              {slide.is_button && (
+                                <>
+                                  <div className="space-y-2">
+                                    <Label>Button Name</Label>
+                                    <Input
+                                      value={slide.button_name}
+                                      onChange={(e) =>
+                                        updateSlide(sectionIndex, slideIndex, "button_name", e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                  <div className="space-y-2">
+                                    <Label>Button Link</Label>
+                                    <Input
+                                      value={slide.button_link}
+                                      onChange={(e) =>
+                                        updateSlide(sectionIndex, slideIndex, "button_link", e.target.value)
+                                      }
+                                    />
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
-
-                  {section.is_button && (
-                    <>
-                      <Label>Button Name</Label>
-                      <Input
-                        value={section.button_name}
-                        onChange={(e) => {
-                          const updated = [...sections];
-                          updated[index].button_name = e.target.value;
-                          setSections(updated);
-                        }}
-                      />
-                      <Label>Button Link</Label>
-                      <Input
-                        value={section.button_link}
-                        onChange={(e) => {
-                          const updated = [...sections];
-                          updated[index].button_link = e.target.value;
-                          setSections(updated);
-                        }}
-                      />
-                    </>
-                  )}
-                </div>
-              ))}
+                ))
+              )}
             </CardContent>
           </Card>
         </div>
@@ -358,10 +517,8 @@ export default function PageFormPage() {
                 <Label htmlFor="status">Active</Label>
                 <Switch
                   id="status"
-                  checked={status === "inactive"}
-                  onCheckedChange={(val) =>
-                    setStatus(val ? "inactive" : "active")
-                  }
+                  checked={status === "active"}
+                  onCheckedChange={(val) => setStatus(val ? "inactive" : "active")}
                 />
               </div>
 
@@ -371,9 +528,7 @@ export default function PageFormPage() {
                   type="number"
                   value={order === "" ? "" : order}
                   onChange={(e) =>
-                    setOrder(
-                      e.target.value === "" ? "" : Number(e.target.value)
-                    )
+                    setOrder(e.target.value === "" ? "" : Number(e.target.value))
                   }
                 />
               </div>
@@ -381,10 +536,7 @@ export default function PageFormPage() {
           </Card>
 
           <div className="flex gap-3">
-            <Button
-              type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700"
-            >
+            <Button type="submit" className="flex-1 bg-blue-600 hover:bg-blue-700">
               {isEditMode ? "Update Page" : "Create Page"}
             </Button>
             <Link to="/pages" className="flex-1">

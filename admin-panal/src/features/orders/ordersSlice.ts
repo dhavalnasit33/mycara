@@ -8,12 +8,21 @@ import {
   updateOrderStatus,
 } from "./ordersThunk";
 
+
+export interface FilterValues {
+  product: string[];
+  user: string[];
+  color: string[];
+  size: string[];
+  price: { min?: number; max?: number };
+}
+
 interface OrderItem {
   _id: string;
-  product_id: { name: string; price: number };
-  variant_id?: {
-    color_id?: { name: string };
-    size_id?: { name: string };
+  product: { name: string; price: number };
+  variant?: {
+    color?: { name: string };
+    size?: { name: string };
   };
   quantity: number;
   price_at_order: number;
@@ -21,7 +30,8 @@ interface OrderItem {
 
 interface Order {
   _id: string;
-  user_id: { name: string; email: string };
+  order_number:string;
+  user: { name: string; email: string };
   coupon_id?: { code: string; discount_value: number };
   total_price: number;
   status: string;

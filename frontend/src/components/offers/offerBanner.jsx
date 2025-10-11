@@ -31,5 +31,38 @@ export default function OfferBanner() {
         </Row>
     </div>
 
+//     <div className="w-full relative flex items-center h-[80vh] lg:h-screen">
+//   {/* Row 1 Background Image */}
+//   <img
+//     src={offerbg}
+//     alt="Hero Background"
+//     className="absolute top-0 left-0 w-full lg:h-full"
+//   />
+
+
+//   {/* Content Row */}
+//   <div className="container mx-auto relative z-10 flex flex-col lg:flex-row w-full px-4">
+//     {/* Left Column - empty on PC, zero on mobile */}
+//     <div className="w-0 lg:w-3/5"></div>
+
+//     {/* Right Column - visible on mobile and PC */}
+//     <div className="w-2/5 flex flex-col items-center lg:items-end text-center lg:text-right mt-10  px-4 lg:px-0">
+//       <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] xl:text-[62px] font-bold text-theme mb-2 lg:mb-[10px] xl:mb-[40px] leading-none">
+//         UP TO 50%
+//       </h2>
+//       <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[70px] xl:text-[120px] font-bold leading-snug md:leading-[60px] lg:leading-[111px] text-[#D2AF9F] mb-3 lg:mb-5 break-words">
+//         LIMITED DISCOUNT
+//       </h1>
+//       <p className="text-sm sm:text-base md:text-lg text-light mb-4 lg:mb-11 max-w-full lg:max-w-[327px]">
+//         Women are afraid to try something new at work because they think that they will no...
+//       </p>
+//       <Button variant="common">
+//         <Link to="/shop">Shop Now!</Link>
+//       </Button>
+//     </div>
+//   </div>
+// </div>
+
+
   );
 };

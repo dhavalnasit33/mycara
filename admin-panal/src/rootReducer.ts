@@ -22,6 +22,7 @@ import profileReducer from "./features/profile/profileSlice";
 import settingReducer from "./features/settings/settingsSlice";
 import storesReducer from "./features/stores/storeSlice";
 import pagesReducer from "./features/pages/pagesSlice";
+import dashboardReducer from "./features/dashboard/dashboardSlice";
 
 export const rootReducer = {
   auth: authReducer,
@@ -48,4 +49,5 @@ export const rootReducer = {
   profile: profileReducer,
   setting: settingReducer,
   stores: storesReducer,
+  dashboard:dashboardReducer
 };

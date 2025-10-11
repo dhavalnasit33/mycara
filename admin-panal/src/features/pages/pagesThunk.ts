@@ -66,7 +66,7 @@ export const updatePageStatus = createAsyncThunk(
   "pages/updatePageStatus",
   async ({ id, status }: { id: string; status: "active" | "inactive"}, { rejectWithValue }) => {
     try {
-      const res = await api.patch(ROUTES.pages.updateStatus(id), { status });
+      const res = await api.put(ROUTES.pages.updateStatus(id), { status });
       if (res.data.success) return res.data.data;
       return rejectWithValue(res.data.message || "Failed to update status");
     } catch (err: any) {

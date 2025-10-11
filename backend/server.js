@@ -28,6 +28,7 @@ const colorRoutes = require("./src/routes/colorRoutes");
 const sizeRoutes = require("./src/routes/sizeRoutes");
 const uploadsRoutes = require("./src/routes/upload");
 const storeRoutes = require("./src/routes/storeRoutes");
+const dashboardRoutes = require("./src/routes/dashboardRoutes");
 
 dotenv.config();
 connectDB();
@@ -68,6 +69,7 @@ app.use("/api/customer-reviews", customerReviewRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/sizes", sizeRoutes);
 app.use("/api/uploads", uploadsRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 app.use(errorHandler);
 

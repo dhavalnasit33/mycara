@@ -9,25 +9,37 @@ import {
   updatePageStatus,
 } from "./pagesThunk";
 
-interface Section {
-  _id?: string;
+export type Slide = {
   title: string;
-  description?: string;
+  description: string;
+  background_image_url: string;
+  is_button: boolean;
+  button_name: string;
+  button_link: string;
+  order: number;
+};
+
+export type SectionType = {
+  type: "content" | "hero_slider" | "feature";
+  title: string;
+  description: string;
   image_url?: string;
   background_image_url?: string;
-  order?: number;
   is_button?: boolean;
   button_name?: string;
   button_link?: string;
-  status?: "active" | "inactive";
-}
+  order: number;
+  status: string;
+  slides?: Slide[];
+};
+
 
 interface Page {
   _id: string;
   page_name: string;
   slug: string;
   description?: string;
-  sections?: Section[];
+  sections?: SectionType[];
   meta_title?: string;
   meta_description?: string;
   meta_keyphrase?: string;

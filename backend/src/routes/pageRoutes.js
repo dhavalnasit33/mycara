@@ -2,12 +2,12 @@ const express = require("express");
 const router = express.Router();
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
-const { getPages, getPageById, createPage, updatePage, updatePageStatus, deletePage, bulkDeletePages } = require("../controllers/pageController");
+const { getPages, getPageById, createPage, updatePage, updatePageStatus, deletePage, bulkDeletePages, getPageBySlug } = require("../controllers/pageController");
 
 router.get("/", getPages);
-router.get("/:id", getPageById);
+router.get("/get/:slug", getPageBySlug);
 router.use(authMiddleware);
-
+router.get("/:id",authorizeMinRole("admin"), getPageById);
 router.post("/", authorizeMinRole("admin"), createPage);
 router.put("/:id", authorizeMinRole("admin"), updatePage);
 router.put("/:id/status", authorizeMinRole("admin"), updatePageStatus);

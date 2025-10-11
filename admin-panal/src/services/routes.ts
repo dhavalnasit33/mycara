@@ -183,6 +183,9 @@ footer: {
   delete: (id: string) => `/footer/${id}`,
   bulkDelete: "/footer/bulk-delete",
 },
+dashboard:{
+  getData :"/dashboard"
+},
 stores: {
     getAll: "/stores",
     getById: (id: string) => `/stores/${id}`,
