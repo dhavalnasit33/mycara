@@ -5,7 +5,7 @@ import ProductGrid from './ProductGrid';
 import shopsaree1 from '../../assets/shopsaree1.jpg';
 import shopsaree2 from '../../assets/shopsaree2.jpg';
 import OriginalSortByIcon from "../icons/SortByIcon";
-import { ChevronDown, X, Plus, Minus, ChevronLeftIcon } from 'lucide-react';
+import { ChevronDown, X, Plus, Minus, ChevronLeftIcon, CircleX } from 'lucide-react';
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import FilterIconComponent from "../icons/filter";
 import { Link } from 'react-router-dom';
@@ -29,15 +29,15 @@ const Filter = (props) => (
 // --- 1. Mobile Responsive UI (Filter Bar) ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
     <div className="flex justify-center items-center w-full mx-auto gap-4 sm:gap-2">
-        <div className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
+        <div className="rounded-[10px] cursor-pointer transition duration-300 border light-border drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
             onClick={onSortClick}
         >
             <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4">
                 <div>
-                    <div className="text-base sm:text-lg font-inter font-semibold text-black/70">Sort By</div>
+                    <div className="text-base sm:text-lg font-inter font-semibold text-light">Sort By</div>
                     <div className="text-xs sm:text-sm font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
                 </div>
-                <SortByIcon className="h-5 w-5 sm:h-6 sm:w-6 text-black/70" />
+                <SortByIcon className="h-5 w-5 sm:h-6 sm:w-6 text-light" />
             </div>
         </div>
         <div className={`bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white w-[140px] sm:w-[180px] md:w-[200px]`}
@@ -48,7 +48,7 @@ const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) =>
                     <div className="text-base sm:text-lg font-inter font-semibold">Filter</div>
                     <div className="flex items-center mt-0.5">
                         <span className="text-xs sm:text-sm font-inter font-medium">Applied</span>
-                        <span className="ml-2 px-2 py-0.5 bg-white text-black/70 font-semibold rounded-full text-xs">
+                        <span className="ml-2 px-2 py-0.5 bg-white text-light font-semibold rounded-full text-xs">
                             {filterCount}
                         </span>
                     </div>
@@ -63,19 +63,19 @@ const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) =>
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
     <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">
         <SortByIcon />
-        <span className="text-base font-medium text-gray-700">Sort By</span>
+        <span className="text-p  sec-text-color">Sort By</span>
         <div className="relative">
             <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm transition duration-150 ease-in-out"
+                className="appearance-none bg-white box-shadow  py-2 pl-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm transition duration-150 ease-in-out"
             >
                 <option value="Popularity">Popularity</option>
                 <option value="Newest">Newest</option>
                 <option value="Price: Low to High">Price: Low to High</option>
                 <option value="Price: High to Low">Price: High to Low</option>
             </select>
-            <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 pointer-events-none" />
         </div>
     </div>
 );
@@ -161,11 +161,11 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
 
                 onChange={() => onChange(name)}
                 className={` w-[15px] h-[15px] rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
-            <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
+            <span className="ml-3 text-[14px] font-inter text-light">{name}</span>
         </div>
 
         {count !== undefined && (
-            <span className="text-[14px] font-regular font-inter text-[#989696]">{count}</span>
+            <span className="text-[14px] font-regular font-inter sec-text-color">{count}</span>
         )}
     </label>
 );
@@ -184,29 +184,27 @@ const SizeFilterItem = ({ name, isChecked, onChange }) => (
              checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
            `}
         />
-        <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">{name}</span>
+        <span className="ml-3 text-[14px] font-inter text-light ">{name}</span>
     </label>
 );
 
 const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
-    const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
     return (
         <div
             className="flex flex-col items-center p-1 cursor-pointer w-1/6"
             onClick={() => onChange(name)}
         >
             <div
-                className={`w-[22px] h-[22px] rounded-full transition-all duration-150
+                className={`w-[22px] h-[22px] rounded-full transition-all duration-150 box-shadow
                      ${border ? 'border border-gray-300' : ''}
                      ${isChecked ? `ring-2 ring-pink-500 ring-offset-2` : ''}
                  `}
                 style={{
                     backgroundColor: hex,
-                    filter: dropShadowStyle
                 }}
             >
             </div>
-            <span className="text-[10px] text-[#989696] font-regular mt-1">{name}</span>
+            <span className="text-[10px] sec-text-color font-regular mt-1">{name}</span>
         </div>
     );
 };
@@ -229,7 +227,6 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
                  ${isOpen ? 'border-transparent' : 'border-gray-200'}
                  `}
                 style={{
-
                     backgroundColor: isOpen ? 'rgba(210, 175, 159, 0.3)' : 'transparent'
                 }}
                 onClick={handleToggle}
@@ -253,12 +250,12 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
                     {showButtons && (
                         <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
                             <button onClick={onCancelClick || handleClose}
-                                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+                                className="w-[100px] h-[40px] text-[18px] font-inter text-light border light-border rounded-[3px] transition"
                             > Cancel
                             </button>
                             <button
                                 onClick={onApplyClick || onReset}
-                                className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
+                                className={`w-[100px] h-[40px] text-[18px] font-inter text-white bg-color rounded-[3px] transition shadow-md`}
                             >
                                 Filter
                             </button>
@@ -279,7 +276,7 @@ const SingleCard = ({ product }) => (
         <img
           src={product.imageSrc}
           alt={product.name}
-          className="w-full h-auto custom-lg:h-[553px]   transition-transform duration-500"
+          className="w-full h-auto custom-lg:h-[553px] transition-transform duration-500"
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
@@ -287,11 +284,11 @@ const SingleCard = ({ product }) => (
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
       <div className="flex justify-between items-start gap-[30px] md:gap-[50px]">
-          <h3 className="text-14  font-medium font-inter tracking-wider text-black uppercase leading-tight">
-            {product.name}
-          </h3>
-        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-white ">
-          <span className="text-lg font-bold text-black leading-none pb-0.5"><Plus size={18}/></span>
+        <h3 className="text-14  font-medium font-inter tracking-wider text-black uppercase leading-tight">
+        {product.name}
+        </h3>
+        <button className="flex-shrink-0 flex items-center justify-center w-[20px] h-[20px] rounded-full border border-white ">
+          <span className="text-lg font-bold text-black leading-none items-center" ><Plus size={14}/></span>
         </button>
       </div>
       <div className='flex items-end justify-end'>
@@ -389,15 +386,15 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                     </div>
                 </div>
                 {isMobile && (
-                    <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+                    <div className="flex gap-4 mt-4 pt-4 border-t light-border">
                         <button
                             onClick={handleReset}
-                            className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+                            className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-light border light-border rounded-[3px] transition"
                         >
                             Cancel
                         </button>
                         <button
-                            onClick={() => console.log('Price Filter Applied')} // Actual application logic
+                            onClick={() => console.log('Price Filter Applied')} 
                             className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
                         >
                             Filter
@@ -475,17 +472,17 @@ const MobileFilterModal = ({
                         onCancelClick={handleResetCategories}
                         onApplyClick={onClose} 
                     >
-                       <div className="space-y-1 h-[130px] overflow-y-auto hide-scrollbar ">
-            {mockCategories.map(cat => (
-                <FilterItemCheckbox
-                    key={cat.name}
-                    name={cat.name}
-                    count={cat.count}
-                    isChecked={selectedCategories.includes(cat.name)}
-                    onChange={handleCategoryChange}
-                />
-            ))}
-        </div>
+                        <div className="space-y-1 h-[130px] overflow-y-auto hide-scrollbar ">
+                            {mockCategories.map(cat => (
+                                <FilterItemCheckbox
+                                    key={cat.name}
+                                    name={cat.name}
+                                    count={cat.count}
+                                    isChecked={selectedCategories.includes(cat.name)}
+                                    onChange={handleCategoryChange}
+                                />
+                            ))}
+                        </div>
                     </CollapsibleFilter>
                     <PriceRangeFilter
                         minPrice={minPrice}
@@ -501,7 +498,7 @@ const MobileFilterModal = ({
                         onCancelClick={handleResetSizes}
                         onApplyClick={onClose} 
                     >
-                        <div className="flex flex-wrap ">
+                        <div className="flex flex-wrap p-2">
                             {mockSizes.map(size => (
                                 <SizeFilterItem
                                     key={size}
@@ -955,7 +952,7 @@ const WomenCollections = () => {
                     <div className="p-4 mt-4 flex gap-4 border-t border-gray-200">
                         <button
                             onClick={handleClearAllFilters}
-                            className="flex-1 h-10 text-base font-semibold font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+                            className="flex-1 h-10 text-base font-semibold font-inter text-light border light-border rounded-[3px] transition"
                         >
                             Clear All
                         </button>
@@ -970,8 +967,8 @@ const WomenCollections = () => {
 
                 <main className="w-full custom-lg:w-3/4">
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden custom-lg:block text-sm text-gray-700">
-                            Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
+                        <div className="hidden custom-lg:block text-p sec-text-color">
+                            Showing <span className="font-medium text-black">{showingResults}</span> results from total <span className="font-medium text-black">{totalResults}</span> for "<span className="font-medium text-black">Saree</span>"
                         </div>
                         <div className=" sm:flex custom-lg:hidden">
                             <MobileFilterBar
@@ -988,16 +985,16 @@ const WomenCollections = () => {
 
                     {/* Active Filters Display */}
                     <div className="hidden sm:flex flex-wrap items-center gap-2 mb-6">
-                        <span onClick={handleClearAllFilters} className={`text-[16px] font-sanss font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer`}>Clear Filters:</span>
+                        <span onClick={handleClearAllFilters} className={`text-[16px]  font-medium sec-text-color mr-2 border-b light-border cursor-pointer leading`}>Clear Filters:</span>
                             {currentFilters.map((filter, index) => (
                             <span
                                 key={index}
-                                className={`theme-border ${TEXT_COLOR_CLASS} border border-gray-300 px-4 py-1 rounded-[5px] cursor-pointer inline-flex items-center `}
+                                className={`theme-border ${TEXT_COLOR_CLASS} min-w-[110px] leading border border-gray-300 px-[10px] py-[6px] rounded-[10px] cursor-pointer inline-flex justify-between items-center gap-[10px]`}
                                 onClick={() => handleClearFilter(filter.type, filter.value)}
                             >
                                 {filter.value}
 
-                                <X className={`w-4 h-4 ml-2 ${TEXT_COLOR_CLASS}`} />
+                                <CircleX className={`w-4 h-4  ${TEXT_COLOR_CLASS}`} />
                             </span>
                         ))}
                     </div>
@@ -1006,14 +1003,9 @@ const WomenCollections = () => {
                             <SingleCard key={product.id} product={product} />
                         ))}
                     </div>
-                    {/* <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-6 w-full mx-auto"> */}
                     <ProductGrid />
-                    {/* </div> */}
-
                 </main>
-
             </Row>
-
         </div>
     );
 };
