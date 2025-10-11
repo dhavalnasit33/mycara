@@ -8,11 +8,6 @@ import WomenCollections from '../components/shop/WomenCollections';
 
 const Shop = () => {
     return (
-<<<<<<< HEAD
-        <div>
-              <ShopBanner />
-              
-=======
         <>
             <div className="hidden lg:flex relative">
                 <SecondarySection 
@@ -21,7 +16,6 @@ const Shop = () => {
                     backgroundImage={shopbg} 
                 />
             </div>
->>>>>>> bb961bde4301c04c294824f51451179071434630
             <WomenCollections />
         </>
         

@@ -1,84 +1,91 @@
 import React, { useState } from "react";
 import HeartIcon from "../icons/HeartIcon";
 import ShoppingBagIcon from "../icons/ShoppingBagIcon";
+
 export default function ProductCard({ product }) {
- const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const hasMultipleImages = product.allImages && product.allImages.length > 1;
   const displayedImage = hasMultipleImages
     ? product.allImages[currentImageIndex]
     : product.image;
+
   return (
-    <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
+    <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
+      {/* Product Image */}
       <div className="relative mb-[10px]">
         <img
           src={displayedImage}
           alt={product.subtitle}
           className="w-full h-[300px] sm:h-[355px] transition duration-300"
         />
+
+        {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
-              <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
+            <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
-              <ShoppingBagIcon  className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
+            <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
-      </div>
+        </div>
+
+        {/* Small Dots for Multiple Images */}
         {hasMultipleImages && (
           <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {product.allImages.map((_, index) => (
               <div
                 key={index}
                 className={`w-[6px] h-[6px] rounded-full cursor-pointer transition-colors duration-300 ${
-                  index === currentImageIndex ? "bg-color " : "bg-white"
+                  index === currentImageIndex ? "bg-color" : "bg-white"
                 }`}
                 onMouseEnter={() => setCurrentImageIndex(index)}
               />
             ))}
           </div>
         )}
-<<<<<<< HEAD
-=======
-   
->>>>>>> bb961bde4301c04c294824f51451179071434630
       </div>
-      <div >
-         {product.express && (
+
+      {/* Product Info */}
+      <div>
+        {product.express && (
           <p className="inline-flex px-[7px] py-[3px] bg-[rgba(244,50,151,9%)] text-theme text-[12px] md:text-[14px] rounded-[3px] mb-[10px]">
             Express Shipping
           </p>
         )}
-         {product.isSale && (
-              <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
-                  Sale
-              </div>
-          )}
-        <h3 className=" text-p">{product.brand}</h3>
-<<<<<<< HEAD
-        <p className="sec-text-color text-14 mb-2">{product.subtitle}</p>
-        <div className="flex items-center gap-[5px] text-p mb-[5px]">
-=======
+
+        {product.isSale && (
+          <div className="mb-2 inline-block text-theme theme-bg-light text-[12px] sm:text-[14px] font-regular font-sans px-2 py-0.5 rounded-sm">
+            Sale
+          </div>
+        )}
+
+        <h3 className="text-p">{product.brand}</h3>
+
         <p className="sec-text-color text-14 mb-2 truncate">{product.subtitle}</p>
 
-        <div className="flex  items-center gap-[5px] text-p mb-[5px]">
->>>>>>> bb961bde4301c04c294824f51451179071434630
-          <p className="">₹{product.price}</p>
+        {/* Price Section */}
+        <div className="flex items-center gap-[5px] text-p mb-[5px]">
+          <p>₹{product.price}</p>
           {product.oldPrice && (
             <p className="line-through text-[#BCBCBC] text-14">₹{product.oldPrice}</p>
           )}
-          {product.discount && (
-            <p className="text-theme ">{product.discount}</p>
-          )}
+          {product.discount && <p className="text-theme">{product.discount}</p>}
         </div>
-        <div className="flex gap-[5px] ">
-            {product.colorOptions?.map((colorClass, index) => (
-              <div
-                key={index}
-                className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full cursor-pointer`}
-              ></div>
-            ))}
+
+        {/* Color Options */}
+        <div className="flex gap-[5px]">
+          {product.colorOptions?.map((colorClass, index) => (
+            <div
+              key={index}
+              className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full cursor-pointer`}
+            ></div>
+          ))}
         </div>
+
+        {/* Rating Stars */}
         {product.rating !== undefined && product.rating !== null && (
-          <div className="flex gap-[6px] ">
+          <div className="flex gap-[6px] mt-1">
             {Array(5)
               .fill()
               .map((_, i) => (
@@ -87,7 +94,8 @@ export default function ProductCard({ product }) {
                   className={`text-sm ${
                     i < product.rating ? "text-theme" : "sec-text-color"
                   }`}
-                >★
+                >
+                  ★
                 </span>
               ))}
           </div>
@@ -96,12 +104,3 @@ export default function ProductCard({ product }) {
     </div>
   );
 }
-
-
-
-
-
-
-
-
-

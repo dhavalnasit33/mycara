@@ -43,7 +43,6 @@ const CategoriesSection = () => {
   };
   return (
     < >
-<<<<<<< HEAD
 
         {/* <Row > */}
           <Slider ref={sliderRef} {...settings}>
@@ -60,13 +59,6 @@ const CategoriesSection = () => {
             ))}
           </Slider>
 
- 
-
-
-        {/* </Row> */}
-
-
-        {/* Custom Dots */}
         <div className="flex justify-center mt-[35px] sm:mt-[65px] space-x-[5px]">
           {categories.slice(0, 4).map((_, i) => (
             <button
@@ -80,7 +72,7 @@ const CategoriesSection = () => {
             ></button>
           ))}
         </div>
-=======
+
       <Slider ref={sliderRef} {...settings}>
         {categories.map((category, index) => (
           <div key={index} className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]">
@@ -108,7 +100,6 @@ const CategoriesSection = () => {
           ></button>
         ))}
       </div>
->>>>>>> bb961bde4301c04c294824f51451179071434630
     </>
   );
 };
