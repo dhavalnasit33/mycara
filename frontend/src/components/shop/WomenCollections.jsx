@@ -9,6 +9,7 @@ import { ChevronDown, X, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 import FilterIconComponent from "../icons/filter";
 import { Link } from 'react-router-dom';
+import Row from '../ui/Row';
 
 const TEXT_COLOR_CLASS = "text-pink-600";
 const BORDER_COLOR_CLASS = "border-pink-600";
@@ -279,7 +280,7 @@ const SingleCard = ({ product }) => (
         <img
           src={product.imageSrc}
           alt={product.name}
-          className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
+          className="w-full h-auto custom-lg:h-[553px]   transition-transform duration-500"
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
@@ -754,7 +755,7 @@ const WomenCollections = () => {
     const showingResults = mockProducts.length;
 
     return (
-        <div className=" w-full container-1440 mx-auto py-2 px-3 lg:px-0 lg:py-10  ">
+        <div className=" w-full  py-2 px-3 lg:px-0 lg:py-10  ">
             <MobileFilterModal
                 isOpen={isMobileFilterOpen}
                 onClose={handleCloseMobileFilter}
@@ -791,17 +792,18 @@ const WomenCollections = () => {
                     </div>
                 </div>
             </div>
+            <Row>
+                <h1 className="text-[22px] font-semibold font-inter mb-2 ">Women's Collections</h1>
+                <p className="text-sm text-gray-600 mb-8">
+                    <span className="text-black border-b border-black lg:border-none"><Link to="/home">Home</Link></span>
+                    <span className="text-black "> / </span>
+                    <span className="font-regular text-[#989696]">Shop</span>
+                </p>
+            </Row>
 
-            <h1 className="text-[22px] font-semibold font-inter mb-2 ">Women's Collections</h1>
-            <p className="text-sm text-gray-600 mb-8">
-                <span className="text-black border-b border-black lg:border-none"><Link to="/home">Home</Link></span>
-                <span className="text-black "> / </span>
-                <span className="font-regular text-[#989696]">Shop</span>
-            </p>
+            <Row className="flex flex-col custom-lg:flex-row gap-[30px]">
 
-            <div className="flex flex-col lg:flex-row gap-[30px]">
-
-                <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 lg:w-1/4 bg-white rounded-[20px] box-shadow">
+                <aside className="hidden custom-lg:block custom-lg:w-1/4 h-fit px-2 py-5 custom-lg:w-1/4 bg-white rounded-[20px] box-shadow">
                     <div className="p-4">
                         <h2 className="text-20px font-medium text-black lowercase ">Filter Products</h2>
                     </div>
@@ -969,12 +971,12 @@ const WomenCollections = () => {
                     </div>
                 </aside>
 
-                <main className="w-full lg:w-3/4">
+                <main className="w-full custom-lg:w-3/4">
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden lg:block text-sm text-gray-700">
+                        <div className="hidden custom-lg:block text-sm text-gray-700">
                             Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
                         </div>
-                        <div className=" sm:flex lg:hidden">
+                        <div className=" sm:flex custom-lg:hidden">
                             <MobileFilterBar
                                 sortBy={sortBy}
                                 filterCount={filterCount}
@@ -982,7 +984,7 @@ const WomenCollections = () => {
                                 onFilterClick={handleFilterClick}
                             />
                         </div>
-                        <div className="hidden lg:flex justify-end">
+                        <div className="hidden custom-lg:flex justify-end">
                             <DesktopSortBar sortBy={sortBy} setSortBy={setSortBy} />
                         </div>
                     </div>
@@ -1002,7 +1004,7 @@ const WomenCollections = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-1 custom-lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
                             <SingleCard key={product.id} product={product} />
                         ))}
@@ -1013,7 +1015,7 @@ const WomenCollections = () => {
 
                 </main>
 
-            </div>
+            </Row>
 
         </div>
     );

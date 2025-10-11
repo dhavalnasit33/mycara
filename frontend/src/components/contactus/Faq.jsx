@@ -73,7 +73,7 @@ export default function FAQ() {
             </div>
 
             <div className="mt-[80px] text-center justify-center flex ">
-            <Button variant='common' className='rounded-[30px]' >
+            <Button variant='common' className='!rounded-[30px]' >
                 Load more
             </Button>
             </div>

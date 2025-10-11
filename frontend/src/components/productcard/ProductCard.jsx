@@ -13,7 +13,7 @@ export default function ProductCard({ product }) {
 
 
   return (
-    <div className="bg-white overflow-hidden  transition-all  group w-full h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
+    <div className="bg-white overflow-hidden  transition-all  group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
       <div className="relative mb-[10px]">
         <img
           src={displayedImage}
@@ -45,7 +45,7 @@ export default function ProductCard({ product }) {
       </div>
       <div >
          {product.express && (
-          <p className="inline-flex px-[7px] py-[3px] bg-[rgba(244,50,151,9%)] text-theme text-14 rounded-[3px] mb-[10px]">
+          <p className="inline-flex px-[7px] py-[3px] bg-[rgba(244,50,151,9%)] text-theme text-[12px] md:text-[14px] rounded-[3px] mb-[10px]">
             Express Shipping
           </p>
         )}
@@ -57,7 +57,7 @@ export default function ProductCard({ product }) {
         <h3 className=" text-p">{product.brand}</h3>
         <p className="sec-text-color text-14 mb-2 truncate">{product.subtitle}</p>
 
-        <div className="flex items-center gap-[5px] text-p mb-[5px]">
+        <div className="flex  items-center gap-[5px] text-p mb-[5px]">
           <p className="">₹{product.price}</p>
           {product.oldPrice && (
             <p className="line-through text-[#BCBCBC] text-14">₹{product.oldPrice}</p>
@@ -82,7 +82,7 @@ export default function ProductCard({ product }) {
                 <span
                   key={i}
                   className={`text-sm ${
-                    i < product.rating ? "text-theme" : "text-gray-300"
+                    i < product.rating ? "text-theme" : "sec-text-color"
                   }`}
                 >★
                 </span>

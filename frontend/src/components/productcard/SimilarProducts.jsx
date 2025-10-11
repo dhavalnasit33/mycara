@@ -97,20 +97,11 @@ function NextArrow({ onClick, disabled }) {
 export default function SimilarProducts() {
   const sliderRef = useRef(null);
   const [slideState, setSlideState] = useState({ current: 0, total: 0 });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   useEffect(() => {
-    const setEqualHeight = () => {
-      const slides = document.querySelectorAll(".slick-slide .card-content");
-      let maxHeight = 0;
-      slides.forEach(slide => {
-        slide.style.height = "auto";
-        if (slide.offsetHeight > maxHeight) maxHeight = slide.offsetHeight;
-      });
-      slides.forEach(slide => slide.style.height = `${maxHeight}px`);
-    };
-
-    setEqualHeight();
-    window.addEventListener("resize", setEqualHeight);
-    return () => window.removeEventListener("resize", setEqualHeight);
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const settings = {
@@ -118,7 +109,8 @@ export default function SimilarProducts() {
     infinite: false,
     speed: 500,
     adaptiveHeight: false,
-    slidesToShow: 4,
+    // slidesToShow: 4,
+    slidesToShow: windowWidth <= 480 ? 1 : windowWidth <= 767 ? 2 : windowWidth <= 980 ? 3 : windowWidth <= 1280 ? 4 : 4,
     slidesToScroll: 1,
     autoplay: false,
     beforeChange: (current, next) =>
@@ -135,20 +127,7 @@ export default function SimilarProducts() {
         disabled={slideState.current === 0}
       />
     ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1 },
-      },
-    ],
+   
   };
 
   return (
@@ -159,7 +138,6 @@ export default function SimilarProducts() {
             <ProductCard key={product.id} product={product} className="border" />
           </div>
         ))}
-
       </Slider>
     </Row>
   );
