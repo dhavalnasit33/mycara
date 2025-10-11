@@ -4,12 +4,6 @@ import './App.css';
 import './index.css';
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
-<<<<<<< HEAD
-import Collections from "./pages/Collections";
-import Blogs from "./pages/Blogs";
-import Features from "./pages/Features";
-import More from "./pages/More";
-
 
 
 
@@ -17,10 +11,6 @@ import More from "./pages/More";
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
-=======
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
->>>>>>> bb961bde4301c04c294824f51451179071434630
 import LoginForm from "./pages/Login";
 import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";

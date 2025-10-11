@@ -15,9 +15,6 @@ const Filter = (props) => (<FilterIconComponent {...props} />);
 // ---------- Mobile Filter Bar ----------
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => {
     
-    // Note: આ કમ્પોનન્ટમાં sortBy value ને label માં કન્વર્ટ કરવા માટેનું લોજિક ખૂટે છે.
-    // જો કે, તમારા provided code માં {sortBy} સીધું જ વાપર્યું છે, તેથી તે જ રાખીશું.
-
     return (
         // Fixed at the bottom of the screen
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-white shadow-[0_-5px_15px_rgba(0,0,0,0.05)] z-40">

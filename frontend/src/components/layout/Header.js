@@ -6,10 +6,9 @@ import {
 } from "react-icons/fa";
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
-<<<<<<< HEAD
+
 import MoreIcon from "../icons/More"; 
-=======
->>>>>>> bb961bde4301c04c294824f51451179071434630
+
 import LoginIcon from "../icons/login"; 
 
 import { Link, NavLink } from "react-router-dom";
@@ -19,10 +18,9 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import OrdersIcon from "../../assets/orders.svg";
 
 import WhiteLogin from "../../assets/white login.png";
-<<<<<<< HEAD
+
 import PayImg from "../../assets/pay.png";
-=======
->>>>>>> bb961bde4301c04c294824f51451179071434630
+
 import HeaderLogo from "../../assets/logo.png";
 import Logo from "../../assets/my_logo.png";
 import bannerImg from "../../assets/banner.png";

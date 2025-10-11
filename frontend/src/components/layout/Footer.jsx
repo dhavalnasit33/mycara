@@ -72,21 +72,13 @@ const Footer = () => {
           <Row className="py-[50px] md:py-[80px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 md:grid-cols-4 gap-8">
             {/* Logo & Contact */}
             <div className="space-y-[22px] max-w-[280px] w-full">
-<<<<<<< HEAD
-             <Link to="/home">
-  <img
-    src={mylogo}
-    alt="MYcara Logo"
-    className="w-[190px] h-[58.52px] mb-[35px]"
-  />
-</Link>
-=======
+
               <Link to="/home"><img 
                 src={mylogo}
                 alt="MYcra Logo"
                 className="w-[190px] h-[58.52px] mb-[35px]"
               /></Link>
->>>>>>> bb961bde4301c04c294824f51451179071434630
+
 
               <div className="flex items-start gap-[20px] text-sm text-light">
                 <MapPin size={24} className="mt-1" />

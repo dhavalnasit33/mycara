@@ -1,7 +1,7 @@
 // D:\mycara\frontend\src\components\icons\PopularityIcon.jsx
 import * as React from "react";
 
-const SortByIcon = (props) => (
+const PopularityIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={13}
@@ -17,4 +17,4 @@ const SortByIcon = (props) => (
   </svg>
 );
 
-export default SortByIcon;
+export default PopularityIcon;
