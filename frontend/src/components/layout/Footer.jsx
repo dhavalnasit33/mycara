@@ -85,12 +85,12 @@ const Footer = () => {
 
               <div className="flex items-start gap-5 text-sm text-light">
                 <TfiEmail className="mt-1" />
-                <a
-                  href="mailto:info@gmail.com"
+                <Link
+                  to="mailto:info@gmail.com"
                   className="underline break-words"
                 >
                   info@gmail.com
-                </a>
+                </Link>
               </div>
 
               <div className="flex items-start gap-5 text-sm text-light">
@@ -108,9 +108,9 @@ const Footer = () => {
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
                 <li>
-                  <a href="#" >
+                  <Link to="#" >
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link to="/contact-us">
@@ -123,9 +123,9 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Women
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -138,29 +138,29 @@ const Footer = () => {
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
                 <li>
-                  <a href="#" >
+                  <Link to="#" >
                     Return Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" >
+                  <Link to="/contact-us" >
                     FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#" >
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Payment Methods
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

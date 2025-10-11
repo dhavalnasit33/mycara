@@ -15,11 +15,10 @@ export default function ContactSection() {
             Get In Touch
           </h2>
           <p className="text-[#989696] text-14 mb-[30px]">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Ut enim ad minim veniam, quis nostrud exercitation......
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation......
           </p>
 
-          <form className="space-y-[28px]">
+          <form className="space-y-[15px] md:space-y-[28px] ">
           
             <input
               type="text"
@@ -31,7 +30,7 @@ export default function ContactSection() {
               placeholder="E-mail*"
               className="input-common"
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-[15px] md:gap-[28px]">
               <input
                 type="text"
                 placeholder="Order Number"
@@ -49,8 +48,7 @@ export default function ContactSection() {
               placeholder="Description"
               className="input-common"
             ></textarea>
-
-     
+  
             <Button
               type="submit"
               variant="common" 
