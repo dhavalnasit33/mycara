@@ -321,7 +321,7 @@ export default function Products() {
         </div>
 
         <Button className="w-full mt-2" onClick={handleSearchClick}>
-          Search
+           Apply Filters
         </Button>
       </div>
     );
@@ -347,68 +347,70 @@ export default function Products() {
       </div>
 
       <Card className="shadow-sm border border-gray-200">
-        <CardContent className="space-y-4 p-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
-              <Input
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+  <CardContent className="space-y-4 p-4">
+    <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 flex-wrap">
+      {/* Search */}
+      <div className="relative flex-1 min-w-[200px]">
+        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+        <Input
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10"
+        />
+      </div>
 
-            <Select
-              value={statusFilter || "all"}
-              onValueChange={(value) =>
-                setStatusFilter(
-                  (value === "all" ? "" : value) as "" | "active" | "inactive"
-                )
-              }
-            >
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="active">Active</SelectItem>
-                <SelectItem value="inactive">Inactive</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+      {/* Status Filter */}
+      <Select
+        value={statusFilter || "all"}
+        onValueChange={(value) =>
+          setStatusFilter(
+            (value === "all" ? "" : value) as "" | "active" | "inactive"
+          )
+        }
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Filter by status" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">All</SelectItem>
+          <SelectItem value="active">Active</SelectItem>
+          <SelectItem value="inactive">Inactive</SelectItem>
+        </SelectContent>
+      </Select>
 
-          {/* Advanced Filters Popover */}
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button variant="outline" className="w-full md:w-auto">
-                Advanced Filters
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-full md:w-96 p-4 space-y-4">
-              <AdvancedFilters onApply={() => {}} />
-            </PopoverContent>
-          </Popover>
-        </CardContent>
+      {/* Advanced Filters Button */}
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="w-full md:w-auto">
+            Advanced Filters
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-full md:w-96 p-4 space-y-4">
+          <AdvancedFilters onApply={() => {}} />
+        </PopoverContent>
+      </Popover>
+    </div>
+  </CardContent>
 
-        {/* Bulk Delete */}
-        {selectedIds.length > 0 && (
-          <div className="p-4 border-t flex justify-end">
-            <ConfirmDialog
-              title="Delete Selected Products"
-              description={`This will delete ${selectedIds.length} selected products.`}
-              confirmText="Delete All"
-              onConfirm={handleBulkDelete}
-              danger
-            >
-              <Button variant="destructive" className="flex items-center gap-2">
-                <Trash2 className="h-4 w-4" /> Delete Selected
-              </Button>
-            </ConfirmDialog>
-          </div>
-        )}
-      </Card>
+  {/* Bulk Delete */}
+  {selectedIds.length > 0 && (
+    <div className="p-4 border-t flex justify-end">
+      <ConfirmDialog
+        title="Delete Selected Products"
+        description={`This will delete ${selectedIds.length} selected products.`}
+        confirmText="Delete All"
+        onConfirm={handleBulkDelete}
+        danger
+      >
+        <Button variant="destructive" className="flex items-center gap-2">
+          <Trash2 className="h-4 w-4" /> Delete Selected
+        </Button>
+      </ConfirmDialog>
+    </div>
+  )}
+</Card>
+
 
       {/* Products Table */}
       <Card className="shadow-sm border border-gray-200">

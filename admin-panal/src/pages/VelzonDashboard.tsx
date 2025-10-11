@@ -53,75 +53,7 @@ import { AppDispatch, RootState } from "@/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchDashboard } from "@/features/dashboard/dashboardThunk";
-
-// Dummy data for charts and tables
-const salesData = [
-  { month: "Jan", sales: 4000, orders: 240 },
-  { month: "Feb", sales: 3000, orders: 198 },
-  { month: "Mar", sales: 5000, orders: 300 },
-  { month: "Apr", sales: 4500, orders: 278 },
-  { month: "May", sales: 6000, orders: 189 },
-  { month: "Jun", sales: 5500, orders: 239 },
-];
-
-const orderStatusData = [
-  { name: "Delivered", value: 120, color: "hsl(var(--success))" },
-  { name: "Pending", value: 80, color: "hsl(var(--warning))" },
-  { name: "Cancelled", value: 30, color: "hsl(var(--destructive))" },
-  { name: "Processing", value: 45, color: "hsl(var(--info))" },
-];
-
-const topProductsData = [
-  { name: "Blue Denim Jacket", sales: 245, revenue: 12250 },
-  { name: "White Cotton T-Shirt", sales: 189, revenue: 3780 },
-  { name: "Black Leather Boots", sales: 156, revenue: 15600 },
-  { name: "Red Summer Dress", sales: 134, revenue: 8040 },
-  { name: "Navy Blue Jeans", sales: 98, revenue: 5880 },
-];
-
-const recentOrders = [
-  { 
-    id: "#VZ001", 
-    customer: "John Smith", 
-    products: "Blue Denim Jacket, White T-Shirt", 
-    total: "$125.50", 
-    status: "delivered",
-    date: "2024-01-20"
-  },
-  { 
-    id: "#VZ002", 
-    customer: "Sarah Johnson", 
-    products: "Black Leather Boots", 
-    total: "$199.99", 
-    status: "processing",
-    date: "2024-01-19"
-  },
-  { 
-    id: "#VZ003", 
-    customer: "Mike Wilson", 
-    products: "Red Summer Dress", 
-    total: "$79.99", 
-    status: "pending",
-    date: "2024-01-18"
-  },
-  { 
-    id: "#VZ004", 
-    customer: "Emily Davis", 
-    products: "Navy Blue Jeans, White T-Shirt", 
-    total: "$89.98", 
-    status: "delivered",
-    date: "2024-01-17"
-  },
-  { 
-    id: "#VZ005", 
-    customer: "David Brown", 
-    products: "Blue Denim Jacket", 
-    total: "$65.00", 
-    status: "cancelled",
-    date: "2024-01-16"
-  },
-];
-
+import { useNavigate } from "react-router-dom";
 
 const getStatusBadge = (status: string) => {
   switch (status) {
@@ -150,71 +82,115 @@ const chartConfig = {
 };
 
 export default function VelzonDashboard() {
+  const navigate = useNavigate();
 
-   const dispatch = useDispatch<AppDispatch>();
-   const { 
-    totalProducts, totalOrders, totalUsers, totalRevenue, activeCoupons,ordersByStatus,salesOverview,
-    recentOrders, topSellingProducts, loading, error 
+  const dispatch = useDispatch<AppDispatch>();
+  const {
+    totalProducts,
+    totalOrders,
+    totalUsers,
+    totalRevenue,
+    activeCoupons,
+    ordersByStatus,
+    salesOverview,
+    recentOrders,
+    topSellingProducts,
+    loading,
+    error,
   } = useSelector((state: RootState) => state.dashboard);
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(fetchDashboard());
   }, [dispatch]);
 
-   if (loading) return <p>Loading dashboard...</p>;
+  if (loading) return <p>Loading dashboard...</p>;
   if (error) return <p className="text-red-500">{error}</p>;
 
-const statsCards = [
-  { title: "Total Products", value: totalProducts, icon: Package, bgClass: "stat-card-primary", trending: "up", change: "+0%" },
-  { title: "Total Orders", value: totalOrders, icon: ShoppingCart, bgClass: "stat-card-success", trending: "up", change: "+0%" },
-  { title: "Total Users", value: totalUsers, icon: Users, bgClass: "stat-card-info", trending: "up", change: "+0%" },
-  { title: "Total Revenue", value: `$${totalRevenue}`, icon: DollarSign, bgClass: "stat-card-warning", trending: "up", change: "+0%" },
-  { title: "Active Coupons", value: activeCoupons, icon: Ticket, bgClass: "stat-card-secondary", trending: "up", change: "+0%" },
-];
+  const statsCards = [
+    {
+      title: "Total Products",
+      value: totalProducts,
+      icon: Package,
+      bgClass: "stat-card-primary",
+      trending: "up",
+      change: "+0%",
+    },
+    {
+      title: "Total Orders",
+      value: totalOrders,
+      icon: ShoppingCart,
+      bgClass: "stat-card-success",
+      trending: "up",
+      change: "+0%",
+    },
+    {
+      title: "Total Users",
+      value: totalUsers,
+      icon: Users,
+      bgClass: "stat-card-info",
+      trending: "up",
+      change: "+0%",
+    },
+    {
+      title: "Total Revenue",
+      value: `$${totalRevenue}`,
+      icon: DollarSign,
+      bgClass: "stat-card-warning",
+      trending: "up",
+      change: "+0%",
+    },
+    {
+      title: "Active Coupons",
+      value: activeCoupons,
+      icon: Ticket,
+      bgClass: "stat-card-secondary",
+      trending: "up",
+      change: "+0%",
+    },
+  ];
 
-// Map API ordersByStatus to chart data
-const orderStatusData = ordersByStatus.map((status) => {
-  let color = "";
-  switch (status._id) {
-    case "delivered":
-      color = "hsl(var(--success))";
-      break;
-    case "pending":
-      color = "hsl(var(--warning))";
-      break;
-    case "cancelled":
-      color = "hsl(var(--destructive))";
-      break;
-    case "processing":
-      color = "hsl(var(--info))";
-      break;
-    default:
-      color = "hsl(var(--secondary))";
-      break;
-  }
+  // Map API ordersByStatus to chart data
+  const orderStatusData = ordersByStatus.map((status) => {
+    let color = "";
+    switch (status._id) {
+      case "delivered":
+        color = "hsl(var(--success))";
+        break;
+      case "pending":
+        color = "hsl(var(--warning))";
+        break;
+      case "cancelled":
+        color = "hsl(var(--destructive))";
+        break;
+      case "processing":
+        color = "hsl(var(--info))";
+        break;
+      default:
+        color = "hsl(var(--secondary))";
+        break;
+    }
 
-  // Capitalize first letter for display
-  const name = status._id.charAt(0).toUpperCase() + status._id.slice(1);
+    // Capitalize first letter for display
+    const name = status._id.charAt(0).toUpperCase() + status._id.slice(1);
 
-  return {
-    name,
-    value: status.count,
-    color,
-  };
-});
+    return {
+      name,
+      value: status.count,
+      color,
+    };
+  });
 
-// Map API salesOverview to chart data
-const salesData = salesOverview.map((item) => ({
-  month: new Date(item._id).toLocaleString("default", { month: "short" }),
-  sales: item.revenue,
-  orders: item.orders,
-}));
+  // Map API salesOverview to chart data
+  const salesData = salesOverview.map((item) => ({
+    month: new Date(item._id).toLocaleString("default", { month: "short" }),
+    sales: item.revenue,
+    orders: item.orders,
+  }));
 
-const topProductsData = topSellingProducts.map((product) => ({
-  name: product.name,
-  sales: product.quantity,
-}));
-
+  const topProductsData = topSellingProducts.map((product) => ({
+    name: product.name,
+    sales: product.quantity,
+  }));
 
   return (
     <div className="space-y-8">
@@ -241,7 +217,9 @@ const topProductsData = topSellingProducts.map((product) => ({
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium opacity-90">{stat.title}</p>
+                    <p className="text-sm font-medium opacity-90">
+                      {stat.title}
+                    </p>
                     <p className="text-2xl font-bold mt-2">{stat.value}</p>
                     <div className="flex items-center gap-1 mt-2">
                       {stat.trending === "up" ? (
@@ -270,26 +248,26 @@ const topProductsData = topSellingProducts.map((product) => ({
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px]">
-            <LineChart data={salesData}>
-  <CartesianGrid strokeDasharray="3 3" />
-  <XAxis dataKey="month" />
-  <YAxis />
-  <ChartTooltip content={<ChartTooltipContent />} />
-  <Line
-    type="monotone"
-    dataKey="sales"
-    stroke="hsl(var(--primary))"
-    strokeWidth={3}
-    dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
-  />
-  <Line
-    type="monotone"
-    dataKey="orders"
-    stroke="hsl(var(--info))"
-    strokeWidth={3}
-    dot={{ fill: "hsl(var(--info))", strokeWidth: 2, r: 4 }}
-  />
-</LineChart>
+              <LineChart data={salesData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
+                <YAxis />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Line
+                  type="monotone"
+                  dataKey="sales"
+                  stroke="hsl(var(--primary))"
+                  strokeWidth={3}
+                  dot={{ fill: "hsl(var(--primary))", strokeWidth: 2, r: 4 }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="orders"
+                  stroke="hsl(var(--info))"
+                  strokeWidth={3}
+                  dot={{ fill: "hsl(var(--info))", strokeWidth: 2, r: 4 }}
+                />
+              </LineChart>
             </ChartContainer>
           </CardContent>
         </Card>
@@ -332,51 +310,83 @@ const topProductsData = topSellingProducts.map((product) => ({
           <CardContent>
             <ChartContainer config={chartConfig} className="h-[300px]">
               <BarChart data={topProductsData} layout="horizontal">
-  <CartesianGrid strokeDasharray="3 3" />
-  <XAxis type="number" />
-  <YAxis dataKey="name" type="category" width={100} />
-  <ChartTooltip content={<ChartTooltipContent />} />
-  <Bar dataKey="sales" fill="hsl(var(--primary))" radius={[0, 4, 4, 0]} />
-</BarChart>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis type="number" />
+                <YAxis dataKey="name" type="category" width={100} />
+                <ChartTooltip content={<ChartTooltipContent />} />
+                <Bar
+                  dataKey="sales"
+                  fill="hsl(var(--primary))"
+                  radius={[0, 4, 4, 0]}
+                />
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
 
         {/* Recent Orders */}
-        {/* <Card>
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <CardTitle>Recent Orders</CardTitle>
-            <Button variant="ghost" size="sm" className="gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-2"
+              onClick={() => navigate("/orders")}
+            >
               <Eye className="h-4 w-4" />
               View All
             </Button>
           </CardHeader>
+
           <CardContent>
             <div className="space-y-4">
-              {recentOrders.map((order) => (
-                <div
-                  key={order._id}
-                  className="flex items-center justify-between p-4 border border-card-border rounded-lg hover:bg-table-hover transition-colors"
-                >
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium">{order._id}</span>
-                      {getStatusBadge(order.status)}
+              {recentOrders.length > 0 ? (
+                recentOrders.map((order) => {
+                  const productsList = order.items
+                    .map(
+                      (item) => `${item.product_id?.name} (x${item.quantity})`
+                    )
+                    .join(", ");
+
+                  return (
+                    <div
+                      key={order._id}
+                      className="flex items-center justify-between p-4 border border-card-border rounded-lg hover:bg-muted/40 transition-colors"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-medium">
+                            {order.order_number}
+                          </span>
+                          {getStatusBadge(order.status)}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {order.user_id?.name} &lt;{order.user_id?.email}&gt;
+                        </div>
+                        <div className="text-xs text-muted-foreground truncate max-w-[250px]">
+                          {productsList}
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="font-semibold">
+                          ${order.total_price}
+                        </div>
+                        <div className="text-sm text-muted-foreground">
+                          {new Date(order.createdAt).toLocaleDateString()}
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-sm text-muted-foreground">{order.customer}</div>
-                    <div className="text-xs text-muted-foreground truncate max-w-[200px]">
-                      {order.products}
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <div className="font-semibold">{order.total}</div>
-                    <div className="text-sm text-muted-foreground">{order.date}</div>
-                  </div>
-                </div>
-              ))}
+                  );
+                })
+              ) : (
+                <p className="text-sm text-muted-foreground text-center py-4">
+                  No recent orders found.
+                </p>
+              )}
             </div>
           </CardContent>
-        </Card> */}
+        </Card>
       </div>
     </div>
   );

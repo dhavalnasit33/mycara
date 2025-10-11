@@ -26,6 +26,7 @@ export default function NavbarFormPage() {
   // 📝 Form States
   const [label, setLabel] = useState("");
   const [url, setUrl] = useState("");
+  const [icon, setIcon] = useState("");
   const [order, setOrder] = useState<number | "">("");
   const [status, setStatus] = useState(true);
 
@@ -37,6 +38,7 @@ export default function NavbarFormPage() {
           const item = res.payload;
           setLabel(item.label || "");
           setUrl(item.url || "");
+          setIcon(item.icon || "");
           setOrder(item.order ?? 0);
           setStatus(item.status === "active");
         }
@@ -54,6 +56,7 @@ export default function NavbarFormPage() {
       label,
       url,
       order,
+      icon,
       status: status ? "active" : "inactive",
     };
 
@@ -132,6 +135,17 @@ export default function NavbarFormPage() {
                   onChange={(e) => setUrl(e.target.value)}
                   placeholder="/home, /about, etc."
                 />
+              </div>
+
+              <div>
+                <Label>Icon *</Label>
+                <div className="mt-1">
+                  <ImageUpload
+                    value={icon}
+                    onChange={(url) => setIcon(url as string | null)}
+                    size={150}
+                  />
+                </div>
               </div>
               <div>
                 <Label htmlFor="order">Order</Label>

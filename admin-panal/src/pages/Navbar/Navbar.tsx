@@ -10,6 +10,24 @@ export default function NavbarPage() {
   const dispatch = useDispatch<AppDispatch>();
 
    const columns = [
+    {
+      key: "icon",
+      label: "icon",
+      width: "w-20",
+      render: (item: any) =>
+        item.icon ? (
+          <img
+            src={`${import.meta.env.VITE_API_URL_IMAGE}${item.icon}`}
+            alt={item.label}
+            className="h-10 w-10 rounded-md object-cover border border-gray-200"
+          />
+        ) : (
+          <div className="h-10 w-10 bg-gray-100 rounded-md flex items-center justify-center text-gray-400 text-xs border border-dashed border-gray-300">
+            —
+          </div>
+        ),
+      exportValue: (item: any) => item.label, 
+    },
     { key: "label", label: "Title" },
     { key: "url", label: "URL" },
     { key: "order", label: "Order" },
