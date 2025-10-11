@@ -5,8 +5,8 @@ import ProductGrid from './ProductGrid';
 import shopsaree1 from '../../assets/shopsaree1.jpg';
 import shopsaree2 from '../../assets/shopsaree2.jpg';
 import OriginalSortByIcon from "../icons/SortByIcon";
-import { ChevronDown, X, Plus, Minus } from 'lucide-react';
-import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
+import { ChevronDown, X, Plus, Minus, ChevronLeftIcon } from 'lucide-react';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import FilterIconComponent from "../icons/filter";
 import { Link } from 'react-router-dom';
 import Row from '../ui/Row';
@@ -427,22 +427,22 @@ const MobileFilterModal = ({
 }) => {
     if (!isOpen) return null;
 
-    const MobileFilterButtons = ({ onCancel, onFilter }) => (
-        <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
-            <button
-                onClick={onCancel}
-                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
-            >
-                Cancel
-            </button>
-            <button
-                onClick={onFilter}
-                className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
-            >
-                Filter
-            </button>
-        </div>
-    );
+    // const MobileFilterButtons = ({ onCancel, onFilter }) => (
+    //     <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+    //         <button
+    //             onClick={onCancel}
+    //             className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
+    //         >
+    //             Cancel
+    //         </button>
+    //         <button
+    //             onClick={onFilter}
+    //             className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
+    //         >
+    //             Filter
+    //         </button>
+    //     </div>
+    // );
 
     return (
          <>

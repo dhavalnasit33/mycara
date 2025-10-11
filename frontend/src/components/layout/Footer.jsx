@@ -184,6 +184,7 @@ const Footer = () => {
                   />
                   <img
                     src={send}
+                    alt= ""
                     className="absolute right-4 top-1/2 h-[20px] w-[20px] transform -translate-y-1/2 cursor-pointer"
                   />
                 </div>
