@@ -1,5 +1,4 @@
-import React from "react";
-import { Truck, RefreshCcw, Package } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import delivery from "../../assets/delivery.png";
@@ -68,30 +67,24 @@ export default function DeliveryInfo() {
     },
   ];
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const sliderSettings = {
     dots: false,
     arrows: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,  
+    // slidesToShow: 3, 
+    slidesToShow: windowWidth <= 480 ? 1 : windowWidth <= 767 ? 2 :  windowWidth <= 1280 ? 3 : 3, 
     slidesToScroll: 1,
     prevArrow: <PrevArrow />,
     nextArrow: <NextArrow />,
-    responsive: [
-    {
-      breakpoint: 1281,
-      settings: { slidesToShow: 2 },
-    },
-    {
-      breakpoint: 768,
-      settings: { slidesToShow: 2 },
-    },
-    {
-      breakpoint: 480,
-      settings: { slidesToShow: 1 },
-    },
-],
-
+    
   };
 
   return (

@@ -66,7 +66,7 @@ export default function CheckoutForm() {
       </div>
 
       {/* Extra options */}
-      <div className="flex flex-col pb-[30px] border-b border-[#BCBCBC] text-p text-light" >
+      <div className="flex flex-col pb-[30px] border-b light-border text-p text-light" >
         <label className="flex items-center pb-[10px]">
           <input type="checkbox" className="mr-[12px]" />
           <span>Add a note to order</span>

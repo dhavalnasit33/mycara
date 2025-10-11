@@ -1,12 +1,10 @@
-// App.jsx
-
 import React, { useState } from 'react';
 import Section from '../ui/Section';
 import faqBg from '../../assets/size-bg.png'
 import Row from '../ui/Row';
 import Button from '../ui/Button';
 import { Minus, Plus } from 'lucide-react';
-// import Row from '../ui/Row';
+import { Link } from 'react-router-dom';
 
 export default function FAQ() {
   const [isOpen, setIsOpen] = useState(null);
@@ -28,56 +26,54 @@ export default function FAQ() {
 
   return (
     <>
-        <Section
-        className="bg-cover bg-center bg-no-repeat min-h-[400px]"
-        style={{ backgroundImage: `url(${faqBg})` }}
+        <Section className="bg-cover bg-center bg-no-repeat min-h-[400px]"
+            style={{ backgroundImage: `url(${faqBg})` }}
         >
-            <Row className='!max-w-[688px] pt-[30px] md:pt-0'>
-        <div className=" text-center ">
-            <h1 className="text-[24px] sm:text-[36px] sm:text-4xl font-semibold mb-[15px] sm:mb-[22px] leading">
-            Frequently Asked Questions
-            </h1>
-            <p className="text-dark text-14 ">
-            Quick answers to questions you may have about untitled UI and billing. Can’t find what yo’re looking for ? Checkout our <a href="" className='underline'>full documentation .</a>
-            </p>
-        </div>
-        </Row>
+            <Row className='!max-w-[688px] pt-[40px] md:pt-[20px] '>
+                <div className=" text-center ">
+                    <h1 className="text-[24px] sm:text-[36px] font-semibold mb-[15px] sm:mb-[22px] leading">
+                        Frequently Asked Questions
+                    </h1>
+                    <p className="text-dark text-14 ">
+                        Quick answers to questions you may have about untitled UI and billing. Can’t find what yo’re looking for ? Checkout our <Link to="" className='underline'>full documentation .</Link>
+                    </p>
+                </div>
+            </Row>
         </Section>
 
-        <Section className="relative !pt-0  -mt-[12rem]">
-        <Row className="!max-w-[1122px] form-shadow rounded-[20px] p-[40px] !px-[30px] bg-white">
-            <div className="space-y-[10px]">
-            {faqData.map((item, index) => (
-                <div key={index} className="border-b border-dashed px-[10px] py-[14px] sm:py-[20px] border-[#D2AF9F]">
-                <div
-                    className="flex justify-between items-center cursor-pointer"
-                    onClick={() => toggle(index)}
-                    >
-                    <span className="text-[18px] font-medium break">{item.question}</span>
-                    <span className='flex flex-start'>
-                        {isOpen === index ? (
-                        <Minus size={14} className="md:w-[20px] md:h-[20px] text-white bg-color-100 " />
-                        ) : (
-                        <Plus size={14}  className="md:w-[20px] md:h-[20px] text-white bg-color-100 " />
-                        )}
-                    </span>
-                    </div>
+        <Section className="relative !pt-0 -mt-[12rem]">
+            <Row className="!max-w-[1122px] form-shadow rounded-[20px] p-[40px] !px-[30px] bg-white">
+                <div className="space-y-[10px]">
+                    {faqData.map((item, index) => (
+                        <div key={index} className="border-b border-dashed px-[10px] py-[14px] sm:py-[20px] border-[#D2AF9F]">
+                            <div className="flex justify-between items-center cursor-pointer"
+                                onClick={() => toggle(index)}
+                                >
+                                <span className="text-[18px] font-medium break">{item.question}</span>
+                                <span className='flex flex-start'>
+                                    {isOpen === index ? (
+                                    <Minus size={14} className="md:w-[20px] md:h-[20px] text-white bg-color-100 " />
+                                    ) : (
+                                    <Plus size={14}  className="md:w-[20px] md:h-[20px] text-white bg-color-100 " />
+                                    )}
+                                </span>
+                            </div>
 
-                {isOpen === index && (
-                    <div className="mt-[12px] text-[#989696] text-14 break">
-                    <p>{item.answer}</p>
-                    </div>
-                )}
+                            {isOpen === index && (
+                                <div className="mt-[12px] text-[#989696] text-14 break">
+                                <p>{item.answer}</p>
+                                </div>
+                            )}
+                        </div>
+                    ))}
                 </div>
-            ))}
-            </div>
 
-            <div className="mt-[80px] text-center justify-center flex ">
-            <Button variant='common' className='rounded-[30px]' >
-                Load more
-            </Button>
-            </div>
-        </Row>
+                <div className="mt-[80px] text-center justify-center flex ">
+                <Button variant='common' className='!rounded-[30px]' >
+                    Load more
+                </Button>
+                </div>
+            </Row>
         </Section>
     </>
   );

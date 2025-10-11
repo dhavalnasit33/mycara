@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bb961bde4301c04c294824f51451179071434630
 import shopsaree3 from '../../assets/shopsaree3.jpg';
 import shopsaree4 from '../../assets/shopsaree4.jpg';
 import shopsaree5 from '../../assets/shopsaree5.jpg';

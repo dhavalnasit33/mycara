@@ -27,7 +27,7 @@ export default function ProductInfo() {
       </div>
 
       {/* Price */}
-      <div className="pb-[33px] border-dashed border-b border-[#BCBCBC]">
+      <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center ">
             <p className="text-[26px] text-black">₹1,430</p>
             <p className="text-theme font-18 ml-[7px]">35% Off</p>
@@ -46,7 +46,7 @@ export default function ProductInfo() {
                 <div key={size.name} className="relative">
                 <button
                     disabled={size.stock === 0} 
-                    className={`border border-[#BCBCBC] w-[50px] md:w-[71px]  md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500  ${
+                    className={`border light-border w-[50px] md:w-[71px]  md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500  ${
                     size.stock === 0 ? " cursor-not-allowed" : ""
                     }`}
                 >

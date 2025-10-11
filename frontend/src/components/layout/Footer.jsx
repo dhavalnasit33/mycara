@@ -72,6 +72,7 @@ const Footer = () => {
           <Row className="py-[50px] md:py-[80px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 md:grid-cols-4 gap-8">
             {/* Logo & Contact */}
             <div className="space-y-[22px] max-w-[280px] w-full">
+<<<<<<< HEAD
              <Link to="/home">
   <img
     src={mylogo}
@@ -79,6 +80,13 @@ const Footer = () => {
     className="w-[190px] h-[58.52px] mb-[35px]"
   />
 </Link>
+=======
+              <Link to="/home"><img 
+                src={mylogo}
+                alt="MYcra Logo"
+                className="w-[190px] h-[58.52px] mb-[35px]"
+              /></Link>
+>>>>>>> bb961bde4301c04c294824f51451179071434630
 
               <div className="flex items-start gap-[20px] text-sm text-light">
                 <MapPin size={24} className="mt-1" />
@@ -87,12 +95,12 @@ const Footer = () => {
 
               <div className="flex items-start gap-5 text-sm text-light">
                 <TfiEmail className="mt-1" />
-                <a
-                  href="mailto:info@gmail.com"
+                <Link
+                  to="mailto:info@gmail.com"
                   className="underline break-words"
                 >
                   info@gmail.com
-                </a>
+                </Link>
               </div>
 
               <div className="flex items-start gap-5 text-sm text-light">
@@ -110,9 +118,9 @@ const Footer = () => {
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
                 <li>
-                  <a href="#" >
+                  <Link to="#" >
                     About
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link to="/contact-us">
@@ -125,9 +133,9 @@ const Footer = () => {
                   </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Women
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -140,29 +148,29 @@ const Footer = () => {
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
                 <li>
-                  <a href="#" >
+                  <Link to="#" >
                     Return Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" >
+                  <Link to="/contact-us" >
                     FAQ
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#" >
                     Terms & Conditions
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Privacy Policy
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#">
+                  <Link to="#">
                     Payment Methods
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -186,6 +194,7 @@ const Footer = () => {
                   />
                   <img
                     src={send}
+                    alt= ""
                     className="absolute right-4 top-1/2 h-[20px] w-[20px] transform -translate-y-1/2 cursor-pointer"
                   />
                 </div>

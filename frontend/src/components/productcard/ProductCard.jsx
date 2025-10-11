@@ -8,38 +8,42 @@ export default function ProductCard({ product }) {
     ? product.allImages[currentImageIndex]
     : product.image;
   return (
-    <div className="bg-white overflow-hidden transition-all  group w-full hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer overflow-hidden">
+    <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
       <div className="relative mb-[10px]">
         <img
           src={displayedImage}
           alt={product.subtitle}
-          className="w-full h-[300px] sm:h-[355px] object-cover transition duration-300"
+          className="w-full h-[300px] sm:h-[355px] transition duration-300"
         />
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <div className="h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full">
-              <HeartIcon className="w-[26px] h-[24px]" />
+          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
+              <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
-          <div className="h-[40px] w-[40px] bg-white flex items-center justify-center rounded-full">
-              <ShoppingBagIcon width={26} height={24} />
+          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
+              <ShoppingBagIcon  className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
       </div>
-       {hasMultipleImages && (
-          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full">
+        {hasMultipleImages && (
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {product.allImages.map((_, index) => (
               <div
                 key={index}
                 className={`w-[6px] h-[6px] rounded-full cursor-pointer transition-colors duration-300 ${
-                  index === currentImageIndex ? "bg-color" : "bg-white"
+                  index === currentImageIndex ? "bg-color " : "bg-white"
                 }`}
                 onMouseEnter={() => setCurrentImageIndex(index)}
               />
             ))}
           </div>
         )}
+<<<<<<< HEAD
+=======
+   
+>>>>>>> bb961bde4301c04c294824f51451179071434630
       </div>
       <div >
          {product.express && (
-          <p className="inline-flex px-[7px] py-[3px] bg-[rgba(244,50,151,9%)] text-theme text-14 rounded-[3px] mb-[10px]">
+          <p className="inline-flex px-[7px] py-[3px] bg-[rgba(244,50,151,9%)] text-theme text-[12px] md:text-[14px] rounded-[3px] mb-[10px]">
             Express Shipping
           </p>
         )}
@@ -49,8 +53,14 @@ export default function ProductCard({ product }) {
               </div>
           )}
         <h3 className=" text-p">{product.brand}</h3>
+<<<<<<< HEAD
         <p className="sec-text-color text-14 mb-2">{product.subtitle}</p>
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
+=======
+        <p className="sec-text-color text-14 mb-2 truncate">{product.subtitle}</p>
+
+        <div className="flex  items-center gap-[5px] text-p mb-[5px]">
+>>>>>>> bb961bde4301c04c294824f51451179071434630
           <p className="">₹{product.price}</p>
           {product.oldPrice && (
             <p className="line-through text-[#BCBCBC] text-14">₹{product.oldPrice}</p>
@@ -75,7 +85,7 @@ export default function ProductCard({ product }) {
                 <span
                   key={i}
                   className={`text-sm ${
-                    i < product.rating ? "text-theme" : "text-gray-300"
+                    i < product.rating ? "text-theme" : "sec-text-color"
                   }`}
                 >★
                 </span>

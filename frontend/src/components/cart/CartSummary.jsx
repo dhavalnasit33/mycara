@@ -12,15 +12,15 @@ export default function CartSummary() {
         </div>
       </h2>
       <div className="space-y-[25px] text-light text-p mb-[50px]">
-        <div className="flex justify-between pb-[10px] border-b border-1 border-[#BCBCBC] ">
+        <div className="flex justify-between pb-[10px] border-b border-1 light-border ">
           <span>Sub-Total:</span>
           <span>₹4,830.00</span>
         </div>
-        <div className="flex justify-between pb-[10px] border-b border-1 border-[#BCBCBC] ">
+        <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Tax (10%):</span>
           <span>₹483.00</span>
         </div>
-        <div className="flex justify-between pb-[10px] border-b border-1 border-[#BCBCBC]">
+        <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Shipping:</span>
           <span>₹0.00</span>
         </div>
