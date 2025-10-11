@@ -11,6 +11,7 @@ import Row from "../components/ui/Row";
 import SectionHeading from "../components/ui/SectionHeading";
 import SimilarProducts from "../components/productcard/SimilarProducts";
 import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
+import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function Product() {
   // const images = [img1, img2, img3];
@@ -19,6 +20,9 @@ export default function Product() {
   return (
     <>
     <Section>
+      <Row>
+        <Breadcrumb/>
+      </Row>
     <Row className=" grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
       <ProductGallery  />
       <div>

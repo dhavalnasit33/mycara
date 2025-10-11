@@ -1,10 +1,11 @@
 import React from "react";
-import SectionHeading from "./ui/SectionHeading";
-import Row from "./ui/Row";
-import earringsImg from "../assets/earrings.png";
-import shoesImg from "../assets/shoes.png";
-import watchImg from "../assets/watch.png";
-import winterClothesImg from "../assets/winter-clothes.png";
+import SectionHeading from "../ui/SectionHeading";
+import Row from "../ui/Row";
+import earringsImg from '../../assets/earrings.png';
+import shoesImg from '../../assets/shoes.png';
+import watchImg from '../../assets/watch.png';
+import winterClothesImg from '../../assets/winter-clothes.png';
+
 
 
 const ImageCard = ({ name, img, textColor = "text-black" }) => {
@@ -67,33 +68,33 @@ const NewArrivals = () => {
 
 const earrings = {
   ...newArrivalItems[0],
-  classes: " lg:w-[428px] lg:h-[578px] max-sm:w-[340px] max-sm:h-[240px]",
+  classes: " lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
 };
 
 const shoes = {
   ...newArrivalItems[1],
-  classes: "lg:w-[568px] lg:h-[285px] max-sm:w-[340px] max-sm:h-[169px]",
+  classes: "lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
 };
 
 const watch = {
   ...newArrivalItems[2],
-  classes: " lg:w-[568px] lg:h-[285px] max-sm:w-[340px] max-sm:h-[169px]",
+  classes: " lg:w-[568px] lg:h-[285px] w-[340px] h-[169px]",
 };
 
 const winterClothes = {
   ...newArrivalItems[3],
-  classes: "lg:w-[428px] lg:h-[578px] max-sm:w-[340px] max-sm:h-[240px]",
+  classes: "lg:w-[428px] lg:h-[578px] w-[340px] h-[240px]",
 };
 
 
   return (
-    <section className="py-12">
+    <section className=" w-full py-[25px] md:py-[50px] ">
       <Row className="flex flex-col items-center">
         <SectionHeading title="New Arrivals" />
       </Row>
 
-      <div className="flex justify-center mx-auto">
-        <Row>
+   
+      
           <div className="grid gap-2 justify-center sm:grid-cols-1 lg:flex  ">
             
             <div className={earrings.classes}>
@@ -114,8 +115,9 @@ const winterClothes = {
             </div>
 
           </div>
-        </Row>
-      </div>
+        
+
+
     </section>
   );
 };

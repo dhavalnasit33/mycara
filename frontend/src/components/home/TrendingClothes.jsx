@@ -2,15 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 
 // Local images
-import FlowerIcon from "../components/icons/FlowerIcon"; 
+import FlowerIcon from "../icons/FlowerIcon"; 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import SpainImg from "../assets/Spain tincid.png";
-import LatestLookImg from "../assets/Leatest Look cort collection.png";
-import StylishImg from "../assets/Leatest look stylish.png";
-import SectionHeading from './ui/SectionHeading';
-import Row from './ui/Row.jsx';
+import SpainImg from "../../assets/Spain tincid.png";
+import LatestLookImg from "../../assets/Leatest Look cort collection.png";
+import StylishImg from "../../assets/Leatest look stylish.png";
+import SectionHeading from '../ui/SectionHeading';
+import Row from '../ui/Row.jsx';
 const products = [
   {
     id: 1,
@@ -74,11 +74,12 @@ const sliderSettings = {
 
 
   return (
-    <div className=" bg-white font-sans mb-[90px]">
+    <section className=" w-full py-[25px] md:py-[50px] ">
+    
       {/* Heading */}
       <div className="relative flex justify-center items-center w-full">
                 <Row>
-                         <SectionHeading title=" Trending Clothes" />
+                         <SectionHeading title="Trending Clothes" />
                 </Row>
       </div>
 
@@ -145,14 +146,15 @@ const sliderSettings = {
                 <div className="group">
                   <div className="relative  overflow-hidden p-2">
                     {/* Dashed border */}
-<span className="absolute top-0 left-0 w-[60px] border-t-[0.5px] border-dashed border-black"></span>
-<span className="absolute top-0 left-0 h-[85px] border-l-[0.5px] border-dashed border-black"></span>
-<span className="absolute bottom-0 right-0 w-[60px] border-b-[0.5px] border-dashed border-black"></span>
-<span className="absolute bottom-0 right-0 h-[85px] border-r-[0.5px] border-dashed border-black"></span>
+                <span className="absolute top-0 left-0 w-[60px] border-t-[0.5px] border-dashed border-black"></span>
+                <span className="absolute top-0 left-0 h-[85px] border-l-[0.5px] border-dashed border-black"></span>
+                <span className="absolute bottom-0 right-0 w-[60px] border-b-[0.5px] border-dashed border-black"></span>
+                <span className="absolute bottom-0 right-0 h-[85px] border-r-[0.5px] border-dashed border-black"></span>
 
                     {/* Flower Icon outside top-left */}
                               {/* Use -top-6 and -left-6 to push it outside the p-2 padding and the dashed border */}
-  <FlowerIcon className="absolute -top-5 -left-5 sm:-left-6 w-[40px] sm:w-[50px] h-[40px] text-pink-300 pointer-events-none" />
+  <FlowerIcon className="absolute -top-5 -left-5 sm:-left-6 w-[40px] sm:w-[50px] h-[40px] 
+   pointer-events-none" />
 
                     <img
                       src={product.img}
@@ -168,13 +170,13 @@ const sliderSettings = {
                   </div>
 
                   <div className="p-2 text-left">
-                    <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] lg:mb-2 sm:mb-0">{product.name}</h3>
-                    <p className="text-[#989696] lg:mb-2 sm:mb-0">
+                    <h3 className="font-medium text-[13px] md:text-[20px]  lg:text-[20px] lg:mb-2 md:mb-0  sm:mb-0">{product.name}</h3>
+                    <p className="text-[#989696] lg:mb-2 md:mb-0 sm:mb-0">
                       <span className=" text-[10px] md:text-[14px] lg:text-[14px] " style={{ color: "#989696" }}>
                         {product.price}
                       </span>
                     </p>
-                    <p className="text-black mb-2">★★★★★</p>
+                    <p className="text-black lg:mb-2 md:mb-0  sm:mb-0">★★★★★</p>
                     <button className="text-black text-[12px] md:text-[14px]  lg:text-[14px] relative transition">
                       Select Option
                       <span className="theme-border-block w-7"></span>
@@ -192,7 +194,8 @@ const sliderSettings = {
           </div>
         </div>
       </Row>
-    </div>
+
+    </section>
   );
 };
 

@@ -7,31 +7,19 @@ import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import MapForm from '../components/contactus/MapForm';
 import FAQ from '../components/contactus/Faq';
 import contactBg from '../assets/contact.jpg';
-import underlineImg from '../assets/underline.png';
+import SecondarySection from '../components/ui/SecondarySection';
 
 
 const ContactUs = () => {
   return (
     <>
-        <Section
-          className="bg-cover bg-center relative"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${contactBg})`,
-          }}
-        >
-          <Row className="flex flex-col items-center justify-center text-center py-[50px] sm:py-[82px]">
-            <h1 className="text-[40px] sm:text-[60px] text-white font-semibold mb-[15px] leading">
-              Contact Us
-            </h1>
-            <p className="text-lg text-white">
-              Get in touch and let us know how we can help!
-            </p>
-            <img src={underlineImg} alt="underline" className="mt-[30px]" />
-          </Row>
-        </Section>
+      <SecondarySection
+        heading="Contact Us"
+        subText="Get in touch and let us know how we can help!"
+        backgroundImage={contactBg}
+      />
       <Section >
         <Row className='xl:max-w-[1122px] grid grid-cols-1 md:grid-cols-3 gap-[30px] py-[25px] md:py-[50px]'>
-          {/* <div className="max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-[30px]"> */}
             <ContactCard
               icon={<MapPinIcon />}
               title="Visit Us"

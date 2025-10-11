@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
@@ -11,7 +11,7 @@ import img4 from "../../assets/similer4.png";
 export const products = [
   {
     id: 1,
-    title: "BLACK SCISSOR",
+    brand: "BLACK SCISSOR",
     subtitle: "Women Georgette Floral Black and...",
     price: 1137,
     oldPrice: 4575,
@@ -22,7 +22,7 @@ export const products = [
   },
   {
     id: 2,
-    title: "Indibellie",
+    brand: "Indibellie",
     subtitle: "Cotton Floral Printed Anarkali Kurta..",
     price: 2137,
     oldPrice: 4755,
@@ -33,7 +33,7 @@ export const products = [
   },
   {
     id: 3,
-    title: "Indya",
+    brand: "Indya",
     subtitle: "Women Reyon Lining Red An...",
     price: 1537,
     rating: 3,
@@ -42,7 +42,7 @@ export const products = [
   },
   {
     id: 4,
-    title: "Rangita",
+    brand: "Rangita",
     subtitle: "Chanderi Coral Sequine Yoke calf...",
     price: 1537,
     rating: 4,
@@ -51,7 +51,7 @@ export const products = [
   },
   {
     id: 5,
-    title: "Libas",
+    brand: "Libas",
     subtitle: "Printed Cotton A-Line Kurta...",
     price: 1937,
     rating: 5,
@@ -60,21 +60,21 @@ export const products = [
   },
   {
     id: 6,
-    title: "Rangita",
+    brand: "Rangita",
     subtitle: "Printed Cotton A-Line Kurta...",
     price: 2937,
     rating: 3,
     express: true,
     image: img3,
   },
-  
+
 ];
 
 function PrevArrow({ onClick, disabled }) {
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border h-[20px] w-[20px] md:h-[40px] md:w-[40px]
       ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronLeft size={22} />
@@ -86,7 +86,7 @@ function NextArrow({ onClick, disabled }) {
   return (
     <button
       onClick={!disabled ? onClick : undefined}
-      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border border-[#BCBCBC] h-[20px] w-[20px] md:h-[40px] md:w-[40px]
+      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border h-[20px] w-[20px] md:h-[40px] md:w-[40px]
       ${disabled ? " sec-text-color cursor-not-allowed" : "bg-white text-black"}`}
     >
       <ChevronRight size={22} />
@@ -97,12 +97,20 @@ function NextArrow({ onClick, disabled }) {
 export default function SimilarProducts() {
   const sliderRef = useRef(null);
   const [slideState, setSlideState] = useState({ current: 0, total: 0 });
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 4,
+    adaptiveHeight: false,
+    // slidesToShow: 4,
+    slidesToShow: windowWidth <= 480 ? 1 : windowWidth <= 767 ? 2 : windowWidth <= 980 ? 3 : windowWidth <= 1280 ? 4 : 4,
     slidesToScroll: 1,
     autoplay: false,
     beforeChange: (current, next) =>
@@ -110,7 +118,7 @@ export default function SimilarProducts() {
     nextArrow: (
       <NextArrow
         disabled={
-          slideState.current >= products.length - 4 // disable if last visible
+          slideState.current >= products.length - 4
         }
       />
     ),
@@ -119,27 +127,16 @@ export default function SimilarProducts() {
         disabled={slideState.current === 0}
       />
     ),
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 480,
-        settings: { slidesToShow: 1 },
-      },
-    ],
+   
   };
 
   return (
     <Row>
       <Slider ref={sliderRef} {...settings}>
         {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <div className="px-[15px] ">
+            <ProductCard key={product.id} product={product} className="border" />
+          </div>
         ))}
       </Slider>
     </Row>

@@ -85,7 +85,7 @@ export default function Orders() {
         
         <tbody>
           {ordersData.map((order, index) => (
-            <tr key={order.id} className="border-b border-[#BCBCBC]  border-0.5 text-p sec-text-color">
+            <tr key={order.id} className="border-b light-border  border-0.5 text-p sec-text-color">
               <td className="p-3 px-[30px] h-[75px]">{index + 1}</td>
               <td className="p-3 h-[75px]">{order.orderId}</td>
               <td className="p-3 h-[75px]">{order.date}</td>

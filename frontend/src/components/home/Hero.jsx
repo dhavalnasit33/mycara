@@ -6,11 +6,9 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaTwitter } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 
-// Import your hero images here
-import heroImg1 from "../assets/hero.png";
-import heroImg2 from "../assets/hero2.png"; 
-import heroImg3 from "../assets/hero3.png"; 
-
+import heroImg1 from '../../assets/hero.png';
+import heroImg2 from '../../assets/hero2.png';
+import heroImg3 from '../../assets/hero3.png';
 
 export default function Hero() {
     // Array to hold the data for each slider item
@@ -96,7 +94,7 @@ export default function Hero() {
                                 </span>
 
                                 <button
-                                    className="lg:w-[160px] sm:w-[72px] lg:h-[54px] sm:h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
+                                    className="lg:w-[160px] w-[72px] lg:h-[54px] h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
                                 
                                 >
                                     Shop Now!

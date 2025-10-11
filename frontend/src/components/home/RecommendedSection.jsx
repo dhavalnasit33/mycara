@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
 // Import your local images
-import shararaPairImage from '../assets/Sharara Pair.png';
-import chaniyaCholiImage from '../assets/Chaniya Choli.png';
-import mojariImage from '../assets/Mojari.png';
+import shararaPairImage from '../../assets/Sharara Pair.png';
+import chaniyaCholiImage from '../../assets/Chaniya Choli.png';
+import mojariImage from '../../assets/Mojari.png';
+import SectionHeading from '../ui/SectionHeading';
+import Row from '../ui/Row.jsx';
 
-import FlowerIcon from "../components/icons/FlowerIcon";  
 
 const recommendedItems = [
   { name: 'Sharara Pair', category: 'Latest trendy Clothes', image: shararaPairImage },
@@ -54,25 +55,23 @@ const RecommendedSection = () => {
   const displayItems = getDisplayItems();
 
   return (
-    <div className="max-w-[1440px] mx-auto w-full py-8 sm:py-14 sm:px-4 md:px-4 lg:px-0 ">
+    <div className=" ">
+       <section className="w-full py-[25px] md:py-[50px] ">
       {/* Title Section */}
-      <div className="relative flex justify-center items-center w-full">
-        <div className="w-[50px] border-t border-black"></div>
-        <div className="relative mx-4 flex flex-col items-center justify-center h-48">
-          <h2 className="font-h2 text-2xl sm:text-3xl text-black whitespace-nowrap relative z-10">
-            Recommended For You
-          </h2>
-          <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[110px] h-[80px] pointer-events-none z-0" />
-        </div>
-        <div className="w-[50px] border-t border-black"></div>
-      </div>
+     <div className="relative flex justify-center items-center w-full">
+               <div className="relative flex justify-center items-center w-full">
+                 <Row>
+                   <SectionHeading title="Recommended For You" />
+                 </Row>
+               </div>
+             </div>
 
       {/* Slider Container */}
-      <div className="relative flex items-center justify-center mt-8">
+      <Row className="relative !max-w-[1179px] flex items-center justify-center ">
         {/* Previous Button */}
         <button
           onClick={goToPrevious}
-          className="absolute left-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
+          className="absolute left-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
           style={{ boxShadow: '0px 0px 4px rgba(0,0,0,0.25)' }}
         >
           &lt;
@@ -94,12 +93,13 @@ const RecommendedSection = () => {
         {/* Next Button */}
         <button
           onClick={goToNext}
-          className="absolute right-0 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
+          className="absolute right-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
           style={{ boxShadow: '0px 0px 4px rgba(0,0,0,0.25)' }}
         >
           &gt;
         </button>
-      </div>
+      </Row>
+      </section>
     </div>
   );
 };
@@ -107,7 +107,7 @@ const RecommendedSection = () => {
 const ProductCard = ({ item }) => {
   return (
     <div className="relative shadow-lg overflow-hidden transition-transform duration-300">
-      <div className="relative w-full aspect-[3/4]">
+      <div className="relative w-full h-[398px] lg:w-[342px] lg:h-[398px]">
         <img src={item.image} alt={item.name} className="w-full h-full " />
         <div className="absolute inset-0 bg-black opacity-30" style={{ mixBlendMode: 'luminosity' }}></div>
       </div>

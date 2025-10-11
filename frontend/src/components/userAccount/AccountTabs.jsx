@@ -34,14 +34,12 @@ export default function AccountTabs() {
                     className={({ isActive }) =>
                         `flex items-center h-[43px] gap-[10px] px-[15px] sm:px-[30px] py-2 transition text-[18px] 
                         ${isActive
-                        ? "bg-[#fff] font-medium text-pink-600 border-pink-400"
-                        : "bg-[rgba(255,255,255,0.50)] text-dark  hover:text-pink-600"
+                        ? "bg-[#fff] font-medium text-theme border-pink-400"
+                        : "bg-[rgba(255,255,255,0.50)] text-dark  hover:text-theme"
                         }`
                     }
                     >
                     <span className="flex-shrink-0">{tab.icon}</span>
-                      {/* <img src={tab.icon} alt={tab.name} className="w-5 h-5" /> */}
-                    {/* <span className="hidden md:inline">{tab.name}</span> */}
                     <span className="hidden custom-lg:inline">{tab.name}</span>
                     </NavLink>
                 ))}
