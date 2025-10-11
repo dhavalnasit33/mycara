@@ -15,7 +15,7 @@ const BannerClothes = () => {
         className="absolute inset-0 flex items-center justify-center"
       >
         <div 
-          className="relative w-full max-w-[1440px] h-[250px] sm:h-[400px] md:h-[563px]"
+          className="relative w-full !max-w-[1590px] h-[250px] sm:h-[400px] md:h-[563px]"
           style={{
             borderRadius: '10px',
             backdropFilter: 'blur(14px)',

@@ -50,7 +50,7 @@ export default function Hero() {
     };
 
     return (
-        <div className="relative  w-[90%] md:w-[90%] container-1440">
+        <div className="relative w-full mx-auto">
             <div className="hidden lg:flex absolute items-center left-[-50px] top-0 bottom-0 flex-col justify-between z-20">
                 
                 <div className="flex flex-col items-center gap-2">
@@ -74,7 +74,7 @@ export default function Hero() {
                 </div>
             </div>
 
-          <section className="relative min-h-[210px] sm:min-h-[210px] md:min-h-[210px] lg:min-h-[716px] bg-[#f8e9e7] rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 ml-0 lg:ml-[50px] mt-4">
+          <section className="relative min-h-[210px] sm:min-h-[210px] md:min-h-[210px] lg:min-h-[716px] bg-gradient-custom rounded-none sm:rounded-l-lg overflow-hidden flex items-center mx-2 mr-0 ml-0 lg:ml-[50px] mt-4">
                 <Slider {...settings} className="w-full container-1440 h-full">
                     {heroSlides.map((slide, index) => (
                         <div key={index}>
@@ -86,7 +86,7 @@ export default function Hero() {
                                     dangerouslySetInnerHTML={{ __html: slide.title }}
                                 />
                                 </h1>
-                                <div className="flex flex-col gap-[40px]">
+                                <div className="flex flex-col gap-[20px] lg:gap-[40px]">
 
                                 <span className="text-black text-[8px] md:text-[8px] lg:text-[24px] leading-[19px] relative">
                                     {slide.subtitle}
@@ -94,7 +94,7 @@ export default function Hero() {
                                 </span>
 
                                 <button
-                                    className="lg:w-[160px] w-[72px] lg:h-[54px] h-[26px]  sm:text-[12px] lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
+                                    className="lg:w-[160px] w-[72px] lg:h-[54px] h-[26px]  text-[12px]  lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
                                 
                                 >
                                     Shop Now!
