@@ -13,7 +13,7 @@ export default function ProductCard({ product }) {
 
 
   return (
-    <div className="bg-white overflow-hidden  transition-all  group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
+    <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer ">
       <div className="relative mb-[10px]">
         <img
           src={displayedImage}
@@ -28,20 +28,20 @@ export default function ProductCard({ product }) {
               <ShoppingBagIcon  className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
       </div>
-       {hasMultipleImages && (
-          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full">
+        {hasMultipleImages && (
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             {product.allImages.map((_, index) => (
               <div
                 key={index}
                 className={`w-[6px] h-[6px] rounded-full cursor-pointer transition-colors duration-300 ${
-                  index === currentImageIndex ? "bg-color" : "bg-white"
+                  index === currentImageIndex ? "bg-color " : "bg-white"
                 }`}
                 onMouseEnter={() => setCurrentImageIndex(index)} 
               />
             ))}
           </div>
         )}
-               
+   
       </div>
       <div >
          {product.express && (

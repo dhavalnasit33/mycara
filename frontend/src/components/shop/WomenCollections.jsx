@@ -59,7 +59,7 @@ const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) =>
     </div>
 );
 
-// --- 2. Desktop UI (Refactored to accept props) ---
+// 2. Desktop UI (Refactored to accept props)
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
     <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">
         <SortByIcon />
@@ -127,7 +127,6 @@ const mockBrands = [
     { name: 'Max', count: 180 },
 ];
 
-// 👇 નવા ફિલ્ટર્સ માટેની ડેટા Mockups
 const mockTypes = ['Casual', 'Ethnic', 'Party Wear', 'Formal', 'Sports'];
 const mockFabrics = ['Cotton', 'Silk', 'Linen', 'Georgette', 'Rayon', 'Wool'];
 const mockDiscounts = ['10% and above', '20% and above', '30% and above', '50% and above'];
@@ -284,21 +283,19 @@ const SingleCard = ({ product }) => (
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
+                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-[30px] sm:p-[37px]
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
-      <div className="flex justify-between items-start">
-        <div className="pr-2 sm:pr-4">
-          <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
+      <div className="flex justify-between items-start gap-[30px] md:gap-[50px]">
+          <h3 className="text-14  font-medium font-inter tracking-wider text-black uppercase leading-tight">
             {product.name}
           </h3>
-        </div>
-        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
-          <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full border border-white ">
+          <span className="text-lg font-bold text-black leading-none pb-0.5"><Plus size={18}/></span>
         </button>
       </div>
-      <div>
-        <p className="text-sm font-medium font-inter text-black">
+      <div className='flex items-end justify-end'>
+        <p className="text-14 font-medium text-black">
           RS {product.price ? product.price.toFixed(2) : "0.00"}
         </p>
       </div>
