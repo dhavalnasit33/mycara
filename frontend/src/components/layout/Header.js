@@ -111,7 +111,7 @@ const Header = ({ hideOnMobileShopPage  }) => {
               <Link to="/login">
                 <Button
                   variant="common"
-                  className="!min-w-[113px] !py-[7px] !px-[8px] !rounded-[10px] flex items-center"
+                  className="!min-w-[113px] !py-[7px] !px-[8px]  flex items-center"
                 >
                   <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
                   <span>Login</span>
@@ -147,12 +147,6 @@ const Header = ({ hideOnMobileShopPage  }) => {
                     <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
-                    </Link>
-                  </li>
-                  <li className=" py-[8px] hover:text-[#F43297]">
-                    <Link to="/gift-cards" className="flex items-center gap-[15px] w-full">
-                      <SvgComponent />
-                      <span>Gift Cards</span>
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
@@ -293,17 +287,7 @@ const Header = ({ hideOnMobileShopPage  }) => {
                 </div>
                 <div className="py-4 px-4 cursor-pointer">
                   <Link to="#" className="flex items-center gap-[15px]">
-                    <SvgComponent />Gift Cards
-                  </Link>
-                </div>
-                <div className="py-4 px-4 cursor-pointer bg-theme sm:bg-transparent">
-                  <Link to="#" className="flex items-center gap-[15px]">
                     <FontAwesomeIcon icon={faGift} />Coupons
-                  </Link>
-                </div>
-                <div className="py-4 px-4 cursor-pointer">
-                  <Link to="#" className="flex items-center gap-[15px]">
-                    <Notification className="w-5 h-5" />Notifications
                   </Link>
                 </div>
               </div>
