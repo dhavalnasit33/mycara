@@ -7,12 +7,12 @@ import Button from "../components/ui/Button";
 
 
 
-const RegistrationForm = () => {
+const RegistrationForm = ({onClose}) => {
   return (
-    <div className="min-h-screen flex items-center justify-center  mx-5">
+    <div className="flex items-center justify-center ">
       <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto">
         <div className="w-full md:w-2/3 px-5 py-16 relative  md:mx-0 md:px-20  ">
-          <button className="absolute top-0 left-0  bg-color  text-2xl font-bold p-3">
+          <button className="absolute top-0 left-0  bg-color  text-2xl font-bold p-3"   onClick={onClose} >
            <FaTimes className="text-white "/>
           </button>
 

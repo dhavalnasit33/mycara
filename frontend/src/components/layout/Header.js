@@ -28,6 +28,7 @@ import Row from "../ui/Row";
 import LoginForm from "../../pages/Login";
 
 import LoginIcon from "../icons/login"; 
+import RegistrationForm from "../../pages/RegistrationForm";
 
 const staticNavItems = [
   { name: "Home", path: "/home", icon: <ShopIcon className="w-5 h-6 hidden custom-lg:block" /> },
@@ -48,6 +49,8 @@ const Header = () => {
 
  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+
 
   const dispatch = useDispatch();
   const { navbars = [], loading } = useSelector((state) => state.navbar);
@@ -72,117 +75,118 @@ const Header = () => {
 
   return (
     <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow">
-      <Row className="h-[70px] custom-lg:h-[100px] flex items-center justify-between">
-          <button
-                className=" custom-lg:hidden text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-[#D2AF9F]"
-                onClick={() => setIsMenuOpen(true)}
+  <Row className="h-[70px] custom-lg:h-[100px] flex items-center justify-between gap-[10px]">
+      <button
+            className=" custom-lg:hidden text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-[#D2AF9F]"
+            onClick={() => setIsMenuOpen(true)}
+          >
+            <Menu size={20} />
+      </button>
+
+    <div className="flex items-center">
+      <Link to="/home">
+        <img src={HeaderLogo} alt="Logo" className="h-10 custom-lg:h-14" />
+      </Link>
+    </div>
+    
+
+    <div className="hidden custom-lg:flex items-center gap-6">
+      <nav>
+        <ul className="flex gap-[26px] xl:gap-[32px] text-base font-normal">
+          {navItems.map((item, i) => (
+            <li key={i} className="relative group">
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `relative cursor-pointer transition-colors duration-300 ${
+                    isActive
+                      ? "text-[var(--theme-color)] font-medium"
+                      : "text-black hover:text-[var(--theme-color)] hover:font-medium"
+                  }`
+                }
               >
-                <Menu size={20} />
-          </button>
+                {item.name}
+                {item.hasDropdown && item.dropdownIcon}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
 
-        <div className="flex items-center">
-          <Link to="/home">
-            <img src={HeaderLogo} alt="Logo" className="h-10 custom-lg:h-14" />
-          </Link>
-        </div>
-        
+    <div className="flex items-center gap-4">
+        <div className="relative hidden custom-lg:block group">
+          <Button
+            variant="common"
+            className="!min-w-[113px] !py-[7px] !px-[8px] flex items-center"
+            onClick={() => setIsLoginOpen(true)}
+          >
+            <img src={WhiteLogin} alt="Login" className="w-5 h-5 mr-2" />
+            Login
+            <ChevronDown
+              size={16}
+              className="ml-1 transition-transform duration-300 group-hover:rotate-180"
+            />
+          </Button>
+          <div className="absolute right-0 mt-2 w-[280px] bg-white rounded-[10px] form-shadow z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
 
-        <div className="hidden custom-lg:flex items-center gap-6">
-          <nav>
-            <ul className="flex gap-[26px] xl:gap-[32px] text-base font-normal">
-              {navItems.map((item, i) => (
-                <li key={i} className="relative group">
-                  <NavLink
-                    to={item.path}
-                    className={({ isActive }) =>
-                      `relative cursor-pointer transition-colors duration-300 ${
-                        isActive
-                          ? "text-[var(--theme-color)] font-medium"
-                          : "text-black hover:text-[var(--theme-color)] hover:font-medium"
-                      }`
-                    }
-                  >
-                    {item.name}
-                    {item.hasDropdown && item.dropdownIcon}
-                  </NavLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-
-        <div className="flex items-center gap-4">
-            <div className="relative hidden custom-lg:block group">
-              <Button
-                variant="common"
-                className="!min-w-[113px] !py-[7px] !px-[8px] flex items-center"
-                onClick={() => setIsLoginOpen(true)}
-              >
-                <img src={WhiteLogin} alt="Login" className="w-5 h-5 mr-2" />
-                Login
-                <ChevronDown
-                  size={16}
-                  className="ml-1 transition-transform duration-300 group-hover:rotate-180"
-                />
-              </Button>
-              <div className="absolute right-0 mt-2 w-[280px] bg-white rounded-[10px] form-shadow z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
-
-                <div className="p-[17px] text-light text-p flex justify-between border-b border-[#989696]">
-                  <span>Welcome User!</span>
-                  <span className="text-color cursor-pointer font-18 font-medium">
-                    <Link to="/register">Sign Up</Link>
-                  </span>
-                </div>
-
-                <ul className="text-light text-p p-[17px]">
-                  <li className="py-[10px] hover:text-[#F43297]">
-                    <Link to="/my-account" className="flex items-center gap-[15px] w-full">
-                      <LoginIcon />
-                      <span>My Profile</span>
-                    </Link>
-                  </li>
-
-                  <li className="py-[8px] hover:text-[#F43297]">
-                    <Link
-                      to="/my-account/orders"
-                      className="flex items-center gap-[15px] w-full"
-                    >
-                      <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
-                      <span>Orders</span>
-                    </Link>
-                  </li>
-
-                  <li className="py-[8px] hover:text-[#F43297]">
-                    <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
-                      <FontAwesomeIcon icon={farHeart} />
-                      <span>Wishlist</span>
-                    </Link>
-                  </li>
-
-                  <li className="py-[8px] hover:text-[#F43297]">
-                    <Link to="/cart" className="flex items-center gap-[15px] w-full">
-                      <FontAwesomeIcon icon={faGift} />
-                      <span>Coupons</span>
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+            <div className="p-[17px] text-light text-p flex justify-between border-b border-[#989696]">
+              <span>Welcome User!</span>
+              <span className="text-color cursor-pointer font-18 font-medium" onClick={() => setIsRegisterOpen(true)}>
+                Sign Up
+              </span>
+              
             </div>
 
+            <ul className="text-light text-p p-[17px]">
+              <li className="py-[10px] hover:text-[#F43297]">
+                <Link to="/my-account" className="flex items-center gap-[15px] w-full">
+                  <LoginIcon />
+                  <span>My Profile</span>
+                </Link>
+              </li>
 
-          <Link to="/wishlist" className="text-light hover:text-pink-500 ">
-            <Heart className="w-5 h-5" />
-          </Link>
+              <li className="py-[8px] hover:text-[#F43297]">
+                <Link
+                  to="/my-account/orders"
+                  className="flex items-center gap-[15px] w-full"
+                >
+                  <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
+                  <span>Orders</span>
+                </Link>
+              </li>
 
-          <Link to="/cart" className="relative text-light hover:text-pink-500">
-            <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-            <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-              0
-            </span>
-          </Link>
-          
+              <li className="py-[8px] hover:text-[#F43297]">
+                <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
+                  <FontAwesomeIcon icon={farHeart} />
+                  <span>Wishlist</span>
+                </Link>
+              </li>
+
+              <li className="py-[8px] hover:text-[#F43297]">
+                <Link to="/cart" className="flex items-center gap-[15px] w-full">
+                  <FontAwesomeIcon icon={faGift} />
+                  <span>Coupons</span>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
-      </Row>
+
+
+      <Link to="/wishlist" className="text-light hover:text-pink-500 ">
+        <Heart className="w-5 h-5" />
+      </Link>
+
+      <Link to="/cart" className="relative text-light hover:text-pink-500">
+        <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
+        <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+          0
+        </span>
+      </Link>
+      
+    </div>
+  </Row>
         {isMenuOpen && (
           <div
             className="fixed inset-0 bg-black/60 z-40"
@@ -267,6 +271,14 @@ const Header = () => {
           </div>
         </div>
       )}
+      {isRegisterOpen && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
+          <div className="relative bg-white w-full max-w-[1062px] rounded-md overflow-hidden">
+            <RegistrationForm onClose={() => setIsRegisterOpen(false)} />
+          </div>
+        </div>
+      )}
+
     </header>
   );
 };
