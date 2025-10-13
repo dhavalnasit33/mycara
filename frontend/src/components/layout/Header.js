@@ -6,7 +6,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
-import { ChevronDown, Contact,  HandCoins, Heart, Menu, SearchX, XCircleIcon } from "lucide-react";
+import { ChevronDown, Contact,  HandCoins, Heart, Menu, Package, SearchX, XCircleIcon } from "lucide-react";
 
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
@@ -17,15 +17,13 @@ import banner1 from "../../assets/banner1.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchNavbar } from "../../features/navbar/navbarThunk";
-
-import OrdersIcon from "../../assets/orders.svg";
 import WhiteLogin from "../../assets/white login.png";
 
 import Button from "../ui/Button";
 import Row from "../ui/Row";
 import LoginForm from "../../pages/Login";
 
-import LoginIcon from "../icons/login"; 
+import SvgComponent from "../icons/login"; 
 import RegistrationForm from "../../pages/RegistrationForm";
 
 const staticNavItems = [
@@ -137,7 +135,7 @@ const Header = () => {
           <ul className="text-light text-p p-[17px]">
             <li className="py-[10px] hover:text-[#F43297]">
               <Link to="/my-account" className="flex items-center gap-[15px] w-full">
-                <LoginIcon />
+                <SvgComponent />
                 <span>My Profile</span>
               </Link>
             </li>
@@ -147,7 +145,7 @@ const Header = () => {
                 to="/my-account/orders"
                 className="flex items-center gap-[15px] w-full"
               >
-                <img src={OrdersIcon} alt="Orders" className="w-[18px] h-[18px]" />
+                <Package size={18} />
                 <span>Orders</span>
               </Link>
             </li>
@@ -238,7 +236,7 @@ const Header = () => {
                 </div>
                 <div className="py-4 px-4 cursor-pointer">
                   <Link to="/my-account/orders" className="flex items-center gap-[15px]">
-                    <img src={OrdersIcon} alt="Orders" className="w-5 h-5" />Orders
+                    <Package size={20} />orders
                   </Link>
                 </div>
                 <div className="py-4 px-4 cursor-pointer bg-theme sm:bg-transparent">
