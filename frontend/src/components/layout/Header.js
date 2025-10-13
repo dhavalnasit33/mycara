@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import {
   FaUser,
-  FaBars,
 } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
@@ -74,10 +72,10 @@ const Header = () => {
     : staticNavItems;
 
   return (
-    <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow">
+    <header className="{headerClasses} w-full mb-[5px] md:mb-[10px] sec-theme box-shadow">
   <Row className="h-[70px] custom-lg:h-[100px] flex items-center justify-between gap-[10px]">
       <button
-            className=" custom-lg:hidden text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-[#D2AF9F]"
+            className="custom-lg:hidden text-light transition-colors duration-300 border rounded-[3px] p-[5px] border-[#D2AF9F]"
             onClick={() => setIsMenuOpen(true)}
           >
             <Menu size={20} />
@@ -92,7 +90,7 @@ const Header = () => {
 
     <div className="hidden custom-lg:flex items-center gap-6">
       <nav>
-        <ul className="flex gap-[26px] xl:gap-[32px] text-base font-normal">
+        <ul className="flex gap-[24px] xl:gap-[32px] text-base font-normal">
           {navItems.map((item, i) => (
             <li key={i} className="relative group">
               <NavLink

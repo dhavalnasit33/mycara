@@ -30,7 +30,7 @@ export default function FAQ() {
             style={{ backgroundImage: `url(${faqBg})` }}
         >
             <Row className='!max-w-[688px] pt-[40px] md:pt-[20px] '>
-                <div className=" text-center ">
+                <div className=" text-center  ">
                     <h1 className="text-[24px] sm:text-[36px] font-semibold mb-[15px] sm:mb-[22px] leading">
                         Frequently Asked Questions
                     </h1>
@@ -41,7 +41,7 @@ export default function FAQ() {
             </Row>
         </Section>
 
-        <Section className="relative !pt-0 -mt-[12rem]">
+        <Section className="relative !pt-0 -mt-[11rem] sm:-mt-[12rem]">
             <Row className="!max-w-[1122px] form-shadow rounded-[20px] p-[40px] !px-[30px] bg-white">
                 <div className="space-y-[10px]">
                     {faqData.map((item, index) => (
