@@ -4,7 +4,7 @@ const { sendResponse } = require("../utils/response");
 // Get all footers with pagination & search / optional full download
 const getFooters = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false" ,status} = req.query;
     const download = isDownload.toLowerCase() === "true";
 
     const query = search
@@ -16,6 +16,7 @@ const getFooters = async (req, res) => {
       return sendResponse(res, true, { footers }, "All footers retrieved for download");
     }
 
+    if (status && ["active", "inactive"].includes(status)) query.status = status;
     page = parseInt(page);
     limit = parseInt(limit);
 
@@ -73,6 +74,32 @@ const updateFooter = async (req, res) => {
   }
 };
 
+const updateFooterStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const footer = await Footer.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!footer) {
+      return sendResponse(res, false, null, "Footer not found");
+    }
+
+    sendResponse(res, true, footer, "Footer status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete footer
 const deleteFooter = async (req, res) => {
   try {
@@ -104,4 +131,5 @@ module.exports = {
   updateFooter,
   deleteFooter,
   bulkDeleteFooters,
+  updateFooterStatus
 };

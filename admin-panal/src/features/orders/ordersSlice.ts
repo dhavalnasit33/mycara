@@ -5,23 +5,33 @@ import {
   updateOrder,
   deleteOrder,
   bulkDeleteOrders,
+  updateOrderStatus,
 } from "./ordersThunk";
+
+
+export interface FilterValues {
+  product: string[];
+  user: string[];
+  color: string[];
+  size: string[];
+  price: { min?: number; max?: number };
+}
 
 interface OrderItem {
   _id: string;
-  product_id: { name: string; price: number };
-  variant_id?: {
-    color_id?: { name: string };
-    size_id?: { name: string };
+  product: { name: string; price: number };
+  variant?: {
+    color?: { name: string };
+    size?: { name: string };
   };
   quantity: number;
   price_at_order: number;
 }
 
-
 interface Order {
   _id: string;
-  user_id: { name: string; email: string };
+  order_number:string;
+  user: { name: string; email: string };
   coupon_id?: { code: string; discount_value: number };
   total_price: number;
   status: string;
@@ -84,9 +94,21 @@ const ordersSlice = createSlice({
 
       // Update order
       .addCase(updateOrder.fulfilled, (state, action) => {
-        const index = state.orders.findIndex((o) => o._id === action.payload._id);
+        const index = state.orders.findIndex(
+          (o) => o._id === action.payload._id
+        );
         if (index !== -1) state.orders[index] = action.payload;
-        if (state.selectedOrder?._id === action.payload._id) state.selectedOrder = action.payload;
+        if (state.selectedOrder?._id === action.payload._id)
+          state.selectedOrder = action.payload;
+      })
+
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        const index = state.orders.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.orders[index] = action.payload;
+        }
       })
 
       // Delete order
@@ -97,7 +119,9 @@ const ordersSlice = createSlice({
 
       // Bulk delete orders
       .addCase(bulkDeleteOrders.fulfilled, (state, action) => {
-        state.orders = state.orders.filter((o) => !action.payload.includes(o._id));
+        state.orders = state.orders.filter(
+          (o) => !action.payload.includes(o._id)
+        );
         state.total -= action.payload.length;
       });
   },

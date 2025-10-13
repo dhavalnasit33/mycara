@@ -69,6 +69,32 @@ const updateType = async (req, res) => {
   }
 };
 
+const updateTypeStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const type = await Type.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!type) {
+      return sendResponse(res, false, null, "Type not found");
+    }
+
+    sendResponse(res, true, type, "Type status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete type
 const deleteType = async (req, res) => {
   try {
@@ -101,4 +127,5 @@ module.exports = {
   updateType,
   deleteType,
   bulkDeleteTypes,
+  updateTypeStatus
 };

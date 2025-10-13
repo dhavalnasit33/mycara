@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteFabrics, createFabric, deleteFabric, fetchFabrics, updateFabric } from "./fabricsThunk";
-
+import {
+  bulkDeleteFabrics,
+  createFabric,
+  deleteFabric,
+  fetchFabrics,
+  updateFabric,
+  updateFabricStatus,
+} from "./fabricsThunk";
 
 interface Fabric {
   _id: string;
@@ -56,8 +62,19 @@ const fabricSlice = createSlice({
 
       // Update
       .addCase(updateFabric.fulfilled, (state, action) => {
-        const index = state.fabrics.findIndex((f) => f._id === action.payload._id);
+        const index = state.fabrics.findIndex(
+          (f) => f._id === action.payload._id
+        );
         if (index !== -1) state.fabrics[index] = action.payload;
+      })
+
+      .addCase(updateFabricStatus.fulfilled, (state, action) => {
+        const index = state.fabrics.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.fabrics[index] = action.payload;
+        }
       })
 
       // Delete
@@ -68,7 +85,9 @@ const fabricSlice = createSlice({
 
       // Bulk delete
       .addCase(bulkDeleteFabrics.fulfilled, (state, action) => {
-        state.fabrics = state.fabrics.filter((f) => !action.payload.includes(f._id));
+        state.fabrics = state.fabrics.filter(
+          (f) => !action.payload.includes(f._id)
+        );
         state.total -= action.payload.length;
       });
   },

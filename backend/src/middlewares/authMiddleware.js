@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const { sendResponse } = require("../utils/response");
 
+// =======================
+// AUTH MIDDLEWARE
+// =======================
 const authMiddleware = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -23,6 +26,9 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
+// =======================
+// ROLE-BASED AUTHORIZATION
+// =======================
 const authorizeRoles = (...allowedRoles) => (req, res, next) => {
   if (!req.user) return sendResponse(res, false, null, "Unauthorized: No user attached");
 
@@ -33,7 +39,11 @@ const authorizeRoles = (...allowedRoles) => (req, res, next) => {
   next();
 };
 
-const roleHierarchy = { user: 1, admin: 2 };
+const roleHierarchy = {
+  store_user: 1,
+  admin: 2,
+};
+
 const authorizeMinRole = (minRole) => (req, res, next) => {
   if (!req.user) return sendResponse(res, false, null, "Unauthorized: User not found");
 

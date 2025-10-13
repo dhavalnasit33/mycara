@@ -107,6 +107,32 @@ const updateBrand = async (req, res) => {
   }
 };
 
+const updateBrandStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const brand = await Brand.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!brand) {
+      return sendResponse(res, false, null, "Brand not found");
+    }
+
+    sendResponse(res, true, brand, "Brand status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete brand
 const deleteBrand = async (req, res) => {
   try {
@@ -138,4 +164,5 @@ module.exports = {
   updateBrand,
   deleteBrand,
   bulkDeleteBrands,
+  updateBrandStatus
 };

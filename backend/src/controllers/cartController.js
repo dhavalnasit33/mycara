@@ -1,21 +1,46 @@
 const Cart = require("../models/Cart");
 const { sendResponse } = require("../utils/response");
 
-
+// Get all carts with pagination, search, and optional download
 const getCarts = async (req, res) => {
   try {
-    let { page = 1, limit = 10 } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    const download = isDownload.toLowerCase() === "true";
+
+    const query = {};
+
+    if (search) {
+      // Search by user name or email
+      query.$or = [
+        { "user_id.name": { $regex: search, $options: "i" } },
+        { "user_id.email": { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (download) {
+      // Fetch all for download
+      const carts = await Cart.find(query)
+        .populate("user_id", "name email")
+        .populate("items.product_id", "name")
+        .populate("items.variant_id", "price color size sku")
+        .sort({ createdAt: -1 });
+
+      return sendResponse(res, true, { carts }, "All carts retrieved for download");
+    }
+
+    // Pagination
     page = parseInt(page);
     limit = parseInt(limit);
 
-    const total = await Cart.countDocuments();
-    const carts = await Cart.find()
+    const total = await Cart.countDocuments(query);
+
+    const carts = await Cart.find(query)
       .skip((page - 1) * limit)
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("user_id", "name email")
-      .populate("items.product_id", "name price")
-      .populate("items.variant_id", "color size sku");
+      .populate("items.product_id", "name")
+      .populate("items.variant_id", "price color size sku");
 
     sendResponse(res, true, { carts, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
@@ -116,6 +141,32 @@ const deleteCart = async (req, res) => {
   }
 };
 
+// Bulk delete cart items
+const bulkDeleteCartItems = async (req, res) => {
+  try {
+    const { ids } = req.body;
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return sendResponse(res, false, null, "No item IDs provided");
+    }
+
+    // Remove matching items from all carts
+    const result = await Cart.updateMany(
+      { "items._id": { $in: ids } },
+      { $pull: { items: { _id: { $in: ids } } } }
+    );
+
+    if (result.modifiedCount === 0) {
+      return sendResponse(res, false, null, "No matching cart items found to delete");
+    }
+
+    sendResponse(res, true, result, "Selected cart items deleted successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
+
 module.exports = {
   getCarts,
   getCartById,
@@ -124,4 +175,5 @@ module.exports = {
   updateCartItem,
   deleteCartItem,
   deleteCart,
+  bulkDeleteCartItems
 };

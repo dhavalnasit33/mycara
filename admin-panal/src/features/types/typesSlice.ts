@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteTypes, createType, deleteType, fetchTypes, updateType } from "./typesThunk";
-
+import {
+  bulkDeleteTypes,
+  createType,
+  deleteType,
+  fetchTypes,
+  updateType,
+  updateTypeStatus,
+} from "./typesThunk";
 
 interface Type {
   _id: string;
@@ -55,10 +61,20 @@ const typesSlice = createSlice({
 
       // Update
       .addCase(updateType.fulfilled, (state, action) => {
-        const index = state.types.findIndex((t) => t._id === action.payload._id);
+        const index = state.types.findIndex(
+          (t) => t._id === action.payload._id
+        );
         if (index !== -1) state.types[index] = action.payload;
       })
 
+      .addCase(updateTypeStatus.fulfilled, (state, action) => {
+        const index = state.types.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.types[index] = action.payload;
+        }
+      })
       // Delete
       .addCase(deleteType.fulfilled, (state, action) => {
         state.types = state.types.filter((t) => t._id !== action.payload);
@@ -67,7 +83,9 @@ const typesSlice = createSlice({
 
       // Bulk delete
       .addCase(bulkDeleteTypes.fulfilled, (state, action) => {
-        state.types = state.types.filter((t) => !action.payload.includes(t._id));
+        state.types = state.types.filter(
+          (t) => !action.payload.includes(t._id)
+        );
         state.total -= action.payload.length;
       });
   },

@@ -1,12 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteProducts, createProduct, deleteProduct, fetchProducts, updateProduct } from "./productsThunk";
-
+import {
+  bulkDeleteProducts,
+  createProduct,
+  deleteProduct,
+  fetchProducts,
+  updateProduct,
+  updateProductStatus,
+} from "./productsThunk";
 
 interface ProductVariant {
   _id: string;
   product_id: string;
   brand?: { _id: string; name: string }[];
   type?: { _id: string; name: string }[];
+   color?: { _id: string; name: string }[];  
+  size?: { _id: string; name: string }[];   
   fabric?: { _id: string; name: string }[];
   color_id: { _id: string; name: string } | string;
   size_id: { _id: string; name: string } | string;
@@ -32,11 +40,10 @@ interface Product {
   labels: { _id: string; name: string }[] | string[];
   images: string[];
   status: string;
-  variants?: ProductVariant[]; 
+  variants?: ProductVariant[];
   createdAt: string;
   updatedAt: string;
 }
-
 
 interface ProductsState {
   products: Product[];
@@ -79,9 +86,20 @@ const productSlice = createSlice({
       })
       // Update
       .addCase(updateProduct.fulfilled, (state, action) => {
-        const index = state.products.findIndex((p) => p._id === action.payload._id);
+        const index = state.products.findIndex(
+          (p) => p._id === action.payload._id
+        );
         if (index !== -1) state.products[index] = action.payload;
       })
+      .addCase(updateProductStatus.fulfilled, (state, action) => {
+        const index = state.products.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.products[index] = action.payload;
+        }
+      })
+
       // Delete
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter((p) => p._id !== action.payload);
@@ -89,7 +107,9 @@ const productSlice = createSlice({
       })
       // Bulk Delete
       .addCase(bulkDeleteProducts.fulfilled, (state, action) => {
-        state.products = state.products.filter((p) => !action.payload.includes(p._id));
+        state.products = state.products.filter(
+          (p) => !action.payload.includes(p._id)
+        );
         state.total -= action.payload.length;
       });
   },

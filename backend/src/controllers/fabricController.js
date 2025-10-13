@@ -104,6 +104,32 @@ const updateFabric = async (req, res) => {
   }
 };
 
+const updateFabricStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const fabric = await Fabric.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!fabric) {
+      return sendResponse(res, false, null, "Fabric not found");
+    }
+
+    sendResponse(res, true, fabric, "Fabric status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete fabric
 const deleteFabric = async (req, res) => {
   try {
@@ -136,4 +162,5 @@ module.exports = {
   updateFabric,
   deleteFabric,
   bulkDeleteFabrics,
+  updateFabricStatus
 };

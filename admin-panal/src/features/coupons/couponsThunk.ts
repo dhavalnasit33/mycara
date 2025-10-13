@@ -61,6 +61,20 @@ export const updateCoupon = createAsyncThunk(
   }
 );
 
+// ✅ Update coupon status
+export const updateCouponStatus = createAsyncThunk(
+  "coupons/updateCouponStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.coupons.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // ✅ Delete coupon
 export const deleteCoupon = createAsyncThunk(
   "coupons/deleteCoupon",

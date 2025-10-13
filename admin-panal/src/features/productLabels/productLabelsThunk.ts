@@ -62,6 +62,21 @@ export const updateProductLabel = createAsyncThunk(
   }
 );
 
+// ✅ Update label status
+export const updateProductLabelStatus = createAsyncThunk(
+  "productLabels/updateProductLabelStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.productLabels.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
+
 // Delete label
 export const deleteProductLabel = createAsyncThunk(
   "productLabels/deleteProductLabel",

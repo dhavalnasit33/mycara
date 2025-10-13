@@ -6,6 +6,7 @@ import {
   updateCoupon,
   deleteCoupon,
   bulkDeleteCoupons,
+  updateCouponStatus,
 } from "./couponsThunk";
 
 interface Coupon {
@@ -72,6 +73,16 @@ const couponsSlice = createSlice({
         const index = state.coupons.findIndex((c) => c._id === action.payload._id);
         if (index !== -1) state.coupons[index] = action.payload;
       })
+
+      
+            .addCase(updateCouponStatus.fulfilled, (state, action) => {
+              const index = state.coupons.findIndex(
+                (c) => c._id === action.payload._id
+              );
+              if (index !== -1) {
+                state.coupons[index] = action.payload;
+              }
+            })
 
       // ✅ Delete
       .addCase(deleteCoupon.fulfilled, (state, action) => {

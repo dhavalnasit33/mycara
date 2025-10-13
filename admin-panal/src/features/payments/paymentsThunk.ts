@@ -7,7 +7,7 @@ import { ROUTES } from "../../services/routes";
 export const fetchPayments = createAsyncThunk(
   "payments/fetchPayments",
   async (
-    params: { page?: number; limit?: number; search?: string; isDownload?: boolean } = {},
+    params: { page?: number; limit?: number; search?: string; isDownload?: boolean; status?: "pending" | "completed" | "failed"; } = {},
     { rejectWithValue }
   ) => {
     try {

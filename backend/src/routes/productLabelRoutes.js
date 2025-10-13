@@ -7,6 +7,7 @@ const {
   updateProductLabel,
   deleteProductLabel,
   bulkDeleteProductLabels,
+  updateProductLabelStatus,
 } = require("../controllers/productLabelController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
@@ -16,6 +17,7 @@ router.use(authMiddleware);
 router.get("/:id", authorizeMinRole("admin"), getProductLabelById);
 router.post("/", authorizeMinRole("admin"), createProductLabel);
 router.put("/:id", authorizeMinRole("admin"), updateProductLabel);
+router.put("/:id/status", authorizeMinRole("admin"), updateProductLabelStatus);
 router.delete("/:id", authorizeMinRole("admin"), deleteProductLabel);
 router.post("/bulk-delete", authorizeMinRole("admin"), bulkDeleteProductLabels);
 
