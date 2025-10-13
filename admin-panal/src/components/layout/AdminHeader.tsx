@@ -43,7 +43,7 @@ const getBreadcrumbs = (pathname: string) => {
     orders: "Orders",
     payments: "Payments",
     users: "Users",
-    reviews: "Customer Reviews",
+    "customer-reviews": "Customer Reviews",
     "contact-messages": "Contact Messages",
     settings: "Settings",
     add: "Add New",

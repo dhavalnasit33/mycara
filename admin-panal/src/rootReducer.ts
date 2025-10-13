@@ -11,7 +11,18 @@ import discountsReducer from "./features/discounts/discountsSlice";
 import couponsReducer from "./features/coupons/couponsSlice";
 import ordersReducer from "./features/orders/ordersSlice";
 import paymentsReducer from "./features/payments/paymentsSlice";
-import usersReducer from  "./features/users/usersSlice"
+import usersReducer from "./features/users/usersSlice";
+import customerReviewsReducer from "./features/customerReviews/customerReviewsSlice";
+import cartsReducer from "./features/carts/cartSlice";
+import wishlistsReducer from "./features/wishlists/wishlistSlice";
+import contactUsReducer from "./features/contactUs/contactUsSlice";
+import navbarReducer from "./features/navbar/navbarSlice";
+import footerReducer from "./features/footer/footerSlice";
+import profileReducer from "./features/profile/profileSlice";
+import settingReducer from "./features/settings/settingsSlice";
+import storesReducer from "./features/stores/storeSlice";
+import pagesReducer from "./features/pages/pagesSlice";
+import dashboardReducer from "./features/dashboard/dashboardSlice";
 
 export const rootReducer = {
   auth: authReducer,
@@ -25,7 +36,18 @@ export const rootReducer = {
   colors: colorsReducer,
   discounts: discountsReducer,
   coupons: couponsReducer,
-  orders:ordersReducer,
-    payments:paymentsReducer,
-     users:usersReducer
+  orders: ordersReducer,
+  payments: paymentsReducer,
+  users: usersReducer,
+  customerReviews: customerReviewsReducer,
+  carts: cartsReducer,
+  wishlists: wishlistsReducer,
+  contactUs: contactUsReducer,
+  pages: pagesReducer,
+  navbar: navbarReducer,
+  footer: footerReducer,
+  profile: profileReducer,
+  setting: settingReducer,
+  stores: storesReducer,
+  dashboard:dashboardReducer
 };

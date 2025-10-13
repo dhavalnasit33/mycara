@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteDiscounts, createDiscount, deleteDiscount, fetchDiscounts, updateDiscount } from "./discountsThunk";
+import { bulkDeleteDiscounts, createDiscount, deleteDiscount, fetchDiscounts, updateDiscount, updateDiscountStatus } from "./discountsThunk";
 
 interface Discount {
   _id: string;
@@ -60,6 +60,15 @@ const discountsSlice = createSlice({
         const index = state.discounts.findIndex((d) => d._id === action.payload._id);
         if (index !== -1) state.discounts[index] = action.payload;
       })
+
+       .addCase(updateDiscountStatus.fulfilled, (state, action) => {
+              const index = state.discounts.findIndex(
+                (c) => c._id === action.payload._id
+              );
+              if (index !== -1) {
+                state.discounts[index] = action.payload;
+              }
+            })
 
       // Delete
       .addCase(deleteDiscount.fulfilled, (state, action) => {

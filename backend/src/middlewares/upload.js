@@ -2,37 +2,45 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-// Ensure uploads folder exists
-const uploadPath = path.join(__dirname, "..", "..", "uploads");
-console.log(("uploadPath",uploadPath))
+// 📁 Ensure uploads folder exists
+const uploadPath = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath, { recursive: true });
 }
 
-// Multer storage
+// 🧭 Storage configuration
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, uploadPath); // use ensured folder
+  destination: (req, file, cb) => {
+    cb(null, uploadPath);
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, uniqueSuffix + path.extname(file.originalname));
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + "-" + uniqueSuffix + ext);
   },
 });
 
-// File filter
+// 🧼 File filter (optional)
 const fileFilter = (req, file, cb) => {
-  const allowedTypes = /jpeg|jpg|png|gif/;
-  const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedTypes.test(file.mimetype);
-
-  if (extname && mimetype) {
+  const allowed = ["image/jpeg", "image/png", "image/webp"];
+  if (allowed.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error("Only images are allowed"));
+    cb(new Error("Only JPEG, PNG and WEBP files are allowed"));
   }
 };
 
-const upload = multer({ storage, fileFilter });
+// 🧠 Core upload middleware
+const baseUpload = multer({
+  storage,
+  fileFilter,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5 MB
+});
+
+// ✅ Export helpers for both single and multiple usage
+const upload = {
+  single: (fieldName) => baseUpload.single(fieldName),
+  fields: (fieldsArray) => baseUpload.fields(fieldsArray),
+};
 
 module.exports = upload;

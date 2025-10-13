@@ -4,11 +4,15 @@ const { sendResponse } = require("../utils/response");
 // Get all payments with pagination & optional download
 const getPayments = async (req, res) => {
   try {
-    let { page = 1, limit = 10, search = "", isDownload = "false" } = req.query;
+    let { page = 1, limit = 10, search = "", isDownload = "false",status } = req.query;
     const download = isDownload.toLowerCase() === "true";
 
     const query = {};
     if (search) query.payment_status = { $regex: search, $options: "i" };
+   
+    if (status && ["pending", "pending", "failed"].includes(status)) {
+      query.status = status;
+    }
 
     if (download) {
       const payments = await Payment.find(query).sort({ createdAt: -1 });

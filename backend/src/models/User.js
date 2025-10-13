@@ -7,25 +7,29 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
 
-     role: { type: String, enum: ["admin", "user"], default: "user" }, 
-
-
-    // Additional fields
-    mobile_number: { type: String, required: false },
-    address: {
-      street: { type: String, required: false },
-      city: { type: String, required: false },
-      state: { type: String, required: false },
-      country: { type: String, required: false },
-      zip_code: { type: String, required: false },
+    role: {
+      type: String,
+      enum: ["admin", "store_owner", "store_user"],
+      default: "store_user",
     },
-    gender: { type: String, enum: ["male", "female", "other"], required: false },
-    date_of_birth: { type: Date, required: false },
-    profile_picture: { type: String, required: false }, 
 
-    is_active: { type: Boolean, default: true }, 
+    mobile_number: { type: String },
+    profile_picture: { type: String },
+
+    // Address of user (optional)
+    address: {
+      street: String,
+      city: String,
+      state: String,
+      country: String,
+      zip_code: String,
+    },
+
+    gender: { type: String, enum: ["male", "female", "other"] },
+    date_of_birth: { type: Date },
+    is_active: { type: Boolean, default: true },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 // Hash password before saving

@@ -5,6 +5,7 @@ import {
   updateCategory,
   deleteCategory,
   bulkDeleteCategories,
+  updateCategoryStatus,
 } from "./categoriesThunk";
 
 interface Category {
@@ -63,6 +64,13 @@ const categoriesSlice = createSlice({
       .addCase(updateCategory.fulfilled, (state, action) => {
         const index = state.categories.findIndex((c) => c._id === action.payload.id);
         if (index !== -1) state.categories[index] = action.payload;
+      })
+
+      .addCase(updateCategoryStatus.fulfilled, (state, action) => {
+        const index = state.categories.findIndex(c => c._id === action.payload._id);
+        if (index !== -1) {
+          state.categories[index] = action.payload;
+        }
       })
 
       // Delete

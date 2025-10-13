@@ -7,6 +7,7 @@ const {
   updateType,
   deleteType,
   bulkDeleteTypes,
+  updateTypeStatus,
 } = require("../controllers/typeController");
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
@@ -18,6 +19,7 @@ router.use(authMiddleware);
 router.get("/:id", authorizeMinRole("admin"), getTypeById);
 router.post("/", authorizeMinRole("admin"), createType);
 router.put("/:id", authorizeMinRole("admin"), updateType);
+router.put("/:id/status", authorizeMinRole("admin"), updateTypeStatus);
 router.delete("/:id", authorizeMinRole("admin"), deleteType);
 router.post("/bulk-delete", authorizeMinRole("admin"), bulkDeleteTypes);
 

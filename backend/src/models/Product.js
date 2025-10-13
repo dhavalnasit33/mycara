@@ -16,10 +16,13 @@ const productSchema = new mongoose.Schema(
     // General product images (main gallery)
     images: [{ type: String }],
 
-    // Labels that apply to the whole product (e.g., Trending, New)
-    labels: [{ type: mongoose.Schema.Types.ObjectId, ref: "ProductLabel" }],
-
     slug: { type: String, required: true, unique: true },
+
+    discount_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Discount",
+      default: null,
+    },
 
     status: {
       type: String,

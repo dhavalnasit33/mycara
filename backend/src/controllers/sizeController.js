@@ -67,6 +67,32 @@ const updateSize = async (req, res) => {
   }
 };
 
+const updateSizeStatus = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const { id } = req.params;
+
+    // Validate status value
+    if (!["active", "inactive"].includes(status)) {
+      return sendResponse(res, false, null, "Invalid status value");
+    }
+
+    const size = await Size.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    if (!size) {
+      return sendResponse(res, false, null, "Size not found");
+    }
+
+    sendResponse(res, true, size, "Size status updated successfully");
+  } catch (err) {
+    sendResponse(res, false, null, err.message);
+  }
+};
+
 // Delete size
 const deleteSize = async (req, res) => {
   try {
@@ -98,4 +124,5 @@ module.exports = {
   updateSize,
   deleteSize,
   bulkDeleteSizes,
+  updateSizeStatus
 };

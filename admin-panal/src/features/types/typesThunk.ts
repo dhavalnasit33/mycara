@@ -59,6 +59,20 @@ export const updateType = createAsyncThunk(
   }
 );
 
+// ✅ Update type status
+export const updateTypeStatus = createAsyncThunk(
+  "types/updateTypeStatus",
+  async ({ id, status }: { id: string; status: "active" | "inactive" }, { rejectWithValue }) => {
+    try {
+      const res = await api.put(ROUTES.types.updateStatus(id), { status });
+      if (res.data.success) return res.data.data;
+      return rejectWithValue(res.data.message || "Failed to update status");
+    } catch (err: any) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
+
 // Delete type
 export const deleteType = createAsyncThunk(
   "types/deleteType",

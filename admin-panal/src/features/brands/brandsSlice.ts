@@ -5,6 +5,7 @@ import {
   updateBrand,
   deleteBrand,
   bulkDeleteBrands,
+  updateBrandStatus,
 } from "./brandsThunk";
 
 interface Brand {
@@ -60,8 +61,19 @@ const brandsSlice = createSlice({
 
       // Update
       .addCase(updateBrand.fulfilled, (state, action) => {
-        const index = state.brands.findIndex((b) => b._id === action.payload._id);
+        const index = state.brands.findIndex(
+          (b) => b._id === action.payload._id
+        );
         if (index !== -1) state.brands[index] = action.payload;
+      })
+
+      .addCase(updateBrandStatus.fulfilled, (state, action) => {
+        const index = state.brands.findIndex(
+          (c) => c._id === action.payload._id
+        );
+        if (index !== -1) {
+          state.brands[index] = action.payload;
+        }
       })
 
       // Delete
@@ -72,7 +84,9 @@ const brandsSlice = createSlice({
 
       // Bulk delete
       .addCase(bulkDeleteBrands.fulfilled, (state, action) => {
-        state.brands = state.brands.filter((b) => !action.payload.includes(b._id));
+        state.brands = state.brands.filter(
+          (b) => !action.payload.includes(b._id)
+        );
         state.total -= action.payload.length;
       });
   },

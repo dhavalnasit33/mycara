@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { login, registerUser, registerAdmin } = require("../controllers/authController");
-const { authorizeMinRole, authMiddleware } = require("../middlewares/authMiddleware");
+const { login, register} = require("../controllers/authController");
+const upload = require("../middlewares/upload");
 
 router.post("/login", login);
-router.post("/register", registerUser);
-router.post("/admin-register", registerAdmin);
+router.post("/register",upload.single("image"), register);
+
 module.exports = router;

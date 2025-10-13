@@ -7,9 +7,6 @@ import Shop from "./pages/Shop";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
-
-import LoginForm from "./pages/Login";
-import RegistrationForm from "./pages/RegistrationForm";
 import Offer from "./pages/Offer";
 import ContactUs from "./pages/ContactUs";
 import MyAccount from "./pages/Account";
@@ -30,8 +27,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/Home" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/login" element={<LoginForm />} />
-          <Route path="/register" element={<RegistrationForm />} />
           <Route path="/offer" element={<Offer/>}/>
           <Route path="/contact-us" element={<ContactUs/>}/>
           <Route path="/my-account" element={<MyAccount />}>

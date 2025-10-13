@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { bulkDeleteProductLabels, createProductLabel, deleteProductLabel, fetchProductLabels, updateProductLabel } from "./productLabelsThunk";
+import { bulkDeleteProductLabels, createProductLabel, deleteProductLabel, fetchProductLabels, updateProductLabel, updateProductLabelStatus } from "./productLabelsThunk";
 
 
 interface ProductLabel {
@@ -59,6 +59,15 @@ const productLabelsSlice = createSlice({
         const index = state.labels.findIndex((l) => l._id === action.payload._id);
         if (index !== -1) state.labels[index] = action.payload;
       })
+
+       .addCase(updateProductLabelStatus.fulfilled, (state, action) => {
+              const index = state.labels.findIndex(
+                (c) => c._id === action.payload._id
+              );
+              if (index !== -1) {
+                state.labels[index] = action.payload;
+              }
+            })
 
       // Delete
       .addCase(deleteProductLabel.fulfilled, (state, action) => {

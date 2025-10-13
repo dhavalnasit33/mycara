@@ -6,6 +6,8 @@ import Row from "../components/ui/Row";
 import Section from "../components/ui/Section";
 import Button from "../components/ui/Button";
 import CartItem from "../components/cart/CartItem";
+import CouponCard from "../components/cart/CouponCard";
+import { Link } from "react-router-dom";
 
 export default function Cart() {
  
@@ -14,11 +16,11 @@ export default function Cart() {
       <CartProgress />
       <Section>
         <Row>
-          <h2 className="text-[28px] font-normal mb-[50px] hidden md:block leading">
-            Home / <span className="font-light">Cart</span>
+          <h2 className="text-[28px]  mb-[50px] hidden md:block leading">
+            <Link to="/home">Home </Link>/ <span className="font-light">Cart</span>
           </h2>
         </Row>
-        <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[3fr_1fr]  gap-[30px]">
+        <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[3fr_1fr] gap-[30px] items-start">
           <div className="flex-1">
             <CartItem/>
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-[12px] mt-[20px] md:mt-[30px]">
@@ -41,13 +43,14 @@ export default function Cart() {
                     UPDATE CART
                 </Button>
                 </div>
-
+                <CouponCard />
           </div>
-
-          {/* Cart Summary */}
           <CartSummary />
-        </Row>
+        </Row>     
       </Section>
+      {/* <Row>
+        
+      </Row> */}
     </>
   );
 }
