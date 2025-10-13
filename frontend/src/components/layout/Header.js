@@ -1,6 +1,6 @@
 // D:\mycara\frontend\src\components\Header.js
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaUser,
 } from "react-icons/fa";
@@ -24,6 +24,8 @@ import banner1 from "../../assets/banner1.png";
 import Button from "../ui/Button";
 import { ChevronDown, Contact, Ellipsis, HandCoins, Heart, Menu, SearchX, X } from "lucide-react";
 import Row from "../ui/Row";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchNavbar } from "../../features/navbar/navbarThunk";
 
 //  Menu List
 const navItems = [
@@ -48,7 +50,26 @@ const navItems = [
 
 const Header = ({ hideOnMobileShopPage  }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+ const dispatch = useDispatch();
 
+  const { navbars, loading } = useSelector((state) => state.navbar);
+
+  useEffect(() => {
+    dispatch(fetchNavbar());
+  }, [dispatch]);
+
+  // Map backend data to your menu structure
+  const navItems = navbars?.map((item) => ({
+    name: item.label,
+    path: item.url,
+    icon: item.icon ? (
+    <img
+      src={`${process.env.REACT_APP_API_URL_IMAGE}${item.icon}`} 
+      alt={item.label}
+      className="w-5 h-5 object-contain"
+    />
+  ) : null,
+  })) || [];
 
   return (
     <header className="{headerClasses}   w-full mb-[5px] md:mb-[10px] sec-theme  box-shadow ">
