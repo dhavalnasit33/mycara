@@ -4,6 +4,7 @@ import OrderSummary from "../components/checkout/OrderSummary";
 import Section from "../components/ui/Section";
 import Row from "../components/ui/Row";
 import CartProgress from "../components/cart/CartProgress";
+import { Link } from "react-router-dom";
 
 
 export default function Checkout() {
@@ -13,7 +14,7 @@ export default function Checkout() {
         <Section >
             <Row>
                 <h2 className="text-[28px] font-normal mb-[50px] hidden md:block leading">
-                Home / <span className="font-light ">Checkout</span>
+                  <Link to="/home">Home </Link>/ <span className="font-light ">Checkout</span>
                 </h2>
             </Row>
             <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[2fr_1fr] gap-[30px] items-start">

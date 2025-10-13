@@ -39,7 +39,7 @@ export default function ContactSection() {
               />
               <input
                 type="date"
-                placeholder="D/M/Y"
+                placeholder="DD/MM/YY"
                 className="input-common placeholder-[#BCBCBC]"
               />
             </div>
