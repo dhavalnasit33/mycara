@@ -7,7 +7,6 @@ import {
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
 
-import MoreIcon from "../icons/More"; 
 
 import LoginIcon from "../icons/login"; 
 
@@ -19,14 +18,11 @@ import OrdersIcon from "../../assets/orders.svg";
 
 import WhiteLogin from "../../assets/white login.png";
 
-import PayImg from "../../assets/pay.png";
 
 import HeaderLogo from "../../assets/logo.png";
 import Logo from "../../assets/my_logo.png";
 import bannerImg from "../../assets/banner.png";
 import banner1 from "../../assets/banner1.png";
-import Notification from "../icons/notification";
-import SvgComponent from "../icons/SvgComponent";
 import Button from "../ui/Button";
 import { ChevronDown, Contact, Ellipsis, HandCoins, Heart, Menu, SearchX, X } from "lucide-react";
 import Row from "../ui/Row";
@@ -109,7 +105,7 @@ const Header = ({ hideOnMobileShopPage  }) => {
               <Link to="/login">
                 <Button
                   variant="common"
-                  className="!min-w-[113px] !py-[7px] !px-[8px] !rounded-[10px] flex items-center"
+                  className="!min-w-[113px] !py-[7px] !px-[8px]  flex items-center"
                 >
                   <img src={WhiteLogin} alt="Login" className="w-[24px] h-[24px] mr-3" />
                   <span>Login</span>
@@ -145,12 +141,6 @@ const Header = ({ hideOnMobileShopPage  }) => {
                     <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
-                    </Link>
-                  </li>
-                  <li className=" py-[8px] hover:text-[#F43297]">
-                    <Link to="/gift-cards" className="flex items-center gap-[15px] w-full">
-                      <SvgComponent />
-                      <span>Gift Cards</span>
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
@@ -291,17 +281,7 @@ const Header = ({ hideOnMobileShopPage  }) => {
                 </div>
                 <div className="py-4 px-4 cursor-pointer">
                   <Link to="#" className="flex items-center gap-[15px]">
-                    <SvgComponent />Gift Cards
-                  </Link>
-                </div>
-                <div className="py-4 px-4 cursor-pointer bg-theme sm:bg-transparent">
-                  <Link to="#" className="flex items-center gap-[15px]">
                     <FontAwesomeIcon icon={faGift} />Coupons
-                  </Link>
-                </div>
-                <div className="py-4 px-4 cursor-pointer">
-                  <Link to="#" className="flex items-center gap-[15px]">
-                    <Notification className="w-5 h-5" />Notifications
                   </Link>
                 </div>
               </div>

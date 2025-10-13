@@ -7,7 +7,7 @@ import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 
 import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
-
+import MobileFilterBar from './MobileFilterBar';
 import ProductGrid from './ProductGrid';
 import SortByPage from './SortByPage'; 
 
@@ -43,38 +43,6 @@ const Filter = (props) => (<FilterIconComponent {...props} />);
 
 // ---------- Mobile Filter Bar ----------
 
-// --- 1. Mobile Responsive UI (Filter Bar) ---
-const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick }) => (
-    <div className="flex justify-center items-center w-full mx-auto gap-4 sm:gap-2">
-        <div className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
-            onClick={onSortClick}
-        >
-            <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4">
-                <div>
-                    <div className="text-base sm:text-lg font-inter font-semibold text-black/70">Sort By</div>
-                    <div className="text-xs sm:text-sm font-inter font-medium mt-0.5 text-[#989696]">{sortBy}</div>
-                </div>
-                <SortByIcon className="h-5 w-5 sm:h-6 sm:w-6 text-black/70" />
-            </div>
-        </div>
-        <div className={`bg-color rounded-[10px] shadow-lg cursor-pointer transition duration-300 hover:shadow-xl text-white w-[140px] sm:w-[180px] md:w-[200px]`}
-            onClick={onFilterClick}
-        >
-            <div className="flex items-center justify-between py-2 px-3 sm:py-3 sm:px-4">
-                <div>
-                    <div className="text-base sm:text-lg font-inter font-semibold">Filter</div>
-                    <div className="flex items-center mt-0.5">
-                        <span className="text-xs sm:text-sm font-inter font-medium">Applied</span>
-                        <span className="ml-2 px-2 py-0.5 bg-white text-black/70 font-semibold rounded-full text-xs">
-                            {filterCount}
-                        </span>
-                    </div>
-                </div>
-                <Filter className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-            </div>
-        </div>
-    </div>
-);
 
 
 // ---------- Desktop Sort Bar ----------
@@ -410,6 +378,9 @@ const WomenCollections = () => {
        const [isSortOpen, setIsSortOpen] = useState(false);
     const [selectedSort, setSelectedSort] = useState('popularity'); // 'popularity' is a good default
 
+     const [isSortByOpen, setIsSortByOpen] = useState(false); 
+
+    
     // --- New Mobile State ---
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
@@ -445,18 +416,26 @@ const WomenCollections = () => {
     const handleDiscountChange = createToggleHandler(setSelectedDiscounts);
     const handleLabelChange = createToggleHandler(setSelectedLabels);
 
-     // --- SORT HANDLERS (New Logic) ---
-            const handleSortClick = () => {
-            setIsSortSheetOpen(true); // Open the Sort By Bottom Sheet
-            };
-            
-           const handleSelectSort = (sortValue) => {
-    setSelectedSort(sortValue);
-    setIsSortOpen(false); // Close the bottom sheet after selection
-    // You would typically call an API or update a global state here to fetch/sort products
-    console.log(`Sorting products by: ${sortValue}`); 
-};
-    
+
+    const handleSortClick = () => {
+        setIsSortByOpen(true);
+    };
+
+
+    const handleCloseSortBy = () => {
+        setIsSortByOpen(false);
+    };
+
+
+    const handleSelectSort = (value, label) => {
+        setCurrentSortValue(value);
+        setCurrentSortLabel(label);
+        
+        // handleCloseSortBy(); // bottom sheet off 
+    };
+
+
+
     const handleFilterClick = () => {
         setIsMobileFilterOpen(true);
     }
@@ -523,16 +502,11 @@ const WomenCollections = () => {
     const totalResults = 100;
     const showingResults = mockProducts.length;
 
-     const currentSortLabel = getSortLabel(currentSortValue);
-
+   
+const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
     return (
         <div className=" w-full container-1440 mx-auto py-2 px-3 lg:px-0 lg:py-10  ">
-                                <MobileFilterBar
-                    sortBy={currentSortLabel} // ✅ અહીંયા સુધારો કર્યો છે: currentSortLabel પાસ કર્યું
-                    filterCount={filterCount}
-                    onSortClick={handleSortClick}
-                    onFilterClick={handleFilterClick}
-                     />
+               
 
             <MobileFilterModal
                 isOpen={isMobileFilterOpen}
@@ -580,8 +554,29 @@ const WomenCollections = () => {
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
 
+           
+                <div className="lg:hidden">
+   
+                         {/* MobileFilterBar - અહીં onSortClick Pass થાય છે */}
+            <div className="mb-6 lg:hidden">
+                <MobileFilterBar
+                    sortBy={currentSortLabel} // ✅ અહીં currentSortLabel દેખાશે
+                    filterCount={filterCount}
+                    onSortClick={handleSortClick} // ✅ ક્લિક થતાં handleSortClick (setIsSortByOpen(true)) Call થશે
+                    onFilterClick={handleFilterClick}
+                />
+            </div>
+            
+            {/* 💥 SortByPage કમ્પોનન્ટ 💥 */}
+            {/* 5. isSortByOpen true હોય તો જ આ કમ્પોનન્ટ render થશે */}
+            <SortByPage
+                isOpen={isSortByOpen}
+                onClose={handleCloseSortBy}
+                selectedSort={currentSortValue} 
+                onSelectSort={handleSelectSort} 
+            />
+            </div>
             <div className="flex flex-col lg:flex-row gap-[30px]">
-
             <DesktopFilters
                     selectedCategories={selectedCategories}
                     handleCategoryChange={handleCategoryChange}

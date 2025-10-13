@@ -23,7 +23,7 @@ const Wishlist = ({ products }) => {
       <table className="w-full hidden custom-lg:table">
         <thead>
           <tr className="border-b border-black font-18">
-            <th className="text-left pb-[16px]">
+            <th className="text-left">
               <input type="checkbox" className="w-4 h-4" />
             </th>
             <th className="text-left p-4 font-normal">Product</th>
@@ -97,7 +97,7 @@ const Wishlist = ({ products }) => {
                       className="border light-border rounded-[3px] p-[4px]"
                     />
                     <Button variant="common"
-                      className="!min-w-[113px] !py-[5px] !px-[8px] !rounded-[3px] text-14"
+                      className="!min-w-[113px] !py-[5px] !px-[8px] text-14"
                     >
                       Add To Cart
                     </Button>
@@ -115,7 +115,6 @@ const Wishlist = ({ products }) => {
         </tbody>
       </table>
 
-      {/* ✅ Mobile Layout */}
       <div className="flex flex-col gap-4 custom-lg:hidden mt-4">
         {products.map((product, index) => (
           <div key={index}

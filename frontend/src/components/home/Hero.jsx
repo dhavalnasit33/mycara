@@ -41,11 +41,11 @@ export default function Hero() {
         arrows: false,
         appendDots: dots => (
             <div className="  w-full">
-                <ul className="flex justify-center gap-5">{dots}</ul>
+                <ul className="flex justify-center lg:gap-[30px] ">{dots}</ul>
             </div>
         ),
         customPaging: i => (
-            <div className="w-10 h-[4px] bg-white transition-colors duration-300 rounded-full"></div>
+            <div className="w-[16px] lg:w-[50px] h-[1px] lg:h-[4px] bg-white transition-colors duration-300 rounded-full"></div>
         )
     };
 
@@ -80,9 +80,9 @@ export default function Hero() {
                         <div key={index}>
                             <div className="w-full flex  flex-row md:flex-row items-center justify-between px-10 sm:px-10">
                                 <div className="flex-1 text-left gap-[30px] ">
-                                <h1 className=" text-stroke text-shadow-custom py-5">
+                                <h1 className=" text-stroke text-shadow-custom py-2 lg:py-5">
                                 <span
-                                    className="font-sans italic font-bold  text-[26px] lg:text-[80px] text-black "
+                                    className="font-sans italic font-bold  sm:text-[26px] lg:text-[80px] text-black "
                                     dangerouslySetInnerHTML={{ __html: slide.title }}
                                 />
                                 </h1>

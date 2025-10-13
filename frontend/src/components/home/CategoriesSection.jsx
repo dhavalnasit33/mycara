@@ -44,6 +44,7 @@ const CategoriesSection = () => {
   return (
     < >
 
+
       <Slider ref={sliderRef} {...settings}>
         {categories.map((category, index) => (
           <div key={index} className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]">
@@ -71,6 +72,7 @@ const CategoriesSection = () => {
           ></button>
         ))}
       </div>
+
 
     </>
   );
