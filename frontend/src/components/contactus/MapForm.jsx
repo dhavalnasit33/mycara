@@ -3,10 +3,11 @@ import React from "react";
 import Row from "../ui/Row";
 import Button from "../ui/Button";
 import formBg from '../../assets/formbg.png';
+import Section from "../ui/Section";
 
 export default function ContactSection() {
   return (
-    <section className="w-full bg-white py-12" 
+    <Section className="w-full bg-white mb-[25px] md:mb-[50px] " 
     style={{ backgroundImage: `url(${formBg})` }}
      >
       <Row className=" grid grid-cols-1 md:grid-cols-2 gap-[30px] ">
@@ -39,7 +40,7 @@ export default function ContactSection() {
               <input
                 type="date"
                 placeholder="D/M/Y"
-                className="input-common  placeholder-[#BCBCBC]"
+                className="input-common placeholder-[#BCBCBC]"
               />
             </div>
 
@@ -69,6 +70,6 @@ export default function ContactSection() {
           ></iframe>
         </div>
       </Row>
-    </section>
+    </Section>
   );
 }
