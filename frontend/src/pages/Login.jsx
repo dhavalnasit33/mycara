@@ -4,18 +4,20 @@ import LoginSlider from "../components/login/loginSlider";
 import { FaPlay, FaTimes } from "react-icons/fa";
 import SocialButtons from "../components/login/SocialButtons";
 import Button from "../components/ui/Button";
+import Section from "../components/ui/Section";
+import Row from "../components/ui/Row";
 
-const LoginForm = () => {
+const LoginForm = ({onClose}) => {
   return (
-    <div className="min-h-screen flex items-center justify-center  mx-5">
-      <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto">
+    <div className="flex items-center justify-center ">
+      <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto ">
         
         <div className="w-1/3 md:flex items-center justify-center light-color hidden"   >
           <LoginSlider /> 
         </div>
 
         <div className="w-full md:w-2/3 px-5 py-16 relative  md:mx-0 md:px-20  ">
-          <button className="absolute top-0 right-0  bg-color  text-2xl font-bold p-3">
+          <button  onClick={onClose}  className="absolute top-0 right-0  bg-color  text-2xl font-bold p-3">
            <FaTimes className="text-white "/>
           </button>
 
