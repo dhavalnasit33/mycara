@@ -7,8 +7,14 @@ export const ROUTES = {
   },
   navbar: {
   getAll: "/navbar",
-},
-products:{
-  getAll: "/products",
-},
+  },
+  products:{
+    getAll: "/products",
+  },
+  categories:{
+    getAll: "/categories",
+  },
+  pages:{
+    getAll: "/pages",
+  }
 }

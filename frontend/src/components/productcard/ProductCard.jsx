@@ -17,9 +17,6 @@ export default function ProductCard({ product }) {
   const displayedImage = getImageUrl(images[currentImageIndex]);
   const hasMultipleImages = images.length > 1;
   
-
-  
-
   return (
     <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
       {/* Product Image */}

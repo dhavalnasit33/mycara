@@ -1,7 +1,7 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 import { Link } from 'react-router-dom';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
@@ -17,6 +17,9 @@ import DesktopFilters from './DesktopFilters';
 import OriginalSortByIcon from "../icons/SortByIcon";
 
 import { mockProducts} from './shopData';
+import TrendingCard from './TrandingCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../features/products/productsThunk';
 
 
 export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter };
@@ -193,42 +196,6 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
     );
 };
 
-// ---------- Product Card ----------
-const TrendingCard = ({ product }) => (
- <Link
-    to="/products"
-    className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
-  >
-      <div className="w-full h-auto overflow-hidden">
-        <img
-          src={product.imageSrc}
-          alt={product.name}
-          className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
-        />
-      </div>
-    <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
-                    bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                    flex flex-col justify-between">
-      <div className="flex justify-between items-start">
-        <div className="pr-2 sm:pr-4">
-          <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
-            {product.name}
-          </h3>
-        </div>
-        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
-          <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
-        </button>
-      </div>
-      <div>
-        <p className="text-sm font-medium font-inter text-black">
-          RS {product.price ? product.price.toFixed(2) : "0.00"}
-        </p>
-      </div>
-    </div>
- </Link>
-);
-
 
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
@@ -356,6 +323,7 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
+
     const [selectedCategories, setSelectedCategories] = useState([]);
 
 
@@ -383,6 +351,14 @@ const WomenCollections = () => {
     
     // --- New Mobile State ---
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+
+//      const dispatch = useDispatch();
+//   const { items: products = [], loading = false, error = null } = useSelector(
+//   (state) => state.products || {}
+// );
+//   useEffect(() => {
+//     dispatch(fetchProducts());
+//   }, [dispatch]);
 
 
     const calculateFilterCount = () => {

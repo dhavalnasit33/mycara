@@ -13,7 +13,7 @@ const ProductGrid  = () => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
-    console.log("🧠 Products in component:", products);
+    console.log("Products in component:", products);
 
     return (
         <div className="py-10 ">

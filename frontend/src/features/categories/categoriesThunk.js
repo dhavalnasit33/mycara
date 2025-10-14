@@ -3,14 +3,14 @@ import api from "../../services/api";
 import { ROUTES } from "../../services/routes";
 
 // Fetch navbar items
-export const fetchProducts = createAsyncThunk(
-  "products/fetchProducts",
+export const fetchCategories = createAsyncThunk(
+  "categories/fetchCategories",
   async (params = {}, { rejectWithValue }) => {
     try {
-      const res = await api.get(ROUTES.products.getAll, { params });
+      const res = await api.get(ROUTES.categories.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.products; 
+        return res.data.data.categories; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch navbar items");

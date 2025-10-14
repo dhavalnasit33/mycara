@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContactCard from '../components/contactus/ContactCard';
 import Section from '../components/ui/Section';
 import Row from '../components/ui/Row';
@@ -8,16 +8,36 @@ import MapForm from '../components/contactus/MapForm';
 import FAQ from '../components/contactus/Faq';
 import contactBg from '../assets/contact.jpg';
 import SecondarySection from '../components/ui/SecondarySection';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPages } from '../features/pages/pagesThunk';
+import { getImageUrl } from '../components/utils/helper';
 
 
 const ContactUs = () => {
+
+  const dispatch = useDispatch();
+    const { pages, loading, error } = useSelector((state) => state.pages);
+
+    useEffect(() => {
+        dispatch(fetchPages());
+    }, [dispatch]);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    const contactPage = pages.find(page => page.slug === 'contact');
+
   return (
     <>
-      <SecondarySection
-        heading="Contact Us"
-        subText="Get in touch and let us know how we can help!"
-        backgroundImage={contactBg}
-      />
+      {contactPage?.sections.map(section => (
+                <SecondarySection
+                    key={section._id}
+                    title={section.title}
+                    description={section.description}
+                    backgroundImage={getImageUrl(
+                    section.background_image_url || section.image_url
+                    )}
+                />
+                ))}
       <Section >
         <Row className='xl:max-w-[1122px] grid grid-cols-1 md:grid-cols-3 gap-[30px] py-[25px] md:py-[50px]'>
             <ContactCard
