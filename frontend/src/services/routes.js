@@ -8,4 +8,7 @@ export const ROUTES = {
   navbar: {
   getAll: "/navbar",
 },
+products:{
+  getAll: "/products",
+},
 }

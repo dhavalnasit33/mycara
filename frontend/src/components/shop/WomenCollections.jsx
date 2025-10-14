@@ -194,7 +194,7 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
 };
 
 // ---------- Product Card ----------
-const ProductCard = ({ product }) => (
+const TrendingCard = ({ product }) => (
  <Link
     to="/products"
     className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
@@ -639,7 +639,7 @@ const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                            <TrendingCard key={product.id} product={product} />
                         ))}
                     </div>
                     
