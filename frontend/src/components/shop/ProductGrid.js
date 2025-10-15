@@ -1,17 +1,5 @@
-
-import shopsaree3 from '../../assets/shopsaree3.jpg';
-import shopsaree4 from '../../assets/shopsaree4.jpg';
-import shopsaree5 from '../../assets/shopsaree5.jpg';
-import shopsaree6 from '../../assets/shopsaree6.jpg';
-import shopsaree7 from '../../assets/shopsaree7.jpg';
-import shopsaree8 from '../../assets/shopsaree8.jpg';
-import shopsaree9 from '../../assets/shopsaree9.jpg';
-import shopsaree10 from '../../assets/shopsaree10.jpg';
-import shopsaree11 from '../../assets/shopsaree11.jpg';
-import shopsaree12 from '../../assets/shopsaree12.jpg';
-import shopsaree13 from '../../assets/shopsaree13.jpg';
-import shopsaree14 from '../../assets/shopsaree14.jpg';
 import ProductCard from '../productcard/ProductCard';
+<<<<<<< HEAD
 export const products = [
     {
         id: 1,
@@ -160,17 +148,42 @@ export const products = [
         isSale: false
     },
 ];
+=======
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../features/products/productsThunk';
+import { useEffect } from 'react';
+
+>>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
 
 const ProductGrid  = () => {
+
+    const { products = [], loading } = useSelector((state) => state.product);
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
+
+    console.log("Products in component:", products);
+
     return (
         <div className="py-10 ">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[10px] md:gap-[30px] w-full mx-auto"> {/* px-4 for side spacing */}
-                    {products.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                    ))}
+                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[30px]">
+                    {products && products.length > 0 ? (
+                        products.map((product, index) => (
+                            <ProductCard key={product.id || index} product={product} />
+                        ))
+                    ) : (
+                        <p>No products found.</p>
+                    )}
                 </div>
+
                 {/* --- Load More Button Section --- */}
+<<<<<<< HEAD
                 <div className="flex justify-center lg:mt-[50px]  ">
+=======
+                <div className="flex justify-center mt-10">
+>>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
                     <button
                         className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
                         style={{

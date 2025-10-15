@@ -3,12 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import {
   FaUser,
 } from "react-icons/fa";
-
-
-
-
-
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faGift } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
@@ -16,7 +10,6 @@ import { ChevronDown, Contact,  HandCoins, Heart, Menu, Package, SearchX, XCircl
 
 import ShopIcon from "../icons/shop";
 import CollectionsIcon from "../icons/Collections";
-
 
 import HeaderLogo from "../../assets/logo.png";
 import bannerImg from "../../assets/banner.png";
@@ -135,8 +128,7 @@ const Header = () => {
             <span>Welcome User!</span>
             <span className="text-color cursor-pointer font-18 font-medium" onClick={() => setIsRegisterOpen(true)}>
               Sign Up
-            </span>
-            
+            </span>  
           </div>
 
           <ul className="text-light text-p p-[17px]">
@@ -174,11 +166,11 @@ const Header = () => {
         </div>
       </div>
 
-      <Link to="/wishlist" className="text-light ">
+      <Link to="/wishlist" className="text-light">
         <Heart className="w-5 h-5 " />
       </Link>
 
-      <Link to="/cart" className="relative text-light ">
+      <Link to="/cart" className="relative text-light">
         <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
         <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
           0

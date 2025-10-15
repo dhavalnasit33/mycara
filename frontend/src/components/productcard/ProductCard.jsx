@@ -1,21 +1,38 @@
 import React, { useState } from "react";
 import HeartIcon from "../icons/HeartIcon";
 import ShoppingBagIcon from "../icons/ShoppingBagIcon";
+import { getImageUrl } from "../utils/helper";
+
+
 export default function ProductCard({ product }) {
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const hasMultipleImages = product.allImages && product.allImages.length > 1;
-  const displayedImage = hasMultipleImages
-    ? product.allImages[currentImageIndex]
-    : product.image;
+
+  const images = Array.isArray(product.images) && product.images.length
+    ? product.images
+    : product.imageUrl
+      ? [product.imageUrl]
+      : ["/placeholder.png"];
+
+  const displayedImage = getImageUrl(images[currentImageIndex]);
+  const hasMultipleImages = images.length > 1;
+  
   return (
     <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
       {/* Product Image */}
       <div className="relative mb-[10px]">
-        <img
-          src={displayedImage}
-          alt={product.subtitle}
-          className="w-full h-[300px] sm:h-[355px] transition duration-300"
-        />
+        <div
+          className="relative mb-[10px] w-full h-[300px] sm:h-[355px]"
+          onMouseEnter={() => hasMultipleImages && setCurrentImageIndex(1)}
+          onMouseLeave={() => hasMultipleImages && setCurrentImageIndex(0)}
+        >
+          <img
+            src={displayedImage}
+            alt={product.subtitle || product.name}
+            className="w-full h-full transition duration-300"
+          />
+        </div>
+
         {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
@@ -25,6 +42,7 @@ export default function ProductCard({ product }) {
             <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
         </div>
+
         {/* Small Dots for Multiple Images */}
         {hasMultipleImages && (
           <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -40,6 +58,7 @@ export default function ProductCard({ product }) {
           </div>
         )}
       </div>
+      
       {/* Product Info */}
       <div>
         {product.express && (
@@ -52,25 +71,35 @@ export default function ProductCard({ product }) {
             Sale
           </div>
         )}
-        <h3 className="text-p">{product.brand}</h3>
-        <p className="sec-text-color text-14 mb-2 truncate">{product.subtitle}</p>
+        <h3 className="text-p"> {product.variants?.[0]?.brand?.[0]?.name || "No Brand"}</h3>
+        <p className="sec-text-color text-14 mb-2 truncate">{product.name}</p>
+
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
-          <p>₹{product.price}</p>
-          {product.oldPrice && (
-            <p className="line-through text-[#BCBCBC] text-14">₹{product.oldPrice}</p>
-          )}
-          {product.discount && <p className="text-theme">{product.discount}</p>}
-        </div>
+            <p>₹{product.variants?.[0]?.price}</p>
+            
+            {product.variants?.[0]?.oldPrice && (
+              <p className="line-through text-[#BCBCBC] text-14">
+                ₹{product.variants[0].oldPrice}
+              </p>
+            )}
+            <p className="text-theme">{product.variants?.[0]?.discount_id}</p>
+          </div>
+
+
         {/* Color Options */}
         <div className="flex gap-[5px]">
-          {product.colorOptions?.map((colorClass, index) => (
+            {product.variants?.[0]?.color?.map((colorItem, index) => (
             <div
               key={index}
-              className={`w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] ${colorClass} rounded-full cursor-pointer`}
+              className="w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] rounded-full cursor-pointer"
+              style={{ backgroundColor: colorItem.code }}
             ></div>
           ))}
         </div>
+      
+
+
         {/* Rating Stars */}
         {product.rating !== undefined && product.rating !== null && (
           <div className="flex gap-[6px] mt-1">

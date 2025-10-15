@@ -1,31 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProducts } from "./productsThunk";
+import { fetchPages } from "./pagesThunk";
 
 const initialState = {
-  products: [],
+  pages: [],
   loading: false,
   error: null,
 };
 
-const productsSlice = createSlice({
-  name: "products",
+const pagesSlice = createSlice({
+  name: "pages",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
+      .addCase(fetchPages.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
+      .addCase(fetchPages.fulfilled, (state, action) => {
         state.loading = false;
-        state.products = action.payload;
+        state.pages = action.payload;
       })
-      .addCase(fetchProducts.rejected, (state, action) => {
+      .addCase(fetchPages.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export default productsSlice.reducer;
+export default pagesSlice.reducer;

@@ -3,72 +3,8 @@ import Slider from "react-slick";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
 import Row from "../ui/Row";
-import img1 from "../../assets/similer1.png";
-import img2 from "../../assets/similer2.png";
-import img3 from "../../assets/similer3.png";
-import img4 from "../../assets/similer4.png";
-
-export const products = [
-  {
-    id: 1,
-    brand: "BLACK SCISSOR",
-    subtitle: "Women Georgette Floral Black and...",
-    price: 1137,
-    oldPrice: 4575,
-    discount: "75%",
-    rating: 4,
-    express: true,
-    image: img1,
-  },
-  {
-    id: 2,
-    brand: "Indibellie",
-    subtitle: "Cotton Floral Printed Anarkali Kurta..",
-    price: 2137,
-    oldPrice: 4755,
-    discount: "55%",
-    rating: 4,
-    express: false,
-    image: img2,
-  },
-  {
-    id: 3,
-    brand: "Indya",
-    subtitle: "Women Reyon Lining Red An...",
-    price: 1537,
-    rating: 3,
-    express: true,
-    image: img3,
-  },
-  {
-    id: 4,
-    brand: "Rangita",
-    subtitle: "Chanderi Coral Sequine Yoke calf...",
-    price: 1537,
-    rating: 4,
-    express: false,
-    image: img4,
-  },
-  {
-    id: 5,
-    brand: "Libas",
-    subtitle: "Printed Cotton A-Line Kurta...",
-    price: 1937,
-    rating: 5,
-    express: true,
-    image: img1,
-  },
-  {
-    id: 6,
-    brand: "Rangita",
-    subtitle: "Printed Cotton A-Line Kurta...",
-    price: 2937,
-    rating: 3,
-    express: true,
-    image: img3,
-  },
-
-];
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../features/products/productsThunk';
 
 function PrevArrow({ onClick, disabled }) {
   return (
@@ -103,6 +39,16 @@ export default function SimilarProducts() {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+
+  const { products = [], loading } = useSelector((state) => state.product);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+      dispatch(fetchProducts());
+  }, [dispatch]);
+
+  console.log("🧠 Products in component:", products);
 
   const settings = {
     dots: false,

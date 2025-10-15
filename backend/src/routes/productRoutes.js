@@ -12,10 +12,10 @@ const {
 
 const { authMiddleware, authorizeMinRole } = require("../middlewares/authMiddleware");
 const upload = require("../middlewares/upload");
-
+router.get("/", getProducts);
 router.use(authMiddleware);
 
-router.get("/", getProducts);
+
 router.get("/:id", getProductById);
 router.post("/", authorizeMinRole("admin"),upload.single("image"), createProduct);
 router.put("/:id/status",authorizeMinRole("admin"), updateProductStatus);
