@@ -12,7 +12,7 @@ import shopsaree12 from '../../assets/shopsaree12.jpg';
 import shopsaree13 from '../../assets/shopsaree13.jpg';
 import shopsaree14 from '../../assets/shopsaree14.jpg';
 import ProductCard from '../productcard/ProductCard';
-const products = [
+export const products = [
     {
         id: 1,
         brand: "Phataakaa",
@@ -170,7 +170,7 @@ const ProductGrid  = () => {
                     ))}
                 </div>
                 {/* --- Load More Button Section --- */}
-                <div className="flex justify-center mt-10 ">
+                <div className="flex justify-center lg:mt-[50px]  ">
                     <button
                         className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
                         style={{

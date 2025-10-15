@@ -1,14 +1,20 @@
 import * as React from "react"
-const SvgComponent = (props) => (
+
+const CloseIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={24}
-    height={24}
+    width={8}
+    height={8}
     fill="none"
-    viewBox="0 0 24 24"
+    viewBox="0 0 8 8"
     {...props}
   >
-    <path stroke="#ffffffff" strokeWidth={1.5} d="m1 1 8 8M9 1 1 9" />
+    <path
+      stroke="#ffffff"
+      strokeWidth={1.5}
+      d="M1 1L7 7M7 1L1 7"
+    />
   </svg>
 )
-export default SvgComponent
+
+export default CloseIcon

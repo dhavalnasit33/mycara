@@ -27,8 +27,7 @@ const SortByPage = ({ isOpen, onClose, selectedSort, onSelectSort }) => {
 
 
     return (
-        // Overlay / Backdrop
-        // Overlay માં flex અને items-end રાખીએ છીએ.
+  
         <div 
             className={`fixed inset-0 z-50 flex items-end justify-center transition-opacity duration-500 
                 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} 
@@ -46,24 +45,24 @@ const SortByPage = ({ isOpen, onClose, selectedSort, onSelectSort }) => {
                 onClick={(e) => e.stopPropagation()} 
             >
                 
-                {/* 1. Close Button: બોટમ શીટની ઉપર, જમણી બાજુએ. */}
-                <button 
-                    onClick={onClose} 
-                    // p-3, mb-4, mr-2: Close બટનને મોટું અને બોટમ શીટથી અલગ રાખવા માટે
-                    className="p-2 mb-4 rounded-full  border-[1.5px] border-white flex items-center justify-center text-gray-700 hover:bg-gray-100 transition duration-150"
-                    aria-label="Close sort options"
+              
+                <button
+                onClick={onClose}
+                aria-label="Close sort options"
+                className="flex items-center justify-center w-[20px] h-[20px] mb-4 rounded-full border-[1.5px] border-white text-gray-700  transition duration-150"
                 >
-                    <CloseIcon />
+                <CloseIcon width={8} height={8} />
                 </button>
 
-                {/* 2. Bottom Sheet Content (bg-white વાળો ભાગ) */}
+
+                {/* 2. Bottom Sheet Content  */}
                 <div 
-                    className="w-full bg-white rounded-t-[15px] shadow-2xl max-h-[80vh]"
+                    className="w-full bg-white rounded-t-[15px]  py-[20px] overflow-hidden"
                 >
                     
                     {/* Header (માત્ર Title) */}
                     <div className="px-[20px]">
-                        <div className="flex justify-start items-center py-[20px] border-b border-gray-300">
+                        <div className="flex justify-start items-center items-end pb-[15px] border-b border-gray-300">
                             <h2 className="text-[20px] font-roboto font-medium text-gray-900">Sort By</h2>
                         </div>
                     </div>
@@ -109,9 +108,15 @@ const SortByPage = ({ isOpen, onClose, selectedSort, onSelectSort }) => {
                     </div>
                     
                     {/* Safe Area for bottom of phone */}
-                    <div className="h-4">
-                        <></>
-                    </div>
+                    <div className="flex justify-center py-[5px]">
+                        <div 
+                            style={{ width: '135px', height: '5px' }} 
+                            className="bg-black rounded-full"
+                        >
+                           </div> 
+                        </div>
+                      
+                    
                 </div>
             </div>
         </div>

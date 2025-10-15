@@ -46,17 +46,17 @@ const MobileFilterModal = ({
                 `}
             >
                 <div className="w-full h-full">
-                    <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex justify-start items-center z-10">
+                    <div className="sticky top-0 bg-white  px-2 py-4 flex justify-start items-center z-10">
                         <button
                             onClick={onClose}
-                            className="flex items-center space-x-1 p-1 font-inter text-base sm:text-lg font-semibold text-black/90 hover:text-black"
+                            className="flex items-center space-x-1 p-1 font-inter text-base sm:text-lg font-semibold text-black/70 hover:text-black gap-3"
                         >
                             <X className="w-5 h-5 text-black" />
                             CLOSE
                         </button>
                     </div>
 
-                    <div className="p-4 space-y-4">
+                    <div className=" space-y-4 py-[10px] ">
                         <CollapsibleFilter
                             title="Category"
                             defaultOpen={true}
@@ -66,6 +66,7 @@ const MobileFilterModal = ({
                             onApplyClick={onClose}
                         >
                             <div className="space-y-1 h-[130px] overflow-y-auto hide-scrollbar">
+                                <div className=" px-3 py-3">
                                 {mockCategories.map((cat) => (
                                     <FilterItemCheckbox
                                         key={cat.name}
@@ -75,7 +76,7 @@ const MobileFilterModal = ({
                                         onChange={handleCategoryChange}
                                     />
                                 ))}
-                            </div>
+                            </div></div>
                         </CollapsibleFilter>
 
                         <PriceRangeFilter
@@ -83,7 +84,7 @@ const MobileFilterModal = ({
                             maxPrice={maxPrice}
                             setMinPrice={setMinPrice}
                             setMaxPrice={setMaxPrice}
-                            isMobile={true}
+                            isMobile={false}
                         />
 
                         <CollapsibleFilter
@@ -93,7 +94,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetSizes}
                             onApplyClick={onClose}
                         >
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap px-3 py-3">
                                 {mockSizes.map((size) => (
                                     <SizeFilterItem
                                         key={size}
@@ -112,7 +113,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetColors}
                             onApplyClick={onClose}
                         >
-                            <div className="flex flex-wrap gap-2">
+                             <div className="flex flex-wrap px-3 py-3">
                                 {mockColors.map((color) => (
                                     <ColorFilterItem
                                         key={color.name}
@@ -123,6 +124,7 @@ const MobileFilterModal = ({
                                         onChange={handleColorChange}
                                     />
                                 ))}
+                           
                             </div>
                         </CollapsibleFilter>
 
@@ -134,6 +136,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetBrands}
                             onApplyClick={onClose}
                         >
+                            <div className=" px-3 py-3">
                             {mockBrands.map((brand) => (
                                 <FilterItemCheckbox
                                     key={brand.name}
@@ -143,6 +146,7 @@ const MobileFilterModal = ({
                                     onChange={handleBrandChange}
                                 />
                             ))}
+                            </div>
                         </CollapsibleFilter>
 
                         {/* Type Filter */}
@@ -153,6 +157,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetTypes}
                             onApplyClick={onClose}
                         >
+                            <div className=" px-3 py-3">
                             {mockTypes.map((type) => (
                                 <FilterItemCheckbox
                                     key={type}
@@ -161,6 +166,7 @@ const MobileFilterModal = ({
                                     onChange={handleTypeChange}
                                 />
                             ))}
+                            </div>
                         </CollapsibleFilter>
 
                         <CollapsibleFilter
@@ -170,6 +176,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetFabrics}
                             onApplyClick={onClose}
                         >
+                             <div className=" px-3 py-3">
                             {mockFabrics.map((fabric) => (
                                 <FilterItemCheckbox
                                     key={fabric}
@@ -178,6 +185,7 @@ const MobileFilterModal = ({
                                     onChange={handleFabricChange}
                                 />
                             ))}
+                            </div>
                         </CollapsibleFilter>
 
                         <CollapsibleFilter
@@ -187,6 +195,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetDiscounts}
                             onApplyClick={onClose}
                         >
+                            <div className=" px-3 py-3">
                             {mockDiscounts.map((discount) => (
                                 <FilterItemCheckbox
                                     key={discount}
@@ -195,6 +204,7 @@ const MobileFilterModal = ({
                                     onChange={handleDiscountChange}
                                 />
                             ))}
+                            </div>
                         </CollapsibleFilter>
 
                         <CollapsibleFilter
@@ -204,6 +214,7 @@ const MobileFilterModal = ({
                             onCancelClick={handleResetLabels}
                             onApplyClick={onClose}
                         >
+                            <div className=" px-3 py-3">
                             {mockLabels.map((label) => (
                                 <FilterItemCheckbox
                                     key={label}
@@ -212,6 +223,7 @@ const MobileFilterModal = ({
                                     onChange={handleLabelChange}
                                 />
                             ))}
+                            </div>
                         </CollapsibleFilter>
                     </div>
                 </div>

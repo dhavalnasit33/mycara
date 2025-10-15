@@ -39,9 +39,9 @@ const DesktopFilters = ({
         defaultOpen={true}
         isSelected={isCategorySelected}
         onReset={handleResetCategories}
-        showButtons={false}
+        showButtons={true}
       >
-        <div className="space-y-1 px-2 overflow-y-auto">
+        <div className="space-y-1 overflow-y-auto px-3 py-3">
           {mockCategories.map(cat => (
             <FilterItemCheckbox
               key={cat.name}
@@ -66,12 +66,12 @@ const DesktopFilters = ({
       {/* Size */}
       <CollapsibleFilter
         title="Size"
-        defaultOpen={false}
+        defaultOpen={true}
         isSelected={selectedSizes.length > 0}
         onReset={handleResetSizes}
-        showButtons={false}
+        showButtons={true}
       >
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap px-3 py-3">
           {mockSizes.map(size => (
             <SizeFilterItem
               key={size}
@@ -86,13 +86,13 @@ const DesktopFilters = ({
       {/* Color */}
       <CollapsibleFilter
         title="Color"
-        defaultOpen={false}
+        defaultOpen={true}
         isSelected={selectedColors.length > 0}
         onReset={handleResetColors}
-        showButtons={false}
+        showButtons={true}
       >
-        <div className="p-2">
-          <div className="flex flex-wrap">
+        
+          <div className="flex flex-wrap px-3 py-3">
             {mockColors.map(color => (
               <ColorFilterItem
                 key={color.name}
@@ -104,7 +104,7 @@ const DesktopFilters = ({
               />
             ))}
           </div>
-        </div>
+        
       </CollapsibleFilter>
 
       {/* Brands */}
@@ -112,8 +112,9 @@ const DesktopFilters = ({
         title="Brands"
         isSelected={selectedBrands.length > 0}
         onReset={handleResetBrands}
-        showButtons={false}
+        showButtons={true}
       >
+         <div className=" px-3 py-3">
         {mockBrands.map(brand => (
           <FilterItemCheckbox
             key={brand.name}
@@ -123,6 +124,7 @@ const DesktopFilters = ({
             onChange={handleBrandChange}
           />
         ))}
+        </div>
       </CollapsibleFilter>
 
       {/* Type */}
@@ -130,8 +132,9 @@ const DesktopFilters = ({
         title="Type"
         isSelected={selectedTypes.length > 0}
         onReset={handleResetTypes}
-        showButtons={false}
+        showButtons={true}
       >
+         <div className=" px-3 py-3">
         {mockTypes.map(type => (
           <FilterItemCheckbox
             key={type}
@@ -140,6 +143,7 @@ const DesktopFilters = ({
             onChange={handleTypeChange}
           />
         ))}
+        </div>
       </CollapsibleFilter>
 
       {/* Fabric */}
@@ -147,8 +151,9 @@ const DesktopFilters = ({
         title="Fabric"
         isSelected={selectedFabrics.length > 0}
         onReset={handleResetFabrics}
-        showButtons={false}
+        showButtons={true}
       >
+        <div className=" px-3 py-3">
         {mockFabrics.map(fabric => (
           <FilterItemCheckbox
             key={fabric}
@@ -157,6 +162,7 @@ const DesktopFilters = ({
             onChange={handleFabricChange}
           />
         ))}
+        </div>
       </CollapsibleFilter>
 
       {/* Discounts */}
@@ -164,8 +170,9 @@ const DesktopFilters = ({
         title="Discounts"
         isSelected={selectedDiscounts.length > 0}
         onReset={handleResetDiscounts}
-        showButtons={false}
+        showButtons={true}
       >
+        <div className=" px-3 py-3">
         {mockDiscounts.map(discount => (
           <FilterItemCheckbox
             key={discount}
@@ -174,6 +181,7 @@ const DesktopFilters = ({
             onChange={handleDiscountChange}
           />
         ))}
+        </div>
       </CollapsibleFilter>
 
       {/* Product Labels */}
@@ -181,8 +189,9 @@ const DesktopFilters = ({
         title="Product Label"
         isSelected={selectedLabels.length > 0}
         onReset={handleResetLabels}
-        showButtons={false}
+        showButtons={true}
       >
+        <div className=" px-3 py-3">
         {mockLabels.map(label => (
           <FilterItemCheckbox
             key={label}
@@ -191,6 +200,7 @@ const DesktopFilters = ({
             onChange={handleLabelChange}
           />
         ))}
+        </div>
       </CollapsibleFilter>
     </aside>
   );

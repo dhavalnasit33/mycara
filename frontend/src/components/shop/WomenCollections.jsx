@@ -5,12 +5,15 @@ import React, { useState } from 'react';
 
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
-
+import CheckedIcon from "../icons/checked"; // your SVG component
 import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
 import MobileFilterBar from './MobileFilterBar';
-import ProductGrid from './ProductGrid';
+
+import ProductGrid, { products } from "./ProductGrid";
+
 import SortByPage from './SortByPage'; 
 
+import PlusIcon from "../icons/plus";
 import MobileFilterModal from "./MobileFilterModal";
 import DesktopFilters from './DesktopFilters';
 
@@ -49,13 +52,30 @@ const Filter = (props) => (<FilterIconComponent {...props} />);
 const DesktopSortBar = ({ sortBy, setSortBy }) => (
     <div className="flex items-center gap-2 cursor-pointer rounded px-3 py-2">
         <SortByIcon />
-        <span className="text-base font-medium text-gray-700">Sort By</span>
+        <span className="text-[16px] font-medium text-[#989696] font-sans">Sort By</span>
         <div className="relative">
-            <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="appearance-none bg-white border border-gray-300 text-gray-700 py-2 pl-3 pr-10 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 text-sm transition duration-150 ease-in-out"
-            >
+          <select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+  className="
+    appearance-none 
+    bg-white 
+    text-black 
+    py-2 
+    pl-3 
+    pr-10 
+    rounded-[3px]
+    shadow-[0_0_4px_0_rgba(0,0,0,0.25)] 
+    focus:outline-none 
+    focus:ring-2 
+    focus:ring-[#F43297] 
+    text-[16px]
+    transition 
+    duration-150 
+    ease-in-out
+  "
+>
+
                 <option value="popularity">Popularity</option>
                 <option value="latest">Newest</option>
                 <option value="price_asc">Price: Low to High</option>
@@ -63,7 +83,7 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
                 <option value="rating">Average Rating</option>
                 <option value="discounts">Discounts</option>
             </select>
-            <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 pointer-events-none" />
+            <CustomChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-black pointer-events-none" />
         </div>
     </div>
 );
@@ -73,13 +93,21 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
     <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
         <div className="flex items-center">
-            <input
-                type="checkbox"
-                name={name}
-                checked={isChecked}
+                  {/* Custom checkbox box */}
+      <div className={`w-[15px] h-[15px] rounded border flex items-center justify-center
+        ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
+      `}>
+        {isChecked && <CheckedIcon className="w-3 h-3 text-white" />}
+      </div>
 
-                onChange={() => onChange(name)}
-                className={` w-[15px] h-[15px] rounded border border-gray-400 cursor-pointer appearance-none checked:bg-color checked:bg-pink-600 checked:border-pink-600 checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center`} />
+      {/* Hidden native input for accessibility */}
+      <input
+        type="checkbox"
+        name={name}
+        checked={isChecked}
+        onChange={() => onChange(name)}
+        className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
+      />
             <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
         </div>
 
@@ -91,23 +119,30 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
 
 // --------------------- SizeFilterItem ---------------------
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
-    <label className="flex items-center cursor-pointer p-1 rounded w-1/2">
-        <input
-            type="checkbox"
-            name={name}
-            checked={isChecked}
-            onChange={onChange}
-            className={`
-             w-5 h-5 rounded border border-gray-400 cursor-pointer
-             appearance-none
-             checked:bg-color checked:${BORDER_COLOR_CLASS}
-             checked:after:content-['✓'] checked:after:text-white checked:after:block checked:after:text-xs checked:after:text-center
-           `}
-        />
-        <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">{name}</span>
-    </label>
-);
+  <label className="flex items-center cursor-pointer p-1 rounded w-1/2 relative">
+    {/* Custom checkbox */}
+    <div
+      className={`w-[15px] h-[15px] rounded border flex items-center justify-center
+        ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
+      `}
+    >
+      {isChecked && <CheckedIcon className="w-3 h-3 pointer-events-none" />}
+    </div>
 
+    {/* Hidden input */}
+    <input
+      type="checkbox"
+      name={name}
+      checked={isChecked}
+      onChange={onChange}
+      className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
+    />
+
+    <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">
+      {name}
+    </span>
+  </label>
+);
 // --------------------- ColorFilterItem ---------------------
 const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
     const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
@@ -133,30 +168,40 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
 };
 
 // ---------- Collapsible Filter ----------
-const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick, onApplyClick, defaultOpen = false, showButtons = true }) => {
-    const [isOpen, setIsOpen] = useState(defaultOpen);
-    const handleToggle = () => {
-        setIsOpen(!isOpen);
-    };
-    const handleClose = () => {
-        setIsOpen(false);
-        if (onCancelClick) {
-            onCancelClick();
-        }
-    };
 
+const CollapsibleFilter = ({
+  title,
+  isSelected,
+  onReset,
+  children,
+  onCancelClick,
+  onApplyClick,
+  defaultOpen = false,
+  showButtons = true,
+}) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    if (onCancelClick) onCancelClick();
+  };
     
     return (
-        <div className="px-4 py-2 border-gray-200">
-            <div className={` border rounded-[10px] px-4 py-3 items-center justify-between cursor-pointer flex
-                 ${isOpen ? 'border-transparent' : 'border-gray-200'}
-                 `}
-                style={{
+        <div className="px-[10px] py-[0px] lg:px-[15px] lg:py-[10px] border-gray-200">
+           <div
+  className={`flex items-center justify-between cursor-pointer rounded-[10px] px-4 py-3 transition-all duration-300
+    ${isOpen 
+      ? 'bg-[rgba(210,175,159,0.3)]  border-transparent' 
+      : 'bg-transparent border border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]'
+    }`}
+  onClick={handleToggle}
+>
 
-                    backgroundColor: isOpen ? 'rgba(210, 175, 159, 0.3)' : 'transparent'
-                }}
-                onClick={handleToggle}
-            >
+
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
                 <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-2">
@@ -171,20 +216,28 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
             </div>
 
             {isOpen && (
-                <div className="p-4 space-y-1">
+                <div className=" space-y-1 py-2">
                     {children}
                     {showButtons && (
-                        <div className="flex gap-4 mt-4 pt-4 border-t border-gray-200 ">
+                        <div className="flex gap-4  py-[20px] border-b border-[#BCBCBC] ">
                             <button onClick={onCancelClick || handleClose}
                                 className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
                             > Cancel
                             </button>
                             <button
                                 onClick={onApplyClick || onReset}
-                                className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md`}
+                                className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md hidden lg:flex items-center justify-center`}
                             >
-                                Filter
+                                Reset
                             </button>
+                             {/* Mobile: Filter (Apply) */}
+                                <button
+                                onClick={onApplyClick || onReset}
+                                className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md flex lg:hidden items-center justify-center"
+                                >
+                                Filter
+                                </button>
+                            
                         </div>
                     )}
                 </div>
@@ -197,7 +250,7 @@ const CollapsibleFilter = ({ title, isSelected, onReset, children, onCancelClick
 const ProductCard = ({ product }) => (
  <Link
     to="/products"
-    className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
+    className="block relative group overflow-hidden bg-white transition-transform duration-300 "
   >
       <div className="w-full h-auto overflow-hidden">
         <img
@@ -211,19 +264,23 @@ const ProductCard = ({ product }) => (
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
       <div className="flex justify-between items-start">
-        <div className="pr-2 sm:pr-4">
-          <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
+        <div className="p-4">
+          <h3 className="text-[14px]  font-medium font-inter tracking-wider text-black uppercase leading-[23px]">
             {product.name}
           </h3>
         </div>
-        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
-          <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
-        </button>
+         <div className="p-4">
+     <button className="flex-shrink-0 flex items-center justify-center w-8 h-8  rounded-full transition duration-300 border border-white">
+  <PlusIcon className="w-[10px] h-[10px] text-black" />
+</button>
+        </div>
       </div>
-      <div>
-        <p className="text-sm font-medium font-inter text-black">
-          RS {product.price ? product.price.toFixed(2) : "0.00"}
-        </p>
+      <div><div className="flex flex-col items-end pr-[30px]">
+  <p className="text-[14px] font-medium font-inter text-black">
+    RS {product.price ? product.price.toFixed(2) : "0.00"}
+  </p>
+</div>
+
       </div>
     </div>
  </Link>
@@ -262,8 +319,14 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
             onReset={handleReset}
             showButtons={false}
         >
-            <div className="px-2 py-2 space-y-6">
-                <div className="relative h-1 w-full bg-gray-200 rounded-full">
+            <div className=" space-y-6  overflow-y-auto px-3 py-3">
+                <div className="relative h-1 w-full rounded-full" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
+
+
+               
+
+
+
                     {/* Highlighted range */}
                     <div
                         className="absolute h-1 bg-color rounded-full top-0"
@@ -293,22 +356,21 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                         className="absolute top-0 w-full h-[3px] opacity-0 cursor-pointer z-30"
                     />
 
-                    {/* Min thumb */}
-    {/* Min thumb */}
-<div
-    className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
-    style={{ left: `calc(${(minPrice / MAX_PRICE) * 100}% - 8px)` }}
->
-    <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
-</div>
+                        {/* Min thumb */}
+                    <div
+                        className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
+                        style={{ left: `calc(${(minPrice / MAX_PRICE) * 100}% - 8px)` }}
+                    >
+                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
+                    </div>
 
-{/* Max thumb */}
-<div
-    className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
-    style={{ left: `calc(${(maxPrice / MAX_PRICE) * 100}% - 8px)` }}
->
-    <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
-</div>
+                    {/* Max thumb */}
+                    <div
+                        className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
+                        style={{ left: `calc(${(maxPrice / MAX_PRICE) * 100}% - 8px)` }}
+                    >
+                        <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
+                    </div>
 
                 </div>
 
@@ -316,14 +378,14 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                 <div className="flex justify-between text-center">
                     <div className="flex flex-col items-start">
                         <span className="font-inter text-[#989696] text-[14px] font-regular">Min</span>
-                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg text-black font-inter text-[14px] font-regular">
+                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-full text-black font-inter text-[14px] font-regular">
                             Rs {minPrice}
                         </div>
                     </div>
 
                     <div className="flex flex-col items-end">
                         <span className="font-inter text-[#989696] text-[14px] font-regular">Max</span>
-                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-lg font-inter text-black text-[14px] font-regular">
+                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-full font-inter text-black text-[14px] font-regular">
                             Rs {maxPrice}
                         </div>
                     </div>
@@ -372,14 +434,13 @@ const WomenCollections = () => {
     const [maxPrice, setMaxPrice] = useState(2500);
 
         // --- NEW SORT STATES ---
-   const [currentSortValue, setCurrentSortValue] = useState('popularity'); // 'popularity' is the value used by SortByPage
-    const [isSortSheetOpen, setIsSortSheetOpen] = useState(false); // State for the SortByPage modal
+   
 
-       const [isSortOpen, setIsSortOpen] = useState(false);
+    const [isSortOpen, setIsSortOpen] = useState(false);
     const [selectedSort, setSelectedSort] = useState('popularity'); // 'popularity' is a good default
-
-     const [isSortByOpen, setIsSortByOpen] = useState(false); 
-
+    const [currentSortValue, setCurrentSortValue] = useState('popularity'); // 'popularity' is the value used by SortByPage
+    const [isSortByOpen, setIsSortByOpen] = useState(false); 
+    const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
     
     // --- New Mobile State ---
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
@@ -500,12 +561,12 @@ const WomenCollections = () => {
 
     const isCategorySelected = selectedCategories.length > 0;
     const totalResults = 100;
-    const showingResults = mockProducts.length;
+     const showingResults = products.length;
 
    
-const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
+
     return (
-        <div className=" w-full container-1440 mx-auto py-2 px-3 lg:px-0 lg:py-10  ">
+        <div className=" w-full container-1440 mx-auto lg:mt-[80px] py-3 px-3">
                
 
             <MobileFilterModal
@@ -555,26 +616,30 @@ const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
             </p>
 
            
-                <div className="lg:hidden">
+                <div className="mb-3 lg:hidden">
    
                          {/* MobileFilterBar - અહીં onSortClick Pass થાય છે */}
-            <div className="mb-6 lg:hidden">
+        
                 <MobileFilterBar
                     sortBy={currentSortLabel} // ✅ અહીં currentSortLabel દેખાશે
                     filterCount={filterCount}
                     onSortClick={handleSortClick} // ✅ ક્લિક થતાં handleSortClick (setIsSortByOpen(true)) Call થશે
                     onFilterClick={handleFilterClick}
+                    isHidden={isSortByOpen}
                 />
-            </div>
             
-            {/* 💥 SortByPage કમ્પોનન્ટ 💥 */}
-            {/* 5. isSortByOpen true હોય તો જ આ કમ્પોનન્ટ render થશે */}
+            
+   
             <SortByPage
-                isOpen={isSortByOpen}
-                onClose={handleCloseSortBy}
-                selectedSort={currentSortValue} 
-                onSelectSort={handleSelectSort} 
-            />
+        isOpen={isSortByOpen}
+        onClose={() => setIsSortByOpen(false)} // ✅ closes modal and shows MobileFilterBar
+        selectedSort={currentSortValue}
+        onSelectSort={(value, label) => {
+            setCurrentSortValue(value);
+            setCurrentSortLabel(label);
+            setIsSortByOpen(false); // ✅ hide modal after selection
+        }}
+    />
             </div>
             <div className="flex flex-col lg:flex-row gap-[30px]">
             <DesktopFilters
@@ -611,9 +676,16 @@ const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
 
                 <main className="w-full lg:w-3/4">
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden lg:block text-sm text-gray-700">
-                            Showing <span className="font-semibold">{showingResults}</span> results from total <span className="font-semibold">{totalResults}</span> for "<span className="font-bold">Saree</span>"
-                        </div>
+                        <div className="hidden lg:block text-[16px] ">
+  <span className="text-[#989696] font-inter">Showing </span>
+  <span className="font-medium text-black font-inter">{showingResults}</span>
+  <span className="text-[#989696] font-inter"> results from total </span>
+  <span className="font-medium text-black font-inter">{totalResults}</span>
+  <span className="text-[#989696] font-inter"> for "</span>
+  <span className="font-medium text-black font-inter">Saree</span>
+  <span className="text-[#989696] font-inter">"</span>
+</div>
+
                         <div className=" sm:flex lg:hidden">
         
                         </div>
@@ -649,17 +721,9 @@ const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
                 </main>
 
             </div>
-                             {/* MOBILE BOTTOM BAR (FIXED) */}
-           
-            
-            {/* SORT BY BOTTOM SHEET MODAL (NEW ADDITION) */}
 
-<SortByPage 
-    isOpen={isSortOpen}
-    onClose={() => setIsSortOpen(false)}
-    selectedSort={selectedSort} // <-- This is the correct state variable
-    onSelectSort={handleSelectSort}
-/>
+
+
         </div>
     );
 };

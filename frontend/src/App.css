@@ -51,6 +51,7 @@
 
 :root {
   /* Theme Colors */
+   --primary-color: #F43297; /* your pink color */
   --theme-color: #F43297;         /* main theme color */
   --sec-theme-color-30: rgba(210, 175, 159, 0.3); /* 30% opacity */
   --theme-hover-color: #F43297;   /* hover color */
@@ -433,3 +434,8 @@
 }
 
 
+/* utility classes for easy usage */
+.bg-color { background-color: var(--primary-color); }
+.border-color { border-color: var(--primary-color); }
+.text-color { color: var(--primary-color); }
+.ring-color { ring-color: var(--primary-color); }
