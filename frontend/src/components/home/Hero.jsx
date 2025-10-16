@@ -91,7 +91,7 @@ export default function Hero() {
                                     className="lg:w-[160px] w-[72px] lg:h-[54px] h-[26px]  text-[12px]  lg:text-[22px] text-white font-regular rounded shadow-md duration-300 bg-color "
                                 
                                 >
-                                    Shop Now!
+                                    {slide.button_name}
                                 </button>
                                 </div>
                                 </div>

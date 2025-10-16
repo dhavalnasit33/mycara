@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Slider from "react-slick";
 
 // Local images
@@ -11,6 +11,8 @@ import LatestLookImg from "../../assets/Leatest Look cort collection.png";
 import StylishImg from "../../assets/Leatest look stylish.png";
 import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row.jsx';
+import { useDispatch } from "react-redux";
+import { fetchPages } from "../../features/pages/pagesThunk.js";
 const products = [
   {
     id: 1,
@@ -53,6 +55,12 @@ const PrevArrow = ({ onClick }) => (
 );
 
 const TrendingClothes = () => {
+    const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+
   const sliderRef = React.useRef(null);
 
 const sliderSettings = {
@@ -79,7 +87,7 @@ const sliderSettings = {
       {/* Heading */}
       <div className="relative flex justify-center items-center w-full">
                 <Row>
-                         <SectionHeading title="Trending Clothes" />
+                  <SectionHeading page="Home" sectionKey="content"  index={3} />
                 </Row>
       </div>
 
