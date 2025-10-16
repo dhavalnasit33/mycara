@@ -1,8 +1,4 @@
 import React, { useEffect } from 'react';
-import Image1 from '../../assets/Short top.png';
-import Image2 from '../../assets/dangali.png';
-import Image3 from '../../assets/vanpees.png';
-import Image4 from '../../assets/suit.png';
 import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row.jsx';
 
@@ -12,21 +8,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk.js';
 import Section from '../ui/Section.jsx';
 import { getImageUrl } from '../utils/helper.js';
-import { fetchPages } from '../../features/pages/pagesThunk.js';
 
 
 const Bestsellers = () => {
     const dispatch = useDispatch();
-  //pages 
-  const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
-
-  useEffect(() => {
-    dispatch(fetchPages());
-  }, [dispatch]);
-  const homepage = pages?.find((page) => page.slug === 'home');
-  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 7);
-
-  //products
 
   const { products = [], loading } = useSelector((state) => state.product);
 
@@ -47,7 +32,7 @@ const Bestsellers = () => {
       <Section className='mt-[25px] md:mt-[50px]'>
 
             <Row>
-              <SectionHeading title={sectionHeadingData?.title}/>
+              <SectionHeading page="Home" order={7}/>
             </Row>
 
         <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">

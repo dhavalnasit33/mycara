@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../features/products/productsThunk.js";
 import { getImageUrl } from "../utils/helper.js";
 import Section from "../ui/Section";
-import { fetchPages } from "../../features/pages/pagesThunk.js";
-
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
@@ -42,15 +40,6 @@ const TrendingClothes = () => {
     product.variants?.some((variant) => variant.is_trending)
   );
 
-  //pages
-  const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
-
-  useEffect(() => {
-    dispatch(fetchPages());
-  }, [dispatch]);
-  const homepage = pages?.find((page) => page.slug === 'home');
-  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 5);
-
 
     const trendingProductsLimited = trendingProducts.slice(0, 3);
   const sliderSettings = {
@@ -78,7 +67,7 @@ const TrendingClothes = () => {
   return (
     <Section className="mb-[25px] md:mb-[50px]">
         <Row>
-          <SectionHeading title={sectionHeadingData?.title}/>
+          <SectionHeading page="Home" order={5}/>
         </Row>
 
       <Row>

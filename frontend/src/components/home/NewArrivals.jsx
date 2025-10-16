@@ -17,7 +17,7 @@ const ImageCard = ({ name, img, textColor = "text-black" }) => {
   const lineTopMobile = 20;
   const textTopMobile = 25;
 
-  
+
 
 
   return (
@@ -95,7 +95,7 @@ const winterClothes = {
     <section className=" w-full py-[25px] md:py-[50px] ">
       <Row className="flex flex-col items-center">
         {/* <SectionHeading title="New Arrivals" /> */}
-        <SectionHeading page="Home" sectionKey="content"  index={1} />
+        <SectionHeading page="Home" order={3} />
       </Row>
 
    

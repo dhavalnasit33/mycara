@@ -115,15 +115,6 @@ const products = [
 // ✅ Main Component
 const FeaturedProducts = () => {
 
-    const dispatch = useDispatch();
-     const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
-
-  useEffect(() => {
-    dispatch(fetchPages());
-  }, [dispatch]);
-  const homepage = pages?.find((page) => page.slug === 'home');
-  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 4);
-
 
   const [mounted, setMounted] = useState(false);
   const [slidesToShow, setSlidesToShow] = useState(9);
@@ -180,7 +171,7 @@ const FeaturedProducts = () => {
         
         {/* Section Heading */}
         <Row>
-         <SectionHeading title={sectionHeadingData?.title}/>
+         <SectionHeading page="Home" order={4}/>
         </Row>
 
         {/* Category Slider (wrapped in Row) */}
