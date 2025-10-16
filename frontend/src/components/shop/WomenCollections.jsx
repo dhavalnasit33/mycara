@@ -9,7 +9,7 @@ import CheckedIcon from "../icons/checked"; // your SVG component
 import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
 import MobileFilterBar from './MobileFilterBar';
 
-import ProductGrid, { products } from "./ProductGrid";
+import ProductGrid from "./ProductGrid";
 
 import SortByPage from './SortByPage'; 
 
@@ -249,49 +249,49 @@ const CollapsibleFilter = ({
     );
 };
 
-<<<<<<< HEAD
-// ---------- Product Card ----------
-const ProductCard = ({ product }) => (
- <Link
-    to="/products"
-    className="block relative group overflow-hidden bg-white transition-transform duration-300 "
-  >
-      <div className="w-full h-auto overflow-hidden">
-        <img
-          src={product.imageSrc}
-          alt={product.name}
-          className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
-        />
-      </div>
-    <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
-                    bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                    flex flex-col justify-between">
-      <div className="flex justify-between items-start">
-        <div className="p-4">
-          <h3 className="text-[14px]  font-medium font-inter tracking-wider text-black uppercase leading-[23px]">
-            {product.name}
-          </h3>
-        </div>
-         <div className="p-4">
-     <button className="flex-shrink-0 flex items-center justify-center w-8 h-8  rounded-full transition duration-300 border border-white">
-  <PlusIcon className="w-[10px] h-[10px] text-black" />
-</button>
-        </div>
-      </div>
-      <div><div className="flex flex-col items-end pr-[30px]">
-  <p className="text-[14px] font-medium font-inter text-black">
-    RS {product.price ? product.price.toFixed(2) : "0.00"}
-  </p>
-</div>
+// <<<<<<< HEAD
+// // ---------- Product Card ----------
+// const ProductCard = ({ product }) => (
+//  <Link
+//     to="/products"
+//     className="block relative group overflow-hidden bg-white transition-transform duration-300 "
+//   >
+//       <div className="w-full h-auto overflow-hidden">
+//         <img
+//           src={product.imageSrc}
+//           alt={product.name}
+//           className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
+//         />
+//       </div>
+//     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
+//                     w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
+//                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+//                     flex flex-col justify-between">
+//       <div className="flex justify-between items-start">
+//         <div className="p-4">
+//           <h3 className="text-[14px]  font-medium font-inter tracking-wider text-black uppercase leading-[23px]">
+//             {product.name}
+//           </h3>
+//         </div>
+//          <div className="p-4">
+//      <button className="flex-shrink-0 flex items-center justify-center w-8 h-8  rounded-full transition duration-300 border border-white">
+//   <PlusIcon className="w-[10px] h-[10px] text-black" />
+// </button>
+//         </div>
+//       </div>
+//       <div><div className="flex flex-col items-end pr-[30px]">
+//   <p className="text-[14px] font-medium font-inter text-black">
+//     RS {product.price ? product.price.toFixed(2) : "0.00"}
+//   </p>
+// </div>
 
-      </div>
-    </div>
- </Link>
-);
+//       </div>
+//     </div>
+//  </Link>
+// );
 
-=======
->>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
+// =======
+// >>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
 
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
@@ -422,7 +422,7 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 
 
 // --------------------- Main Component ---------------------
-const WomenCollections = () => {
+const WomenCollections = ({products}) => {
     // Filter States
 
     const [selectedCategories, setSelectedCategories] = useState([]);
