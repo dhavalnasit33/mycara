@@ -1,5 +1,4 @@
 import ProductCard from '../productcard/ProductCard';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk';
 import { useEffect } from 'react';
@@ -29,11 +28,7 @@ const ProductGrid  = () => {
                 </div>
 
                 {/* --- Load More Button Section --- */}
-{/* <<<<<<< HEAD
-                <div className="flex justify-center lg:mt-[50px]  "> */}
-{/* ======= */}
                 <div className="flex justify-center mt-10">
-{/* >>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa */}
                     <button
                         className="text-[18px] theme-border font-inter text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
                         style={{
@@ -48,13 +43,4 @@ const ProductGrid  = () => {
 };
 
 export default ProductGrid;
-
-
-
-
-
-
-
-
-
 

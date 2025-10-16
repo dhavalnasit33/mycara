@@ -1,14 +1,14 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 import { Link } from 'react-router-dom';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
 import CheckedIcon from "../icons/checked"; // your SVG component
 import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
 import MobileFilterBar from './MobileFilterBar';
-
+import ProductCard from '../productcard/ProductCard';
 import ProductGrid from "./ProductGrid";
 
 import SortByPage from './SortByPage'; 
@@ -20,9 +20,6 @@ import DesktopFilters from './DesktopFilters';
 import OriginalSortByIcon from "../icons/SortByIcon";
 
 import { mockProducts} from './shopData';
-import TrendingCard from './TrandingCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunk';
 
 
 export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter };
@@ -249,6 +246,57 @@ const CollapsibleFilter = ({
     );
 };
 
+<<<<<<< HEAD
+=======
+
+// <<<<<<< HEAD
+// // ---------- Product Card ----------
+// const ProductCard = ({ product }) => (
+//  <Link
+//     to="/products"
+//     className="block relative group overflow-hidden bg-white transition-transform duration-300 "
+//   >
+//       <div className="w-full h-auto overflow-hidden">
+//         <img
+//           src={product.imageSrc}
+//           alt={product.name}
+//           className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
+//         />
+//       </div>
+//     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
+//                     w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
+//                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
+//                     flex flex-col justify-between">
+//       <div className="flex justify-between items-start">
+//         <div className="p-4">
+//           <h3 className="text-[14px]  font-medium font-inter tracking-wider text-black uppercase leading-[23px]">
+//             {product.name}
+//           </h3>
+//         </div>
+//          <div className="p-4">
+//      <button className="flex-shrink-0 flex items-center justify-center w-8 h-8  rounded-full transition duration-300 border border-white">
+//   <PlusIcon className="w-[10px] h-[10px] text-black" />
+// </button>
+//         </div>
+//       </div>
+//       <div><div className="flex flex-col items-end pr-[30px]">
+//   <p className="text-[14px] font-medium font-inter text-black">
+//     RS {product.price ? product.price.toFixed(2) : "0.00"}
+//   </p>
+// </div>
+
+
+//       </div>
+//     </div>
+//  </Link>
+// );
+
+
+
+// =======
+// >>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
+>>>>>>> 77f6d81b034c0ad91ddcc8651a2054711d0ba408
+
 
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
@@ -381,7 +429,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
-
     const [selectedCategories, setSelectedCategories] = useState([]);
 
 
@@ -410,6 +457,10 @@ const WomenCollections = () => {
     // --- New Mobile State ---
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 77f6d81b034c0ad91ddcc8651a2054711d0ba408
     const calculateFilterCount = () => {
         let count = selectedCategories.length + selectedSizes.length + selectedColors.length + selectedBrands.length +
             selectedTypes.length + selectedFabrics.length + selectedDiscounts.length + selectedLabels.length;
@@ -675,7 +726,7 @@ const WomenCollections = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
-                            <TrendingCard key={product.id} product={product} />
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                     
