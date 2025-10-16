@@ -1,34 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { FaTwitter } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
-
-import heroImg1 from '../../assets/hero.png';
-import heroImg2 from '../../assets/hero2.png';
-import heroImg3 from '../../assets/hero3.png';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPages } from '../../features/pages/pagesThunk';
+import { getImageUrl } from '../utils/helper';
 
 export default function Hero() {
-    // Array to hold the data for each slider item
-    const heroSlides = [
-        {
-            image: heroImg1,
-            title: "Trandy Fashion <br /> Cloths",
-            subtitle: "Get Up To 30% Off New Arrivals"
-        },
-        {
-            image: heroImg2,
-            title: "Summer Collection <br /> 2024",
-            subtitle: "Discover Your New Style"
-        },
-        {
-            image: heroImg3,
-            title: "Elegant & Casual <br /> Wear",
-            subtitle: "Shop the Latest Trends"
-        }
-    ];
+    const dispatch = useDispatch();
+  const { pages, loading } = useSelector((state) => state.pages);
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+
+  if (loading) return <p>Loading...</p>;
+  
+  const homePage = pages?.find((page) => page.slug === "home");
+  const heroSection = homePage?.sections?.find((sec) => sec.type === "hero_slider");
+  const heroSlides = heroSection?.slides || [];
+
 
     const settings = {
         dots: true,
@@ -89,7 +83,7 @@ export default function Hero() {
                                 <div className="flex flex-col gap-[20px] lg:gap-[40px]">
 
                                 <span className="text-black text-[8px] md:text-[8px] lg:text-[24px] leading-[19px] relative">
-                                    {slide.subtitle}
+                                    {slide.description}
                                     <span className="absolute left-0 bottom-0 sm:translate-y-[0px] md:translate-y-[0px] lg:translate-y-[10px]  w-[56px] sm:w-[56px] md:w-[90px] lg:w-[225px] h-[0.5px] bg-black"></span>
                                 </span>
 
@@ -104,7 +98,7 @@ export default function Hero() {
 
                                <div className="flex-1 flex justify-center mt-0">
                                     <img
-                                        src={slide.image}
+                                         src={getImageUrl(slide.background_image_url)}
                                         alt="Fashion"
                                         className="w-[132.02px] h-[170.18px] sm:w-[132.02px] sm:h-[170.18px] md:w-[132.02px] md:h-[170.18px] lg:w-[487.38px] lg:h-[607px] object-contain"
                                     />
@@ -118,76 +112,3 @@ export default function Hero() {
         </div>
     );
 };
-
-// // export default Hero;
-// import React from "react";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import {  Pagination } from "swiper/modules";
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import Row from "./ui/Row";
-// import mycra1 from "../assets/mycra1.png";
-// import mycra2 from "../assets/mycra2.png";
-// import mycra3 from "../assets/mycra3.png";
-// import Button from "./ui/Button";
-
-
-
-
-// const slides = [
-//   {
-//     title: "TRANDY FASHION CLOTHES",
-//     subtitle: "Get 30% Off Trandy Fashion Clothes",
-//     cta: "Shop Now!",
-//     background: mycra1,
-//   },
-//   {
-//     title: "NEW SEASON ARRIVALS",
-//     subtitle: "Discover the latest trends",
-//     cta: "Explore",
-//      background: mycra2,
-//   },
-//   {
-//     title: "ELEGANT STYLE FOR YOU",
-//     subtitle: "Fresh looks, everyday comfort",
-//     cta: "Shop Collection",
-//      background:mycra3,
-//   }
-// ];
-
-// export default function Hero() {
-
-//   return (
-//     <Swiper
-//         modules={[Pagination]}
-//         spaceBetween={0}
-//         slidesPerView={1}
-//         loop
-//         pagination={{ clickable: true }}
-//         className="mySwiper"
-//     >
-//         {slides.map((s, i) => (
-//         <SwiperSlide key={i}>
-//             <div
-//             className="md:h-[750px] aspect-[16/9] sm:aspect-auto sm:h-auto w-full bg-cover bg-center bg-no-repeat flex items-center "
-//             style={{ backgroundImage: `url(${s.background})` }}
-//             >
-//             <Row>
-//                 <div className="flex flex-col md:flex-row items-center gap-8 ">
-//                 <div className="w-full md:w-1/2 sm:w-full text-left sm:break-words">
-//                     <h1 className="hero-title text-5xl text-7xl max-md:text-4xl  font-bold italic leading-tight tracking-tight uppercase leading-[100%]" >
-//                     {s.title.split("\n").map((t, idx) => (<div key={idx}>{t}</div>))}
-//                     </h1>
-//                     <p className="mt-10 text-gray-700 text-lg md:text-2xl max-w-lg">{s.subtitle}</p>
-//                     <Button className="mt-12 inline-block bg-pink-600 text-white font-semibold px-6 py-3 rounded-lg hover:scale-105 transform transition" aria-label={s.cta}>
-//                     {s.cta}
-//                     </Button>
-//                 </div>
-//                 </div>
-//             </Row>
-//             </div>
-//         </SwiperSlide>
-//         ))}
-//     </Swiper>
-//   );
-// }

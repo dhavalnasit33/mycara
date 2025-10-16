@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import Row from "../ui/Row";
 import earringsImg from '../../assets/earrings.png';
 import shoesImg from '../../assets/shoes.png';
 import watchImg from '../../assets/watch.png';
 import winterClothesImg from '../../assets/winter-clothes.png';
+import { useDispatch } from "react-redux";
+import { fetchPages } from "../../features/pages/pagesThunk";
 
 
 
@@ -14,6 +16,14 @@ const ImageCard = ({ name, img, textColor = "text-black" }) => {
 
   const lineTopMobile = 20;
   const textTopMobile = 25;
+
+  
+    const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+
 
   return (
     <div className="relative overflow-hidden cursor-pointer group h-full w-full">
@@ -89,7 +99,8 @@ const winterClothes = {
   return (
     <section className=" w-full py-[25px] md:py-[50px] ">
       <Row className="flex flex-col items-center">
-        <SectionHeading title="New Arrivals" />
+        {/* <SectionHeading title="New Arrivals" /> */}
+        <SectionHeading page="Home" sectionKey="content"  index={1} />
       </Row>
 
    

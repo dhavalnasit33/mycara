@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 
 import Hero from "../components/home/Hero";
@@ -15,16 +15,30 @@ import Features from '../components/home/Features.jsx';
 import Row from "../components/ui/Row.jsx";
 import SectionHeading from "../components/ui/SectionHeading.jsx";
 import Section from "../components/ui/Section.jsx";
+import { useDispatch } from "react-redux";
+import { fetchPages } from "../features/pages/pagesThunk.js";
+
+
 
 
 const Home = () => {
+
+    const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+
+
   return (
     <div>
       <Hero />
       
       <Section>
         <Row className="pt-[25px] md:pt-[50px]">
-            <SectionHeading title=" Shop By Categories" />
+            {/* <SectionHeading title=" Shop By Categories" /> */}
+           <SectionHeading page="Home" sectionKey="content" />
+
           </Row>
           <Row>
         <CategoriesSection />
