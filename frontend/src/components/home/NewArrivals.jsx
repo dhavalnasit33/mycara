@@ -18,11 +18,6 @@ const ImageCard = ({ name, img, textColor = "text-black" }) => {
   const textTopMobile = 25;
 
   
-    const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchPages());
-  }, [dispatch]);
 
 
   return (
