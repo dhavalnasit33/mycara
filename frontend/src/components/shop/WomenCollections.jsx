@@ -422,7 +422,7 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 
 
 // --------------------- Main Component ---------------------
-const WomenCollections = ({products}) => {
+const WomenCollections = () => {
     // Filter States
 
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -439,6 +439,7 @@ const WomenCollections = ({products}) => {
 
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
+    const [products, setProducts] = useState([]); 
 
         // --- NEW SORT STATES ---
    
