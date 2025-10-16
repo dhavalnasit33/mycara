@@ -1,7 +1,7 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 import { Link } from 'react-router-dom';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
@@ -20,9 +20,6 @@ import DesktopFilters from './DesktopFilters';
 import OriginalSortByIcon from "../icons/SortByIcon";
 
 import { mockProducts} from './shopData';
-import TrendingCard from './TrandingCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../../features/products/productsThunk';
 
 
 export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter };
@@ -249,7 +246,6 @@ const CollapsibleFilter = ({
     );
 };
 
-<<<<<<< HEAD
 // ---------- Product Card ----------
 const ProductCard = ({ product }) => (
  <Link
@@ -290,8 +286,6 @@ const ProductCard = ({ product }) => (
  </Link>
 );
 
-=======
->>>>>>> 05356209fcdb09ac6cf464f3c1ddc506b82b0aaa
 
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
@@ -424,7 +418,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
-
     const [selectedCategories, setSelectedCategories] = useState([]);
 
 
@@ -451,14 +444,6 @@ const WomenCollections = () => {
     
     // --- New Mobile State ---
     const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-
-//      const dispatch = useDispatch();
-//   const { items: products = [], loading = false, error = null } = useSelector(
-//   (state) => state.products || {}
-// );
-//   useEffect(() => {
-//     dispatch(fetchProducts());
-//   }, [dispatch]);
 
 
     const calculateFilterCount = () => {
@@ -726,7 +711,7 @@ const WomenCollections = () => {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
                         {mockProducts.map(product => (
-                            <TrendingCard key={product.id} product={product} />
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
                     
