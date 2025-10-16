@@ -12,22 +12,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk.js';
 import Section from '../ui/Section.jsx';
 import { getImageUrl } from '../utils/helper.js';
+import { fetchPages } from '../../features/pages/pagesThunk.js';
 
 
 const Bestsellers = () => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
+  //pages 
+  const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+  const homepage = pages?.find((page) => page.slug === 'home');
+  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 7);
+
+  //products
+
   const { products = [], loading } = useSelector((state) => state.product);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
-  // ✅ Filter only best-seller products
   const sellersProducts = products.filter((product) =>
     product.variants?.some((variant) => variant.is_best_seller)
   );
 
-  // ✅ Limit to 3 products only
   const bestSellersLimited = sellersProducts.slice(0, 4);
 
   if (loading) return <p>Loading...</p>;
@@ -37,7 +47,7 @@ const Bestsellers = () => {
       <Section className='mt-[25px] md:mt-[50px]'>
 
             <Row>
-              <SectionHeading page="Home" sectionKey="content"  index={5}/>
+              <SectionHeading title={sectionHeadingData?.title}/>
             </Row>
 
         <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">

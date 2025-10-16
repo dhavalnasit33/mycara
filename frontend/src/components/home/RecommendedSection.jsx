@@ -7,6 +7,8 @@ import mojariImage from '../../assets/Mojari.png';
 import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row.jsx';
 import Section from '../ui/Section.jsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchPages } from '../../features/pages/pagesThunk.js';
 
 
 const recommendedItems = [
@@ -55,11 +57,24 @@ const RecommendedSection = () => {
 
   const displayItems = getDisplayItems();
 
+
+//pages
+const dispatch = useDispatch();
+   const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
+
+  useEffect(() => {
+    dispatch(fetchPages());
+  }, [dispatch]);
+  const homepage = pages?.find((page) => page.slug === 'home');
+  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 8);
+
+  
+
   return (
     <div className=" ">
       <Section className="w-full py-[25px] md:py-[50px] ">
         <Row>
-          <SectionHeading page="Home" sectionKey="content"  index={6}/>
+         <SectionHeading title={sectionHeadingData?.title}/>
         </Row>
 
       <Row className="relative !max-w-[1179px] flex items-center justify-center ">

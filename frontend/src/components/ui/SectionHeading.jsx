@@ -2,27 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import FlowerIcon from "../icons/FlowerIcon";
 
-export default function SectionHeading({ page, sectionKey, index = 0 }) {
-  const { data } = useSelector((state) => state.pages || {});
-
-  const currentPage = data?.find(
-    (p) => p.page_name?.toLowerCase().trim() === page?.toLowerCase().trim()
-  );
-
-  const matchingSections = currentPage?.sections?.filter(
-    (section) =>
-      section.type?.toLowerCase().trim() === sectionKey?.toLowerCase().trim()
-  );
-
-  const currentSection = matchingSections?.[index];
-  const title = currentSection?.title || "Default Title";
-
-  if (!currentSection) {
-    console.warn(
-      `⚠️ Section not found for page: "${page}" sectionKey: "${sectionKey}" (index: ${index})`
-    );
-  }
-
+export default function SectionHeading({title }) {
   return (
     <div className="relative flex justify-center items-center w-full mb-[50px] md:mb-[90px]">
       <div className="w-[18px] md:w-[50px] border-t border-black"></div>

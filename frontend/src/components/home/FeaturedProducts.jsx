@@ -28,7 +28,7 @@ import sareeImg from "../../assets/Women floral Cotton jaipuri saree.png";
 import cotsetImg from "../../assets/Wommen ordenaree cotset.png";
 import fanceytshirtImg from "../../assets/Girls full sleave fancy t shirt.png";
 import banarasiImg from "../../assets/Self design banarasi silk bland.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../../features/pages/pagesThunk";
 
 // ✅ Category list
@@ -116,10 +116,13 @@ const products = [
 const FeaturedProducts = () => {
 
     const dispatch = useDispatch();
+     const { pages, loading: pagesLoading, error } = useSelector((state) => state.pages);
 
   useEffect(() => {
     dispatch(fetchPages());
   }, [dispatch]);
+  const homepage = pages?.find((page) => page.slug === 'home');
+  const sectionHeadingData = homepage?.sections?.find((section) => section.order === 4);
 
 
   const [mounted, setMounted] = useState(false);
@@ -177,7 +180,7 @@ const FeaturedProducts = () => {
         
         {/* Section Heading */}
         <Row>
-          <SectionHeading page="Home" sectionKey="content"  index={2} />
+         <SectionHeading title={sectionHeadingData?.title}/>
         </Row>
 
         {/* Category Slider (wrapped in Row) */}
