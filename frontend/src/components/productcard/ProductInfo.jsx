@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Handbag } from "lucide-react";
 import Button from "../ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductById } from "../../features/products/productsThunk";
 
 
 export default function ProductInfo() {
@@ -14,11 +16,27 @@ export default function ProductInfo() {
   { name: "2XL", stock: 3 },
 ];
 
+  const { id } = useParams();            
+  const dispatch = useDispatch();          
+
+ const { product, loading } = useSelector((state) => state.product);
+
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductById(id));
+    }
+  }, [id, dispatch]);
+
+  if (loading) return <p>Loading...</p>;
+const productData = product || {};
+const brandName = productData.variants?.[0]?.brand?.[0]?.name;
+
   return (
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
-      <h1 className="text-[24px] uppercase">ORANGE scissor</h1>
-      <p className="text-p text-light pb-[12px]">Floral plain Ethnic Anarkali Gown</p>
+      <h1 className="text-[24px] uppercase">  {brandName || "No Brand"}</h1>
+      <p className="text-p text-light pb-[12px]">{productData?.name || "No Product"}</p>
 
       {/* Rating */}
       <div className="flex items-center gap-[15px] text-14 sec-text-color mb-[25px]">

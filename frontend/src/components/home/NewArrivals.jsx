@@ -94,12 +94,8 @@ const winterClothes = {
   return (
     <section className=" w-full py-[25px] md:py-[50px] ">
       <Row className="flex flex-col items-center">
-        {/* <SectionHeading title="New Arrivals" /> */}
         <SectionHeading page="Home" order={3} />
       </Row>
-
-   
-      
           <div className="grid gap-2 justify-center sm:grid-cols-1 md:grid-cols-1 lg:flex sm:px-4 md:px-4  ">
             
             <div className={earrings.classes}>
@@ -120,9 +116,6 @@ const winterClothes = {
             </div>
 
           </div>
-        
-
-
     </section>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import HeartIcon from "../icons/HeartIcon";
 import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
+import { Link } from "react-router-dom";
 
 
 export default function ProductCard({ product }) {
@@ -18,6 +19,7 @@ export default function ProductCard({ product }) {
   const hasMultipleImages = images.length > 1;
   
   return (
+      <Link to={`/products/${product._id}`}>
     <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
       {/* Product Image */}
       <div className="relative mb-[10px]">
@@ -119,6 +121,7 @@ export default function ProductCard({ product }) {
         )}
       </div>
     </div>
+    </Link>
   );
 }
 

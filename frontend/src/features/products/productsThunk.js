@@ -19,3 +19,18 @@ export const fetchProducts = createAsyncThunk(
     }
   }
 );
+
+export const fetchProductById = createAsyncThunk(
+  "products/fetchProductById",
+  async (id, { rejectWithValue }) => {
+    try {
+      const res = await api.get(`${ROUTES.products.getAll}/${id}`);
+      if (res.data.success) {
+        return res.data.data.product; // single product
+      }
+      return rejectWithValue(res.data.message || "Failed to fetch product");
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Server Error");
+    }
+  }
+);
