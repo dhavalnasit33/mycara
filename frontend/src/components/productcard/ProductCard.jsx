@@ -6,7 +6,16 @@ import { Link } from "react-router-dom";
 
 
 export default function ProductCard({ product }) {
+  const originalPrice = product.price; // e.g., 1000
+let finalPrice = originalPrice;
 
+if (product.discount_id) {
+  if (product.discount_id.type === "percentage") {
+    finalPrice = originalPrice - (originalPrice * product.discount_id.value) / 100;
+  } else {
+    finalPrice = originalPrice - product.discount_id.value;
+  }
+}
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = Array.isArray(product.images) && product.images.length
@@ -79,13 +88,15 @@ export default function ProductCard({ product }) {
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
             <p>₹{product.variants?.[0]?.price}</p>
-            
-            {product.variants?.[0]?.oldPrice && (
-              <p className="line-through text-[#BCBCBC] text-14">
-                ₹{product.variants[0].oldPrice}
+            <p className="text-theme">
+                {product.discount_id
+                  ? product.discount_id.type === "percentage"
+                    ? `${product.discount_id.value}% OFF`
+                    : `₹${product.discount_id.value} OFF`
+                  : null
+                }
               </p>
-            )}
-            <p className="text-theme">{product.variants?.[0]?.discount_id}</p>
+
           </div>
 
 

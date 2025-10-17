@@ -27,7 +27,7 @@ const productsSlice = createSlice({
         state.error = action.payload;
       })
 
-        .addCase(fetchProductById.pending, (state) => {
+      .addCase(fetchProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
@@ -38,7 +38,7 @@ const productsSlice = createSlice({
       .addCase(fetchProductById.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
   },
 });
 
