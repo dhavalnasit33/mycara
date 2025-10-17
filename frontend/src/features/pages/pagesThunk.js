@@ -1,3 +1,4 @@
+// D:\mycara\frontend\src\features\pages\pagesThunk.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../../services/api";
 import { ROUTES } from "../../services/routes";

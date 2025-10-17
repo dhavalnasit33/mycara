@@ -30,6 +30,7 @@
 
 // export default pagesSlice.reducer;
 
+// D:\mycara\frontend\src\features\pages\pagesSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchPages } from "./pagesThunk";
 

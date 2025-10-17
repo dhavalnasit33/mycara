@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\services\routes.js
+
 export const ROUTES = {
   auth: {
     login: "/auth/login",
@@ -16,5 +18,8 @@ export const ROUTES = {
   },
   pages:{
     getAll: "/pages",
+  },
+  heroBanners: {
+    getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
   }
 }

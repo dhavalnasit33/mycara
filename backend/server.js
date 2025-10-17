@@ -29,9 +29,11 @@ const sizeRoutes = require("./src/routes/sizeRoutes");
 const uploadsRoutes = require("./src/routes/upload");
 const storeRoutes = require("./src/routes/storeRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
-
+const heroBannerRoutes = require('./src/routes/heroBannerRoutes');
+const mongoose = require("mongoose");
 dotenv.config();
 connectDB();
+
 
 const app = express();
 
@@ -81,7 +83,14 @@ app.use("/api/sizes", sizeRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
+app.use("/api/hero-banners", heroBannerRoutes);
+
 app.use(errorHandler);
 
+// MongoDB connection
+mongoose.connect("mongodb://localhost:27017/mycra")
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.log(err));
+  
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
