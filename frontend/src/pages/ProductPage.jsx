@@ -3,9 +3,6 @@ import React from "react";
 import ProductGallery from "../components/productcard/ProductGallery";
 import ProductInfo from "../components/productcard/ProductInfo";
 import ProductTabs from "../components/productcard/ProductTabs";
-// import img1 from "../assets/gallary1.png";
-// import img2 from "../assets/gallary2.png";
-// import img3 from "../assets/gallary3.png";
 import Section from "../components/ui/Section";
 import Row from "../components/ui/Row";
 import SectionHeading from "../components/ui/SectionHeading";
@@ -14,8 +11,6 @@ import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
 import Breadcrumb from "../components/ui/Breadcrumb";
 
 export default function Product() {
-  // const images = [img1, img2, img3];
-
 
   return (
     <>

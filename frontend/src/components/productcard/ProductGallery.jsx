@@ -9,7 +9,6 @@ export default function ProductGallery() {
   const product = {
   colors: ["#6267D9", "#406144", "#DC0A0A", "#3DAFD3"], // example colors
 };
-
  
   const [selectedImage, setSelectedImage] = useState(images[0]);
 
