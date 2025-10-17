@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Handbag } from "lucide-react";
 import Button from "../ui/Button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductById } from "../../features/products/productsThunk";
 
 
 export default function ProductInfo() {
@@ -13,6 +15,20 @@ export default function ProductInfo() {
   { name: "XL", stock: 0 },
   { name: "2XL", stock: 3 },
 ];
+
+  // const { id } = useParams();
+  // const dispatch = useDispatch();
+  // const { product, loading, error } = useSelector((state) => state.product);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     dispatch(fetchProductById(id));
+  //   }
+  // }, [id, dispatch]);
+
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
+  // if (!product) return <p>No product found</p>;
 
   return (
     <>

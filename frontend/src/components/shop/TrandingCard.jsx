@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-const TrendingCard = ({ product }) => (
+export default function TrendingCard ({ product }){
+  return(
  <Link
     to="/products"
     className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
@@ -34,5 +35,4 @@ const TrendingCard = ({ product }) => (
     </div>
  </Link>
 );
-
-export default TrendingCard;
+}

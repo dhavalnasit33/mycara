@@ -28,6 +28,8 @@ import sareeImg from "../../assets/Women floral Cotton jaipuri saree.png";
 import cotsetImg from "../../assets/Wommen ordenaree cotset.png";
 import fanceytshirtImg from "../../assets/Girls full sleave fancy t shirt.png";
 import banarasiImg from "../../assets/Self design banarasi silk bland.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPages } from "../../features/pages/pagesThunk";
 
 // ✅ Category list
 const categories = [
@@ -112,6 +114,8 @@ const products = [
 
 // ✅ Main Component
 const FeaturedProducts = () => {
+
+
   const [mounted, setMounted] = useState(false);
   const [slidesToShow, setSlidesToShow] = useState(9);
   const [showArrows, setShowArrows] = useState(true);
@@ -167,7 +171,7 @@ const FeaturedProducts = () => {
         
         {/* Section Heading */}
         <Row>
-          <SectionHeading title="Featured Products" />
+         <SectionHeading page="Home" order={4}/>
         </Row>
 
         {/* Category Slider (wrapped in Row) */}

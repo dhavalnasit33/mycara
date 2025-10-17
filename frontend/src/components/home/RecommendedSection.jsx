@@ -6,6 +6,7 @@ import chaniyaCholiImage from '../../assets/Chaniya Choli.png';
 import mojariImage from '../../assets/Mojari.png';
 import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row.jsx';
+import Section from '../ui/Section.jsx';
 
 
 const recommendedItems = [
@@ -54,21 +55,15 @@ const RecommendedSection = () => {
 
   const displayItems = getDisplayItems();
 
+
   return (
     <div className=" ">
-       <section className="w-full py-[25px] md:py-[50px] ">
-      {/* Title Section */}
-     <div className="relative flex justify-center items-center w-full">
-               <div className="relative flex justify-center items-center w-full">
-                 <Row>
-                   <SectionHeading title="Recommended For You" />
-                 </Row>
-               </div>
-             </div>
+      <Section className="w-full py-[25px] md:py-[50px] ">
+        <Row>
+         <SectionHeading page="Home" order={8}/>
+        </Row>
 
-      {/* Slider Container */}
       <Row className="relative !max-w-[1179px] flex items-center justify-center ">
-        {/* Previous Button */}
         <button
           onClick={goToPrevious}
           className="absolute left-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
@@ -99,7 +94,7 @@ const RecommendedSection = () => {
           &gt;
         </button>
       </Row>
-      </section>
+      </Section>
     </div>
   );
 };
