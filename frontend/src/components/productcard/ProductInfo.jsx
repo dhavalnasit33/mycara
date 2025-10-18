@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Handbag } from "lucide-react";
+import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
 import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
@@ -36,7 +36,7 @@ export default function ProductInfo() {
 
       {/* Rating */}
       <div className="flex items-center gap-[15px] text-14 sec-text-color mb-[25px]">
-        <span className="border border-[#CECDCD] text-black px-2 py-[3px] rounded-[2px] font-18 font-medium">4.2 ★</span>
+        <span className="flex items-center gap-[5px] border border-[#CECDCD] text-black px-2 py-[3px] rounded-[2px] font-18 font-medium">4.2 <Star size={14}/></span>
         <span >Based on 30 Ratings</span>
       </div>
 
