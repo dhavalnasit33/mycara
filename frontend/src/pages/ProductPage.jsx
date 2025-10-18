@@ -21,7 +21,7 @@ export default function Product({product}) {
     <Row className=" grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
       <ProductGallery  product={product}/>
       <div>
-        <ProductInfo />
+        <ProductInfo product={product} />
         <ProductTabs />
       </div>
     </Row>

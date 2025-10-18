@@ -27,18 +27,18 @@ const productsSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(fetchProductById.pending, (state) => {
+     .addCase(fetchProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.loading = false;
-        state.product = action.payload;
+        state.product = action.payload; // ✅ the fetched object
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
-      })
+        state.error = action.payload || "Failed to fetch product";
+      });
   },
 });
 

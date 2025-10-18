@@ -3,8 +3,6 @@ import { Handbag } from "lucide-react";
 import Button from "../ui/Button";
 import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProductById } from "../../features/products/productsThunk";
 
 
 export default function ProductInfo() {

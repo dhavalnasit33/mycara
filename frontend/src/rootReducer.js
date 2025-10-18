@@ -6,7 +6,7 @@ import pagesReducer from "./features/pages/pagesSlice";
 
 export const rootReducer = {
     navbar: navbarReducer,
-    product: productsReducer,
+    products: productsReducer,
     categories: categoriesReducer,
     pages: pagesReducer,
 };

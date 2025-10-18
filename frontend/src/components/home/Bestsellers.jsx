@@ -13,7 +13,7 @@ import { getImageUrl } from '../utils/helper.js';
 const Bestsellers = () => {
     const dispatch = useDispatch();
 
-  const { products = [], loading } = useSelector((state) => state.product);
+  const { products = [], loading } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());

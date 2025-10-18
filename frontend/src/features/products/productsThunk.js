@@ -26,7 +26,7 @@ export const fetchProductById = createAsyncThunk(
     try {
       const res = await api.get(`${ROUTES.products.getAll}/${id}`);
       if (res.data.success) {
-        return res.data.data; // single product
+        return res.data.data.product; 
       }
       return rejectWithValue(res.data.message || "Failed to fetch product");
     } catch (err) {
@@ -34,3 +34,6 @@ export const fetchProductById = createAsyncThunk(
     }
   }
 );
+
+
+

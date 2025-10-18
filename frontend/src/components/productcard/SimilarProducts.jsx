@@ -41,7 +41,7 @@ export default function SimilarProducts() {
   }, []);
 
 
-  const { products = [], loading } = useSelector((state) => state.product);
+  const { products = [], loading } = useSelector((state) => state.products);
 
   const dispatch = useDispatch();
   useEffect(() => {

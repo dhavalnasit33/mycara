@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 const ProductGrid  = () => {
 
-    const { products = [], loading } = useSelector((state) => state.product);
+    const { products = [], loading } = useSelector((state) => state.products);
 
     const dispatch = useDispatch();
     useEffect(() => {

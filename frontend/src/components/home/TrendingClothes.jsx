@@ -29,7 +29,7 @@ const PrevArrow = ({ onClick }) => (
 
 const TrendingClothes = () => {
   const dispatch = useDispatch();
-  const { products = [], loading } = useSelector((state) => state.product);
+  const { products = [], loading } = useSelector((state) => state.products);
   const sliderRef = useRef(null);
 
   useEffect(() => {
