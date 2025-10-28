@@ -20,13 +20,14 @@ const Bestsellers = () => {
   }, [dispatch]);
 
   const sellersProducts = products.filter((product) =>
-    product.variants?.some((variant) => variant.is_featured)
+    product.variants?.some((variant) => variant.is_best_seller)
   );
 
   const bestSellersLimited = sellersProducts.slice(0, 4);
 
   if (loading) return <p>Loading...</p>;
   if (!bestSellersLimited.length) return <p>No best sellers found.</p>;
+
 
   return (
       <Section className='mt-[25px] md:mt-[50px]'>
@@ -65,7 +66,7 @@ const SellerCard = ({ product }) => {
     <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
   <div className="w-[95%] h-[95%] bg-black bg-opacity-30 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[5px] pointer-events-auto overflow-hidden cursor-pointer">
 
-    <div className="bg-white px-4 py-2 lg:px-4 lg:py-2 rounded-[5px] text-center">
+    <div className="bg-white px-4 py-2 lg:px-4 lg:py-2 rounded-[5px] text-center mx-[10px]">
       <p className="text-black text-[10px]  lg:text-[18px] font-medium font-sans max-w-[250px]">{product.name}</p>
       <p className="text-black text-[8px] lg:text-[16px] font-sans"> Rs {product.variants?.[0]?.price ?? 'N/A'}</p>
     </div>
