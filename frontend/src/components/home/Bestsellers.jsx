@@ -20,7 +20,7 @@ const Bestsellers = () => {
   }, [dispatch]);
 
   const sellersProducts = products.filter((product) =>
-    product.variants?.some((variant) => variant.is_best_seller)
+    product.variants?.some((variant) => variant.is_featured)
   );
 
   const bestSellersLimited = sellersProducts.slice(0, 4);

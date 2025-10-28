@@ -57,7 +57,7 @@ const RecommendedSection = () => {
 
 
   return (
-    <div className=" ">
+    <div className=" mb-[25px] md:mb-[50px]">
       <Section className="w-full py-[25px] md:py-[50px] ">
         <Row>
          <SectionHeading page="Home" order={8}/>
@@ -73,12 +73,12 @@ const RecommendedSection = () => {
         </button>
 
         {/* Product Cards */}
-        <div className="flex gap-6 justify-center w-full px-4 sm:px-10 lg:px-20 overflow-hidden">
+        <div className="flex justify-center w-full px-[2rem]  lg:px-[3rem] overflow-hidden">
 
           {displayItems.map((item, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 w-full ${itemsPerPage === 3 ? 'md:w-1/3' : 'w-full'}`}
+              className={`flex-shrink-0 w-full px-[15px] ${itemsPerPage === 3 ? 'md:w-1/3' : 'w-full'}`}
             >
               <ProductCard item={item} />
             </div>
@@ -101,17 +101,17 @@ const RecommendedSection = () => {
 
 const ProductCard = ({ item }) => {
   return (
-    <div className="relative shadow-lg overflow-hidden transition-transform duration-300">
-      <div className="relative w-full h-[398px] lg:w-[342px] lg:h-[398px]">
+    <div className="relative shadow-lg overflow-hidden transition-transform duration-300 ">
+      <div className="relative w-full sm:h-[398px] md:h-auto lg:w-[342px] lg:h-[398px]">
         <img src={item.image} alt={item.name} className="w-full h-full " />
         <div className="absolute inset-0 bg-black opacity-30" style={{ mixBlendMode: 'luminosity' }}></div>
       </div>
       <div className="absolute inset-0 flex justify-center items-center cursor-pointer">
         <img src={item.image} alt={item.name} className="w-[90%] h-[92%] object-cover" />
       </div>
-      <div className="absolute bottom-8 left-6 text-white z-20">
+      <div className="absolute w-[200px] bottom-8 left-6 text-white leading-none">
         <h2 className="font-h5">{item.name}</h2>
-        <p className="font-sans font-medium text-[16px]">{item.category}</p>
+        <p className="font-medium text-[16px]">{item.category}</p>
       </div>
     </div>
   );
