@@ -13,7 +13,7 @@ export const fetchProducts = createAsyncThunk(
         return res.data.data.products; 
       }
 
-      return rejectWithValue(res.data.message || "Failed to fetch navbar items");
+      return rejectWithValue(res.data.message || "Failed to fetch product");
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }
@@ -24,9 +24,13 @@ export const fetchProductById = createAsyncThunk(
   "products/fetchProductById",
   async (id, { rejectWithValue }) => {
     try {
-      const res = await api.get(`${ROUTES.products.getAll}/${id}`);
+      const token = localStorage.getItem("token");
+      const res = await api.get(ROUTES.products.getById(id), {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+  
       if (res.data.success) {
-        return res.data.data.product; 
+        return res.data.data; 
       }
       return rejectWithValue(res.data.message || "Failed to fetch product");
     } catch (err) {
@@ -34,6 +38,3 @@ export const fetchProductById = createAsyncThunk(
     }
   }
 );
-
-
-

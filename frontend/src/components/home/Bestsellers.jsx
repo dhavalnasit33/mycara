@@ -26,7 +26,7 @@ const Bestsellers = () => {
   const bestSellersLimited = sellersProducts.slice(0, 4);
 
   if (loading) return <p>Loading...</p>;
-  if (!bestSellersLimited.length) return <p>No best sellers found.</p>;
+  // if (!bestSellersLimited.length) return <p>No best sellers found.</p>;
 
 
   return (

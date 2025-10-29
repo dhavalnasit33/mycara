@@ -10,11 +10,20 @@ export const ROUTES = {
   },
   products:{
     getAll: "/products",
+    getById: (id) => `/products/${id}`,
   },
   categories:{
     getAll: "/categories",
   },
   pages:{
     getAll: "/pages",
+  },
+  sizes:{
+    getAll:"/sizes",
+    getById: (id) => `/sizes/${id}`,
+  },
+  colors:{
+    getAll:"/colors",
+    getById: (id) => `/colors/${id}`,
   }
 }

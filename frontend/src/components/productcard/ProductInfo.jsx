@@ -3,36 +3,43 @@ import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
 import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductById } from "../../features/products/productsThunk";
+import { fetchSizes, getSizeById } from "../../features/sizes/sizesThunk";
 
 
 export default function ProductInfo() {
-  const sizes = [
-  { name: "S", stock: 5 },
-  { name: "M", stock: 0 },
-  { name: "L", stock: 2 },
-  { name: "XL", stock: 0 },
-  { name: "2XL", stock: 3 },
-];
 
-  // const { id } = useParams();
-  // const dispatch = useDispatch();
-  // const { product, loading, error } = useSelector((state) => state.product);
+  const { id } = useParams(); 
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (id) {
-  //     dispatch(fetchProductById(id));
-  //   }
-  // }, [id, dispatch]);
+  const { product, loading, error } = useSelector((state) => state.products);
+    const { sizes, loading: sizeLoading } = useSelector((state) => state.sizes);
 
-  // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>Error: {error}</p>;
-  // if (!product) return <p>No product found</p>;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductById(id)); 
+         dispatch(fetchSizes(id));
+    }
+  }, [id, dispatch]);
+
+  if (loading) {
+    return <p className="text-center text-gray-500 py-10">Loading product...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500 py-10">{error}</p>;
+  }
+
+  if (!product) {
+    return <p className="text-center text-gray-500 py-10">No product found.</p>;
+  }
 
   return (
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
-      <h1 className="text-[24px] uppercase">ORANGE scissor</h1>
-      <p className="text-p text-light pb-[12px]">Floral plain Ethnic Anarkali Gown</p>
+      <h1 className="text-[24px] uppercase"> {product.variants?.[0]?.brand_id?.name || "No Brand"}  </h1>
+      <p className="text-p text-light pb-[12px]">{product.name}</p>
 
       {/* Rating */}
       <div className="flex items-center gap-[15px] text-14 sec-text-color mb-[25px]">
@@ -43,7 +50,7 @@ export default function ProductInfo() {
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center ">
-            <p className="text-[26px] text-black">₹1,430</p>
+            <p className="text-[26px] text-black">₹{product.variants?.[0]?.price}</p>
             <p className="text-theme font-18 ml-[7px]">35% Off</p>
         </div>
         <p className="sec-text-color">MRP <span className="line-through">₹2,199</span> Inclusive of all taxes</p>
@@ -55,25 +62,31 @@ export default function ProductInfo() {
             <span className="text-[24px]">Select Size </span>
             <span className="text-theme font-medium font-18">Size Guide</span>
         </div>
+
         <div className="flex flex-wrap gap-[13px]">
-            {sizes.map((size) => (
-                <div key={size.name} className="relative">
+          {product.variants && product.variants.length > 0 ? (
+            product.variants.map((variant) => (
+              <div key={variant.size_id._id} className="relative">
                 <button
-                    disabled={size.stock === 0} 
-                    className={`border light-border w-[50px] md:w-[71px]  md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500  ${
-                    size.stock === 0 ? " cursor-not-allowed" : ""
-                    }`}
+                  disabled={variant.stock_quantity === 0}
+                  className={`border light-border w-[50px] md:w-[71px] md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500 ${
+                    variant.stock_quantity === 0 ? "cursor-not-allowed" : ""
+                  }`}
                 >
-                    {size.name}
+                  {variant.size_id.name}
                 </button>
-                {size.stock === 0 && (
-                    <span className="absolute -bottom-5 left-2 text-[10px] md:text-[12px] sec-text-color ">
+                {variant.stock_quantity === 0 && (
+                  <span className="absolute -bottom-5 left-2 text-[10px] md:text-[12px] sec-text-color">
                     Sold Out
-                    </span>
+                  </span>
                 )}
-                </div>
-            ))}
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-500">No sizes available</p>
+          )}
         </div>
+
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
