@@ -50,7 +50,7 @@ export default function ProductInfo() {
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center ">
-            <p className="text-[26px] text-black">₹{product.variants?.[0]?.price}</p>
+            <p className="text-[26px] text-black">₹{Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}</p>
             <p className="text-theme font-18 ml-[7px]">35% Off</p>
         </div>
         <p className="sec-text-color">MRP <span className="line-through">₹2,199</span> Inclusive of all taxes</p>

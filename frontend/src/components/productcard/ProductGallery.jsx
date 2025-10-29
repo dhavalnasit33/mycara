@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "../../features/products/productsThunk";
 import { useParams } from "react-router-dom";
 import { getImageUrl } from "../utils/helper";
+import { fetchColors } from "../../features/colors/colorsThunk";
 
 export default function ProductGallery() {
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const { product } = useSelector((state) => state.products);
-  // const { color } = useSelector((state) => state.colors);
+  const { color } = useSelector((state) => state.colors);
 
   const [currentImage, setCurrentImage] = useState(null);
   const [productColors, setProductColors] = useState([]);
@@ -20,7 +21,7 @@ export default function ProductGallery() {
   useEffect(() => {
     if (id) {
       dispatch(fetchProductById(id));
-      // dispatch(fetchColors(id));
+      dispatch(fetchColors(id));
     }
   }, [id, dispatch]);
 
@@ -82,8 +83,8 @@ export default function ProductGallery() {
             onClick={() => setCurrentImage(img)}
             className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer transition-all duration-200 ${
               currentImage === img
-                ? "ring-2 ring-pink-500 scale-[1.02]"
-                : "opacity-90 hover:opacity-100"
+                ? "ring-1 ring-[#F43297] scale-[1.02]"
+                : "opacity-50 hover:opacity-100"
             }`}
           />
         ))}
