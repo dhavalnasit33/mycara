@@ -1,7 +1,4 @@
-// D:\mycara\frontend\src\components\shop\shopData.js
-// --------------------- Products ---------------------
-import shopsaree1 from '../../assets/shopsaree1.jpg';
-import shopsaree2 from '../../assets/shopsaree2.jpg';
+
 
 // --------------------- Categories ---------------------
 export const mockCategories = [
@@ -65,19 +62,19 @@ export const mockDiscounts = ['10% and above', '20% and above', '30% and above',
 export const mockLabels = ['Bestseller', 'New Arrival', 'Limited Edition', 'Top Rated'];
 
 
-export const mockProducts = [
-    {
-        id: 1,
-        name: 'CHECKED SAREE WITH HIGH NACK',
-        price: 3599.00,
-        imageSrc: shopsaree1,
-        isNew: true,
-    },
-    {
-        id: 2,
-        name: 'CHECKED SAREE WITH CRAPIO DETAIL',
-        price: 2999.00,
-        imageSrc: shopsaree2,
-        isNew: false,
-    },
-];
+// export const mockProducts = [
+//     {
+//         id: 1,
+//         name: 'CHECKED SAREE WITH HIGH NACK',
+//         price: 3599.00,
+//         imageSrc: shopsaree1,
+//         isNew: true,
+//     },
+//     {
+//         id: 2,
+//         name: 'CHECKED SAREE WITH CRAPIO DETAIL',
+//         price: 2999.00,
+//         imageSrc: shopsaree2,
+//         isNew: false,
+//     },
+// ];

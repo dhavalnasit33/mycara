@@ -25,5 +25,8 @@ export const ROUTES = {
   colors:{
     getAll:"/colors",
     getById: (id) => `/colors/${id}`,
+  },
+  brands:{
+    getAll:"/brands",
   }
 }

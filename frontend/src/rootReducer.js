@@ -5,6 +5,7 @@ import categoriesReducer from "./features/categories/categoriesSlice";
 import pagesReducer from "./features/pages/pagesSlice";
 import sizesReducer from "./features/sizes/sizesSlice";
 import colorsReducer from "./features/colors/colorsSlice";
+import brandsReducer from "./features/brands/brandsSlice";
 
 export const rootReducer = {
     navbar: navbarReducer,
@@ -13,4 +14,5 @@ export const rootReducer = {
     pages: pagesReducer,
     sizes: sizesReducer,
     colors: colorsReducer,
+     brands: brandsReducer,
 };

@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 // Import your filter components
 import { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter } from './WomenCollections';
 
 // Import mock data
 import {
-  mockCategories,
-  mockSizes,
-  mockColors,
-  mockBrands,
+
   mockTypes,
   mockFabrics,
   mockDiscounts,
   mockLabels
 } from './shopData';
+import { fetchCategories } from "../../features/categories/categoriesThunk";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSizes } from "../../features/sizes/sizesThunk";
+import { fetchColors } from "../../features/colors/colorsThunk";
+import { fetchBrands } from "../../features/brands/brandsThunk";
 
 const DesktopFilters = ({
   selectedCategories, handleCategoryChange, handleResetCategories,
@@ -27,6 +29,46 @@ const DesktopFilters = ({
   minPrice, setMinPrice, maxPrice, setMaxPrice,
   isCategorySelected
 }) => {
+
+    const dispatch = useDispatch();
+
+  // Redux data
+  const { items: categories = [], loading: catLoading } = useSelector(
+    (state) => state.categories || {}
+  );
+    const { products, loading, error } = useSelector((state) => state.products);
+   const { sizes: sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
+    const { colors: color =[], loading: colorLoading} = useSelector((state) => state.colors);
+     const { brands: brands =[], loading: brandLoading} = useSelector((state) => state.brands);
+
+   useEffect(() => {
+      dispatch(fetchCategories());
+       dispatch(fetchSizes());
+        dispatch(fetchColors());
+         dispatch(fetchBrands());
+    }, [dispatch]);
+  
+
+    //category count
+  const categoryCounts = products.reduce((acc, product) => {
+    const catId = product.category?._id;
+    if (catId) {
+      acc[catId] = (acc[catId] || 0) + 1;
+    }
+    return acc;
+  }, {});
+
+  //brandcount
+  const brandCounts = products.reduce((acc, product) => {
+  const variantBrand = product.variants?.[0]?.brand?.[0];
+  const brandId = variantBrand?._id;
+  if (brandId) {
+    acc[brandId] = (acc[brandId] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+
   return (
     <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 bg-white rounded-[20px] box-shadow">
       <div className="p-4">
@@ -42,17 +84,24 @@ const DesktopFilters = ({
         showButtons={true}
       >
         <div className="space-y-1 overflow-y-auto px-3 py-3">
-          {mockCategories.map(cat => (
-            <FilterItemCheckbox
-              key={cat.name}
-              name={cat.name}
-              count={cat.count}
-              isChecked={selectedCategories.includes(cat.name)}
-              onChange={handleCategoryChange}
-            />
-          ))}
+          {catLoading ? (
+            <p className="text-sm text-gray-500">Loading categories...</p>
+          ) : categories.length > 0 ? (
+            categories.map((cat) => (
+              <FilterItemCheckbox
+                key={cat._id}
+                name={cat.name}
+                count={categoryCounts[cat._id] || 0}
+                isChecked={selectedCategories.includes(cat.name)}
+                onChange={handleCategoryChange}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">No categories found.</p>
+          )}
         </div>
-      </CollapsibleFilter>
+    </CollapsibleFilter>
+
 
       {/* Price */}
       <PriceRangeFilter
@@ -71,16 +120,22 @@ const DesktopFilters = ({
         onReset={handleResetSizes}
         showButtons={true}
       >
-        <div className="flex flex-wrap px-3 py-3">
-          {mockSizes.map(size => (
-            <SizeFilterItem
-              key={size}
-              name={size}
-              isChecked={selectedSizes.includes(size)}
-              onChange={() => handleSizeChange(size)}
-            />
-          ))}
-        </div>
+        <div className="grid grid-cols-2 gap-2 px-3 py-3">
+          {sizeLoading ? (
+            <p className="text-sm text-gray-500">Loading categories...</p>
+          ) : sizes.length > 0 ? (
+            sizes.map((size) => (
+              <FilterItemCheckbox
+                key={size._id}
+                name={size.name}
+                isChecked={selectedSizes.includes(size.name)}
+                onChange={handleSizeChange}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">No sizes found.</p>
+          )}
+          </div>
       </CollapsibleFilter>
 
       {/* Color */}
@@ -91,20 +146,34 @@ const DesktopFilters = ({
         onReset={handleResetColors}
         showButtons={true}
       >
-        
-          <div className="flex flex-wrap px-3 py-3">
-            {mockColors.map(color => (
-              <ColorFilterItem
-                key={color.name}
-                name={color.name}
-                hex={color.hex}
-                border={color.border}
-                isChecked={selectedColors.includes(color.name)}
-                onChange={handleColorChange}
-              />
-            ))}
-          </div>
-        
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-y-5 gap-x-3 px-3 py-3">
+          {colorLoading ? (
+            <p className="text-sm text-gray-500 col-span-full">Loading colors...</p>
+          ) : Array.isArray(color) && color.length > 0 ? (
+            color.map((clr) => (
+              <div
+                key={clr._id || clr.name}
+                className="flex flex-col items-center cursor-pointer"
+                onClick={() => handleColorChange(clr.name)}
+              >
+                <div
+                  className={`w-[22px] h-[22px] rounded-full box-shadow ${
+                    selectedColors.includes(clr.name)
+                      ? "ring-2 ring-offset-1 ring-black"
+                      : ""
+                  } transition-transform duration-200`}
+                  style={{ backgroundColor: clr.code }}
+                ></div>
+                <p className="text-[10px] sec-text-color mt-1 text-center">
+                  {clr.name}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-gray-500 col-span-full">No colors found.</p>
+          )}
+        </div>
+
       </CollapsibleFilter>
 
       {/* Brands */}
@@ -114,16 +183,22 @@ const DesktopFilters = ({
         onReset={handleResetBrands}
         showButtons={true}
       >
-         <div className=" px-3 py-3">
-        {mockBrands.map(brand => (
-          <FilterItemCheckbox
-            key={brand.name}
-            name={brand.name}
-            count={brand.count}
-            isChecked={selectedBrands.includes(brand.name)}
-            onChange={handleBrandChange}
-          />
-        ))}
+        <div className="space-y-1 overflow-y-auto px-3 py-3">
+          {brandLoading ? (
+            <p className="text-sm text-gray-500">Loading brands...</p>
+          ) : brands.length > 0 ? (
+            brands.map((brand) => (
+              <FilterItemCheckbox
+                key={brand._id}
+                name={brand.name}
+                count={brandCounts[brand._id] || 0}
+                isChecked={selectedBrands.includes(brand.name)}
+                onChange={handleBrandChange}
+              />
+            ))
+          ) : (
+            <p className="text-sm text-gray-500">No brands found.</p>
+          )}
         </div>
       </CollapsibleFilter>
 
