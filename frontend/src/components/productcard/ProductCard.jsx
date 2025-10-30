@@ -87,7 +87,7 @@ if (product.discount_id) {
 
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
-            <p>₹{product.variants?.[0]?.price}</p>
+            <p>₹{Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}</p>
             <p className="text-theme">
                 {product.discount_id
                   ? product.discount_id.type === "percentage"

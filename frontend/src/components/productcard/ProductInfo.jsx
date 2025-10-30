@@ -5,7 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "../../features/products/productsThunk";
-import { fetchSizes, getSizeById } from "../../features/sizes/sizesThunk";
+import { fetchSizes } from "../../features/sizes/sizesThunk";
 
 
 export default function ProductInfo() {
@@ -14,7 +14,7 @@ export default function ProductInfo() {
   const dispatch = useDispatch();
 
   const { product, loading, error } = useSelector((state) => state.products);
-    const { sizes, loading: sizeLoading } = useSelector((state) => state.sizes);
+    const { sizes } = useSelector((state) => state.sizes);
 
   useEffect(() => {
     if (id) {

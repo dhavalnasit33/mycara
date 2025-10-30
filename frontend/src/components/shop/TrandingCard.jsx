@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../utils/helper";
 
 export default function TrendingCard ({ product }){
   return(
@@ -8,9 +9,9 @@ export default function TrendingCard ({ product }){
   >
       <div className="w-full h-auto overflow-hidden">
         <img
-          src={product.imageSrc}
+          src={getImageUrl(product.images)}
           alt={product.name}
-          className="w-full h-full object-cover aspect-[4/5] sm:aspect-square transition-transform duration-500"
+          className="w-full h-full  aspect-[4/5] sm:aspect-square transition-transform duration-500"
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
@@ -29,7 +30,7 @@ export default function TrendingCard ({ product }){
       </div>
       <div>
         <p className="text-sm font-medium font-inter text-black">
-          RS {product.price ? product.price.toFixed(2) : "0.00"}
+          Rs {Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}
         </p>
       </div>
     </div>

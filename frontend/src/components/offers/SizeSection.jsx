@@ -1,20 +1,20 @@
 import React, { useEffect } from "react";
-import SectionHeading from "../ui/SectionHeading";
-import Section from "../ui/Section";
 import Row from "../ui/Row";
-import sizeBg from "../../assets/size-bg.png"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../../features/pages/pagesThunk";
-
-const sizes = ["04", "05", "06", "07", "08", "09"];
+import { fetchSizes } from "../../features/sizes/sizesThunk";
+import { getImageUrl } from "../utils/helper";
 
 export default function SizeSection() {
      const dispatch = useDispatch();
     const { pages, loading, error } = useSelector((state) => state.pages);
+    const { sizes, loading: sizeLoading, error: sizeError } = useSelector((state) => state.sizes);
+
 
     useEffect(() => {
         dispatch(fetchPages());
-    }, [dispatch]);
+         dispatch(fetchSizes());
+    }, [,dispatch]);
 
     const offerpage = pages?.find(page => page.slug === 'offer');
     const salebanner = offerpage?.sections?.find(section => section.order === 3);
@@ -27,14 +27,24 @@ export default function SizeSection() {
     <>
         <Row>
             <div className="flex flex-wrap justify-center gap-5 max-w-[880px] mx-auto">
-                {sizes.map((size, i) => (
-                <div key={i}
-                    className="flex flex-col bg-cover bg-no-repeat bg-center p-5 items-center justify-center w-[130px] h-[130px] rounded-full  box-shadow hover:scale-105 transition-transform 
-                        duration-200 cursor-pointer" style={{ backgroundImage: `url(${sizeBg})` }}>
-                    <p className="text-[24px] text-dark leading pb-2">Size</p>
-                    <p className="text-[60px] font-medium text-dark leading">{size}</p>
-                </div>
-                ))}
+                  {sizes && sizes.length > 0 ? (
+                    sizes.map((size) => (
+                    <div
+                        key={size._id} className="flex flex-col bg-cover bg-no-repeat bg-center p-5 items-center justify-center w-[130px] h-[130px] rounded-full box-shadow
+                                                  hover:scale-105 transition-transform duration-200 cursor-pointer"
+                        style={{ backgroundImage: salebanner?.image_url ? `url(${getImageUrl(salebanner.image_url)})` : "none", }}
+                    >
+                        <p className="text-[24px] text-dark leading pb-2">Size</p>
+                        <p className="text-[52px] font-medium text-dark leading">
+                            {size.name}
+                        </p>
+                    </div>
+                    ))
+                ) : (
+                    <p className="text-gray-500 text-center w-full">
+                    No sizes available
+                    </p>
+                )}
             </div>
         </Row>
         <Row>
