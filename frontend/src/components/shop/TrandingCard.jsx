@@ -4,7 +4,7 @@ import { getImageUrl } from "../utils/helper";
 export default function TrendingCard ({ product }){
   return(
  <Link
-    to="/products"
+     to={`/products/${product._id}`}
     className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
   >
       <div className="w-full h-auto overflow-hidden">
