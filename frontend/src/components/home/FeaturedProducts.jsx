@@ -1,7 +1,7 @@
 // src/components/FeaturedProducts.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Slider from "react-slick";
 
 // ✅ Importing custom components
@@ -189,7 +189,8 @@ const settings = {
                 <p>Loading products...</p>
               ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
                 filteredProducts.map((p, index) => (
-              <div key={index} className="relative  overflow-hidden transform transition-transform  cursor-pointer" >
+                  
+              <Link to={`/products/${p._id}`} key={index} className="relative  overflow-hidden transform transition-transform  cursor-pointer" >
                 <div className="relative group ">
                   <img
                     src={getImageUrl(p.images)}
@@ -242,10 +243,12 @@ const settings = {
                         style={{ backgroundColor: clr.code }}
                       ></span>
                     ))
+                    
                   )}
+                  
                 </div>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <p>No products available.</p>
@@ -257,3 +260,4 @@ const settings = {
 };
 
 export default FeaturedProducts;
+  

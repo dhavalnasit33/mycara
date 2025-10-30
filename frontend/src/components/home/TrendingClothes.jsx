@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../../features/products/productsThunk.js";
 import { getImageUrl } from "../utils/helper.js";
 import Section from "../ui/Section";
+import { Link } from "react-router-dom";
 const NextArrow = ({ onClick }) => (
   <button
     onClick={onClick}
@@ -100,7 +101,9 @@ const TrendingClothes = () => {
 
 const TrendingCloth = ({ product, desktop }) => {
   return (
+     <Link to={`/products/${product._id}`}>
     <div className={`group ${desktop ? "" : "w-full"}`}>
+     
       <div className="relative rounded-lg overflow-visible p-2">
         <span className="absolute top-0 left-0 w-[139px] border-t-[0.5px] border-dashed border-black"></span>
         <span className="absolute top-0 left-0 h-[177px] border-l-[0.5px] border-dashed border-black"></span>
@@ -135,7 +138,9 @@ const TrendingCloth = ({ product, desktop }) => {
           <span className="theme-border-block w-7"></span>
         </button>
       </div>
+
     </div>
+    </Link>
   );
 };
 

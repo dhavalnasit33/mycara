@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk.js';
 import Section from '../ui/Section.jsx';
 import { getImageUrl } from '../utils/helper.js';
+import { Link } from 'react-router-dom';
 
 
 const Bestsellers = () => {
@@ -54,6 +55,7 @@ const Bestsellers = () => {
 
 const SellerCard = ({ product }) => {
   return (
+     <Link to={`/products/${product._id}`}>
     <div className="relative overflow-hidden bg-white rounded-[5px] group ">
       {/* Main Image */}
       <img
@@ -74,6 +76,7 @@ const SellerCard = ({ product }) => {
 </div>
 
     </div>
+    </Link>
   );
 };
 
