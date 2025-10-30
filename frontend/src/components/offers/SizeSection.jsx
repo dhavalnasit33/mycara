@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import Section from "../ui/Section";
 import Row from "../ui/Row";
 import sizeBg from "../../assets/size-bg.png"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPages } from "../../features/pages/pagesThunk";
 
 const sizes = ["04", "05", "06", "07", "08", "09"];
 
 export default function SizeSection() {
+     const dispatch = useDispatch();
+    const { pages, loading, error } = useSelector((state) => state.pages);
+
+    useEffect(() => {
+        dispatch(fetchPages());
+    }, [dispatch]);
+
+    const offerpage = pages?.find(page => page.slug === 'offer');
+    const salebanner = offerpage?.sections?.find(section => section.order === 3);
+
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    if (!salebanner) return <p>No Section 9 Found</p>;
+
   return (
-    <Section>
-        <Row>
-            <SectionHeading title="Shop Footwear by Size" />
-        </Row>
+    <>
         <Row>
             <div className="flex flex-wrap justify-center gap-5 max-w-[880px] mx-auto">
                 {sizes.map((size, i) => (
@@ -26,9 +39,9 @@ export default function SizeSection() {
         </Row>
         <Row>
             <div className="mt-[60px] mx-auto max-w-[1122px] border-2 border-[#F43297] rounded-md text-14 py-7 px-[10px] md:px-[75px] text-center text-light">
-                Mykra Fashion will never contact their customers for cash prizes or request passwords/pins/CVV. Please refrain from sharing such confidential information with anyone, as this can result in fraudulent transactions.
+                {salebanner.description }            
             </div>
         </Row>
-    </Section>
+    </>
   );
 }

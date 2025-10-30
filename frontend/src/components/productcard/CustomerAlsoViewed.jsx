@@ -42,10 +42,7 @@ const products = [
 
 export default function CustomerAlsoViewed() {
   return (
-    <Section>
-    <Row >
-      <SectionHeading title="Customer Also Viewed"/>
-    </Row >
+    <>
     <Row className="!max-w-[1155px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px]">
         {products.map((product, index) => (
             <div key={index} className="bg-white rounded-[3px] box-shadow overflow-hidden p-[23px]" >
@@ -71,6 +68,6 @@ export default function CustomerAlsoViewed() {
             </div>
         ))}
     </Row>
-    </Section>
+    </ >
   );
 }

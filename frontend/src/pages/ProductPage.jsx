@@ -28,11 +28,17 @@ export default function Product({product}) {
     </Section>
     <Section>
       <Row>
-        <SectionHeading title="Similer Products" />
+        <SectionHeading  page="Products" order="1" />
       </Row>
         <SimilarProducts />
     </Section>
-       <CustomerAlsoViewed/>
+    <Section>
+      <Row >
+          <SectionHeading  page="Products" order="2"/>
+      </Row >
+      <CustomerAlsoViewed/>
+    </Section>
+
   
  </>
   );
