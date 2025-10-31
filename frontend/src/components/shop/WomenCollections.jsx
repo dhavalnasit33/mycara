@@ -1,10 +1,10 @@
 // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
 import { Link } from 'react-router-dom';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ChevronDown, Sliders, X, Star, Plus, Minus } from 'lucide-react';
-import { ChevronLeftIcon, MagnifyingGlassIcon, SlidersHorizontal, ChevronDown as LucideChevronDown, ListFilter } from '@heroicons/react/24/outline';
+import { ChevronDown, X, Plus, Minus } from 'lucide-react';
+import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as HeroChevronDown } from '@heroicons/react/24/outline';
 import CheckedIcon from "../icons/checked"; // your SVG component
 import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
 import MobileFilterBar from './MobileFilterBar';
@@ -13,36 +13,35 @@ import TrandingCard from "./TrandingCard"
 
 import SortByPage from './SortByPage'; 
 
-import PlusIcon from "../icons/plus";
 import MobileFilterModal from "./MobileFilterModal";
 import DesktopFilters from './DesktopFilters';
 
 import OriginalSortByIcon from "../icons/SortByIcon";
 
-import { mockProducts} from './shopData';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../../features/products/productsThunk';
 
 
 export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter };
 
 // --- Utility function to convert Sort Value to Display Label ---
-const getSortLabel = (sortValue) => {
-    switch (sortValue) {
-        case 'popularity': return 'Popularity';
-        case 'latest': return 'Newest'; // Mapped 'latest' to 'Newest' for display
-        case 'rating': return 'Average Rating';
-        case 'price_asc': return 'Price L-H';
-        case 'price_desc': return 'Price H-L';
-        case 'discounts': return 'Discounts';
-        default: return 'Popularity';
-    }
-};
+// const getSortLabel = (sortValue) => {
+//     switch (sortValue) {
+//         case 'popularity': return 'Popularity';
+//         case 'latest': return 'Newest'; // Mapped 'latest' to 'Newest' for display
+//         case 'rating': return 'Average Rating';
+//         case 'price_asc': return 'Price L-H';
+//         case 'price_desc': return 'Price H-L';
+//         case 'discounts': return 'Discounts';
+//         default: return 'Popularity';
+//     }
+// };
 
-const BORDER_COLOR_CLASS = "border-pink-600";
+// const BORDER_COLOR_CLASS = "border-pink-600";
 
 // ---------- Icon Wrappers ----------
 const SortByIcon = (props) => (<OriginalSortByIcon {...props} className="h-4 w-4 md:text-gray-500" />);
 const CustomChevronDown = (props) => ( <ChevronDown {...props} />);
-const Filter = (props) => (<FilterIconComponent {...props} />);
 
 // ---------- Mobile Filter Bar ----------
 
@@ -380,6 +379,19 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
+
+      const dispatch = useDispatch();
+  const { products = [], loading } = useSelector((state) => state.products);
+
+  // ✅ Fetch once when the component mounts
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  const trendingProducts = products.filter((product) =>
+    product.variants?.some((variant) => variant.is_trending)
+  );
+
     const [selectedCategories, setSelectedCategories] = useState([]);
 
 
@@ -394,13 +406,11 @@ const WomenCollections = () => {
 
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
-    const [products, setProducts] = useState([]); 
+    const [product, setProducts] = useState([]); 
 
         // --- NEW SORT STATES ---
    
 
-    const [isSortOpen, setIsSortOpen] = useState(false);
-    const [selectedSort, setSelectedSort] = useState('popularity'); // 'popularity' is a good default
     const [currentSortValue, setCurrentSortValue] = useState('popularity'); // 'popularity' is the value used by SortByPage
     const [isSortByOpen, setIsSortByOpen] = useState(false); 
     const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
@@ -446,17 +456,17 @@ const WomenCollections = () => {
     };
 
 
-    const handleCloseSortBy = () => {
-        setIsSortByOpen(false);
-    };
+    // const handleCloseSortBy = () => {
+    //     setIsSortByOpen(false);
+    // };
 
 
-    const handleSelectSort = (value, label) => {
-        setCurrentSortValue(value);
-        setCurrentSortLabel(label);
+    // const handleSelectSort = (value, label) => {
+    //     setCurrentSortValue(value);
+    //     setCurrentSortLabel(label);
         
-        // handleCloseSortBy(); // bottom sheet off 
-    };
+    //     // handleCloseSortBy(); // bottom sheet off 
+    // };
 
 
 
@@ -524,7 +534,7 @@ const WomenCollections = () => {
 
     const isCategorySelected = selectedCategories.length > 0;
     const totalResults = 100;
-     const showingResults = products.length;
+     const showingResults = product.length;
 
    
 
@@ -672,21 +682,21 @@ const WomenCollections = () => {
                             </span>
                         ))}
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
-                        {mockProducts.map(product => (
-                            <TrandingCard key={product.id} product={product} />
-                        ))}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px] ">
+                        {loading ? (
+                            <p>Loading...</p>
+                        ) : trendingProducts.length > 0 ? (
+                            trendingProducts.slice(0, 2).map((product) => (
+                            <TrandingCard key={product._id || product.id} product={product} />
+                            ))
+                        ) : (
+                            <p>No trending products found.</p>
+                        )}
                     </div>
-                    
                     <ProductGrid />
-               
-
                 </main>
 
             </div>
-
-
-
         </div>
     );
 };

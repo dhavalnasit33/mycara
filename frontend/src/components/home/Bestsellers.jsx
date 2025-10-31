@@ -8,12 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk.js';
 import Section from '../ui/Section.jsx';
 import { getImageUrl } from '../utils/helper.js';
+import { Link } from 'react-router-dom';
 
 
 const Bestsellers = () => {
     const dispatch = useDispatch();
 
-  const { products = [], loading } = useSelector((state) => state.product);
+  const { products = [], loading } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -26,7 +27,8 @@ const Bestsellers = () => {
   const bestSellersLimited = sellersProducts.slice(0, 4);
 
   if (loading) return <p>Loading...</p>;
-  if (!bestSellersLimited.length) return <p>No best sellers found.</p>;
+  // if (!bestSellersLimited.length) return <p>No best sellers found.</p>;
+
 
   return (
       <Section className='mt-[25px] md:mt-[50px]'>
@@ -53,6 +55,7 @@ const Bestsellers = () => {
 
 const SellerCard = ({ product }) => {
   return (
+     <Link to={`/products/${product._id}`}>
     <div className="relative overflow-hidden bg-white rounded-[5px] group ">
       {/* Main Image */}
       <img
@@ -65,7 +68,7 @@ const SellerCard = ({ product }) => {
     <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
   <div className="w-[95%] h-[95%] bg-black bg-opacity-30 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[5px] pointer-events-auto overflow-hidden cursor-pointer">
 
-    <div className="bg-white px-4 py-2 lg:px-4 lg:py-2 rounded-[5px] text-center">
+    <div className="bg-white px-4 py-2 lg:px-4 lg:py-2 rounded-[5px] text-center mx-[10px]">
       <p className="text-black text-[10px]  lg:text-[18px] font-medium font-sans max-w-[250px]">{product.name}</p>
       <p className="text-black text-[8px] lg:text-[16px] font-sans"> Rs {product.variants?.[0]?.price ?? 'N/A'}</p>
     </div>
@@ -73,6 +76,7 @@ const SellerCard = ({ product }) => {
 </div>
 
     </div>
+    </Link>
   );
 };
 

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 const ProductGrid  = () => {
 
-    const { products = [], loading } = useSelector((state) => state.product);
+    const { products = [] } = useSelector((state) => state.products);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -17,7 +17,7 @@ const ProductGrid  = () => {
 
     return (
         <div className="py-10 ">
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[30px]">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[10px] md:gap-[30px]">
                     {products && products.length > 0 ? (
                         products.map((product, index) => (
                             <ProductCard key={product.id || index} product={product} />

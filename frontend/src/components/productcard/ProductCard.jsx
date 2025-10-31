@@ -87,7 +87,7 @@ if (product.discount_id) {
 
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
-            <p>₹{product.variants?.[0]?.price}</p>
+            <p>₹{Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}</p>
             <p className="text-theme">
                 {product.discount_id
                   ? product.discount_id.type === "percentage"
@@ -101,15 +101,18 @@ if (product.discount_id) {
 
 
         {/* Color Options */}
-        <div className="flex gap-[5px]">
-            {product.variants?.[0]?.color?.map((colorItem, index) => (
-            <div
-              key={index}
-              className="w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] rounded-full cursor-pointer"
-              style={{ backgroundColor: colorItem.code }}
-            ></div>
-          ))}
-        </div>
+         <div className="flex gap-[5px]"> 
+            {product.variants?.map((variant, vi) =>
+              variant.color?.map((clr, ci) => (
+                <span
+                  key={`${vi}-${ci}`}
+                  className="w-[10px] h-[10px] sm:w-[16px] sm:h-[16px] rounded-full "
+                  title={clr.name}
+                  style={{ backgroundColor: clr.code }}
+                ></span>
+              ))
+            )}
+          </div>
       
 
 

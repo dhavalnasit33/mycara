@@ -12,6 +12,7 @@ export const ROUTES = {
   },
   products:{
     getAll: "/products",
+    getById: (id) => `/products/${id}`,
   },
   categories:{
     getAll: "/categories",
@@ -19,10 +20,23 @@ export const ROUTES = {
   pages:{
     getAll: "/pages",
   },
-  heroBanners: {
-    getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
+// <<<<<<< HEAD
+//   heroBanners: {
+//     getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
+//   },
+//   features: {
+//     getAll: "/features",
+// =======
+  sizes:{
+    getAll:"/sizes",
+    getById: (id) => `/sizes/${id}`,
   },
-  features: {
-    getAll: "/features",
+  colors:{
+    getAll:"/colors",
+    getById: (id) => `/colors/${id}`,
+  },
+  brands:{
+    getAll:"/brands",
+
   }
 }

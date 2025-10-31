@@ -32,16 +32,17 @@ const productsSlice = createSlice({
         state.error = action.payload;
       })
 
-      .addCase(fetchProductById.pending, (state) => {
+     .addCase(fetchProductById.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.loading = false;
-        state.product = action.payload;
+        state.product = action.payload; // ✅ the fetched object
       })
       .addCase(fetchProductById.rejected, (state, action) => {
         state.loading = false;
+
         state.error = action.payload;
       })
 
@@ -56,7 +57,9 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProductsByVariant.rejected, (state, action) => { // Line 59 સુધારો
         state.loading = false;
-        state.error = action.payload; 
+
+        state.error = action.payload || "Failed to fetch product";
+
       });
   },
 });

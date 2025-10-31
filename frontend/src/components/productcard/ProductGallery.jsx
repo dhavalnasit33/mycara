@@ -1,16 +1,48 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Slider from "react-slick";
-import img1 from "../../assets/gallary1.png";
-import img2 from "../../assets/gallary2.png";
-import img3 from "../../assets/gallary3.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProductById } from "../../features/products/productsThunk";
+import { useParams } from "react-router-dom";
+import { getImageUrl } from "../utils/helper";
+import { fetchColors } from "../../features/colors/colorsThunk";
 
-export default function ProductGallery() { 
-  const images = [img1, img2, img3];
-  const product = {
-  colors: ["#6267D9", "#406144", "#DC0A0A", "#3DAFD3"], // example colors
-};
- 
-  const [selectedImage, setSelectedImage] = useState(images[0]);
+export default function ProductGallery() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+
+  const { product } = useSelector((state) => state.products);
+  const { color } = useSelector((state) => state.colors);
+
+  const [currentImage, setCurrentImage] = useState(null);
+  const [productColors, setProductColors] = useState([]);
+
+
+  // ✅ Fetch product by ID
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductById(id));
+      dispatch(fetchColors(id));
+    }
+  }, [id, dispatch]);
+
+
+  // ✅ Merge all images (main + variant)
+  const fullImageUrls = useMemo(() => {
+    if (!product?._id || product?._id !== id) return [];
+    const mainImages = product?.images || [];
+    const variantImages =
+      product?.variants?.length > 0
+        ? product.variants.flatMap((v) => v.images || [])
+        : [];
+    const allImages = [...new Set([...mainImages, ...variantImages])];
+    return allImages.map((img) => getImageUrl(img));
+  }, [product, id]);
+
+
+  useEffect(() => {
+    if (fullImageUrls.length > 0) setCurrentImage(fullImageUrls[0]);
+    else setCurrentImage(null);
+  }, [fullImageUrls]);
 
   const sliderSettings = {
     dots: true,
@@ -33,50 +65,65 @@ export default function ProductGallery() {
 
   return (
     <div className="flex flex-col md:flex-row gap-[30px]">
-      {/* Desktop Thumbnail Gallery */}
-      <div className="hidden md:flex md:flex-col gap-[20px]">
-        {images.map((img, index) => (
+      {/* ✅ Thumbnail List */}
+      <div
+        className="hidden md:flex md:flex-col gap-[20px] overflow-y-auto max-h-[727px] p-1
+        [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0 scrollbar-none"
+        style={{
+          scrollBehavior: "smooth",
+          msOverflowStyle: "none",
+          scrollbarWidth: "none",
+        }}
+      >
+        {fullImageUrls.map((img, index) => (
           <img
             key={index}
-            src={img} 
+            src={img}
             alt={`Thumbnail ${index}`}
-            onClick={() => setSelectedImage(img)} 
-            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer transition-all  ${
-              selectedImage === img ? "" : ""
+            onClick={() => setCurrentImage(img)}
+            className={`w-[160px] h-[208px] object-cover rounded-[3px] cursor-pointer transition-all duration-200 ${
+              currentImage === img
+                ? "ring-1 ring-[#F43297] scale-[1.02]"
+                : "opacity-50 hover:opacity-100"
             }`}
           />
         ))}
       </div>
 
-      {/* Desktop Main Image */}
+      {/* ✅ Main Image + Dynamic Colors */}
       <div className="hidden md:block flex-1">
-        <img
-          src={selectedImage} 
-          alt="Main product"
-          className="w-full h-[727px] rounded-[10px]"
-        />
-        <div className="flex gap-[8px] mt-[30px] justify-center">
-          {product.colors.map((c, i) => (
-            <span
-              key={i}
-              className="w-[24px] h-[24px] rounded-full"
-              style={{ backgroundColor: c }}
-            ></span>
-          ))}
-        </div>
-      </div>
-     
+        {currentImage && (
+          <img
+            key={currentImage}
+            src={currentImage}
+            alt="Main product"
+            className="w-full h-[727px] rounded-[10px] object-cover transition-all duration-300 ease-in-out"
+          />
+        )}
 
-      {/* Mobile Slider */}
+        {/* ✅ Display All Product Colors */}
+        {productColors.length > 0 && (
+          <div className="flex gap-[8px] mt-[30px] justify-center">
+            {productColors.map((clr, i) => (
+              <span
+                key={i}
+                className="w-[24px] h-[24px] rounded-full border border-gray-300 cursor-pointer"
+                title={clr.name}
+                style={{
+                  backgroundColor: clr.hex_code || clr.name,
+                }}
+              ></span>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* ✅ Mobile Slider */}
       <div className="block md:hidden w-full rounded-[10px]">
         <Slider {...sliderSettings}>
-          {images.map((img, index) => (
+          {fullImageUrls.map((img, index) => (
             <div key={index}>
-              <img
-                src={img}
-                alt={`Slide ${index}`}
-                className="w-full h-auto"
-              />
+              <img src={img} alt={`Slide ${index}`} className="w-full h-auto" />
             </div>
           ))}
         </Slider>

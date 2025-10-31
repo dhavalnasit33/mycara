@@ -6,7 +6,6 @@ import { MapPinIcon, PhoneIcon } from 'lucide-react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import MapForm from '../components/contactus/MapForm';
 import FAQ from '../components/contactus/Faq';
-import contactBg from '../assets/contact.jpg';
 import SecondarySection from '../components/ui/SecondarySection';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPages } from '../features/pages/pagesThunk';

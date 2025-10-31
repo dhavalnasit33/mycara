@@ -12,8 +12,12 @@ export default function SectionHeading({page, order }) {
   );
 
   // 2️⃣ Find section by order
-  const currentSection = currentPage?.sections?.find(
-    (section) => section.order === order
+  // const currentSection = currentPage?.sections?.find(
+  //   (section) => section.order === order
+  // );
+
+    const currentSection = currentPage?.sections?.find(
+    (section) => Number(section.order) === Number(order)
   );
 
   const title = currentSection?.title || "Default Title";

@@ -10,7 +10,7 @@ import SimilarProducts from "../components/productcard/SimilarProducts";
 import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
 import Breadcrumb from "../components/ui/Breadcrumb";
 
-export default function Product() {
+export default function Product({product}) {
 
   return (
     <>
@@ -19,20 +19,26 @@ export default function Product() {
         <Breadcrumb/>
       </Row>
     <Row className=" grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-      <ProductGallery  />
+      <ProductGallery  product={product}/>
       <div>
-        <ProductInfo />
+        <ProductInfo product={product} />
         <ProductTabs />
       </div>
     </Row>
     </Section>
     <Section>
       <Row>
-        <SectionHeading title="Similar Products" />
+        <SectionHeading  page="Products" order="1" />
       </Row>
         <SimilarProducts />
     </Section>
-       <CustomerAlsoViewed/>
+    <Section>
+      <Row >
+          <SectionHeading  page="Products" order="2"/>
+      </Row >
+      <CustomerAlsoViewed/>
+    </Section>
+
   
  </>
   );
