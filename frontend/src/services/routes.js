@@ -28,5 +28,17 @@ export const ROUTES = {
   },
   brands:{
     getAll:"/brands",
+  },
+  types:{
+    getAll:"/types",
+  },
+  fabrics:{
+    getAll:"/fabrics"
+  },
+  discounts:{
+    getAll:"/discounts"
+  },
+  productLabels:{
+    getAll: "/product-labels"
   }
 }
