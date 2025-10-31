@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../features/pages/pagesThunk";
 import { useEffect } from "react";
 import { getImageUrl } from "../components/utils/helper";
-import { fetchWishlist } from "../features/wishlist/wishlistThunk";
+
+
 const products = [
   {
     name: "Analog Watch for Women",
@@ -29,41 +30,19 @@ const products = [
     inStock: false,
     stockText: "out of stock",
   },
-  // add more products as needed
 ];
 
-
-
 export default function Wishlist(){
-  // const dispatch = useDispatch();
-  //   const { pages, loading, error } = useSelector((state) => state.pages);
+  const dispatch = useDispatch();
+    const { pages, loading, error } = useSelector((state) => state.pages);
 
-  //   useEffect(() => {
-  //       dispatch(fetchPages());
-  //   }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchPages());
+    }, [dispatch]);
 
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>{error}</p>;
-  //   const wishlistpage = pages.find(page => page.slug === 'wishlist');
-const dispatch = useDispatch();
-
-  // ✅ Fetch wishlist + page data
-  const { pages, loading: pagesLoading, error } = useSelector(
-    (state) => state.pages
-  );
-  const { wishlist, loading: wishlistLoading } = useSelector(
-    (state) => state.wishlist
-  );
-
-  useEffect(() => {
-    dispatch(fetchPages());
-    dispatch(fetchWishlist()); // ✅ Fetch wishlist from backend
-  }, [dispatch]);
-
-  if (pagesLoading || wishlistLoading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
-
-  const wishlistpage = pages.find((page) => page.slug === "wishlist");
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>{error}</p>;
+    const wishlistpage = pages.find(page => page.slug === 'wishlist');
 
 
 
@@ -81,8 +60,7 @@ const dispatch = useDispatch();
               ))}
            <Section >
             <Row className="pt-[50px]">
-                {/* <WishlistTable products={products} /> */}
-                  <WishlistTable products={wishlist || []} />
+                <WishlistTable products={products} />
             </Row>
             </Section>
         </>

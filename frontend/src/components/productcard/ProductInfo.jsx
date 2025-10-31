@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "../../features/products/productsThunk";
 import { fetchSizes } from "../../features/sizes/sizesThunk";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
+import { addToCart, fetchCart } from "../../features/cart/cartThunk";
 
 
 export default function ProductInfo() {
@@ -16,7 +17,7 @@ export default function ProductInfo() {
 
   const { product, loading, error } = useSelector((state) => state.products);
   const { discounts } = useSelector((state) => state.discounts);
-    const { sizes } = useSelector((state) => state.sizes);
+  const { sizes } = useSelector((state) => state.sizes);
 
   useEffect(() => {
     if (id) {
@@ -25,6 +26,12 @@ export default function ProductInfo() {
          dispatch(fetchDiscounts());
     }
   }, [id, dispatch]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addToCart(product));
+    }
+  };
 
   const discount = product
     ? discounts.find((d) => d._id === product?.discount_id)
@@ -117,7 +124,7 @@ export default function ProductInfo() {
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
-            <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]">
+            <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart}>
                 <Link to='/cart' className="flex items-center gap-[10px]">
                     <Handbag size={22} />Add To Bag
                 </Link>

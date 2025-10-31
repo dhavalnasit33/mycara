@@ -1,5 +1,9 @@
 import Slider from "react-slick";
 import heroImg1 from "../../assets/slider.png";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPages } from "../../features/pages/pagesThunk";
+import { useEffect } from "react";
+import { getImageUrl } from "../utils/helper";
 
 export default function LoginSlider() {
   const settings = {
@@ -9,7 +13,7 @@ export default function LoginSlider() {
     slidesToShow: 1,       
     slidesToScroll: 1,
     autoplay: true,        
-    autoplaySpeed: 3000,  
+    autoplaySpeed: 2000,  
     arrows: false ,  
     appendDots: dots => (
     <div className="w-full relative">
@@ -21,39 +25,48 @@ export default function LoginSlider() {
     )
   };
 
+      const dispatch = useDispatch();
+    const { pages, loading } = useSelector((state) => state.pages);
+  
+    useEffect(() => {
+      dispatch(fetchPages());
+    }, [dispatch]);
+  
+    if (loading) return <p>Loading...</p>;
+    
+  const loginPage = pages?.find((page) => page.slug === "login");
+  const heroSection = loginPage?.sections?.find(
+    (sec) => sec.type === "hero_slider"
+  );
+
+  const heroSlides = [
+    ...(heroSection?.image_url ? [{ background_image_url: heroSection.image_url }] : []),
+    ...(heroSection?.slides || []),
+  ];
+
   return (
     <div className="w-full flex items-center justify-center px-5 ">
-      <Slider {...settings} className="w-full h-full loginSlider" >
-        <div>
-          <img
-            src={heroImg1}
-            alt="Slide 1"
-            className="object-cover max-h-[448px] w-full"
-          />
-        </div>
-        <div>
-          <img
-            src={heroImg1}
-            alt="Slide 2"
-            className="object-cover max-h-[448px]  h-full w-full"
-          />
-        </div>
-        <div>
-          <img
-            src={heroImg1}
-            alt="Slide 3"
-            className="object-cover  max-h-[448px] h-full w-full"
-          />
-        </div>
-        <div>
-          <img
-            src={heroImg1}
-            alt="Slide 3"
-            className="object-cover  max-h-[448px] h-full w-full"
-          />
-        </div>
+         <Slider {...settings} className="w-full h-full loginSlider">
+        {heroSlides.length > 0 ? (
+          heroSlides.map((slide, index) => (
+            <div key={index} className="flex justify-center items-center">
+              <img
+                src={getImageUrl(slide.background_image_url)}
+                alt={slide.title || `Slide ${index + 1}`}
+                className="object-contain bg-transparent max-h-[448px] w-full"
+              />
+            </div>
+          ))
+        ) : (
+          <div>
+            <img
+              src="/placeholder.png"
+              alt="Default Slide"
+              className="object-contain bg-transparent max-h-[448px] w-full"
+            />
+          </div>
+        )}
       </Slider>
     </div>
   );
 }
-

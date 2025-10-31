@@ -46,5 +46,9 @@ export const ROUTES = {
   wishlist:{
     getAll: "/wishlist",
   },
+    cart: {
+    getAll: "/carts",
+    addItem: "/carts/items", 
+  },
 
 }
