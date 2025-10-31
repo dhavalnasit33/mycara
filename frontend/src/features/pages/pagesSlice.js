@@ -1,10 +1,10 @@
 
+// D:\mycara\frontend\src\features\pages\pagesSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchPages } from "./pagesThunk";
 
 const initialState = {
-  data: [],     
-  pages: [],
+  homePageSections: [],
   loading: false,
   error: null,
 };
@@ -14,7 +14,7 @@ const pagesSlice = createSlice({
   initialState,
   reducers: {
     clearPages: (state) => {
-      state.data = [];
+      state.homePageSections = [];
       state.error = null;
     },
   },
@@ -26,8 +26,7 @@ const pagesSlice = createSlice({
       })
       .addCase(fetchPages.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload;
-         state.pages = action.payload;
+        state.homePageSections = action.payload;
       })
       .addCase(fetchPages.rejected, (state, action) => {
         state.loading = false;
@@ -39,8 +38,7 @@ const pagesSlice = createSlice({
 // ✅ Export actions
 export const { clearPages } = pagesSlice.actions;
 
-// ✅ Export selector for useSelector()
-export const selectPages = (state) => state.pages;
+
 
 // ✅ Export reducer
 export default pagesSlice.reducer;

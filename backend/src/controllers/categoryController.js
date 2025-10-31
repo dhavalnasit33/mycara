@@ -1,3 +1,5 @@
+//D:\mycara\backend\src\controllers\categoryController.js
+
 const { default: slugify } = require("slugify");
 const Category = require("../models/Category");
 const { sendResponse } = require("../utils/response");

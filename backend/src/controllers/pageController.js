@@ -1,3 +1,5 @@
+//D:\mycara\backend\src\controllers\pageController.js
+
 const Page = require("../models/Page");
 const { sendResponse } = require("../utils/response");
 

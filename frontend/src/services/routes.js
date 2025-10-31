@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\services\routes.js
+
 export const ROUTES = {
   auth: {
     login: "/auth/login",

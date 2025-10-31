@@ -1,3 +1,5 @@
+//D:\mycara\backend\src\models\Category.js
+
 const mongoose = require("mongoose");
 const slugify = require("slugify"); 
 

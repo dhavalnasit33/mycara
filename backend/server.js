@@ -1,3 +1,5 @@
+//D:\mycara\backend\server.js
+
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./src/config/db");
@@ -29,11 +31,16 @@ const sizeRoutes = require("./src/routes/sizeRoutes");
 const uploadsRoutes = require("./src/routes/upload");
 const storeRoutes = require("./src/routes/storeRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
-
+const heroBannerRoutes = require('./src/routes/heroBannerRoutes');
+// const featureRoutes = require('./src/routes/featureRoutes');
+const mongoose = require("mongoose");
 dotenv.config();
 connectDB();
 
+
 const app = express();
+app.use(cors());
+
 
 const allowedOrigins = ['http://localhost:8080', 'http://localhost:3000'];
 
@@ -81,7 +88,17 @@ app.use("/api/sizes", sizeRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
+app.use("/api/hero-banners", heroBannerRoutes);
+
+// app.use("/api/features", featureRoutes); 
+
 app.use(errorHandler);
 
+// MongoDB connection
+mongoose.connect("mongodb://localhost:27017/mycra")
+  .then(() => console.log("MongoDB connected"))
+   .catch(err => console.error("❌ MongoDB error:", err));
+
+  
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

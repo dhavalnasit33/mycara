@@ -1,4 +1,4 @@
-
+//D:\mycara\frontend\src\rootReducer.js
 import navbarReducer from "./features/navbar/navbarSlice";
 import productsReducer from "./features/products/productsSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
@@ -10,6 +10,7 @@ import typesReducer from "./features/types/typesSlice";
 import fabricsReducer from "./features/fabrics/fabricsSlice";
 import discountsReducer from "./features/discounts/discountsSlice";
 import productLabelsReducer from "./features/productLabels/productLabelsSlice";
+
 
 export const rootReducer = {
     navbar: navbarReducer,

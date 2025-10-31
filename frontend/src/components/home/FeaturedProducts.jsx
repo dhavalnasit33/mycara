@@ -1,4 +1,4 @@
-// src/components/FeaturedProducts.jsx
+// D:\mycara\frontend\src\components\home\FeaturedProducts.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";

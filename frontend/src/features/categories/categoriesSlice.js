@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\features\categories\categoriesSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchCategories } from "./categoriesThunk";
 
