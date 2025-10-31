@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { fetchPages } from "./pagesThunk";
 
 const initialState = {
-  homePageSections: [],
+  pages: [],
   loading: false,
   error: null,
 };
@@ -14,7 +14,7 @@ const pagesSlice = createSlice({
   initialState,
   reducers: {
     clearPages: (state) => {
-      state.homePageSections = [];
+      state.pages = [];
       state.error = null;
     },
   },
@@ -26,7 +26,7 @@ const pagesSlice = createSlice({
       })
       .addCase(fetchPages.fulfilled, (state, action) => {
         state.loading = false;
-        state.homePageSections = action.payload;
+        state.pages = action.payload;
       })
       .addCase(fetchPages.rejected, (state, action) => {
         state.loading = false;
