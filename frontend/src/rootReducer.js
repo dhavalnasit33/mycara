@@ -10,7 +10,7 @@ import typesReducer from "./features/types/typesSlice";
 import fabricsReducer from "./features/fabrics/fabricsSlice";
 import discountsReducer from "./features/discounts/discountsSlice";
 import productLabelsReducer from "./features/productLabels/productLabelsSlice";
-import customerReviewsReducer from "./features/customerReviews/customerReviewsSlice";
+import wishlistReducer from "./features/wishlist/wishlistSlice";
 
 export const rootReducer = {
     navbar: navbarReducer,
@@ -24,5 +24,5 @@ export const rootReducer = {
     fabrics: fabricsReducer,
     discounts: discountsReducer,
     productLabels: productLabelsReducer,
-    customerReviews: customerReviewsReducer,
+    wishlist: wishlistReducer,
 };

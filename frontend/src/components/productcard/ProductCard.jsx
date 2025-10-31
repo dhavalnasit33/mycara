@@ -110,6 +110,8 @@ export default function ProductCard({ product }) {
           )}
         </div>
 
+
+
         {/* Color Options */}
          <div className="flex gap-[5px]"> 
             {product.variants?.map((variant, vi) =>
@@ -124,6 +126,8 @@ export default function ProductCard({ product }) {
             )}
           </div>
       
+
+
         {/* Rating Stars */}
         {product.rating !== undefined && product.rating !== null && (
           <div className="flex gap-[6px] mt-1">
