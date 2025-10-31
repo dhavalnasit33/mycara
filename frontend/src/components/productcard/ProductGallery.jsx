@@ -67,8 +67,7 @@ export default function ProductGallery() {
     <div className="flex flex-col md:flex-row gap-[30px]">
       {/* ✅ Thumbnail List */}
       <div
-        className="hidden md:flex md:flex-col gap-[20px] overflow-y-auto max-h-[727px] p-1
-        [&::-webkit-scrollbar]:w-0 [&::-webkit-scrollbar]:h-0 scrollbar-none"
+        className="hidden md:flex md:flex-col gap-[20px] h-[727px] overflow-y-auto hide-scrollbar p-1"
         style={{
           scrollBehavior: "smooth",
           msOverflowStyle: "none",

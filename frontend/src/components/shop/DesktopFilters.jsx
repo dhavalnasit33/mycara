@@ -3,14 +3,7 @@ import React, { useEffect } from "react";
 // Import your filter components
 import { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter } from './WomenCollections';
 
-// Import mock data
-import {
 
-  mockTypes,
-  mockFabrics,
-  mockDiscounts,
-  mockLabels
-} from './shopData';
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchSizes } from "../../features/sizes/sizesThunk";
@@ -37,9 +30,7 @@ const DesktopFilters = ({
     const dispatch = useDispatch();
 
   // Redux data
-  const { items: categories = [], loading: catLoading } = useSelector(
-    (state) => state.categories || {}
-  );
+  const { items:categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
     const { products, loading, error } = useSelector((state) => state.products);
    const {  sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
     const {  colors =[], loading: colorLoading} = useSelector((state) => state.colors);
@@ -131,7 +122,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetCategories}
         showButtons={true}
       >
-        <div className="space-y-1 overflow-y-auto px-3 py-3">
+        <div className="space-y-1 overflow-y-auto px-3 py-3 h-[230px] overflow-y-auto hide-scrollbar" >
           {catLoading ? (
             <p className="text-sm text-gray-500">Loading categories...</p>
           ) : categories.length > 0 ? (
@@ -168,7 +159,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetSizes}
         showButtons={true}
       >
-        <div className="grid grid-cols-2 gap-2 px-3 py-3">
+        <div className="grid grid-cols-2 gap-2 px-3 py-3 ">
           {sizeLoading ? (
             <p className="text-sm text-gray-500">Loading categories...</p>
           ) : sizes.length > 0 ? (
@@ -194,7 +185,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetColors}
         showButtons={true}
       >
-        <div className="grid grid-cols-3 sm:grid-cols-5 gap-y-5 gap-x-3 px-3 py-3">
+        <div className="grid grid-cols-3 sm:grid-cols-5 gap-y-[15px] gap-x-[10px] px-3 py-3">
           {colorLoading ? (
             <p className="text-sm text-gray-500 col-span-full">Loading colors...</p>
           ) : Array.isArray(colors) && colors.length > 0 ? (
@@ -231,7 +222,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetBrands}
         showButtons={true}
       >
-        <div className="space-y-1 overflow-y-auto px-3 py-3">
+        <div className="space-y-1 overflow-y-auto px-3 py-3 ">
           {brandLoading ? (
             <p className="text-sm text-gray-500">Loading brands...</p>
           ) : brands.length > 0 ? (
@@ -309,7 +300,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetDiscounts}
         showButtons={true}
       >
-      <div className="space-y-1 overflow-y-auto px-3 py-3">
+      <div className="space-y-1 overflow-y-auto px-3 py-3 ">
         {discountsLoading ? (
           <p className="text-sm text-gray-500">Loading brands...</p>
         ) : discounts.length > 0 ? (
@@ -336,7 +327,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetLabels}
         showButtons={true}
       >
-        <div className="space-y-1 overflow-y-auto px-3 py-3">
+        <div className="space-y-1 overflow-y-auto px-3 py-3 ">
         {labelsLoading ? (
           <p className="text-sm text-gray-500">Loading brands...</p>
         ) : productLabels.length > 0 ? (

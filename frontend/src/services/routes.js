@@ -42,5 +42,8 @@ export const ROUTES = {
   },
   productLabels:{
     getAll: "/product-labels"
+  },
+  customerReviews:{
+    getAll: "/customer-reviews"
   }
 }

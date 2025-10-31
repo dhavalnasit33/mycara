@@ -535,7 +535,6 @@ const WomenCollections = () => {
     const isCategorySelected = selectedCategories.length > 0;
     const totalResults = 100;
      const showingResults = product.length;
-
    
 
     return (
@@ -649,15 +648,11 @@ const WomenCollections = () => {
 
                 <main className="w-full lg:w-3/4">
                     <div className="flex justify-between items-center mb-6">
-                        <div className="hidden lg:block text-[16px] ">
-  <span className="text-[#989696] font-inter">Showing </span>
-  <span className="font-medium text-black font-inter">{showingResults}</span>
-  <span className="text-[#989696] font-inter"> results from total </span>
-  <span className="font-medium text-black font-inter">{totalResults}</span>
-  <span className="text-[#989696] font-inter"> for "</span>
-  <span className="font-medium text-black font-inter">Saree</span>
-  <span className="text-[#989696] font-inter">"</span>
-</div>
+                        <div className="hidden lg:block text-[16px] sec-text-color ">
+                            Showing  <span className="font-medium text-black">
+                            {showingResults}</span> results from total <span className="font-medium text-black">{totalResults}
+                            </span> for “<span className="font-medium text-black">Saree</span>“
+                        </div>
 
                         <div className=" sm:flex lg:hidden">
         
