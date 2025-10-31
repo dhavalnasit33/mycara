@@ -37,6 +37,21 @@ export const ROUTES = {
   },
   brands:{
     getAll:"/brands",
+<<<<<<< HEAD
 
+=======
+  },
+  types:{
+    getAll:"/types",
+  },
+  fabrics:{
+    getAll:"/fabrics"
+  },
+  discounts:{
+    getAll:"/discounts"
+  },
+  productLabels:{
+    getAll: "/product-labels"
+>>>>>>> 9ec4dd4 (Resolved merge conflicts)
   }
 }

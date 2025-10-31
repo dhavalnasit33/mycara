@@ -16,6 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSizes } from "../../features/sizes/sizesThunk";
 import { fetchColors } from "../../features/colors/colorsThunk";
 import { fetchBrands } from "../../features/brands/brandsThunk";
+import { fetchtypes } from "../../features/types/typeThunk";
+import { fetchFabrics } from "../../features/fabrics/fabricsThunk";
+import { fetchDiscounts } from "../../features/discounts/discountsThunk";
+import { fetchProductLabels } from "../../features/productLabels/productlabelsThunk";
 
 const DesktopFilters = ({
   selectedCategories, handleCategoryChange, handleResetCategories,
@@ -37,16 +41,25 @@ const DesktopFilters = ({
     (state) => state.categories || {}
   );
     const { products, loading, error } = useSelector((state) => state.products);
-   const { sizes: sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
-    const { colors: color =[], loading: colorLoading} = useSelector((state) => state.colors);
-     const { brands: brands =[], loading: brandLoading} = useSelector((state) => state.brands);
+   const {  sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
+    const {  colors =[], loading: colorLoading} = useSelector((state) => state.colors);
+     const {  brands =[], loading: brandLoading} = useSelector((state) => state.brands);
+      const { types =[], loading: typesLoading} = useSelector((state) => state.types);
+       const { fabrics =[], loading: fabricsLoading} = useSelector((state) => state.fabrics);
+       const { discounts =[], loading: discountsLoading} = useSelector((state) => state.discounts);
+      const { productLabels = [], loading: labelsLoading } = useSelector((state) => state.productLabels);
 
-   useEffect(() => {
-      dispatch(fetchCategories());
-       dispatch(fetchSizes());
-        dispatch(fetchColors());
-         dispatch(fetchBrands());
-    }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+    dispatch(fetchSizes());
+    dispatch(fetchColors());
+    dispatch(fetchBrands());
+    dispatch(fetchtypes());
+    dispatch(fetchFabrics());
+    dispatch(fetchDiscounts());
+    dispatch(fetchProductLabels());
+  }, [dispatch]);
   
 
     //category count
@@ -60,10 +73,45 @@ const DesktopFilters = ({
 
   //brandcount
   const brandCounts = products.reduce((acc, product) => {
-  const variantBrand = product.variants?.[0]?.brand?.[0];
-  const brandId = variantBrand?._id;
+  const brandId = product.variants?.[0]?.brand?.[0]?._id;
   if (brandId) {
     acc[brandId] = (acc[brandId] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+//typecount
+  const typeCounts = products.reduce((acc, product) => {
+  const typeId = product.variants?.[0]?.type?.[0]?._id;
+  if (typeId) {
+    acc[typeId] = (acc[typeId] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+//fabriccount 
+  const fabricCounts = products.reduce((acc, product) => {
+  const fabricId = product.variants?.[0]?.fabric?.[0]?._id;
+  if (fabricId) {
+    acc[fabricId] = (acc[fabricId] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+//discountcount
+const discountCounts = products.reduce((acc, product) => {
+  const discountId = product.discount_id;
+  if (discountId) {
+    acc[discountId] = (acc[discountId] || 0) + 1;
+  }
+  return acc;
+}, {});
+
+//productLabels
+  const labelCounts = products.reduce((acc, product) => {
+  const labelId = product.variants?.[0]?.labels?.[0]; 
+  if (labelId) {
+    acc[labelId] = (acc[labelId] || 0) + 1;
   }
   return acc;
 }, {});
@@ -149,8 +197,8 @@ const DesktopFilters = ({
         <div className="grid grid-cols-3 sm:grid-cols-5 gap-y-5 gap-x-3 px-3 py-3">
           {colorLoading ? (
             <p className="text-sm text-gray-500 col-span-full">Loading colors...</p>
-          ) : Array.isArray(color) && color.length > 0 ? (
-            color.map((clr) => (
+          ) : Array.isArray(colors) && colors.length > 0 ? (
+            colors.map((clr) => (
               <div
                 key={clr._id || clr.name}
                 className="flex flex-col items-center cursor-pointer"
@@ -209,16 +257,23 @@ const DesktopFilters = ({
         onReset={handleResetTypes}
         showButtons={true}
       >
-         <div className=" px-3 py-3">
-        {mockTypes.map(type => (
-          <FilterItemCheckbox
-            key={type}
-            name={type}
-            isChecked={selectedTypes.includes(type)}
-            onChange={handleTypeChange}
-          />
-        ))}
-        </div>
+      <div className="space-y-1 overflow-y-auto px-3 py-3">
+        {typesLoading ? (
+          <p className="text-sm text-gray-500">Loading brands...</p>
+        ) : types.length > 0 ? (
+          types.map((type) => (
+            <FilterItemCheckbox
+              key={type._id}
+              name={type.name}
+              count={typeCounts[type._id] || 0}
+              isChecked={selectedTypes.includes(type.name)}
+              onChange={handleTypeChange}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No types found.</p>
+        )}
+      </div>
       </CollapsibleFilter>
 
       {/* Fabric */}
@@ -228,16 +283,23 @@ const DesktopFilters = ({
         onReset={handleResetFabrics}
         showButtons={true}
       >
-        <div className=" px-3 py-3">
-        {mockFabrics.map(fabric => (
-          <FilterItemCheckbox
-            key={fabric}
-            name={fabric}
-            isChecked={selectedFabrics.includes(fabric)}
-            onChange={handleFabricChange}
-          />
-        ))}
-        </div>
+      <div className="space-y-1 overflow-y-auto px-3 py-3">
+        {fabricsLoading ? (
+          <p className="text-sm text-gray-500">Loading brands...</p>
+        ) : fabrics.length > 0 ? (
+          fabrics.map((fabric) => (
+            <FilterItemCheckbox
+              key={fabric._id}
+              name={fabric.name}
+              count={fabricCounts[fabric._id] || 0}
+              isChecked={selectedFabrics.includes(fabric.name)}
+              onChange={handleFabricChange}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No fabrics found.</p>
+        )}
+      </div>
       </CollapsibleFilter>
 
       {/* Discounts */}
@@ -247,16 +309,24 @@ const DesktopFilters = ({
         onReset={handleResetDiscounts}
         showButtons={true}
       >
-        <div className=" px-3 py-3">
-        {mockDiscounts.map(discount => (
-          <FilterItemCheckbox
-            key={discount}
-            name={discount}
-            isChecked={selectedDiscounts.includes(discount)}
-            onChange={handleDiscountChange}
-          />
-        ))}
-        </div>
+      <div className="space-y-1 overflow-y-auto px-3 py-3">
+        {discountsLoading ? (
+          <p className="text-sm text-gray-500">Loading brands...</p>
+        ) : discounts.length > 0 ? (
+          discounts.map((discount) => (
+            <FilterItemCheckbox
+              key={discount._id}
+              name={discount.name}
+              count={discountCounts[discount._id] || 0}
+              isChecked={selectedDiscounts.includes(discount.name)}
+              onChange={handleDiscountChange}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No discounts found.</p>
+        )}
+      </div>
+      
       </CollapsibleFilter>
 
       {/* Product Labels */}
@@ -266,16 +336,23 @@ const DesktopFilters = ({
         onReset={handleResetLabels}
         showButtons={true}
       >
-        <div className=" px-3 py-3">
-        {mockLabels.map(label => (
-          <FilterItemCheckbox
-            key={label}
-            name={label}
-            isChecked={selectedLabels.includes(label)}
-            onChange={handleLabelChange}
-          />
-        ))}
-        </div>
+        <div className="space-y-1 overflow-y-auto px-3 py-3">
+        {labelsLoading ? (
+          <p className="text-sm text-gray-500">Loading brands...</p>
+        ) : productLabels.length > 0 ? (
+          productLabels.map((label) => (
+            <FilterItemCheckbox
+              key={label._id}
+              name={label.name}
+              count={labelCounts[label._id] || 0}
+              isChecked={selectedLabels.includes(label.name)}
+              onChange={handleLabelChange}
+            />
+          ))
+        ) : (
+          <p className="text-sm text-gray-500">No product labels found.</p>
+        )}
+      </div>
       </CollapsibleFilter>
     </aside>
   );

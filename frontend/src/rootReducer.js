@@ -10,6 +10,10 @@ import heroBannerReducer from "./features/heroBanner/heroBannerSlice";
 import sizesReducer from "./features/sizes/sizesSlice";
 import colorsReducer from "./features/colors/colorsSlice";
 import brandsReducer from "./features/brands/brandsSlice";
+import typesReducer from "./features/types/typesSlice";
+import fabricsReducer from "./features/fabrics/fabricsSlice";
+import discountsReducer from "./features/discounts/discountsSlice";
+import productLabelsReducer from "./features/productLabels/productLabelsSlice";
 
 
 export const rootReducer = {
@@ -24,6 +28,14 @@ export const rootReducer = {
 
     sizes: sizesReducer,
     colors: colorsReducer,
+<<<<<<< HEAD
      brands: brandsReducer,
 
+=======
+    brands: brandsReducer,
+    types: typesReducer,
+    fabrics: fabricsReducer,
+    discounts: discountsReducer,
+    productLabels: productLabelsReducer,
+>>>>>>> 9ec4dd4 (Resolved merge conflicts)
 };
