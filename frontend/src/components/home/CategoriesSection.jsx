@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\components\home\CategoriesSection.jsx
+
 import React, { useState, useRef, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";

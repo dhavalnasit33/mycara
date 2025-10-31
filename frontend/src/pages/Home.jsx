@@ -11,7 +11,7 @@ import HeroBanner from '../components/home/HeroBanner';
 import Bestsellers from '../components/home/Bestsellers';
 import RecommendedSection from '../components/home/RecommendedSection';
 import BannerClothes from '../components/home/bannerclothes.jsx';
-import Features from '../components/home/Features.jsx';
+import FeatureSection from '../components/home/FeatureSection.jsx';
 import Row from "../components/ui/Row.jsx";
 import SectionHeading from "../components/ui/SectionHeading.jsx";
 import Section from "../components/ui/Section.jsx";
@@ -41,7 +41,7 @@ const Home = () => {
       <Bestsellers />
       <RecommendedSection />
       <BannerClothes />
-      <Features />
+      <FeatureSection />
     </div>
   );
 };

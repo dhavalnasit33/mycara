@@ -28,8 +28,8 @@ import Sizes from "./pages/Sizes/Sizes";
 import SizeFormPage from "./pages/Sizes/SizeForm";
 import Discounts from "./pages/Discount/Discounts";
 import DiscountFormPage from "./pages/Discount/DiscountForm";
-import Coupons from "./pages/Coupons/Coupons";
-import CouponFormPage from "./pages/Coupons/CouponForm";
+// import Coupons from "./pages/Coupons/Coupons";
+// import CouponFormPage from "./pages/Coupons/CouponForm";
 import Orders from "./pages/Orders/Orders";
 import Payments from "./pages/Payments/Payments";
 import UserFormPage from "./pages/Users/UserForm";
@@ -48,6 +48,8 @@ import StoreFormPage from "./pages/Stores/StoreForm";
 import StoreOwnerFormPage from "./pages/StoreOwner/StoreOwnerForm";
 import Pages from "./pages/Pages/Pages";
 import PageFormPage from "./pages/Pages/PagesForm";
+
+
 
 const queryClient = new QueryClient();
 
@@ -103,9 +105,9 @@ const App = () => (
                 path="discounts/:id/edit"
                 element={<DiscountFormPage />}
               />
-              <Route path="coupons" element={<Coupons />} />
+              {/* <Route path="coupons" element={<Coupons />} />
               <Route path="coupons/add" element={<CouponFormPage />} />
-              <Route path="coupons/:id/edit" element={<CouponFormPage />} />
+              <Route path="coupons/:id/edit" element={<CouponFormPage />} /> */}
               <Route path="orders" element={<Orders />} />
               <Route path="payments" element={<Payments />} />
               <Route path="users" element={<Users />} />
@@ -128,6 +130,7 @@ const App = () => (
               <Route path="stores" element={<Stores />} />
               <Route path="stores/add" element={<StoreFormPage />} />
               <Route path="stores/:id/edit" element={<StoreFormPage />} />
+     
               <Route
                 path="store-owners/add"
                 element={<StoreOwnerFormPage />}

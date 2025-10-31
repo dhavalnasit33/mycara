@@ -1,4 +1,4 @@
-// src/components/FeaturedProducts.jsx
+// D:\mycara\frontend\src\components\home\FeaturedProducts.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { FaArrowRightLong, FaArrowLeftLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";

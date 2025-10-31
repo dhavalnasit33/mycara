@@ -2,6 +2,7 @@
 import navbarReducer from "./features/navbar/navbarSlice";
 import productsReducer from "./features/products/productsSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
+
 import pagesReducer from "./features/pages/pagesSlice";
 import heroBannerReducer from "./features/heroBanner/heroBannerSlice";
 
@@ -11,4 +12,6 @@ export const rootReducer = {
     categories: categoriesReducer,
     pages: pagesReducer,
     heroBanner: heroBannerReducer,
+    
+
 };

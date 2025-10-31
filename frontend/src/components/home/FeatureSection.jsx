@@ -1,10 +1,10 @@
+// D:\mycara\frontend\src\components\home\FeatureSection.jsx
 import React from "react";
 import Section from "../ui/Section";
 import Row from "../ui/Row";
 import feature1 from "../../assets/feature1.png";
 import feature2 from "../../assets/feature2.png";
 import feature3 from "../../assets/feature3.png";
-
 const features = [
   {
     icon: feature1,
@@ -22,7 +22,6 @@ const features = [
     description: "Security is a priority at MYcra.in and we make every effort to...",
   },
 ];
-
 export default function FeatureSection() {
   return (
     <Section >
@@ -37,7 +36,6 @@ export default function FeatureSection() {
                 alt="feature icon"
               />
             </div>
-
             {/* Text */}
             <div className="flex-1">
               <h3 className="font-medium text-20px mb-[10px] leading">

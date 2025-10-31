@@ -21,5 +21,8 @@ export const ROUTES = {
   },
   heroBanners: {
     getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
+  },
+  features: {
+    getAll: "/features",
   }
 }
