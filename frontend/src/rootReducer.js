@@ -2,11 +2,7 @@
 import navbarReducer from "./features/navbar/navbarSlice";
 import productsReducer from "./features/products/productsSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
-
 import pagesReducer from "./features/pages/pagesSlice";
-
-import heroBannerReducer from "./features/heroBanner/heroBannerSlice";
-
 import sizesReducer from "./features/sizes/sizesSlice";
 import colorsReducer from "./features/colors/colorsSlice";
 import brandsReducer from "./features/brands/brandsSlice";
@@ -21,21 +17,11 @@ export const rootReducer = {
     products: productsReducer,
     categories: categoriesReducer,
     pages: pagesReducer,
-
-    heroBanner: heroBannerReducer,
-    
-
-
     sizes: sizesReducer,
     colors: colorsReducer,
-<<<<<<< HEAD
-     brands: brandsReducer,
-
-=======
     brands: brandsReducer,
     types: typesReducer,
     fabrics: fabricsReducer,
     discounts: discountsReducer,
     productLabels: productLabelsReducer,
->>>>>>> 9ec4dd4 (Resolved merge conflicts)
 };

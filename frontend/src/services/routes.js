@@ -20,13 +20,6 @@ export const ROUTES = {
   pages:{
     getAll: "/pages",
   },
-// <<<<<<< HEAD
-//   heroBanners: {
-//     getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
-//   },
-//   features: {
-//     getAll: "/features",
-// =======
   sizes:{
     getAll:"/sizes",
     getById: (id) => `/sizes/${id}`,
@@ -37,9 +30,6 @@ export const ROUTES = {
   },
   brands:{
     getAll:"/brands",
-<<<<<<< HEAD
-
-=======
   },
   types:{
     getAll:"/types",
@@ -52,6 +42,5 @@ export const ROUTES = {
   },
   productLabels:{
     getAll: "/product-labels"
->>>>>>> 9ec4dd4 (Resolved merge conflicts)
   }
 }
