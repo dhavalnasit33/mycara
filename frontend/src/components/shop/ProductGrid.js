@@ -2,6 +2,7 @@ import ProductCard from '../productcard/ProductCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk';
 import { useEffect } from 'react';
+import { fetchDiscounts } from '../../features/discounts/discountsThunk';
 
 
 const ProductGrid  = () => {
@@ -11,6 +12,7 @@ const ProductGrid  = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchProducts());
+          dispatch(fetchDiscounts());
     }, [dispatch]);
 
     console.log("Products in component:", products);

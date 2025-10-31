@@ -6,6 +6,7 @@ import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "../../features/products/productsThunk";
 import { fetchSizes } from "../../features/sizes/sizesThunk";
+import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 
 
 export default function ProductInfo() {
@@ -14,14 +15,31 @@ export default function ProductInfo() {
   const dispatch = useDispatch();
 
   const { product, loading, error } = useSelector((state) => state.products);
+  const { discounts } = useSelector((state) => state.discounts);
     const { sizes } = useSelector((state) => state.sizes);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchProductById(id)); 
          dispatch(fetchSizes(id));
+         dispatch(fetchDiscounts());
     }
   }, [id, dispatch]);
+
+  const discount = product
+    ? discounts.find((d) => d._id === product?.discount_id)
+    : null;
+    const originalPrice = product?.variants?.[0]?.price || 0;
+    let finalPrice = originalPrice;
+
+    if (discount) {
+      if (discount.type === "percentage") {
+        finalPrice = originalPrice - (originalPrice * discount.value) / 100;
+      } else {
+        finalPrice = originalPrice - discount.value;
+      }
+  }
+
 
   if (loading) {
     return <p className="text-center text-gray-500 py-10">Loading product...</p>;
@@ -50,11 +68,18 @@ export default function ProductInfo() {
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center ">
-            <p className="text-[26px] text-black">₹{Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}</p>
-            <p className="text-theme font-18 ml-[7px]">35% Off</p>
+            <p className="text-[26px] text-black">₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</p>
+             {discount && (
+            <p className="text-theme font-18 ml-[7px]">
+              {discount.type === "percentage"
+                ? `${discount.value}% Off`
+                : `₹${discount.value} Off`}
+            </p>
+          )}
         </div>
-        <p className="sec-text-color">MRP <span className="line-through">₹2,199</span> Inclusive of all taxes</p>
+        <p className="sec-text-color">MRP <span className="line-through"> ₹{Number(originalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span> Inclusive of all taxes</p>
       </div>
+
 
       {/* Sizes */}
       <div className="pt-[34px] space-y-[28px]">
