@@ -16,7 +16,7 @@ import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
 export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { product, products, loading, error } = useSelector((state) => state.products);
+  const { product, products, loading,error } = useSelector((state) => state.products);
 
   useEffect(() => {
     if (id) dispatch(fetchProductById(id));
@@ -28,7 +28,7 @@ export default function Product() {
 
   if (loading) return <p className="text-center py-10">Loading product...</p>;
   if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
-  if (!product) return <p className="text-center py-10">No product found.</p>;
+  if (!product) return <p className="text-center py-10">No Product Found.</p>;
 
   return (
     <>

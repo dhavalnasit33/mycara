@@ -113,7 +113,7 @@ const TrendingCloth = ({ product, desktop }) => {
         <img
           src={getImageUrl(product.images)}
           alt={product.name}
-          className="w-full h-auto md:h-[555px]"
+          className="w-full h-auto md:h-[555px] rounded-[5px]"
         />
 
         {product.sale && (
@@ -124,8 +124,8 @@ const TrendingCloth = ({ product, desktop }) => {
       </div>
 
       <div className="p-2 text-left">
-        <h3 className="font-medium text-[13px] custom-lg:text-[20px] custom-lg:text-[20px] mb-2">{product.name}</h3>
-        <p className="text-[#989696] mb-2">
+        <h3 className="font-medium text-[13px] custom-lg:text-[20px] custom-lg:text-[20px] mb-[8px] leading">{product.name}</h3>
+        <p className="sec-text-color mb-[8px]">
           {product.variants?.map((variant) => (
             <span key={variant._id} className="text-[10px] custom-lg:text-[14px] mr-2">
               Rs {variant.price}
