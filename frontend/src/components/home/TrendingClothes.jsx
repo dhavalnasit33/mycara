@@ -56,7 +56,7 @@ const TrendingClothes = () => {
         settings: { slidesToShow: 2 },
       },
       {
-        breakpoint: 640, // mobile
+        breakpoint: 767, // mobile
         settings: { slidesToShow: 1 },
       },
     ],
@@ -104,7 +104,7 @@ const TrendingCloth = ({ product, desktop }) => {
      <Link to={`/products/${product._id}`}>
     <div className={`group ${desktop ? "" : "w-full"}`}>
      
-      <div className="relative rounded-lg overflow-visible p-2">
+      <div className="relative rounded-lg overflow-visible p-2 h-[450px] md:h-[555px]">
         <span className="absolute top-0 left-0 w-[139px] border-t-[0.5px] border-dashed border-black"></span>
         <span className="absolute top-0 left-0 h-[177px] border-l-[0.5px] border-dashed border-black"></span>
         <span className="absolute bottom-0 right-0 w-[139px] border-b-[0.5px] border-dashed border-black"></span>
@@ -113,7 +113,7 @@ const TrendingCloth = ({ product, desktop }) => {
         <img
           src={getImageUrl(product.images)}
           alt={product.name}
-          className="w-full h-auto md:h-[555px] rounded-[5px]"
+          className="w-full h-full rounded-[5px]"
         />
 
         {product.sale && (
