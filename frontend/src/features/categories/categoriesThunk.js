@@ -9,8 +9,7 @@ export const fetchCategories = createAsyncThunk(
   "categories/fetchCategories",
   async (params = {}, { rejectWithValue }) => {
     try {
-      // const res = await api.get(ROUTES.categories.getAll, { params });
-      const queryParams = { page: 1, limit: 20, ...params };
+      const queryParams = { page: 1, limit: 0, ...params };
 
       const res = await api.get(ROUTES.categories.getAll, { params: queryParams });
 

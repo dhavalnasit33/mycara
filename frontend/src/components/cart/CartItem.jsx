@@ -103,8 +103,7 @@
 // }
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCart } from "../../features/cart/cartThunk";
-import { Minus, Plus } from "lucide-react";
+import { fetchCart } from "../../features/cart/cartThunk";  
 import remove from "../../assets/remove.png";
 
 export default function CartItem() {
