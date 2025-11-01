@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
 import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row.jsx';
-
-
-import IoIosArrow from '../icons/IoIosArrow';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../../features/products/productsThunk.js';
 import Section from '../ui/Section.jsx';
 import { getImageUrl } from '../utils/helper.js';
 import { Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 
 
 const Bestsellers = () => {
@@ -31,10 +29,10 @@ const Bestsellers = () => {
 
 
   return (
-      <Section className='mt-[25px] md:mt-[50px]'>
+      <Section>
 
-            <Row>
-              <SectionHeading page="Home" order={7}/>
+            <Row className="pt-[25px] md:pt-[50px]">
+              <SectionHeading page="Home" order={7} />
             </Row>
 
         <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
@@ -44,11 +42,11 @@ const Bestsellers = () => {
         </Row>
         
         {/* "View all" Button */}
-        <div className="flex justify-center pt-[40px] lg:pt-[70px]">
-          <button className="lg:w-[217px] lg:w-[217px] flex items-center justify-center text-theme text-[12px] lg:text-[16px] font-sans border border-black py-3 px-5 rounded-[5px] transition-colors ">
-            View all Best Seller's <IoIosArrow className="inline-block text-[30px]" />
+        <Row className="flex justify-center pt-[50px] md:pt-[100px] pb-[25px] md:pb-[50px]">
+          <button className="lg:w-[217px] lg:w-[217px] gap-[5px] flex items-center justify-center text-theme text-[12px] lg:text-[16px] font-sans border border-black py-3 px-5 rounded-[5px] transition-colors ">
+            View all Best Seller's <ArrowRight size={20} />
           </button>
-        </div>
+        </Row>
       </Section> 
   );
 };
@@ -56,7 +54,7 @@ const Bestsellers = () => {
 const SellerCard = ({ product }) => {
   return (
      <Link to={`/products/${product._id}`}>
-    <div className="relative overflow-hidden bg-white rounded-[5px] group ">
+    <div className="relative overflow-hidden bg-white rounded-[5px] group " >
       {/* Main Image */}
       <img
         src={getImageUrl(product.images)}
