@@ -113,7 +113,7 @@ const TrendingCloth = ({ product, desktop }) => {
         <img
           src={getImageUrl(product.images)}
           alt={product.name}
-          className="w-full h-full rounded-[5px]"
+          className=" w-full h-full rounded-[5px]"
         />
 
         {product.sale && (
