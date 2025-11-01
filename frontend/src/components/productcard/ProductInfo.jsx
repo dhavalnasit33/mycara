@@ -10,19 +10,19 @@ import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 import { addToCart, fetchCart } from "../../features/cart/cartThunk";
 
 
-export default function ProductInfo() {
+export default function ProductInfo({product}) {
 
   const { id } = useParams(); 
   const dispatch = useDispatch();
 
-  const { product, loading, error } = useSelector((state) => state.products);
+  // const { product, loading, error } = useSelector((state) => state.products);
   const { discounts } = useSelector((state) => state.discounts);
-  const { sizes } = useSelector((state) => state.sizes);
+  // const { sizes } = useSelector((state) => state.sizes);
 
   useEffect(() => {
     if (id) {
-      dispatch(fetchProductById(id)); 
-         dispatch(fetchSizes(id));
+    //   dispatch(fetchProductById(id)); 
+        //  dispatch(fetchSizes(id));
          dispatch(fetchDiscounts());
     }
   }, [id, dispatch]);
@@ -48,17 +48,17 @@ export default function ProductInfo() {
   }
 
 
-  if (loading) {
-    return <p className="text-center text-gray-500 py-10">Loading product...</p>;
-  }
+  // if (loading) {
+  //   return <p className="text-center text-gray-500 py-10">Loading product...</p>;
+  // }
 
-  if (error) {
-    return <p className="text-center text-red-500 py-10">{error}</p>;
-  }
+  // if (error) {
+  //   return <p className="text-center text-red-500 py-10">{error}</p>;
+  // }
 
-  if (!product) {
-    return <p className="text-center text-gray-500 py-10">No product found.</p>;
-  }
+  // if (!product) {
+  //   return <p className="text-center text-gray-500 py-10">No product found.</p>;
+  // }
 
   return (
     <>
@@ -137,3 +137,4 @@ export default function ProductInfo() {
     </>
   );
 }
+
