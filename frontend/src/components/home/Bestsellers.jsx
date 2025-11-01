@@ -35,7 +35,7 @@ const Bestsellers = () => {
               <SectionHeading page="Home" order={7} />
             </Row>
 
-        <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-6">
+        <Row className="grid grid-cols-2 lg:grid-cols-4 gap-[10px] lg:gap-[30px]">
           {bestSellersLimited.map((product, index) => (
             <SellerCard key={index} product={product} />
           ))}
@@ -54,12 +54,12 @@ const Bestsellers = () => {
 const SellerCard = ({ product }) => {
   return (
      <Link to={`/products/${product._id}`}>
-    <div className="relative overflow-hidden bg-white rounded-[5px] group " >
+    <div className="relative overflow-hidden bg-white rounded-[5px] group  h-[300px] sm:h-[397px]" >
       {/* Main Image */}
       <img
         src={getImageUrl(product.images)}
         alt={product.name}
-        className="w-full sm:h-[222px]  md:h-[222px]  lg:h-[397.33px]  transition-transform duration-300 transform"
+        className="w-full  h-full  transition-transform duration-300 transform"
       />
 
       {/* Hover overlay */}
