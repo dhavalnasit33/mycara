@@ -4,6 +4,7 @@ import LoginSlider from "../components/login/loginSlider";
 import { FaPlay, FaTimes } from "react-icons/fa";
 import SocialButtons from "../components/login/SocialButtons";
 import Button from "../components/ui/Button";
+import { X } from "lucide-react";
 
 
 
@@ -12,8 +13,8 @@ const RegistrationForm = ({onClose}) => {
     <div className="flex items-center justify-center ">
       <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto">
         <div className="w-full md:w-2/3 px-5 py-16 relative  md:mx-0 md:px-20  ">
-          <button className="absolute top-0 left-0  bg-color  text-2xl font-bold p-3"   onClick={onClose} >
-           <FaTimes className="text-white "/>
+          <button className="absolute top-0 left-0  bg-color p-[8px]"   onClick={onClose} >
+           <X className="text-white " size={20}/>
           </button>
 
           <div className="mb-6 text-center ">

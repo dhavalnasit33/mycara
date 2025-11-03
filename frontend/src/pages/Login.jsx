@@ -6,6 +6,7 @@ import SocialButtons from "../components/login/SocialButtons";
 import Button from "../components/ui/Button";
 import Section from "../components/ui/Section";
 import Row from "../components/ui/Row";
+import { X } from "lucide-react";
 
 const LoginForm = ({onClose}) => {
   return (
@@ -17,8 +18,8 @@ const LoginForm = ({onClose}) => {
         </div>
 
         <div className="w-full md:w-2/3 px-5 py-16 relative  md:mx-0 md:px-20  ">
-          <button  onClick={onClose}  className="absolute top-0 right-0  bg-color  text-2xl font-bold p-3">
-           <FaTimes className="text-white "/>
+          <button  onClick={onClose}  className="absolute top-0 right-0  bg-color p-[8px]">
+           <X className="text-white " size={20}/>
           </button>
 
           <div className="mb-6 text-center ">

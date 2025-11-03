@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProductById } from "../../features/products/productsThunk";
@@ -15,23 +15,21 @@ export default function ProductInfo({product}) {
   const { id } = useParams(); 
   const dispatch = useDispatch();
 
-  // const { product, loading, error } = useSelector((state) => state.products);
   const { discounts } = useSelector((state) => state.discounts);
-  // const { sizes } = useSelector((state) => state.sizes);
 
   useEffect(() => {
     if (id) {
-    //   dispatch(fetchProductById(id)); 
-        //  dispatch(fetchSizes(id));
          dispatch(fetchDiscounts());
     }
   }, [id, dispatch]);
 
+  const navigate = useNavigate();
+
   const handleAddToCart = () => {
-    if (product) {
-      dispatch(addToCart(product));
-    }
+    dispatch(addToCart(product));
+    navigate("/cart"); // redirect after adding
   };
+
 
   const discount = product
     ? discounts.find((d) => d._id === product?.discount_id)
@@ -47,18 +45,6 @@ export default function ProductInfo({product}) {
       }
   }
 
-
-  // if (loading) {
-  //   return <p className="text-center text-gray-500 py-10">Loading product...</p>;
-  // }
-
-  // if (error) {
-  //   return <p className="text-center text-red-500 py-10">{error}</p>;
-  // }
-
-  // if (!product) {
-  //   return <p className="text-center text-gray-500 py-10">No product found.</p>;
-  // }
 
   return (
     <>
@@ -124,11 +110,11 @@ export default function ProductInfo({product}) {
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
-            <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart}>
-                <Link to='/cart' className="flex items-center gap-[10px]">
-                    <Handbag size={22} />Add To Bag
-                </Link>
-            </Button>
+            <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >
+            <span className="flex items-center gap-[10px]">
+              <Handbag size={22} /> Add To Bag
+            </span>
+          </Button>
         </div>
       </div>
 

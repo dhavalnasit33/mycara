@@ -108,15 +108,23 @@ import remove from "../../assets/remove.png";
 
 export default function CartItem() {
   const dispatch = useDispatch();
-  const { items, loading, error } = useSelector((state) => state.cart);
+  // const { items, loading, error } = useSelector((state) => state.cart);
+  const { items } = useSelector((state) => state.cart);
+
 
   useEffect(() => {
     dispatch(fetchCart());
   }, [dispatch]);
 
-  if (loading) return <p className="text-center py-10 text-gray-500">Loading your cart...</p>;
-  if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
-  if (!items || items.length === 0) return <p className="text-center py-10 text-gray-500">No items in your cart</p>;
+
+
+
+  // if (loading) return <p className="text-center py-10 text-gray-500">Loading your cart...</p>;
+  // if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
+  // if (!items || items.length === 0) return <p className="text-center py-10 text-gray-500">No items in your cart</p>;
+  if (!items || items.length === 0)
+  return <p className="text-center py-10 text-gray-500">No items in your cart</p>;
+
 
   return (
     <div className="w-full">
