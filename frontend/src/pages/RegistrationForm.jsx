@@ -1,7 +1,7 @@
 // src/components/LoginForm.jsx
 import Logo from "../assets/my_logo.png";
 import LoginSlider from "../components/login/loginSlider";
-import { FaPlay, FaTimes } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import SocialButtons from "../components/login/SocialButtons";
 import Button from "../components/ui/Button";
 import { X } from "lucide-react";

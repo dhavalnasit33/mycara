@@ -24,7 +24,7 @@ export const addToCart = createAsyncThunk("cart/addToCart", async (product, { re
     };
     // const res = await api.post(ROUTES.cart.addItem, body);
     const res = await api.get(ROUTES.sizes.addItem, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }, body
         });
     return res.data.data;
   } catch (err) {

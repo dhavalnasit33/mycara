@@ -1,7 +1,5 @@
 import React from 'react';
-import SectionHeading from '../ui/SectionHeading';
 import Row from '../ui/Row';
-import Section from '../ui/Section';
 
 import prodimg from "../../assets/shopsaree4.jpg";
 import prodimg1 from "../../assets/shopsaree2.jpg";

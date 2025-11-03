@@ -1,13 +1,11 @@
 import React, { useEffect } from "react";
 import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProductById } from "../../features/products/productsThunk";
-import { fetchSizes } from "../../features/sizes/sizesThunk";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
-import { addToCart, fetchCart } from "../../features/cart/cartThunk";
+import { addToCart} from "../../features/cart/cartThunk";
 
 
 export default function ProductInfo({product}) {
