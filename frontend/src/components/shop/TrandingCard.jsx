@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../utils/helper";
+import { Plus } from "lucide-react";
 
 export default function TrendingCard ({ product }){
   return(
@@ -24,8 +25,8 @@ export default function TrendingCard ({ product }){
             {product.name}
           </h3>
         </div>
-        <button className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full shadow-lg transition duration-300 border border-white bg-pink-500/10 hover:bg-pink-500/20">
-          <span className="text-lg font-bold text-black leading-none pb-0.5">+</span>
+        <button className="flex-shrink-0 flex items-center justify-center w-[20px] h-[20px] rounded-full transition duration-300 border border-white">
+          <Plus size={14}/>
         </button>
       </div>
       <div>

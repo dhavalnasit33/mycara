@@ -109,7 +109,7 @@ const discountCounts = products.reduce((acc, product) => {
 
 
   return (
-    <aside className="hidden lg:block lg:w-1/4 h-fit px-2 py-5 bg-white rounded-[20px] box-shadow">
+  <aside className="hidden lg:block lg:w-1/4 h-[150vh] overflow-y-auto px-4 py-5 bg-white rounded-[20px] box-shadow hide-scrollbar">
       <div className="p-4">
         <h2 className="text-20px font-medium text-black lowercase">Filter Products</h2>
       </div>
@@ -122,7 +122,7 @@ const discountCounts = products.reduce((acc, product) => {
         onReset={handleResetCategories}
         showButtons={true}
       >
-        <div className="space-y-1 overflow-y-auto px-3 py-3 h-[230px] overflow-y-auto hide-scrollbar" >
+        <div className="space-y-1 px-3 py-3 h-[230px] overflow-y-auto hide-scrollbar" >
           {catLoading ? (
             <p className="text-sm text-gray-500">Loading categories...</p>
           ) : categories.length > 0 ? (

@@ -1,4 +1,5 @@
 //D:\mycara\frontend\src\rootReducer.js
+import authReducer from "./features/auth/authSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
 import productsReducer from "./features/products/productsSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
@@ -14,6 +15,7 @@ import wishlistReducer from "./features/wishlist/wishlistSlice";
 import cartReducer from "./features/cart/cartSlice";
 
 export const rootReducer = {
+    auth: authReducer,
     navbar: navbarReducer,
     products: productsReducer,
     categories: categoriesReducer,
