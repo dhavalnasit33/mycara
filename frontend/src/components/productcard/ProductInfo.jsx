@@ -21,12 +21,26 @@ export default function ProductInfo({product}) {
     }
   }, [id, dispatch]);
 
+  //add to bag
   const navigate = useNavigate();
 
   const handleAddToCart = () => {
-    dispatch(addToCart(product));
-    navigate("/cart"); // redirect after adding
+    const payload = {
+      productId: product._id,
+      quantity: 1,
+    };
+
+    dispatch(addToCart(payload))
+      .unwrap()
+      .then(() => {
+        alert("Item added to cart!");
+        navigate("/cart");
+      })
+      .catch((err) => {
+        alert(err?.message || "Failed to add item");
+      });
   };
+
 
 
   const discount = product

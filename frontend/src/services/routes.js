@@ -48,7 +48,8 @@ export const ROUTES = {
   },
     cart: {
     getAll: "/carts",
-    addItem: "/carts/items", 
+    addItem: "/carts/items",
+    getById: (id) => `/carts/${id}`, 
   },
 
 }
