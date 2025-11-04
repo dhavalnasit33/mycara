@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const res = await api.post(ROUTES.auth.login, userData);
-      return res.data; 
+      return res.data.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
@@ -21,7 +21,7 @@ export const registerUser = createAsyncThunk(
   async (formData, { rejectWithValue }) => {
     try {
       const response = await api.post(ROUTES.auth.register, formData);
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

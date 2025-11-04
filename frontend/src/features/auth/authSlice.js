@@ -38,11 +38,13 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        const { token, user } = action.payload.data || {};
-        state.token = token;
-        state.user = user;
-        localStorage.setItem("token", token);
-        localStorage.setItem("user", JSON.stringify(user));
+        const { token, user } = action.payload || {};
+        if (token && user) {
+          state.token = token;
+          state.user = user;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+        }
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -57,7 +59,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        const { token, user } = action.payload.data || {};
+        const { token, user } = action.payload || {};
         if (token && user) {
           state.token = token;
           state.user = user;
