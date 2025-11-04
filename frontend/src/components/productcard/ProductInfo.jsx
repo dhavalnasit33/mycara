@@ -24,21 +24,30 @@ export default function ProductInfo({product}) {
   //add to bag
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
-    const payload = {
-      productId: product._id,
-      quantity: 1,
-    };
+  // const handleAddToCart = () => {
+  //   const payload = {
+  //     productId: product._id,
+  //     quantity: 1,
+  //   };
 
-    dispatch(addToCart(payload))
-      .unwrap()
-      .then(() => {
-        alert("Item added to cart!");
-        navigate("/cart");
-      })
-      .catch((err) => {
-        alert(err?.message || "Failed to add item");
-      });
+  //   dispatch(addToCart(payload))
+  //     .unwrap()
+  //     .then(() => {
+  //       alert("Item added to cart!");
+  //       navigate("/cart");
+  //     })
+  //     .catch((err) => {
+  //       alert(err?.message || "Failed to add item");
+  //     });
+  // };
+    const { token } = useSelector((state) => state.auth);
+
+  const handleAddToCart = () => {
+    if (!token) {
+      console.log("User not logged in");
+      return;
+    }
+    dispatch(addToCart({ productId: product._id, quantity: 1 }));
   };
 
 

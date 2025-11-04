@@ -38,7 +38,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        const { token, user } = action.payload || {};
+        const { token, user } = action.payload.data || {};
         if (token && user) {
           state.token = token;
           state.user = user;
@@ -59,7 +59,7 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        const { token, user } = action.payload || {};
+        const { token, user } = action.payload.data || {};
         if (token && user) {
           state.token = token;
           state.user = user;
