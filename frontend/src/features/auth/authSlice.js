@@ -51,27 +51,24 @@ const authSlice = createSlice({
 
       // ✅ REGISTER
 
-      // .addCase(registerUser.fulfilled, (state, action) => {
-      //   state.loading = false;
-      // })
       .addCase(registerUser.pending, (state) => {
-  state.loading = true;
-  state.error = null;
-})
-.addCase(registerUser.fulfilled, (state, action) => {
-  state.loading = false;
-  const { token, user } = action.payload.data || {};
-  if (token && user) {
-    state.token = token;
-    state.user = user;
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
-  }
-})
-.addCase(registerUser.rejected, (state, action) => {
-  state.loading = false;
-  state.error = action.payload || "Registration failed";
-});
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        const { token, user } = action.payload.data || {};
+        if (token && user) {
+          state.token = token;
+          state.user = user;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(user));
+        }
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Registration failed";
+      });
 
   },
 });

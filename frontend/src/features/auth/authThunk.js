@@ -8,7 +8,7 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const res = await api.post(ROUTES.auth.login, userData);
-      return res.data; // expected: { success, data: {token, user}, message }
+      return res.data; 
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
     }
