@@ -5,10 +5,30 @@ import { FaPlay } from "react-icons/fa";
 import SocialButtons from "../components/login/SocialButtons";
 import Button from "../components/ui/Button";
 import { X } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { registerUser } from "../features/auth/authThunk";
 
 
 
 const RegistrationForm = ({onClose}) => {
+
+  const dispatch = useDispatch();
+    const { loading } = useSelector((state) => state.auth);
+    const [formData, setFormData] = useState({ email: "", password: "" });
+  
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      const res = await dispatch(registerUser(formData));
+      if (res.meta.requestStatus === "fulfilled") {
+        alert("Registration successful!");
+        onClose();
+      }
+    };
   return (
     <div className="flex items-center justify-center ">
       <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto">
@@ -25,31 +45,43 @@ const RegistrationForm = ({onClose}) => {
             <h3 className="text-dark text-bold text-[26px]">Sign Up</h3>
           </div>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="flex flex-col mb-4">
                 <input 
-                    type="text" 
-                    placeholder="Name" 
+                     type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
                     className="w-full border light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
                 />
             </div>
             <div>
               <input
-                type="text"
+                type="email"
+                name="email"
                 placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
                 className="w-full border light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
               />
             </div>
             <div>
               <input
                 type="password"
+                name="password"
                 placeholder="Password"
+                value={formData.password}
+                onChange={handleChange}
+                required
                 className="w-full border light-border rounded-md px-5 py-3 focus:outline-none focus:ring-2 focus:ring-pink-400"
               />
             </div>
             <div className="flex flex-col sm:flex-row justify-between items-center text-sm gap-4 w-full pt-[26px]">
-                <Button variant="common" className="!min-w-[185px] flex items-center justify-between ">
-                    Sign Up
+                <Button type="submit"   disabled={loading} variant="common" className="!min-w-[185px] flex items-center justify-between ">
+                    {loading ? "Signing up..." : "Sign Up"}
                     <FaPlay size={8} />
                 </Button>
             </div>

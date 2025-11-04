@@ -1,24 +1,29 @@
+// src/features/auth/authThunk.js
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import { ROUTES } from "../../services/routes";
+import api from "../../services/api";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async ({ username, password }, { rejectWithValue }) => {
+  async (userData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(ROUTES.auth.login, { username, password });
-
-      const token = res.data?.data?.token;
-      const user = res.data?.data?.user;
-
-      if (!token) throw new Error("Token not found");
-
-      // store token localStorage ma
-      localStorage.setItem("token", token);
-
-      return { token, user };
+      const res = await api.post(ROUTES.auth.login, userData);
+      return res.data; // expected: { success, data: {token, user}, message }
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
+    }
+  }
+);
+
+
+export const registerUser = createAsyncThunk(
+  "auth/registerUser",
+  async (formData, { rejectWithValue }) => {
+    try {
+      const response = await api.post(ROUTES.auth.register, formData);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
