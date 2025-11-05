@@ -41,28 +41,26 @@ export const fetchProductById = createAsyncThunk(
   }
 );
 
-//NewArrivals
-export const fetchProductsByVariant = createAsyncThunk(
-  "products/fetchProductsByVariant",
-  async ({ variantLabel, limit }, { rejectWithValue }) => {
+
+export const fetchNewArrivals = createAsyncThunk(
+  "products/fetchNewArrivals",
+  async (_, { rejectWithValue }) => {
     try {
-      
-      const params = {
-        variant_label: variantLabel, 
-        limit: limit,
-      };
+      const res = await api.get(ROUTES.products.getAll, {
+        // 🔍 Only fetch products that have Variant Label = "New Arrivals"
+        params: { 
+          variantLabel: "New Arrivals",
+          sort: "-createdAt",
+          limit: 100,
+        },
+      });
 
-      // getAll એન્ડપોઇન્ટનો ઉપયોગ કરો અને query parameters મોકલો
-      const res = await api.get(ROUTES.products.getAll, { params });
-
-      if (res.data.success) {
-        // Fetched products નો એરે રિટર્ન કરો
-        return res.data.data.products;
+      if (res.data?.success) {
+        return res.data.data?.products || [];
       }
 
-      return rejectWithValue(res.data.message || `Failed to fetch products for variant: ${variantLabel}`);
+      return rejectWithValue(res.data?.message || "Failed to fetch new arrivals");
     } catch (err) {
-      // console.error(err); // debugging માટે
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }
   }

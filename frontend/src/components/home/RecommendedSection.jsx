@@ -74,13 +74,8 @@ const recommendedData = (homePageSections || [])
   if (recommendedData.length === 0) return null;
 
   return (
-// <<<<<<< HEAD
-//     <div>
-//       <Section className="w-full py-[25px] md:py-[50px]">
-// =======
-    <div className=" mb-[25px] md:mb-[50px]">
-      <Section className="w-full py-[25px] md:py-[50px] ">
-
+    <div>
+      <Section className="w-full py-[25px] md:py-[50px]">
         <Row>
           
           <SectionHeading page="Home" order={8} />
@@ -96,7 +91,6 @@ const recommendedData = (homePageSections || [])
             &lt;
           </button>
 
-{/* <<<<<<< HEAD
           
           <div className="flex gap-6 justify-center w-full px-4 sm:px-10 lg:px-20 overflow-hidden">
             {displayItems.map((item, index) => (
@@ -120,30 +114,6 @@ const recommendedData = (homePageSections || [])
             &gt;
           </button>
         </Row>
-======= */}
-        {/* Product Cards */}
-        <div className="flex justify-center w-full px-[2rem]  lg:px-[3rem] overflow-hidden">
-
-          {displayItems.map((item, index) => (
-            <div
-              key={index}
-              className={`flex-shrink-0 w-full px-[15px] ${itemsPerPage === 3 ? 'md:w-1/3' : 'w-full'}`}
-            >
-              <ProductCard item={item} />
-            </div>
-          ))}
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={goToNext}
-          className="absolute right-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold transition-colors"
-          style={{ boxShadow: '0px 0px 4px rgba(0,0,0,0.25)' }}
-        >
-          &gt;
-        </button>
-      </Row>
-
       </Section>
     </div>
   );
@@ -154,35 +124,22 @@ const ProductCard = ({ item }) => {
   const imageUrl = item?.image_url ? `${IMAGE_BASE_URL}${item.image_url}` : "placeholder.png";
 
   return (
-// <<<<<<< HEAD
-//     <div className="relative shadow-lg overflow-hidden transition-transform duration-300">
-//       <div className="relative w-full h-[398px] lg:w-[342px] lg:h-[398px]">
-//         <img src={imageUrl} alt={item?.title || "Recommended"} className="w-full h-full" />
-//         <div
-//           className="absolute inset-0 bg-black opacity-30"
-//           style={{ mixBlendMode: "luminosity" }}
-//         ></div>
-// =======
-    <div className="relative shadow-lg overflow-hidden transition-transform duration-300 ">
-      <div className="relative w-full h-[398px] md:h-auto lg:w-[342px] lg:h-[398px]">
-        <img src={item.image} alt={item.name} className="w-full h-full " />
-        <div className="absolute inset-0 bg-black opacity-30" style={{ mixBlendMode: 'luminosity' }}></div>
-
+    <div className="relative shadow-lg overflow-hidden transition-transform duration-300">
+      <div className="relative w-full h-[398px] lg:w-[342px] lg:h-[398px]">
+        <img src={imageUrl} alt={item?.title || "Recommended"} className="w-full h-full" />
+        <div
+          className="absolute inset-0 bg-black opacity-30"
+          style={{ mixBlendMode: "luminosity" }}
+        ></div>
       </div>
 
       <div className="absolute inset-0 flex justify-center items-center cursor-pointer">
         <img src={imageUrl} alt={item?.title || "Recommended"} className="w-[90%] h-[92%] object-cover" />
       </div>
-{/* <<<<<<< HEAD
 
       <div className="absolute bottom-8 left-6 text-white z-20">
         <h2 className="font-h5">{item?.title || "Recommended Item"}</h2>
         <p className="font-sans font-medium text-[16px]">{item?.description || "Category"}</p>
-======= */}
-      <div className="absolute w-[200px] bottom-8 left-6 text-white leading-none ">
-        <h2 className="font-h5 break">{item.name}</h2>
-        <p className="font-medium text-[16px]">{item.category}</p>
-
       </div>
     </div>
   );

@@ -22,6 +22,7 @@ import { fetchProducts } from "../../features/products/productsThunk";
 import { getImageUrl } from "../utils/helper";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 
+
 const FeaturedProducts = () => {
    const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -46,11 +47,31 @@ const FeaturedProducts = () => {
   }, [dispatch]);
 
   // ✅ Automatically set first category as active when categories load
-  useEffect(() => {
-    if (categories.length > 0 && !activeCategory) {
-      setActiveCategory(categories[0]._id);
+useEffect(() => {
+  if (categories.length > 0) {
+    const savedCategoryId = localStorage.getItem("activeCategoryId");
+    const savedCategoryName = localStorage.getItem("activeCategoryName");
+
+    // ✅ Prefer saved category (from localStorage)
+    let initialCategory = null;
+
+    if (savedCategoryId && savedCategoryName) {
+      const existingCat = categories.find(cat => cat._id === savedCategoryId && cat.name === savedCategoryName);
+      if (existingCat) initialCategory = existingCat._id;
     }
-  }, [categories, activeCategory]);
+
+    // ✅ If not found, fallback to Cotton Kurti or first featured one
+    if (!initialCategory) {
+      const featured = categories.find(cat => FEATURED_CATEGORY_NAMES.includes(cat.name));
+      initialCategory = featured ? featured._id : categories[0]._id;
+    }
+
+    setActiveCategory(initialCategory);
+    localStorage.setItem("activeCategoryId", initialCategory);
+  }
+}, [categories]);
+
+
 
 
 
@@ -83,7 +104,9 @@ const FeaturedProducts = () => {
   const settings = { 
     slidesToShow: 9,
     slidesToScroll: 1,
+
     autoplay: true,
+
     speed: 5000,
     cssEase: "linear",
     autoplaySpeed: 0,
@@ -102,7 +125,9 @@ const FeaturedProducts = () => {
               },
               {
                   breakpoint: 767,
+
                   settings: { slidesToShow: 3, }
+
               }
           ] 
   };
@@ -112,7 +137,7 @@ const FeaturedProducts = () => {
     setActiveCategory(category._id);
   };
 
-  // ✅ Filter products by selected category
+
   const filteredProducts =
     activeCategory && products.length > 0
       ? products.filter((p) => {
@@ -133,6 +158,7 @@ const FeaturedProducts = () => {
         </Row>
 
         {/* Category Section */}
+        
         <Row className="relative mb-5 ">
           {showArrows && (
             <>
@@ -152,37 +178,48 @@ const FeaturedProducts = () => {
             </>
           )}
 
-          {/* Category List */}
-          {catLoading ? (
-            <p>Loading categories...</p>
-          ) : Array.isArray(categories) && categories.length > 0 ? (
-            <Slider ref={sliderRef} {...settings}>
-              {categories.map((cat) => (
-                <div key={cat._id} className="px-[5px]">
-                  <button
-                    onClick={() => handleCategorySelect(cat)}
-                    className={` rounded-[30px] flex items-center justify-center 
-                      w-full h-[22px] md:h-[38px] text-center transition
-                      ${
-                        activeCategory === cat._id
-                          ? "bg-color text-white"
-                          : "text-black "
-                      }`}
-                    style={{
-                      boxShadow: "inset 0 0 5px 1px rgba(0, 0, 0, 0.25)",
-                    }}
-                  >
-                    <p className="text-[12px] md:text-[16px] font-medium">
-                      {cat.name}
-                    </p>
-                  </button>
 
-                </div>
-              ))}
-            </Slider>
-          ) : (
-            <p>No categories available.</p>
-          )}
+
+          {/* Category List */}
+{catLoading ? (
+  <p>Loading categories...</p>
+) : Array.isArray(categories) && categories.length > 0 ? (
+  <Slider ref={sliderRef} {...settings}>
+    {FEATURED_CATEGORY_NAMES.map((name, index) => {
+        const cat = categories.find((c) => c.name === name);
+        if (!cat) return null;
+        return (
+        <div key={cat._id} className="px-[5px]">
+          <button
+            onClick={() => {
+              handleCategorySelect(cat);
+              // ✅ Save active category name to localStorage
+              localStorage.setItem("activeCategoryName", cat.name);
+              localStorage.setItem("activeCategoryId", cat._id);
+            }}
+            className={`rounded-[30px] flex items-center justify-center 
+              w-full h-[22px] md:h-[38px] text-center transition
+              ${
+                activeCategory === cat._id
+                  ? "bg-color text-white"
+                  : "text-black"
+              }`}
+            style={{
+              boxShadow: "inset 0 0 5px 1px rgba(0, 0, 0, 0.25)",
+            }}
+          >
+             <p className="text-[12px] md:text-[16px] font-medium">
+                {cat.name}
+              </p>
+            </button>
+          </div>
+        );
+      })}
+    </Slider>
+) : (
+  <p>No categories available.</p>
+)}
+
         </Row>
 
         {/* Products Grid */}
@@ -257,6 +294,7 @@ const FeaturedProducts = () => {
                         )}
                       </div>
 
+
                       {/* Color Dots */}
                       <div className="flex gap-[5px] mt-2 justify-center">
                         {p.variants?.map((variant, vi) =>
@@ -270,6 +308,7 @@ const FeaturedProducts = () => {
                           ))
                         )}
                       </div>
+
                     </div>
                   </Link>
                 );
@@ -286,3 +325,13 @@ const FeaturedProducts = () => {
 
 export default FeaturedProducts;
   
+
+
+
+
+
+
+
+
+
+

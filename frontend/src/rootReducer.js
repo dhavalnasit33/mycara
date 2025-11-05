@@ -2,6 +2,7 @@
 import authReducer from "./features/auth/authSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
 import productsReducer from "./features/products/productsSlice";
+import discountsReducer from './features/discounts/discountsSlice';
 import categoriesReducer from "./features/categories/categoriesSlice";
 import pagesReducer from "./features/pages/pagesSlice";
 import sizesReducer from "./features/sizes/sizesSlice";
@@ -18,6 +19,7 @@ export const rootReducer = {
     auth: authReducer,
     navbar: navbarReducer,
     products: productsReducer,
+    discounts: discountsReducer,
     categories: categoriesReducer,
     pages: pagesReducer,
     sizes: sizesReducer,
