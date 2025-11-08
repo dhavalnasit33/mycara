@@ -45,6 +45,7 @@ export default function ProductInfo({product}) {
   const handleAddToCart = () => {
     if (!token) {
       console.log("User not logged in");
+       navigate("/cart");
       return;
     }
     dispatch(addToCart({ productId: product._id, quantity: 1 }));

@@ -3,6 +3,7 @@
   import { fetchCart, addToCart } from "./cartThunk";
 
   const initialState = {
+    cart:null,
      carts: [],
       loading: false,
       error: null,
@@ -33,7 +34,7 @@
         state.loading = true;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
-        state.carts = action.payload;
+        state.cart = action.payload;
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
