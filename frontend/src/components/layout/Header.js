@@ -88,6 +88,23 @@ const Header = () => {
     alert("Logged out successfully!");
   };
 
+  const handleOpenCart = async () => {
+      if (!token) {
+        setIsLoginOpen(true);
+        return;
+      }
+      navigate("/cart");
+    };
+
+     const handleOpenWishlist = async () => {
+      if (!token) {
+        setIsLoginOpen(true);
+        return;
+      }
+      navigate("/wishlist");
+    };
+    
+
   return (
     <header className="w-full mb-[5px] md:mb-[10px] sec-theme box-shadow">
       <Row className="h-[70px] custom-lg:h-[100px] flex items-center justify-between gap-[10px]">
@@ -213,7 +230,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
+                    <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
                     </Link>
@@ -230,17 +247,17 @@ const Header = () => {
 
 
           {/* Wishlist Icon */}
-          <Link to="/wishlist" className="text-light">
+          <button onClick={handleOpenWishlist} className="text-light">
             <Heart className="w-5 h-5 " />
-          </Link>
+          </button>
 
           {/* Cart Icon */}
-          <Link to="/cart" className="relative text-light">
+          <button className="relative text-light" onClick={handleOpenCart}>
             <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
             <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
               0
             </span>
-          </Link>
+          </button>
         </div>
       </Row>
 
@@ -304,7 +321,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className="py-4 px-4 cursor-pointer">
-                <Link to="/wishlist" className="flex items-center gap-[15px]">
+                <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
                 </Link>
               </div>

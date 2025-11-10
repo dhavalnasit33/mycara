@@ -40,6 +40,11 @@ const handleDecrease = (item) => {
   }
 };
   
+const handleDelete = (item) => {
+  const cart_id = localStorage.getItem("cart_id");
+  
+};
+
 
   return (
     <div className="w-full">
@@ -59,7 +64,7 @@ const handleDecrease = (item) => {
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
               <td className="py-4">
-                <button className="w-[20px] h-[20px]"  >
+                <button className="w-[20px] h-[20px]"   onClick={() => handleDelete(item)}>
                   <img src={remove} alt="remove"  />
                 </button>
               </td>
