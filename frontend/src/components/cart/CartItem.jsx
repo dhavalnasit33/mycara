@@ -1,13 +1,11 @@
 import remove from "../../assets/remove.png";
 import { Minus, Plus } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCartItem, fetchCart, updateCartItem, updateCartItemQuantity } from "../../features/cart/cartThunk";
+import { fetchCart, updateCartItem } from "../../features/cart/cartThunk";
 
 export default function CartItem() {  
-  const [cartItems, setCartItems] = useState([]);
   const { items = [], loading } = useSelector((state) => state.cart);
-  // const cart_id = localStorage.getItem("cart_id");
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -41,7 +39,6 @@ const handleDecrease = (item) => {
 };
   
 const handleDelete = (item) => {
-  const cart_id = localStorage.getItem("cart_id");
   
 };
 

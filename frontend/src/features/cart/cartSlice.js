@@ -1,6 +1,6 @@
   // // features/cart/cartSlice.js
   import { createSlice } from "@reduxjs/toolkit";
-  import { fetchCart, addToCart, updateCartItem, deleteCartItem } from "./cartThunk";
+  import { fetchCart, addToCart, updateCartItem } from "./cartThunk";
 
   const initialState = {
     cart: null,
