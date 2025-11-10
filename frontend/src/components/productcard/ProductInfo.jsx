@@ -19,7 +19,6 @@ export default function ProductInfo({product}) {
  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
     const [showLoginPopup, setShowLoginPopup] = useState(false);
-      const [isLoginOpen, setIsLoginOpen] = useState(false);
 
  useEffect(() => {
     if (id) {
@@ -52,13 +51,8 @@ export default function ProductInfo({product}) {
 
     dispatch(addToCart(payload))
       .unwrap()
-      .then((res) => {
-        dispatch(fetchCart());
-        navigate("/cart");
-      })
-      .catch((err) => {
-        console.error("🔴 Error adding to cart:", err);
-      });
+      dispatch(fetchCart());
+      navigate("/cart");
   };
 
 

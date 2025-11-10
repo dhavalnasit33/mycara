@@ -7,7 +7,7 @@ import { deleteCartItem, fetchCart, updateCartItem, updateCartItemQuantity } fro
 export default function CartItem() {  
   const [cartItems, setCartItems] = useState([]);
   const { items = [], loading } = useSelector((state) => state.cart);
-  const cart_id = localStorage.getItem("cart_id");
+  // const cart_id = localStorage.getItem("cart_id");
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -28,7 +28,7 @@ const handleIncrease = (item) => {
   const newQuantity = item.quantity + 1;
   dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
     .unwrap()
-    .then(() => dispatch(fetchCart())); // refresh cart
+    dispatch(fetchCart()); // refresh cart
 };
 const handleDecrease = (item) => {
   const cart_id = localStorage.getItem("cart_id");
@@ -36,7 +36,7 @@ const handleDecrease = (item) => {
     const newQuantity = item.quantity - 1;
     dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
       .unwrap()
-      .then(() => dispatch(fetchCart()));
+      dispatch(fetchCart());
   }
 };
   
