@@ -1,10 +1,10 @@
   // // features/cart/cartSlice.js
   import { createSlice } from "@reduxjs/toolkit";
-  import { fetchCart, addToCart } from "./cartThunk";
+  import { fetchCart, addToCart, updateCartItem, deleteCartItem } from "./cartThunk";
 
   const initialState = {
-    cart:null,
-     carts: [],
+    cart: null,
+  items: [],
       loading: false,
       error: null,
       selectedItem: null,
@@ -13,7 +13,11 @@
   const cartSlice = createSlice({
     name: "cart",
     initialState,
-    reducers: {},
+    reducers: { clearCart: (state) => {
+      state.items = [];
+      state.total = 0;
+      state.cart_id = null;
+    },},
     extraReducers: (builder) => {
       builder
         // Add to cart
@@ -22,7 +26,8 @@
         })
         .addCase(addToCart.fulfilled, (state, action) => {
           state.loading = false;
-          state.carts = action.payload;
+        state.cart = action.payload;
+        state.items = action.payload?.items || [];
         })
         .addCase(addToCart.rejected, (state, action) => {
           state.loading = false;
@@ -34,13 +39,21 @@
         state.loading = true;
       })
       .addCase(fetchCart.fulfilled, (state, action) => {
+         state.loading = false;
         state.cart = action.payload;
+        state.items = action.payload?.items || []; 
       })
       .addCase(fetchCart.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(updateCartItem.fulfilled, (state, action) => {
+        state.items = action.payload.items || [];
       });
+
     },
   });
 
+  
+export const { clearCart } = cartSlice.actions;
   export default cartSlice.reducer;

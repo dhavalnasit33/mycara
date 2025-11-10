@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   FaUser,
 } from "react-icons/fa";
@@ -36,6 +36,7 @@ import Button from "../ui/Button";
 import Row from "../ui/Row";
 import LoginForm from "../../pages/Login";
 import RegistrationForm from "../../pages/RegistrationForm";
+import { clearCart } from "../../features/cart/cartSlice";
 
 const staticNavItems = [
   { name: "Home", path: "/home", icon: <ShopIcon className="w-5 h-6 hidden custom-lg:block" /> },
@@ -54,6 +55,7 @@ const staticNavItems = [
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { navbars = [] } = useSelector((state) => state.navbar);
   const { token, user } = useSelector((state) => state.auth);
 
@@ -81,6 +83,8 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearCart()); 
+    navigate("/shop");
     alert("Logged out successfully!");
   };
 

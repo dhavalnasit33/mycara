@@ -18,18 +18,46 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue }) => { 
+  async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await api.get(ROUTES.cart.getAll, {
+      const response = await api.get(ROUTES.cart.getAll, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      return res.data.data?.carts;
+
+      const carts = response.data?.data?.carts || [];
+      const cart = carts[0] || null;
+
+      if (cart?._id) {
+        localStorage.setItem("cart_id", cart._id);
+      }
+
+      return cart;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch cart failed");
+    }
+  }
+);
+
+
+export const updateCartItem = createAsyncThunk(
+  "cart/updateCartItem",
+  async ({ cart_id, item_id, quantity }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await api.put(ROUTES.cart.updateItem, { cart_id, item_id, quantity },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return res.data.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   }
 );
