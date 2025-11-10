@@ -1,8 +1,21 @@
 import React from "react";
 import Button from "../ui/Button";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function CartSummary() {
+   const { items = [] } = useSelector((state) => state.cart);
+
+  const subtotal = items.reduce((acc, item) => {
+    const price = item?.variant_id?.price || 0;
+    const quantity = item?.quantity || 1;
+    return acc + price * quantity;
+  }, 0);
+
+  const tax = subtotal * 0.1; // 10% tax
+  const shipping = 0;
+  const total = subtotal + tax + shipping;
+
   return (
     <div className="w-full  rounded-[3px] py-[45px] px-[22px] light-color ">
       <h2 className="text-[22px] text-black mb-[50px] text-center">
@@ -14,19 +27,19 @@ export default function CartSummary() {
       <div className="space-y-[25px] text-light text-p mb-[50px]">
         <div className="flex justify-between pb-[10px] border-b border-1 light-border ">
           <span>Sub-Total:</span>
-          <span>₹4,830.00</span>
+          <span>₹{subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Tax (10%):</span>
-          <span>₹483.00</span>
+          <span>₹{tax.toFixed(2)}</span>
         </div>
         <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Shipping:</span>
-          <span>₹0.00</span>
+          <span>₹{shipping.toFixed(2)}</span>
         </div>
-        <div className="flex justify-between ">
+        <div className="flex justify-between font-bold ">
           <span>TOTAL:</span>
-          <span>₹5,213.00</span>
+          <span>₹{total.toFixed(2)}</span>
         </div>
       </div>
 

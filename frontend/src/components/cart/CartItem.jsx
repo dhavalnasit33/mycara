@@ -66,7 +66,7 @@ const handleDecrease = (item) => {
               <td className="p-4 w-[162px]">
                 <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
               </td>
-              <td className="p-4 break">{item.product_id?.name}</td>
+              <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
               <td className="p-4">
                 <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] light-border border text-black rounded-[20px] leading">
                   <button onClick={() => handleDecrease(item)}>
@@ -79,8 +79,8 @@ const handleDecrease = (item) => {
                   </button>
                 </div>
               </td>
-              <td className="p-4 text-left">₹{item.variant_id?.price}*{item.quantity}</td>
-              <td className="p-4 text-center">₹ {(item.variant_id?.price || 0) * (item.quantity || 1)}</td>
+              <td className="p-4 text-left">₹{item.variant_id?.price} * {item.quantity}</td>
+              <td className="p-4 text-center">₹ {(item.variant_id?.price || 0)*(item.quantity || 1)}</td>
             </tr>
           ))}
         </tbody>
@@ -97,7 +97,7 @@ const handleDecrease = (item) => {
                 <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
             </div>
             <div className="flex flex-col  flex-wrap ">
-                <div className="mb-[8px] text-14 break">{item.product_id?.name}</div>
+                <div className="mb-[8px] text-14 break ">{item.product_id?.name}</div>
                 <div className="text-p mb-[12px] text-color">₹{(item.variant_id?.price || 0) * (item.quantity || 1)}</div>
 
                 <div className="flex items-center gap-[10px] text-14">
