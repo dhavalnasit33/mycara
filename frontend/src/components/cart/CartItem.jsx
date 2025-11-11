@@ -6,8 +6,8 @@ import { deleteCartItem, fetchCart, updateCartItem } from "../../features/cart/c
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../utils/helper";
 
-export default function CartItem({product}) {  
-  const { items = [], loading } = useSelector((state) => state.cart);
+export default function CartItem() {  
+  const { items = [], loading ,deletingItemId } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -40,6 +40,21 @@ const handleDecrease = (item) => {
   }
 };
 
+//remove cart
+  const handleDelete = (item_id) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id) return alert("No cart found!");
+    dispatch(deleteCartItem({ cart_id, item_id }))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchCart());
+      })
+      .catch((error) => {
+        console.error("Delete error:", error);
+      });
+  };
+
+
   return (
     <div className="w-full">
       {/* Desktop View */}
@@ -57,9 +72,9 @@ const handleDecrease = (item) => {
         <tbody>
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
-              <td className="py-4">
-                <button className="w-[20px] h-[20px]" >
-                  <img src={remove} alt="remove"  />
+              <td className="py-4 text-center">
+                <button className="w-[20px] h-[20px]" onClick={() => handleDelete(item._id)}  >
+                    <img src={remove} alt="remove" />
                 </button>
               </td>
               <td className="p-4 w-[162px]">
@@ -93,8 +108,8 @@ const handleDecrease = (item) => {
         {items.map((item, index) => (
         <div key={index} className="bg-white p-4 rounded-[5px] box-shadow relative flex sm:flex-nowrap gap-[20px] items-start">
             <div className="flex items-center gap-[10px] flex-shrink-0">
-                <button className="w-[10px] h-[10px] flex items-center justify-center">
-                    <img src={remove} alt="remove" className="w-full h-full object-contain" />
+                <button className="w-[10px] h-[10px] flex items-center justify-center" onClick={() => handleDelete(item._id)} >
+                  <img src={remove}  alt="remove" className="w-full h-full object-contain" />
                 </button>
                 <Link to={`/products/${item.product_id?._id}`}>
                   <img src={getImageUrl(item.product_id?.images?.[0])} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
