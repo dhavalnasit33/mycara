@@ -2,9 +2,10 @@ import remove from "../../assets/remove.png";
 import { Minus, Plus } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCart, updateCartItem } from "../../features/cart/cartThunk";
+import { deleteCartItem, fetchCart, updateCartItem } from "../../features/cart/cartThunk";
+import { Link } from "react-router-dom";
 
-export default function CartItem() {  
+export default function CartItem({product}) {  
   const { items = [], loading } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
@@ -37,11 +38,6 @@ const handleDecrease = (item) => {
       dispatch(fetchCart());
   }
 };
-  
-const handleDelete = (item) => {
-  
-};
-
 
   return (
     <div className="w-full">
@@ -61,12 +57,14 @@ const handleDelete = (item) => {
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
               <td className="py-4">
-                <button className="w-[20px] h-[20px]"   onClick={() => handleDelete(item)}>
+                <button className="w-[20px] h-[20px]" >
                   <img src={remove} alt="remove"  />
                 </button>
               </td>
               <td className="p-4 w-[162px]">
+                <Link to={`/products/${item.product_id?._id}`}>
                 <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
+                </Link>
               </td>
               <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
               <td className="p-4">
