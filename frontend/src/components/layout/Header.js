@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import {
   FaUser,
 } from "react-icons/fa";
@@ -36,6 +36,7 @@ import Button from "../ui/Button";
 import Row from "../ui/Row";
 import LoginForm from "../../pages/Login";
 import RegistrationForm from "../../pages/RegistrationForm";
+import { clearCart } from "../../features/cart/cartSlice";
 
 const staticNavItems = [
   { name: "Home", path: "/home", icon: <ShopIcon className="w-5 h-6 hidden custom-lg:block" /> },
@@ -54,6 +55,7 @@ const staticNavItems = [
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { navbars = [] } = useSelector((state) => state.navbar);
   const { token, user } = useSelector((state) => state.auth);
 
@@ -81,8 +83,27 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    dispatch(clearCart()); 
+    navigate("/shop");
     alert("Logged out successfully!");
   };
+
+  const handleOpenCart = async () => {
+      if (!token) {
+        setIsLoginOpen(true);
+        return;
+      }
+      navigate("/cart");
+    };
+
+     const handleOpenWishlist = async () => {
+      if (!token) {
+        setIsLoginOpen(true);
+        return;
+      }
+      navigate("/wishlist");
+    };
+    
 
   return (
     <header className="w-full mb-[5px] md:mb-[10px] sec-theme box-shadow">
@@ -209,7 +230,7 @@ const Header = () => {
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link to="/wishlist" className="flex items-center gap-[15px] w-full">
+                    <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
                     </Link>
@@ -226,17 +247,17 @@ const Header = () => {
 
 
           {/* Wishlist Icon */}
-          <Link to="/wishlist" className="text-light">
+          <button onClick={handleOpenWishlist} className="text-light">
             <Heart className="w-5 h-5 " />
-          </Link>
+          </button>
 
           {/* Cart Icon */}
-          <Link to="/cart" className="relative text-light">
+          <button className="relative text-light" onClick={handleOpenCart}>
             <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
             <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
               0
             </span>
-          </Link>
+          </button>
         </div>
       </Row>
 
@@ -300,7 +321,7 @@ const Header = () => {
                 </Link>
               </div>
               <div className="py-4 px-4 cursor-pointer">
-                <Link to="/wishlist" className="flex items-center gap-[15px]">
+                <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
                 </Link>
               </div>

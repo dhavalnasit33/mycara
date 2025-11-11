@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
-import { addToCart} from "../../features/cart/cartThunk";
+import { addToCart, fetchCart} from "../../features/cart/cartThunk";
+import LoginForm from "../../pages/Login";
 
 
 export default function ProductInfo({product}) {
@@ -15,43 +16,48 @@ export default function ProductInfo({product}) {
 
   const { discounts } = useSelector((state) => state.discounts);
 
-  useEffect(() => {
+ const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+    const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+ useEffect(() => {
     if (id) {
-         dispatch(fetchDiscounts());
+      dispatch(fetchDiscounts());
     }
-  }, [id, dispatch]);
+    if (token) {
+      dispatch(fetchCart());
+    }
+  }, [id, token, dispatch]);
 
-  //add to bag
-  const navigate = useNavigate();
-
-  // const handleAddToCart = () => {
-  //   const payload = {
-  //     productId: product._id,
-  //     quantity: 1,
-  //   };
-
-  //   dispatch(addToCart(payload))
-  //     .unwrap()
-  //     .then(() => {
-  //       alert("Item added to cart!");
-  //       navigate("/cart");
-  //     })
-  //     .catch((err) => {
-  //       alert(err?.message || "Failed to add item");
-  //     });
-  // };
-    const { token } = useSelector((state) => state.auth);
-
-  const handleAddToCart = () => {
+  const handleAddToCart = async () => {
     if (!token) {
-      console.log("User not logged in");
+      setShowLoginPopup(true);
       return;
     }
-    dispatch(addToCart({ productId: product._id, quantity: 1 }));
+    let cart_id = localStorage.getItem("cart_id");
+    const product_id = product._id;
+    const variant_id = product.variants?.[0]?._id;
+    const quantity = 1;
+
+    if (!cart_id || cart_id === "undefined") {
+      await dispatch(fetchCart()).unwrap();
+      cart_id = localStorage.getItem("cart_id");
+    }
+    if (!cart_id || cart_id === "undefined") {
+      alert("Cart not found. Please refresh and try again.");
+      return;
+    }
+    const payload = { cart_id, product_id, variant_id, quantity };
+
+    dispatch(addToCart(payload))
+      .unwrap()
+      dispatch(fetchCart());
+      navigate("/cart");
   };
 
 
 
+//discount percentage
   const discount = product
     ? discounts.find((d) => d._id === product?.discount_id)
     : null;
@@ -138,6 +144,20 @@ export default function ProductInfo({product}) {
           </Button>
         </div>
       </div>
+
+            {/* ===== Login Popup ===== */}
+        {showLoginPopup && (
+        <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
+          <div className="relative bg-white w-full max-w-[1062px] rounded-md overflow-hidden">
+            <LoginForm
+              onClose={() => setShowLoginPopup(false)}
+              onSwitch={() => {
+                setShowLoginPopup(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Wishlist + Add to Bag */}
      

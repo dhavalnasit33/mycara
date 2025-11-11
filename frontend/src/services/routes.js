@@ -58,10 +58,11 @@ export const ROUTES = {
   wishlist:{
     getAll: "/wishlist",
   },
-    cart: {
+  cart: {
     getAll: "/carts",
     addItem: "/carts/items",
-    getById: (id) => `/carts/${id}`, 
+    updateItem: "/carts/items",
+    deleteCart: "/carts/items",
   },
 
 // <<<<<<< Updated upstream
