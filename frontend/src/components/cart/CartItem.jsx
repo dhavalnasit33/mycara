@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItem, fetchCart, updateCartItem } from "../../features/cart/cartThunk";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../utils/helper";
 
 export default function CartItem({product}) {  
   const { items = [], loading } = useSelector((state) => state.cart);
@@ -63,7 +64,8 @@ const handleDecrease = (item) => {
               </td>
               <td className="p-4 w-[162px]">
                 <Link to={`/products/${item.product_id?._id}`}>
-                <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
+                <img src={getImageUrl(item.product_id?.images?.[0])} 
+                    alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
                 </Link>
               </td>
               <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
@@ -94,7 +96,9 @@ const handleDecrease = (item) => {
                 <button className="w-[10px] h-[10px] flex items-center justify-center">
                     <img src={remove} alt="remove" className="w-full h-full object-contain" />
                 </button>
-                <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                <Link to={`/products/${item.product_id?._id}`}>
+                  <img src={getImageUrl(item.product_id?.images?.[0])} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                </Link>
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break ">{item.product_id?.name}</div>
@@ -102,11 +106,11 @@ const handleDecrease = (item) => {
 
                 <div className="flex items-center gap-[10px] text-14">
                 <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] ">
-                    <Minus size={12} onClick={() => handleDecrease(index)} />
+                    <Minus size={12} onClick={() => handleDecrease(item)} />
                 </button>
                 <span>{item.quantity}</span>
                 <button className="bg-color-100 rounded-[2px] flex items-center justify-center p-[2px] text-white">
-                    <Plus size={12} onClick={() => handleIncrease(index)}/>
+                    <Plus size={12} onClick={() => handleIncrease(item)}/>
                 </button>
                 </div>
             </div>
