@@ -63,6 +63,13 @@ const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
+const cart = useSelector((state) => state.cart.cart);
+const wishlist = useSelector((state) => state.wishlist.items);
+
+const cartCount = cart?.items?.reduce((sum, item) => sum + item.quantity, 0) || 0;
+const wishlistCount = wishlist?.length || 0;
+
+
   useEffect(() => {
     dispatch(fetchNavbar());
   }, [dispatch]);
@@ -249,14 +256,21 @@ const Header = () => {
           {/* Wishlist Icon */}
           <button onClick={handleOpenWishlist} className="text-light">
             <Heart className="w-5 h-5 " />
+             {wishlistCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    {wishlistCount}
+                  </span>
+                )}
           </button>
 
           {/* Cart Icon */}
           <button className="relative text-light" onClick={handleOpenCart}>
             <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
-            <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-              0
-            </span>
+               {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
           </button>
         </div>
       </Row>
