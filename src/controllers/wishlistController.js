@@ -21,7 +21,7 @@ const getWishlist = async (req, res) => {
       // Fetch all for download
       const wishlists = await Wishlist.find()
         .populate("user_id", "name email")
-        .populate("items.product_id", "name")
+        .populate("items.product_id", "name image images")
         .populate("items.variant_id", "price color size sku")
         .sort({ createdAt: -1 });
 
@@ -38,7 +38,7 @@ const getWishlist = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("user_id", "name email")
-      .populate("items.product_id", "name")
+      .populate("items.product_id", "name image images")
       .populate("items.variant_id", "price color size sku");
 
     sendResponse(res, true, { wishlists, total, page, pages: Math.ceil(total / limit) });
