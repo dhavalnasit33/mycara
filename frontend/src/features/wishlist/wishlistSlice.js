@@ -28,20 +28,17 @@ const wishlistSlice = createSlice({
         state.loading = false;
       })
 
-        .addCase(fetchWishlistByUser.fulfilled, (state, action) => {
-          state.loading = false;
-          state.items = action.payload.items || [];
-          state.wishlistId = action.payload._id || null; // ✅ store wishlist id
-        })
-
-        .addCase(removeWishlistItem.fulfilled, (state, action) => {
+      .addCase(fetchWishlistByUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.items = action.payload.items; // updated wishlist from backend
+        state.items = action.payload.items || [];
+        state.wishlistId = action.payload._id || null; 
       })
-      .addCase(removeWishlistItem.rejected, (state, action) => {
+
+      .addCase(removeWishlistItem.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = action.payload;
-      });
+        state.items = action.payload.items; 
+      })
+
 
   },
 });

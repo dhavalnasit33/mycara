@@ -23,22 +23,35 @@ export default function CartItem() {
   if (!items.length) return <p>Your cart is empty.</p>;
 
 
-const handleIncrease = (item) => {
+const handleIncrease = async (item) => {
   const cart_id = localStorage.getItem("cart_id");
+  if (!cart_id) return;
   const newQuantity = item.quantity + 1;
+  dispatch({
+    type: "cart/updateLocalQuantity",
+    payload: { item_id: item._id, quantity: newQuantity },
+  });
   dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
     .unwrap()
-    dispatch(fetchCart()); // refresh cart
+    .catch(() => {
+    });
 };
-const handleDecrease = (item) => {
+
+const handleDecrease = async (item) => {
   const cart_id = localStorage.getItem("cart_id");
-  if (item.quantity > 1) {
-    const newQuantity = item.quantity - 1;
-    dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
-      .unwrap()
-      dispatch(fetchCart());
-  }
+  if (!cart_id || item.quantity <= 1) return;
+  const newQuantity = item.quantity - 1;
+  dispatch({
+    type: "cart/updateLocalQuantity",
+    payload: { item_id: item._id, quantity: newQuantity },
+  });
+  dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
+    .unwrap()
+    .catch(() => {
+    });
 };
+
+
 
 //remove cart
   const handleDelete = (item_id) => {
