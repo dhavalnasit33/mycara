@@ -52,8 +52,13 @@ const getCartById = async (req, res) => {
   try {
     const cart = await Cart.findById(req.params.id)
       .populate("user_id", "name email")
-      .populate("items.product_id", "name price")
-      .populate("items.variant_id", "color size sku");
+      // .populate("items.product_id", "name price image images")
+       .populate({
+          path: "items.product_id",
+          select: "name price image images discount_id", 
+          populate: { path: "discount_id", select: "type value", },
+        })
+      .populate("items.variant_id", "color size sku price");
     if (!cart) return sendResponse(res, false, null, "Cart not found");
     sendResponse(res, true, cart, "Cart retrieved successfully");
   } catch (err) {

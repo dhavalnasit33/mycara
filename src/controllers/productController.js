@@ -69,6 +69,16 @@ const getProducts = async (req, res) => {
         },
       },
       { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
+      {
+        $lookup: {
+          from: "discounts",
+          localField: "discount_id",
+          foreignField: "_id",
+          as: "discount",
+        },
+      },
+      { $unwind: { path: "$discount", preserveNullAndEmptyArrays: true } },
+
 
       // Lookup matching variants
       {
@@ -144,6 +154,7 @@ const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate("category_id", "name")
+      .populate("discount_id")
       .lean();
     if (!product) return sendResponse(res, false, null, "Product not found");
 

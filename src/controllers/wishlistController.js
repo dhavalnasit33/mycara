@@ -106,7 +106,11 @@ const removeItemFromWishlist = async (req, res) => {
 const getWishlistByUser = async (req, res) => {
   try {
     const wishlist = await Wishlist.findOne({ user_id: req.params.user_id })
-      .populate("items.product_id")
+      // .populate("items.product_id")
+      .populate({
+        path: "items.product_id",
+        populate: { path: "discount_id", select: "type value", },
+      })
       .populate("items.variant_id");
 
     if (!wishlist) return sendResponse(res, false, null, "Wishlist not found");
