@@ -1,29 +1,47 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchWishlist, toggleWishlist } from "./wishlistThunk";
+import { addToWishlist, fetchWishlistByUser, removeWishlistItem } from "./wishlistThunk";
 
-const initialState = {
-  wishlist: [],
+const initialState = { 
+  items: [],
+  wishlistId: null,
   loading: false,
-  error: null,
+  error: null
 };
 
 const wishlistSlice = createSlice({
   name: "wishlist",
   initialState,
-  reducers: {},
+  reducers: {   setWishlist: (state, action) => {
+      state.items = action.payload;
+    },},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchWishlist.pending, (state) => {
+
+      .addCase(addToWishlist.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchWishlist.fulfilled, (state, action) => {
+      .addCase(addToWishlist.fulfilled, (state, action) => {
         state.loading = false;
-        state.wishlist = action.payload;
+        state.items = action.payload.data;
       })
-      .addCase(fetchWishlist.rejected, (state, action) => {
+      .addCase(addToWishlist.rejected, (state) => {
+        state.loading = false;
+      })
+
+        .addCase(fetchWishlistByUser.fulfilled, (state, action) => {
+          state.loading = false;
+          state.items = action.payload.items || [];
+          state.wishlistId = action.payload._id || null; // ✅ store wishlist id
+        })
+
+        .addCase(removeWishlistItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.items = action.payload.items; // updated wishlist from backend
+      })
+      .addCase(removeWishlistItem.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      })
+      });
 
   },
 });

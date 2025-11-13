@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 import { addToCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
 export default function ProductInfo({product}) {
@@ -72,6 +73,8 @@ export default function ProductInfo({product}) {
       }
   }
 
+//add to wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
 
   return (
     <>
@@ -134,7 +137,7 @@ export default function ProductInfo({product}) {
 
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
-            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] ">
+            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product)}>
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >

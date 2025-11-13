@@ -4,6 +4,7 @@ import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
 export default function ProductCard({ product }) {
@@ -34,6 +35,9 @@ export default function ProductCard({ product }) {
 
   const displayedImage = getImageUrl(images[currentImageIndex]);
   const hasMultipleImages = images.length > 1;
+
+  //addto wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
   
   return (
       <Link to={`/products/${product._id}`}>
@@ -54,7 +58,7 @@ export default function ProductCard({ product }) {
 
         {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
+          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full" onClick={() => handleAddToWishlist(product)}>
             <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
           </div>
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">

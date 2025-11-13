@@ -44,8 +44,11 @@ export const ROUTES = {
     getAll: "/product-labels"
   },
   wishlist: {
-    getByUser: (user_id) => `/wishlists/user/${user_id}`,
+    getAll: "/wishlists",
     addItem: "/wishlists/items",
+    removeItem: "/wishlists/items",
+    getByUser: (id) => `/wishlists/user/${id}`,
+    bulkDelete: "/wishlists/bulk-delete",
   },
   cart: {
     getAll: "/carts",

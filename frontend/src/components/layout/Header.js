@@ -254,7 +254,7 @@ const wishlistCount = wishlist?.length || 0;
 
 
           {/* Wishlist Icon */}
-          <button onClick={handleOpenWishlist} className="text-light">
+          <button onClick={handleOpenWishlist} className=" relative text-light">
             <Heart className="w-5 h-5 " />
              {wishlistCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
