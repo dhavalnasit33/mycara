@@ -54,6 +54,20 @@ const handleDecrease = (item) => {
       });
   };
 
+  //discount price
+const getDiscountedPrice = (item) => {
+  const discount = item?.product_id?.discount_id?.value || 0;
+  const originalPrice = item?.variant_id?.price || 0;
+  const discountedPrice =
+    discount > 0
+      ? originalPrice - (originalPrice * discount) / 100
+      : originalPrice;
+
+  return { discount, originalPrice, discountedPrice };
+};
+
+
+
 
   return (
     <div className="w-full">
@@ -72,19 +86,19 @@ const handleDecrease = (item) => {
         <tbody>
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
-              <td className="py-4 text-center">
+              <td className="text-center pt-[40px] pb-[20px]">
                 <button className="w-[20px] h-[20px]" onClick={() => handleDelete(item._id)}  >
                     <img src={remove} alt="remove" />
                 </button>
               </td>
-              <td className="p-4 w-[162px]">
+              <td className="px-3 xl:px-6 w-[162px] pt-[40px] pb-[20px]">
                 <Link to={`/products/${item.product_id?._id}`}>
                 <img src={getImageUrl(item.product_id?.images?.[0])} 
                     alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
                 </Link>
               </td>
-              <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
-              <td className="p-4">
+              <td className="px-3 xl:px-6 break pt-[40px] pb-[20px] max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
+              <td className="px-3 xl:px-6 pt-[40px] pb-[20px]">
                 <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] light-border border text-black rounded-[20px] leading">
                   <button onClick={() => handleDecrease(item)}>
                     <Minus size={14} />
@@ -96,8 +110,12 @@ const handleDecrease = (item) => {
                   </button>
                 </div>
               </td>
-              <td className="p-4 text-left">₹{item.variant_id?.price} * {item.quantity}</td>
-              <td className="p-4 text-center">₹ {(item.variant_id?.price || 0)*(item.quantity || 1)}</td>
+              <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-left">
+                  ₹ {getDiscountedPrice(item).discountedPrice.toFixed(0)} × {item.quantity}
+              </td> 
+               <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-center">
+                  ₹ {(getDiscountedPrice(item).discountedPrice * item.quantity).toFixed(0)}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -117,7 +135,7 @@ const handleDecrease = (item) => {
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break ">{item.product_id?.name}</div>
-                <div className="text-p mb-[12px] text-color">₹{(item.variant_id?.price || 0) * (item.quantity || 1)}</div>
+                <div className="text-p mb-[12px] text-color">₹{(getDiscountedPrice(item).discountedPrice * item.quantity).toFixed(0)}</div>
 
                 <div className="flex items-center gap-[10px] text-14">
                 <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] ">

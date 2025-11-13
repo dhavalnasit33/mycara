@@ -20,7 +20,6 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { fetchProducts } from "../../features/products/productsThunk";
 import { getImageUrl } from "../utils/helper";
-import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 
 const FeaturedProducts = () => {
    const dispatch = useDispatch();
@@ -30,7 +29,6 @@ const FeaturedProducts = () => {
   // Redux data
   const { items : categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
   const { products = [], loading: productLoading } = useSelector( (state) => state.products  );
-  const { discounts } = useSelector((state) => state.discounts);
 
   // Local states
   const [mounted, setMounted] = useState(false);
@@ -42,7 +40,6 @@ const FeaturedProducts = () => {
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchProducts());
-    dispatch(fetchDiscounts());
   }, [dispatch]);
 
   // ✅ Automatically set first category as active when categories load
@@ -51,7 +48,22 @@ const FeaturedProducts = () => {
       setActiveCategory(categories[0]._id);
     }
   }, [categories, activeCategory]);
+//discount price
+    const getDiscountedPrice = (product) => {
+    const originalPrice = product?.variants?.[0]?.price || 0;
+    const discount = product?.discount?.value || 0;
+    const discountType = product?.discount?.type || "none";
 
+    let discountedPrice = originalPrice;
+
+    if (discountType === "percentage") {
+      discountedPrice = originalPrice - (originalPrice * discount) / 100;
+    } else if (discountType === "flat") {
+      discountedPrice = originalPrice - discount;
+    }
+
+    return { originalPrice, discountedPrice, discountValue: discount, discountType };
+  };
 
 
 
@@ -188,20 +200,11 @@ const FeaturedProducts = () => {
         {/* Products Grid */}
           <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[14px] lg:gap-[30px] lg:px-0 sm:px-2 mt-6">
             {productLoading ? (
-              <p>Loading products...</p>
-            ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-              filteredProducts.map((p, index) => {
-                const discount = discounts?.find((d) => d._id === p.discount_id);
-                const originalPrice = p?.variants?.[0]?.price || 0;
-                let finalPrice = originalPrice;
-
-                if (discount) {
-                  if (discount.type === "percentage") {
-                    finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-                  } else {
-                    finalPrice = originalPrice - discount.value;
-                  }
-                }
+                <p>Loading products...</p>
+              ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
+                filteredProducts.map((p,index) => {
+                  const { originalPrice, discountedPrice, discountValue, discountType } =
+                    getDiscountedPrice(p);
 
                 return (
                   <Link
@@ -241,18 +244,22 @@ const FeaturedProducts = () => {
                       <p className="text-black text-[12px] md:text-[15px] mb-1">{p.name}</p>
                       <div>
                         <p className="text-black text-[12px] md:text-[15px] lg:text-[15px] mb-1">
-                          Rs {Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}
-                          {discount && (
+                          Rs {discountedPrice.toLocaleString("en-IN", {
+                            maximumFractionDigits: 0,
+                          })}
+                          {discountValue > 0 &&  (
                             <span className="line-through text-[#BCBCBC] text-[10px] md:text-[12px] lg:text-[12px] ml-[5px]">
-                              Rs {Number(originalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+                              Rs {originalPrice.toLocaleString("en-IN", {
+                              maximumFractionDigits: 0,
+                            })}
                             </span>
                           )}
                         </p>
-                        {discount && (
+                        {discountValue > 0 &&  (
                           <p className="text-theme text-[10px] lg:text-[12px] font-medium bg-[rgba(239,58,150,0.09)] p-[1px] w-[60px] block  mx-auto text-center">
-                            {discount.type === "percentage"
-                              ? `${discount.value}% OFF`
-                              : `₹${discount.value} OFF`}
+                              {discountType === "percentage"
+                            ? `${discountValue}% OFF`
+                            : `₹${discountValue} OFF`}
                           </p>
                         )}
                       </div>

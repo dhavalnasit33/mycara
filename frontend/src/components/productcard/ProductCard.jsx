@@ -8,21 +8,21 @@ import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
 export default function ProductCard({ product }) {
-//discount percentage value 
-  const { discounts } = useSelector((state) => state.discounts);
+const getDiscountedPrice = (product) => {
+  const originalPrice = product?.variants?.[0]?.price || 0;
+  const discount = product?.discount?.value || 0;
+  const discountType = product?.discount?.type || "none";
 
-  const discount = discounts.find((d) => d._id === product.discount_id);
+  let discountedPrice = originalPrice;
 
-  const originalPrice = product.variants?.[0]?.price || 0;
-  let finalPrice = originalPrice;
-
-  if (discount) {
-    if (discount.type === "percentage") {
-      finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-    } else {
-      finalPrice = originalPrice - discount.value;
-    }
+  if (discountType === "percentage") {
+    discountedPrice = originalPrice - (originalPrice * discount) / 100;
+  } else if (discountType === "flat") {
+    discountedPrice = originalPrice - discount;
   }
+
+  return {  originalPrice, discountedPrice, discountValue: discount, discountType, };
+};
 
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -99,23 +99,28 @@ export default function ProductCard({ product }) {
 
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
-          <p className="text-p text-black ">
-            ₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+          <p className="text-p text-black">
+            ₹ {getDiscountedPrice(product).discountedPrice.toLocaleString("en-IN", {
+              maximumFractionDigits: 0,
+            })}
           </p>
-          <p className="line-through text-[#BCBCBC]">
-            ₹{Number(originalPrice).toLocaleString("en-IN")}
-          </p>
-          {discount && (
+          {getDiscountedPrice(product).discountValue > 0 && (
+            <p className="line-through text-[#BCBCBC]">
+              ₹
+              {getDiscountedPrice(product).originalPrice.toLocaleString("en-IN", {
+                maximumFractionDigits: 0,
+              })}
+            </p>
+          )}
+          {getDiscountedPrice(product).discountValue > 0 && (
             <p className="text-theme text-p">
-              {discount.type === "percentage"
-                ? `${discount.value}% `
-                : `₹${discount.value} `}
+              {getDiscountedPrice(product).discountType === "percentage"
+                ? `${getDiscountedPrice(product).discountValue}% Off`
+                : `₹${getDiscountedPrice(product).discountValue} Off`}
             </p>
           )}
         </div>
-
-
-
+        
         {/* Color Options */}
          <div className="flex gap-[5px]"> 
             {product.variants?.map((variant, vi) =>

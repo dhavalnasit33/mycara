@@ -4,7 +4,6 @@ import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDiscounts } from "../../features/discounts/discountsThunk";
 import { addToCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
@@ -15,20 +14,15 @@ export default function ProductInfo({product}) {
   const { id } = useParams(); 
   const dispatch = useDispatch();
 
-  const { discounts } = useSelector((state) => state.discounts);
-
  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
     const [showLoginPopup, setShowLoginPopup] = useState(false);
 
  useEffect(() => {
-    if (id) {
-      dispatch(fetchDiscounts());
-    }
     if (token) {
       dispatch(fetchCart());
     }
-  }, [id, token, dispatch]);
+  }, [ token, dispatch]);
 
   const handleAddToCart = async () => {
     if (!token) {
@@ -59,19 +53,19 @@ export default function ProductInfo({product}) {
 
 
 //discount percentage
-  const discount = product
-    ? discounts.find((d) => d._id === product?.discount_id)
-    : null;
-    const originalPrice = product?.variants?.[0]?.price || 0;
-    let finalPrice = originalPrice;
+  const variant = product?.variants?.[0];
+  const originalPrice = variant?.price || 0;
+  const discountType = product?.discount_id?.type;
+  const discountValue = product?.discount_id?.value || 0;
 
-    if (discount) {
-      if (discount.type === "percentage") {
-        finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-      } else {
-        finalPrice = originalPrice - discount.value;
-      }
+  let discountedPrice = originalPrice;
+
+  if (discountType === "percentage") {
+    discountedPrice = Math.round(originalPrice - (originalPrice * discountValue) / 100);
+  } else if (discountType === "flat") {
+    discountedPrice = Math.max(0, originalPrice - discountValue);
   }
+
 
 //add to wishlist
   const { handleAddToWishlist } = useAddToWishlist();
@@ -90,17 +84,29 @@ export default function ProductInfo({product}) {
 
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
-        <div className="flex items-center ">
-            <p className="text-[26px] text-black">₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</p>
-             {discount && (
+        <div className="flex items-center">
+          <p className="text-[26px] text-black">
+            ₹{discountedPrice.toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+          </p>
+
+          {discountValue > 0 && (
             <p className="text-theme font-18 ml-[7px]">
-              {discount.type === "percentage"
-                ? `${discount.value}% Off`
-                : `₹${discount.value} Off`}
+              {discountType === "percentage"
+                ? `${discountValue}% Off`
+                : `₹${discountValue} Off`}
             </p>
           )}
         </div>
-        <p className="sec-text-color">MRP <span className="line-through"> ₹{Number(originalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span> Inclusive of all taxes</p>
+
+        {discountValue > 0 && (
+          <p className="sec-text-color">
+            MRP{" "}
+            <span className="line-through">
+              ₹{originalPrice.toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+            </span>{" "}
+            Inclusive of all taxes
+          </p>
+        )}
       </div>
 
 

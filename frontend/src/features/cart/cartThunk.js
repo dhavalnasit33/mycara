@@ -16,24 +16,50 @@ export const addToCart = createAsyncThunk(
   }
 );
 
+// export const fetchCart = createAsyncThunk(
+//   "cart/fetchCart",
+//   async (_, { rejectWithValue }) => {
+//     try {
+//       const token = localStorage.getItem("token");
+//       const response = await api.get(ROUTES.cart.getAll, { headers: { Authorization: `Bearer ${token}` }, });
+//       const carts = response.data?.data?.carts || [];
+//       const cart = carts[0] || null;
+//       if (cart?._id) {
+//         localStorage.setItem("cart_id", cart._id);
+//       }
+//       return cart;
+//     } catch (error) {
+//       return rejectWithValue(error.response?.data || "Fetch cart failed");
+//     }
+//   }
+// );
+
+
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.get(ROUTES.cart.getAll, { headers: { Authorization: `Bearer ${token}` }, });
-      const carts = response.data?.data?.carts || [];
-      const cart = carts[0] || null;
+      let cart_id = localStorage.getItem("cart_id");
+
+      if (!cart_id) {
+        console.warn("No cart ID found in localStorage");
+        return null;
+      }
+      const response = await api.get(ROUTES.cart.getById(cart_id), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const cart = response.data?.data || null;
       if (cart?._id) {
         localStorage.setItem("cart_id", cart._id);
       }
       return cart;
     } catch (error) {
+      console.error("Fetch cart failed:", error);
       return rejectWithValue(error.response?.data || "Fetch cart failed");
     }
   }
 );
-
 
 export const updateCartItem = createAsyncThunk(
   "cart/updateCartItem",

@@ -107,6 +107,20 @@ const formattedItems = Array.isArray(items)
 };
 
 
+//discount price
+const getDiscountedPrice = (item) => {
+  const discount = item?.product_id?.discount_id?.value || 0;
+  const originalPrice = item?.variant_id?.price || 0;
+  const discountedPrice =
+    discount > 0
+      ? originalPrice - (originalPrice * discount) / 100
+      : originalPrice;
+
+  return { discount, originalPrice, discountedPrice };
+};
+
+
+
 
 
   return (
@@ -163,14 +177,14 @@ const formattedItems = Array.isArray(items)
               </td>
 
               <td className="p-4">
-                <div className="flex gap-[5px] items-center">
-                  {item.variant?.oldPrice && (
-                    <span className="sec-text-color text-14 line-through">
-                      ₹{item.variant?.oldPrice}
-                    </span>
-                  )}
-                  <span className="text-p">₹{(item.variant?.price || 0)*(item.quantity || 1)}</span>
-                </div>
+                {getDiscountedPrice(item).discount > 0 && (
+                  <span className="sec-text-color text-14 line-through mr-1">
+                    ₹{getDiscountedPrice(item).originalPrice}
+                  </span>
+                )}
+                <span className="text-p">
+                  ₹{getDiscountedPrice(item).discountedPrice.toFixed(0)}
+                </span>
               </td>
 
               <td className="p-4 text-p">
@@ -226,13 +240,11 @@ const formattedItems = Array.isArray(items)
           <div key={index}
             className="bg-white p-4 rounded-[5px] box-shadow flex sm:flex-nowrap gap-[20px] items-start"
           >
-            <Link to={`/products/${item.product?._id}`}>
             <img
                 src={getImageUrl(item.product?.images)}
                 alt={item.product?.name}
               className="w-[90px] h-[110px] p-[5px] box-shadow"
             />
-            </Link>
             <div className="flex-1 flex flex-col text-p">
               <h3 className="mb-[5px] break text-14">{item.product?.name}</h3>
               <p className="mb-[10px] text-14">
@@ -256,14 +268,16 @@ const formattedItems = Array.isArray(items)
               </div>
 
               <div className="flex gap-[5px] items-center mb-[5px]">
-                {item.variant?.oldPrice && (
-                  <span className="sec-text-color text-14 line-through">
-                    ₹{item.variant?.oldPrice}
+                {getDiscountedPrice(item).discount > 0 && (
+                  <span className="sec-text-color text-14 line-through mr-1">
+                    ₹{getDiscountedPrice(item).originalPrice}
                   </span>
                 )}
-                <span>₹{(item.variant?.price || 0)*(item.quantity || 1)}</span>
+                <span className="text-p">
+                  ₹{getDiscountedPrice(item).discountedPrice.toFixed(0)}
+                </span>
               </div>
-
+              
               <div>
                  {item.variant?.stock_quantity > 0 ? (
                   <span className="text-[#3EE878] flex gap-[5px]">
