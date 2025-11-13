@@ -51,3 +51,24 @@ export const updateCartItem = createAsyncThunk(
     }
   }
 );
+
+export const deleteCartItem = createAsyncThunk(
+  "cart/deleteCartItem",
+  async ({ cart_id, item_id }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await api.delete(ROUTES.cart.deleteCart, {
+        data: { cart_id, item_id }, // ✅ body for DELETE
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // ✅ token included correctly
+        },
+      });
+
+      return res.data.data ?? res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  }
+);

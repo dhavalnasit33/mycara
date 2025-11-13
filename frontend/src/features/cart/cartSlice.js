@@ -1,6 +1,6 @@
   // // features/cart/cartSlice.js
   import { createSlice } from "@reduxjs/toolkit";
-  import { fetchCart, addToCart, updateCartItem } from "./cartThunk";
+  import { fetchCart, addToCart, updateCartItem, deleteCartItem } from "./cartThunk";
 
   const initialState = {
     cart: null,
@@ -8,6 +8,7 @@
       loading: false,
       error: null,
       selectedItem: null,
+      deletingItemId: null,
   };
 
   const cartSlice = createSlice({
@@ -49,6 +50,21 @@
       })
       .addCase(updateCartItem.fulfilled, (state, action) => {
         state.items = action.payload.items || [];
+      })
+
+        .addCase(deleteCartItem.pending, (state, action) => {
+        state.deletingItemId = action.meta.arg.item_id; // show spinner for this item
+        state.error = null;
+      })
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.deletingItemId = null;
+        // backend returns updated cart — update local state
+        state.cart = action.payload;
+        state.items = action.payload?.items || [];
+      })
+      .addCase(deleteCartItem.rejected, (state, action) => {
+        state.deletingItemId = null;
+        state.error = action.payload || action.error.message;
       });
 
     },

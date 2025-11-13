@@ -10,7 +10,11 @@ import { addToCart, fetchCart } from "../../features/cart/cartThunk";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LoginForm from "../../pages/Login";
+<<<<<<< HEAD
 import api from "../../services/api"; // ✅ Your axios instance
+=======
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
+>>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
 
 const ProductInfo = ({ product }) => {
   const { id } = useParams();
@@ -109,6 +113,12 @@ const handleAddWishlist = async () => {
     }
   }
 
+<<<<<<< HEAD
+=======
+//add to wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
+
+>>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
   return (
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">
@@ -196,11 +206,19 @@ const handleAddWishlist = async () => {
             <HeartIcon className="h-[22px] w-[22px]" /> Wishlist
           </Button>
 
+<<<<<<< HEAD
           <Button
             variant="common"
             className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"
             onClick={handleAddToCart}
           >
+=======
+        <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
+            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product)}>
+                <HeartIcon className="h-[22px] w-[22px]" />Wishlist
+            </Button>
+            <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >
+>>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
             <span className="flex items-center gap-[10px]">
               <Handbag size={22} /> Add To Bag
             </span>

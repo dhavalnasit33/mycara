@@ -4,9 +4,10 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartItem, fetchCart, updateCartItem } from "../../features/cart/cartThunk";
 import { Link } from "react-router-dom";
+import { getImageUrl } from "../utils/helper";
 
-export default function CartItem({product}) {  
-  const { items = [], loading } = useSelector((state) => state.cart);
+export default function CartItem() {  
+  const { items = [], loading ,deletingItemId } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -39,6 +40,21 @@ const handleDecrease = (item) => {
   }
 };
 
+//remove cart
+  const handleDelete = (item_id) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id) return alert("No cart found!");
+    dispatch(deleteCartItem({ cart_id, item_id }))
+      .unwrap()
+      .then(() => {
+        dispatch(fetchCart());
+      })
+      .catch((error) => {
+        console.error("Delete error:", error);
+      });
+  };
+
+
   return (
     <div className="w-full">
       {/* Desktop View */}
@@ -56,14 +72,15 @@ const handleDecrease = (item) => {
         <tbody>
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
-              <td className="py-4">
-                <button className="w-[20px] h-[20px]" >
-                  <img src={remove} alt="remove"  />
+              <td className="py-4 text-center">
+                <button className="w-[20px] h-[20px]" onClick={() => handleDelete(item._id)}  >
+                    <img src={remove} alt="remove" />
                 </button>
               </td>
               <td className="p-4 w-[162px]">
                 <Link to={`/products/${item.product_id?._id}`}>
-                <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
+                <img src={getImageUrl(item.product_id?.images?.[0])} 
+                    alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
                 </Link>
               </td>
               <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
@@ -91,10 +108,12 @@ const handleDecrease = (item) => {
         {items.map((item, index) => (
         <div key={index} className="bg-white p-4 rounded-[5px] box-shadow relative flex sm:flex-nowrap gap-[20px] items-start">
             <div className="flex items-center gap-[10px] flex-shrink-0">
-                <button className="w-[10px] h-[10px] flex items-center justify-center">
-                    <img src={remove} alt="remove" className="w-full h-full object-contain" />
+                <button className="w-[10px] h-[10px] flex items-center justify-center" onClick={() => handleDelete(item._id)} >
+                  <img src={remove}  alt="remove" className="w-full h-full object-contain" />
                 </button>
-                <img src={item.product_id?.image} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                <Link to={`/products/${item.product_id?._id}`}>
+                  <img src={getImageUrl(item.product_id?.images?.[0])} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                </Link>
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break ">{item.product_id?.name}</div>
@@ -102,11 +121,11 @@ const handleDecrease = (item) => {
 
                 <div className="flex items-center gap-[10px] text-14">
                 <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] ">
-                    <Minus size={12} onClick={() => handleDecrease(index)} />
+                    <Minus size={12} onClick={() => handleDecrease(item)} />
                 </button>
                 <span>{item.quantity}</span>
                 <button className="bg-color-100 rounded-[2px] flex items-center justify-center p-[2px] text-white">
-                    <Plus size={12} onClick={() => handleIncrease(index)}/>
+                    <Plus size={12} onClick={() => handleIncrease(item)}/>
                 </button>
                 </div>
             </div>
