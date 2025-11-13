@@ -16,7 +16,7 @@ const BannerClothes = () => {
     }, [dispatch]);
 
     const homepage = pages?.find(page => page.slug === 'home');
-    const bannerSection = homepage?.sections?.find(section => section.order === 9);
+    const bannerSection = homepage?.sections?.find(section => section.order === 1);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;

@@ -1,3 +1,6 @@
+//D:\mycara\frontend\src\pages\Cart.jsx
+
+
 import React from "react";
 
 import CartProgress from "../components/cart/CartProgress";

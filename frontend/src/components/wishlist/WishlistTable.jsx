@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\components\wishlist\WishlistTable.jsx
+
 import React, { useState } from "react";
 import { Minus, Plus, Eye, Trash2 } from "lucide-react";
 import Button from "../ui/Button";

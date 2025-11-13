@@ -10,7 +10,7 @@ import colorsReducer from "./features/colors/colorsSlice";
 import brandsReducer from "./features/brands/brandsSlice";
 import typesReducer from "./features/types/typesSlice";
 import fabricsReducer from "./features/fabrics/fabricsSlice";
-import discountsReducer from "./features/discounts/discountsSlice";
+
 import productLabelsReducer from "./features/productLabels/productLabelsSlice";
 import wishlistReducer from "./features/wishlist/wishlistSlice";
 import cartReducer from "./features/cart/cartSlice";

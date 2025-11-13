@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\components\cart\CartProgress.jsx
+
 import React from "react";
 import Row from "../ui/Row";
 import Section from "../ui/Section";

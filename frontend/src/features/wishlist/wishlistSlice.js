@@ -1,15 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { fetchWishlist, toggleWishlist } from "./wishlistThunk";
+//D:\mycara\frontend\src\features\wishlist\wishlistSlice.js
 
-const initialState = {
-  wishlist: [],
-  loading: false,
-  error: null,
-};
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchWishlist, addToWishlist } from "./wishlistThunk";
 
 const wishlistSlice = createSlice({
   name: "wishlist",
-  initialState,
+  initialState: {
+    items: [],
+    loading: false,
+    error: null,
+  },
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -18,13 +18,15 @@ const wishlistSlice = createSlice({
       })
       .addCase(fetchWishlist.fulfilled, (state, action) => {
         state.loading = false;
-        state.wishlist = action.payload;
+        state.items = action.payload;
       })
       .addCase(fetchWishlist.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
-
+      .addCase(addToWishlist.fulfilled, (state, action) => {
+        state.items.push({ product_id: action.payload.product_id });
+      });
   },
 });
 

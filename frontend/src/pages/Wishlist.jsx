@@ -1,3 +1,5 @@
+// D:\mycara\frontend\src\pages\Wishlist.jsx
+
 import SecondarySection from "../components/ui/SecondarySection";
 import WishlistTable from "../components/wishlist/WishlistTable";
 import prod1 from "../assets/shopsaree3.jpg";
@@ -8,8 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../features/pages/pagesThunk";
 import { useEffect } from "react";
 import { getImageUrl } from "../components/utils/helper";
-
-
 const products = [
   {
     name: "Analog Watch for Women",
@@ -31,21 +31,15 @@ const products = [
     stockText: "out of stock",
   },
 ];
-
 export default function Wishlist(){
   const dispatch = useDispatch();
     const { pages, loading, error } = useSelector((state) => state.pages);
-
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
     const wishlistpage = pages.find(page => page.slug === 'wishlist');
-
-
-
     return(
         <>
           {wishlistpage?.sections.map(section => (
