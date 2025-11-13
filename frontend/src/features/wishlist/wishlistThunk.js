@@ -56,3 +56,23 @@ export const removeWishlistItem = createAsyncThunk(
     }
   }
 );
+
+
+export const bulkDeleteWishlistItems = createAsyncThunk(
+  "wishlists/bulkDeleteWishlistItems",
+  async (ids, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token"); // ✅ token for admin user
+      const response = await api.post(
+        ROUTES.wishlist.bulkDelete,
+        { ids },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || "Bulk delete failed"
+      );
+    }
+  }
+);

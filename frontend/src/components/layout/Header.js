@@ -302,12 +302,15 @@ const wishlistCount = wishlist?.length || 0;
           <nav className="py-3">
             {navItems.map((item, i) => {
               if (item.name === "Home") return null;
+                const isOdd = i % 2 !== 0; 
               return (
                 <NavLink
                   key={i}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 py-4 px-4 text-light bg-white"
+                   className={`flex items-center gap-3 py-4 px-4 text-light 
+                      ${isOdd ? "light-color " : "bg-white "}
+                    `}
                 >
                   {item.icon}
                   <span>{item.name}</span>
@@ -321,7 +324,7 @@ const wishlistCount = wishlist?.length || 0;
             </div>
 
             <div className="text-light">
-              <div className="py-4 px-4 cursor-pointer">
+              <div className="py-4 px-4 cursor-pointer light-color">
                 <Link to="/my-account" className="flex items-center gap-[15px]">
                   <FaUser /> My Profile
                 </Link>
@@ -334,7 +337,7 @@ const wishlistCount = wishlist?.length || 0;
                   <Package size={20} /> Orders
                 </Link>
               </div>
-              <div className="py-4 px-4 cursor-pointer">
+              <div className="py-4 px-4 cursor-pointer light-color">
                 <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
                 </Link>
