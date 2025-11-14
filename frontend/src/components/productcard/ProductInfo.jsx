@@ -3,40 +3,39 @@ import React, { useEffect, useState } from "react";
 import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
-import HeartIcon from "../icons/HeartIcon";
+import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { fetchDiscounts } from "../../features/discounts/discountsThunk";
-import { addToCart, fetchCart } from "../../features/cart/cartThunk";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { addToCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
-<<<<<<< HEAD
-import api from "../../services/api"; // ✅ Your axios instance
-=======
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
->>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
 
-const ProductInfo = ({ product }) => {
-  const { id } = useParams();
+
+export default function ProductInfo({product}) {
+
+  const { id } = useParams(); 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { discounts } = useSelector((state) => state.discounts);
-  const { token } = useSelector((state) => state.auth);
-  const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-  useEffect(() => {
-    if (id) dispatch(fetchDiscounts());
-    if (token) dispatch(fetchCart());
+ const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+    const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+ useEffect(() => {
+    if (id) {
+      dispatch(fetchDiscounts());
+    }
+    if (token) {
+      dispatch(fetchCart());
+    }
   }, [id, token, dispatch]);
 
-  // 🛒 Add to Cart Handler
   const handleAddToCart = async () => {
     if (!token) {
       setShowLoginPopup(true);
       return;
     }
-
     let cart_id = localStorage.getItem("cart_id");
     const product_id = product._id;
     const variant_id = product.variants?.[0]?._id;
@@ -50,103 +49,51 @@ const ProductInfo = ({ product }) => {
       alert("Cart not found. Please refresh and try again.");
       return;
     }
-
     const payload = { cart_id, product_id, variant_id, quantity };
 
-    try {
-      await dispatch(addToCart(payload)).unwrap();
-      await dispatch(fetchCart());
+    dispatch(addToCart(payload))
+      .unwrap()
+      dispatch(fetchCart());
       navigate("/cart");
-    } catch (err) {
-      alert("Error adding to cart: " + err);
-    }
   };
 
-  // 💖 Add to Wishlist Handler (API Call – frontend only)
-// 💖 Add to Wishlist Handler (Frontend Only + Navigate)
-const handleAddWishlist = async () => {
-  const user_id = localStorage.getItem("user_id");
-
-  if (!user_id) {
-    toast.error("Please log in to add items to wishlist!");
-    // Optional: Navigate to login page
-    // navigate("/login");
-    return;
-  }
-
-  try {
-    // ✅ Fake frontend wishlist storage (simulate API)
-    let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
-
-    // Check if product already exists
-    const exists = wishlist.find((item) => item._id === product._id);
-
-    if (exists) {
-      toast.info("Already in wishlist!");
-    } else {
-      wishlist.push(product);
-      localStorage.setItem("wishlist", JSON.stringify(wishlist));
-      toast.success("✅ Added to wishlist successfully!");
-    }
-
-    // ✅ Navigate to wishlist page
-    navigate("/wishlist");
-  } catch (error) {
-    console.error("Wishlist error:", error);
-    toast.error("❌ Something went wrong while adding to wishlist.");
-  }
-};
 
 
-  // 🏷️ Discount Calculation
+//discount percentage
   const discount = product
     ? discounts.find((d) => d._id === product?.discount_id)
     : null;
-  const originalPrice = product?.variants?.[0]?.price || 0;
-  let finalPrice = originalPrice;
+    const originalPrice = product?.variants?.[0]?.price || 0;
+    let finalPrice = originalPrice;
 
-  if (discount) {
-    if (discount.type === "percentage") {
-      finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-    } else {
-      finalPrice = originalPrice - discount.value;
-    }
+    if (discount) {
+      if (discount.type === "percentage") {
+        finalPrice = originalPrice - (originalPrice * discount.value) / 100;
+      } else {
+        finalPrice = originalPrice - discount.value;
+      }
   }
 
-<<<<<<< HEAD
-=======
 //add to wishlist
   const { handleAddToWishlist } = useAddToWishlist();
 
->>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
   return (
     <>
-      <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">
-        Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping
-      </p>
-      <h1 className="text-[24px] uppercase">
-        {product.variants?.[0]?.brand_id?.name || "No Brand"}
-      </h1>
+      <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
+      <h1 className="text-[24px] uppercase"> {product.variants?.[0]?.brand_id?.name || "No Brand"}  </h1>
       <p className="text-p text-light pb-[12px]">{product.name}</p>
 
       {/* Rating */}
       <div className="flex items-center gap-[15px] text-14 sec-text-color mb-[25px]">
-        <span className="flex items-center gap-[5px] border border-[#CECDCD] text-black px-2 py-[3px] rounded-[2px] font-18 font-medium">
-          4.2 <Star size={14} />
-        </span>
-        <span>Based on 30 Ratings</span>
+        <span className="flex items-center gap-[5px] border border-[#CECDCD] text-black px-2 py-[3px] rounded-[2px] font-18 font-medium">4.2 <Star size={14}/></span>
+        <span >Based on 30 Ratings</span>
       </div>
 
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
-        <div className="flex items-center">
-          <p className="text-[26px] text-black">
-            ₹
-            {Number(finalPrice).toLocaleString("en-IN", {
-              maximumFractionDigits: 0,
-            })}
-          </p>
-          {discount && (
+        <div className="flex items-center ">
+            <p className="text-[26px] text-black">₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</p>
+             {discount && (
             <p className="text-theme font-18 ml-[7px]">
               {discount.type === "percentage"
                 ? `${discount.value}% Off`
@@ -154,23 +101,15 @@ const handleAddWishlist = async () => {
             </p>
           )}
         </div>
-        <p className="sec-text-color">
-          MRP{" "}
-          <span className="line-through">
-            ₹
-            {Number(originalPrice).toLocaleString("en-IN", {
-              maximumFractionDigits: 0,
-            })}
-          </span>{" "}
-          Inclusive of all taxes
-        </p>
+        <p className="sec-text-color">MRP <span className="line-through"> ₹{Number(originalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span> Inclusive of all taxes</p>
       </div>
+
 
       {/* Sizes */}
       <div className="pt-[34px] space-y-[28px]">
         <div className="flex items-center justify-between">
-          <span className="text-[24px]">Select Size </span>
-          <span className="text-theme font-medium font-18">Size Guide</span>
+            <span className="text-[24px]">Select Size </span>
+            <span className="text-theme font-medium font-18">Size Guide</span>
         </div>
 
         <div className="flex flex-wrap gap-[13px]">
@@ -197,28 +136,12 @@ const handleAddWishlist = async () => {
           )}
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-[17px] pt-[10px]">
-          <Button
-            variant="outline"
-            className="flex items-center gap-[10px] !text-[22px] !py-[10px]"
-            onClick={handleAddWishlist}
-          >
-            <HeartIcon className="h-[22px] w-[22px]" /> Wishlist
-          </Button>
 
-<<<<<<< HEAD
-          <Button
-            variant="common"
-            className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"
-            onClick={handleAddToCart}
-          >
-=======
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
             <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product)}>
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >
->>>>>>> 437ec24e58425f561a3f4f4bed52f9e20984014d
             <span className="flex items-center gap-[10px]">
               <Handbag size={22} /> Add To Bag
             </span>
@@ -226,22 +149,22 @@ const handleAddWishlist = async () => {
         </div>
       </div>
 
-      {/* ===== Login Popup ===== */}
-      {showLoginPopup && (
+            {/* ===== Login Popup ===== */}
+        {showLoginPopup && (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-center justify-center px-4">
           <div className="relative bg-white w-full max-w-[1062px] rounded-md overflow-hidden">
             <LoginForm
               onClose={() => setShowLoginPopup(false)}
-              onSwitch={() => setShowLoginPopup(false)}
+              onSwitch={() => {
+                setShowLoginPopup(false);
+              }}
             />
           </div>
         </div>
       )}
 
-      <ToastContainer position="top-center" autoClose={1500} />
-
+      {/* Wishlist + Add to Bag */}
+     
     </>
   );
-};
-
-export default ProductInfo;
+}
