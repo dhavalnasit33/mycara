@@ -12,6 +12,7 @@ import ProductInfo from "../components/productcard/ProductInfo";
 import ProductTabs from "../components/productcard/ProductTabs";
 import SimilarProducts from "../components/productcard/SimilarProducts";
 import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
+import { fetchPages } from "../features/pages/pagesThunk";
 
 export default function Product() {
   const { id } = useParams();
@@ -24,6 +25,7 @@ export default function Product() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchPages());
   }, [dispatch]);
 
   if (loading) return <p className="text-center py-10">Loading product...</p>;
@@ -48,14 +50,14 @@ export default function Product() {
 
       <Section>
         <Row>
-          <SectionHeading page="Products" order="2" />
+          <SectionHeading page="products"  order="2" index="0"   />
         </Row>
         <SimilarProducts product={product} products={products} />
       </Section>
 
       <Section>
         <Row>
-          <SectionHeading page="Products" order="3" />
+          <SectionHeading page="products"  order="2" index="1" />
         </Row>
         <CustomerAlsoViewed />
       </Section>
