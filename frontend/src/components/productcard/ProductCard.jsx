@@ -24,17 +24,16 @@ const getDiscountedPrice = (product) => {
   return {  originalPrice, discountedPrice, discountValue: discount, discountType, };
 };
 
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  const images = Array.isArray(product.images) && product.images.length
-    ? product.images
-    : product.imageUrl
-      ? [product.imageUrl]
-      : ["/placeholder.png"];
-
-  const displayedImage = getImageUrl(images[currentImageIndex]);
-  const hasMultipleImages = images.length > 1;
+//product hover slider
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const mainImages = Array.isArray(product.images) ? product.images : [];
+  const variantImages =
+    product?.variants?.[0]?.images && Array.isArray(product.variants[0].images)
+      ? product.variants[0].images
+      : [];
+  const allImages = [...mainImages, ...variantImages];
+  const displayedImage = getImageUrl(allImages[currentIndex] || mainImages[0]);
+  const hasMultipleImages = allImages.length > 1;
 
   //addto wishlist
   const { handleAddToWishlist } = useAddToWishlist();
@@ -46,8 +45,8 @@ const getDiscountedPrice = (product) => {
       <div className="relative mb-[10px]">
         <div
           className="relative mb-[10px] w-full h-[300px] sm:h-[355px]"
-          onMouseEnter={() => hasMultipleImages && setCurrentImageIndex(1)}
-          onMouseLeave={() => hasMultipleImages && setCurrentImageIndex(0)}
+          onMouseEnter={() => hasMultipleImages && setCurrentIndex(1)}
+          onMouseLeave={() => hasMultipleImages && setCurrentIndex(0)}
         >
           <img
             src={displayedImage}
@@ -68,19 +67,19 @@ const getDiscountedPrice = (product) => {
 
         {/* Small Dots for Multiple Images */}
         {hasMultipleImages && (
-          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {product.allImages.map((_, index) => (
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] px-[10px] py-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {allImages.map((_, index) => (
               <div
                 key={index}
+                onMouseEnter={() => setCurrentIndex(index)} 
                 className={`w-[6px] h-[6px] rounded-full cursor-pointer transition-colors duration-300 ${
-                  index === currentImageIndex ? "bg-color" : "bg-white"
+                  currentIndex === index ? "bg-color" : "bg-white"
                 }`}
-                onMouseEnter={() => setCurrentImageIndex(index)}
-              />
+              ></div>
             ))}
           </div>
         )}
-      </div>
+        </div>
       
       {/* Product Info */}
       <div>
