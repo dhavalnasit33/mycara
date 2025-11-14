@@ -569,7 +569,7 @@ const WomenCollections = () => {
                             {currentFilters.map((filter, index) => (
                             <span
                                 key={index}
-                                className={`theme-border text-theme  border border-gray-300 px-4 py-1 rounded-[5px] cursor-pointer inline-flex items-center `}
+                                className={`theme-border min-w-[110px] text-theme border px-[10px] py-[5px] rounded-[10px] cursor-pointer flex items-center justify-between`}
                                 onClick={() => handleClearFilter(filter.type, filter.value)}
                             >
                                 {filter.value}
