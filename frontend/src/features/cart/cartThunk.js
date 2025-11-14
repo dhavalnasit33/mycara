@@ -34,28 +34,60 @@ export const addToCart = createAsyncThunk(
 //   }
 // );
 
+export const createCart = createAsyncThunk(
+  "cart/createCart",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const user = JSON.parse(localStorage.getItem("user"));
+      const user_id = user?._id;
+
+      const response = await api.post(
+        ROUTES.cart.getAll,
+        { user_id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const cart = response.data?.data;
+
+      if (cart?._id) {
+        localStorage.setItem("cart_id", cart._id);
+      }
+
+      return cart;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || "Create cart failed");
+    }
+  }
+);
+
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
       let cart_id = localStorage.getItem("cart_id");
 
+      // If cart does not exist → create
       if (!cart_id) {
-        console.warn("No cart ID found in localStorage");
-        return null;
+        const newCart = await dispatch(createCart()).unwrap();
+        cart_id = newCart?._id;
       }
-      const response = await api.get(ROUTES.cart.getById(cart_id), {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      const cart = response.data?.data || null;
+
+      const response = await api.get(
+        ROUTES.cart.getById(cart_id),
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const cart = response.data?.data;
+
       if (cart?._id) {
         localStorage.setItem("cart_id", cart._id);
       }
+
       return cart;
     } catch (error) {
-      console.error("Fetch cart failed:", error);
       return rejectWithValue(error.response?.data || "Fetch cart failed");
     }
   }
