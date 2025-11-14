@@ -5,8 +5,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ChevronDown, X, Plus, Minus } from 'lucide-react';
 import { ChevronLeftIcon, MagnifyingGlassIcon, ChevronDown as HeroChevronDown } from '@heroicons/react/24/outline';
-import CheckedIcon from "../icons/checked"; // your SVG component
-import FilterIconComponent from "../icons/filter"; // Import it with a unique, capitalized name
+import CheckedIcon from "../icons/checked"; 
 import MobileFilterBar from './MobileFilterBar';
 import ProductGrid from "./ProductGrid";
 import TrandingCard from "./TrandingCard"
@@ -24,27 +23,9 @@ import { fetchProducts } from '../../features/products/productsThunk';
 
 export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter };
 
-// --- Utility function to convert Sort Value to Display Label ---
-// const getSortLabel = (sortValue) => {
-//     switch (sortValue) {
-//         case 'popularity': return 'Popularity';
-//         case 'latest': return 'Newest'; // Mapped 'latest' to 'Newest' for display
-//         case 'rating': return 'Average Rating';
-//         case 'price_asc': return 'Price L-H';
-//         case 'price_desc': return 'Price H-L';
-//         case 'discounts': return 'Discounts';
-//         default: return 'Popularity';
-//     }
-// };
-
-// const BORDER_COLOR_CLASS = "border-pink-600";
-
 // ---------- Icon Wrappers ----------
 const SortByIcon = (props) => (<OriginalSortByIcon {...props} className="h-4 w-4 md:text-gray-500" />);
 const CustomChevronDown = (props) => ( <ChevronDown {...props} />);
-
-// ---------- Mobile Filter Bar ----------
-
 
 
 // ---------- Desktop Sort Bar ----------
@@ -53,29 +34,11 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
         <SortByIcon />
         <span className="text-[16px] font-medium text-[#989696] font-sans">Sort By</span>
         <div className="relative">
-          <select
-  value={sortBy}
-  onChange={(e) => setSortBy(e.target.value)}
-  className="
-    appearance-none 
-    bg-white 
-    text-black 
-    py-2 
-    pl-3 
-    pr-10 
-    rounded-[3px]
-    shadow-[0_0_4px_0_rgba(0,0,0,0.25)] 
-    focus:outline-none 
-    focus:ring-2 
-    focus:ring-[#F43297] 
-    text-[16px]
-    transition 
-    duration-150 
-    ease-in-out
-  "
->
-
-                <option value="popularity">Popularity</option>
+            <select value={sortBy}  onChange={(e) => setSortBy(e.target.value)}
+                className=" appearance-none   bg-white text-black py-2  pl-3 pr-10 rounded-[3px] box-shadow focus:outline-none focus:ring-2 focus:ring-[#F43297] text-[16px]
+                    transition duration-150 ease-in-out " 
+            >
+               <option value="popularity">Popularity</option>
                 <option value="latest">Newest</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
@@ -86,8 +49,7 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
         </div>
     </div>
 );
-// ---------- Filter Item Components ----------
-// --------------------- Sub-Components ---------------------
+
 // --------------------- FilterItemCheckbox ---------------------
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
     <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
@@ -150,8 +112,7 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
             className="flex flex-col items-center p-1 cursor-pointer w-1/6"
             onClick={() => onChange(name)}
         >
-            <div
-                className={`w-[22px] h-[22px] rounded-full transition-all duration-150
+            <div className={`w-[22px] h-[22px] rounded-full transition-all duration-150
                      ${border ? 'border border-gray-300' : ''}
                      ${isChecked ? `ring-2 ring-pink-500 ring-offset-2` : ''}
                  `}
@@ -170,7 +131,6 @@ const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
 
 const CollapsibleFilter = ({
   title,
-  isSelected,
   onReset,
   children,
   onCancelClick,
@@ -192,14 +152,13 @@ const CollapsibleFilter = ({
     return (
         <div className="px-[10px] py-[0px] lg:px-[15px] lg:py-[10px] border-gray-200">
            <div
-  className={`flex items-center justify-between cursor-pointer rounded-[10px] px-4 py-3 transition-all duration-300
-    ${isOpen 
-      ? 'bg-[rgba(210,175,159,0.3)]  border-transparent' 
-      : 'bg-transparent border border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]'
-    }`}
-  onClick={handleToggle}
->
-
+                className={`flex items-center justify-between cursor-pointer rounded-[10px] px-4 py-3 transition-all duration-300
+                    ${isOpen 
+                    ? 'bg-[rgba(210,175,159,0.3)]  border-transparent' 
+                    : 'bg-transparent border border-white shadow-[0_0_4px_rgba(0,0,0,0.3)]'
+                    }`}
+                onClick={handleToggle}
+             >
 
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
                 <div className="flex items-center space-x-2">
@@ -210,7 +169,6 @@ const CollapsibleFilter = ({
                             <Plus className={`w-4 h-4 text-white bg-color`} />
                         )}
                     </div>
-
                 </div>
             </div>
 
@@ -223,20 +181,17 @@ const CollapsibleFilter = ({
                                 className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-black/70 border border-[#989696] rounded-[3px] transition"
                             > Cancel
                             </button>
-                            <button
-                                onClick={onApplyClick || onReset}
+                            <button onClick={onApplyClick || onReset}
                                 className={`w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md hidden lg:flex items-center justify-center`}
                             >
                                 Reset
                             </button>
                              {/* Mobile: Filter (Apply) */}
-                                <button
-                                onClick={onApplyClick || onReset}
+                            <button onClick={onApplyClick || onReset}
                                 className="w-[100px] h-[40px] text-[18px] font-regular font-inter text-white bg-color rounded-[3px] transition shadow-md flex lg:hidden items-center justify-center"
-                                >
+                             >
                                 Filter
-                                </button>
-                            
+                            </button>
                         </div>
                     )}
                 </div>
@@ -244,9 +199,6 @@ const CollapsibleFilter = ({
         </div>
     );
 };
-
-
-
 
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false }) => {
@@ -283,11 +235,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
             <div className=" space-y-6  overflow-y-auto px-3 py-3">
                 <div className="relative h-1 w-full rounded-full" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
 
-
-               
-
-
-
                     {/* Highlighted range */}
                     <div
                         className="absolute h-1 bg-color rounded-full top-0"
@@ -318,16 +265,14 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                     />
 
                         {/* Min thumb */}
-                    <div
-                        className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
+                    <div className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
                         style={{ left: `calc(${(minPrice / MAX_PRICE) * 100}% - 8px)` }}
                     >
                         <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
                     </div>
 
                     {/* Max thumb */}
-                    <div
-                        className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
+                    <div className="absolute w-[12px] h-[12px] rounded-full bg-color top-1/2 transform -translate-y-1/2 shadow-md flex items-center justify-center"
                         style={{ left: `calc(${(maxPrice / MAX_PRICE) * 100}% - 8px)` }}
                     >
                         <div className="w-1.5 h-1.5 rounded-full bg-white"></div> {/* small white dot */}
@@ -374,8 +319,6 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 };
 
 
-
-
 // --------------------- Main Component ---------------------
 const WomenCollections = () => {
     // Filter States
@@ -394,7 +337,6 @@ const WomenCollections = () => {
 
     const [selectedCategories, setSelectedCategories] = useState([]);
 
-
     const [selectedSizes, setSelectedSizes] = useState([]);
     const [selectedColors, setSelectedColors] = useState([]);
     const [selectedBrands, setSelectedBrands] = useState([]);
@@ -406,11 +348,9 @@ const WomenCollections = () => {
 
     const [minPrice, setMinPrice] = useState(500);
     const [maxPrice, setMaxPrice] = useState(2500);
-    const [product, setProducts] = useState([]); 
+    const [product] = useState([]); 
 
         // --- NEW SORT STATES ---
-   
-
     const [currentSortValue, setCurrentSortValue] = useState('popularity'); // 'popularity' is the value used by SortByPage
     const [isSortByOpen, setIsSortByOpen] = useState(false); 
     const [currentSortLabel, setCurrentSortLabel] = useState('Popularity');
@@ -454,20 +394,6 @@ const WomenCollections = () => {
     const handleSortClick = () => {
         setIsSortByOpen(true);
     };
-
-
-    // const handleCloseSortBy = () => {
-    //     setIsSortByOpen(false);
-    // };
-
-
-    // const handleSelectSort = (value, label) => {
-    //     setCurrentSortValue(value);
-    //     setCurrentSortLabel(label);
-        
-    //     // handleCloseSortBy(); // bottom sheet off 
-    // };
-
 
 
     const handleFilterClick = () => {
@@ -539,8 +465,6 @@ const WomenCollections = () => {
 
     return (
         <div className=" w-full container-1440 mx-auto lg:mt-[80px] py-3 px-3">
-               
-
             <MobileFilterModal
                 isOpen={isMobileFilterOpen}
                 onClose={handleCloseMobileFilter}
@@ -556,12 +480,9 @@ const WomenCollections = () => {
                 applyAllFilters={handleApplyAllFilters}
                 onClearAll={handleClearAllFilters} //
             />
-
-
+    
             <div className="flex justify-between items-center py-2 mb-4 lg:hidden">
                 <div className=" w-full">
-
-
                     <div className="flex items-center py-2 space-x-2">
                         <button className="flex items-center justify-center w-8 h-8 rounded-[3px] border border-[#D2AF9F] shadow-sm bg-white/70 backdrop-blur-sm">
                             <ChevronLeftIcon className="w-5 h-5 text-black cursor-pointer" />
@@ -573,7 +494,6 @@ const WomenCollections = () => {
                                 placeholder="Women's Fashion.."
                                 className="w-full h-11 bg-white border border-white rounded-[3px] pl-10 pr-4 text-sm font-regular focus:outline-none shadow-[0_0_4px_rgba(0,0,0,0.25)]"
                             />
-
                             <MagnifyingGlassIcon className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                         </div>
                     </div>
@@ -586,32 +506,24 @@ const WomenCollections = () => {
                 <span className="text-black "> / </span>
                 <span className="font-regular text-[#989696]">Shop</span>
             </p>
-
-           
-                <div className="mb-3 lg:hidden">
-   
-                         {/* MobileFilterBar - અહીં onSortClick Pass થાય છે */}
-        
+            <div className="mb-3 lg:hidden">
                 <MobileFilterBar
-                    sortBy={currentSortLabel} // ✅ અહીં currentSortLabel દેખાશે
+                    sortBy={currentSortLabel} 
                     filterCount={filterCount}
-                    onSortClick={handleSortClick} // ✅ ક્લિક થતાં handleSortClick (setIsSortByOpen(true)) Call થશે
+                    onSortClick={handleSortClick} 
                     onFilterClick={handleFilterClick}
                     isHidden={isSortByOpen}
                 />
-            
-            
-   
-            <SortByPage
-        isOpen={isSortByOpen}
-        onClose={() => setIsSortByOpen(false)} // ✅ closes modal and shows MobileFilterBar
-        selectedSort={currentSortValue}
-        onSelectSort={(value, label) => {
-            setCurrentSortValue(value);
-            setCurrentSortLabel(label);
-            setIsSortByOpen(false); // ✅ hide modal after selection
-        }}
-    />
+                <SortByPage
+                    isOpen={isSortByOpen}
+                    onClose={() => setIsSortByOpen(false)} 
+                    selectedSort={currentSortValue}
+                    onSelectSort={(value, label) => {
+                        setCurrentSortValue(value);
+                        setCurrentSortLabel(label);
+                        setIsSortByOpen(false); 
+                    }}
+                />
             </div>
             <div className="flex flex-col lg:flex-row gap-[30px]">
             <DesktopFilters
@@ -645,7 +557,6 @@ const WomenCollections = () => {
                     setMaxPrice={setMaxPrice}
                     isCategorySelected={selectedCategories.length > 0}
                 />
-
                 <main className="w-full lg:w-3/4">
                     <div className="flex justify-between items-center mb-6">
                         <div className="hidden lg:block text-[16px] sec-text-color ">
@@ -690,7 +601,6 @@ const WomenCollections = () => {
                     </div>
                     <ProductGrid />
                 </main>
-
             </div>
         </div>
     );
