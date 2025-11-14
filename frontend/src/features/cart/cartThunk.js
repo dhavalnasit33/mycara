@@ -16,24 +16,6 @@ export const addToCart = createAsyncThunk(
   }
 );
 
-// export const fetchCart = createAsyncThunk(
-//   "cart/fetchCart",
-//   async (_, { rejectWithValue }) => {
-//     try {
-//       const token = localStorage.getItem("token");
-//       const response = await api.get(ROUTES.cart.getAll, { headers: { Authorization: `Bearer ${token}` }, });
-//       const carts = response.data?.data?.carts || [];
-//       const cart = carts[0] || null;
-//       if (cart?._id) {
-//         localStorage.setItem("cart_id", cart._id);
-//       }
-//       return cart;
-//     } catch (error) {
-//       return rejectWithValue(error.response?.data || "Fetch cart failed");
-//     }
-//   }
-// );
-
 export const createCart = createAsyncThunk(
   "cart/createCart",
   async (_, { rejectWithValue }) => {
@@ -47,7 +29,6 @@ export const createCart = createAsyncThunk(
         { user_id },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       const cart = response.data?.data;
 
       if (cart?._id) {
@@ -61,7 +42,6 @@ export const createCart = createAsyncThunk(
   }
 );
 
-
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
   async (_, { dispatch, rejectWithValue }) => {
@@ -69,7 +49,6 @@ export const fetchCart = createAsyncThunk(
       const token = localStorage.getItem("token");
       let cart_id = localStorage.getItem("cart_id");
 
-      // If cart does not exist → create
       if (!cart_id) {
         const newCart = await dispatch(createCart()).unwrap();
         cart_id = newCart?._id;
@@ -79,7 +58,6 @@ export const fetchCart = createAsyncThunk(
         ROUTES.cart.getById(cart_id),
         { headers: { Authorization: `Bearer ${token}` } }
       );
-
       const cart = response.data?.data;
 
       if (cart?._id) {
