@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { getImageUrl } from "../utils/helper";
 
 export default function CartItem() {  
-  const { items = [], loading ,deletingItemId } = useSelector((state) => state.cart);
+  const { items = [], loading  } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
@@ -20,7 +20,7 @@ export default function CartItem() {
   }, [dispatch, user]);
 
   if (loading) return <p>Loading cart...</p>;
-  if (!items.length) return <p>Your cart is empty.</p>;
+  if (!items.length) return <p className="text-center mb-[100px]">Your cart is empty.</p>;
 
 
 const handleIncrease = async (item) => {
@@ -124,7 +124,7 @@ const getDiscountedPrice = (item) => {
                 </div>
               </td>
               <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-left">
-                  ₹ {getDiscountedPrice(item).discountedPrice.toFixed(0)} × {item.quantity}
+                  ₹ {getDiscountedPrice(item).discountedPrice.toFixed(0)} * {item.quantity}
               </td> 
                <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-center">
                   ₹ {(getDiscountedPrice(item).discountedPrice * item.quantity).toFixed(0)}
