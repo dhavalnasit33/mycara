@@ -55,21 +55,21 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
     <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
         <div className="flex items-center">
                   {/* Custom checkbox box */}
-      <div className={`w-[15px] h-[15px] rounded border flex items-center justify-center
-        ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
-      `}>
-        {isChecked && <CheckedIcon className="w-3 h-3 text-white" />}
-      </div>
+            <div className={`w-[15px] h-[15px] rounded border flex items-center justify-center
+                ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
+            `}>
+                {isChecked && <CheckedIcon className="w-3 h-3 text-white" />}
+            </div>
 
-      {/* Hidden native input for accessibility */}
-      <input
-        type="checkbox"
-        name={name}
-        checked={isChecked}
-        onChange={() => onChange(name)}
-        className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
-      />
-            <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
+            {/* Hidden native input for accessibility */}
+            <input
+                type="checkbox"
+                name={name}
+                checked={isChecked}
+                onChange={() => onChange(name)}
+                className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
+            />
+                    <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
         </div>
 
         {count !== undefined && (
@@ -80,46 +80,39 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
 
 // --------------------- SizeFilterItem ---------------------
 const SizeFilterItem = ({ name, isChecked, onChange }) => (
-  <label className="flex items-center cursor-pointer p-1 rounded w-1/2 relative">
-    {/* Custom checkbox */}
-    <div
-      className={`w-[15px] h-[15px] rounded border flex items-center justify-center
-        ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
-      `}
-    >
-      {isChecked && <CheckedIcon className="w-3 h-3 pointer-events-none" />}
-    </div>
+    <label className="flex items-center cursor-pointer p-1 rounded w-1/2 relative">
+        {/* Custom checkbox */}
+        <div className={`w-[15px] h-[15px] rounded border flex items-center justify-center
+            ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'} `}
+        >
+            {isChecked && <CheckedIcon className="w-3 h-3 pointer-events-none" />}
+        </div>
 
-    {/* Hidden input */}
-    <input
-      type="checkbox"
-      name={name}
-      checked={isChecked}
-      onChange={onChange}
-      className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
-    />
+        {/* Hidden input */}
+        <input
+        type="checkbox"
+        name={name}
+        checked={isChecked}
+        onChange={onChange}
+        className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
+        />
 
-    <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">
-      {name}
-    </span>
+        <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)] font-regular">
+        {name}
+        </span>
   </label>
 );
 // --------------------- ColorFilterItem ---------------------
 const ColorFilterItem = ({ name, hex, isChecked, onChange, border }) => {
     const dropShadowStyle = `drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25))`;
     return (
-        <div
-            className="flex flex-col items-center p-1 cursor-pointer w-1/6"
+        <div className="flex flex-col items-center p-1 cursor-pointer w-1/6"
             onClick={() => onChange(name)}
         >
             <div className={`w-[22px] h-[22px] rounded-full transition-all duration-150
-                     ${border ? 'border border-gray-300' : ''}
-                     ${isChecked ? `ring-2 ring-pink-500 ring-offset-2` : ''}
-                 `}
-                style={{
-                    backgroundColor: hex,
-                    filter: dropShadowStyle
-                }}
+                ${border ? 'border border-gray-300' : ''}
+                ${isChecked ? `ring-2 ring-pink-500 ring-offset-2` : ''}`}
+                style={{ backgroundColor: hex, filter: dropShadowStyle }}
             >
             </div>
             <span className="text-[10px] text-[#989696] font-regular mt-1">{name}</span>
@@ -159,7 +152,6 @@ const CollapsibleFilter = ({
                     }`}
                 onClick={handleToggle}
              >
-
                 <h3 className="font-medium font-inter text-black text-[14px]">{title}</h3>
                 <div className="flex items-center space-x-2">
                     <div className="flex items-center space-x-2">
@@ -236,12 +228,10 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                 <div className="relative h-1 w-full rounded-full" style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}>
 
                     {/* Highlighted range */}
-                    <div
-                        className="absolute h-1 bg-color rounded-full top-0"
-                        style={{
-                            left: `${(minPrice / MAX_PRICE) * 100}%`,
-                            right: `${100 - (maxPrice / MAX_PRICE) * 100}%`,
-                        }}
+                    <div className="absolute h-1 bg-color rounded-full top-0"
+                        style={{ left: `${(minPrice / MAX_PRICE) * 100}%`,
+                                    right: `${100 - (maxPrice / MAX_PRICE) * 100}%`,
+                                }}
                     ></div>
 
                     {/* Min slider */}
@@ -323,17 +313,17 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 const WomenCollections = () => {
     // Filter States
 
-      const dispatch = useDispatch();
-  const { products = [], loading } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
+    const { products = [], loading } = useSelector((state) => state.products);
 
-  // ✅ Fetch once when the component mounts
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    // ✅ Fetch once when the component mounts
+    useEffect(() => {
+        dispatch(fetchProducts());
+    }, [dispatch]);
 
-  const trendingProducts = products.filter((product) =>
-    product.variants?.some((variant) => variant.is_trending)
-  );
+    const trendingProducts = products.filter((product) =>
+        product.variants?.some((variant) => variant.is_trending)
+    );
 
     const [selectedCategories, setSelectedCategories] = useState([]);
 
