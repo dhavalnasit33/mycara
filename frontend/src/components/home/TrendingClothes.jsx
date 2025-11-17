@@ -123,8 +123,11 @@ const TrendingCloth = ({ product, desktop }) => {
         <span className="absolute bottom-0 right-0 w-[139px] border-b-[0.5px] border-dashed border-black"></span>
         <span className="absolute bottom-0 right-0 h-[177px] border-r-[0.5px] border-dashed border-black"></span>
         <FlowerIcon className="absolute top-0 left-0  w-[40px]  -translate-x-1/2   -translate-y-1/2  h-[30px] text-pink-300 pointer-events-none" />
-        <img
-          src={getImageUrl(product.images)}
+        <img  src={getImageUrl(
+            product.variants?.[0]?.images?.[0] ||    
+            product.images?.[0] ||                
+            "/uploads/placeholder.png"    
+          )}
           alt={product.name}
           className=" w-full h-full rounded-[5px]"
         />

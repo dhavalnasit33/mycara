@@ -53,8 +53,11 @@ const Bestsellers = () => {
                 <div className="relative overflow-hidden bg-white rounded-[5px] group h-[300px] sm:h-[397px]">
 
                   {/* Main Image */}
-                  <img
-                    src={getImageUrl(product.images)}
+                  <img src={getImageUrl(
+                      product.variants?.[0]?.images?.[0] ||    
+                      product.images?.[0] ||                
+                      "/uploads/placeholder.png"    
+                    )}
                     alt={product.name}
                     className="w-full h-full transition-transform duration-300"
                   />

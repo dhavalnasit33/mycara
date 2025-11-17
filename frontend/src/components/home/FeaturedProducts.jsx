@@ -216,8 +216,11 @@ const FeaturedProducts = () => {
                     className="relative overflow-hidden transform transition-transform cursor-pointer"
                   >
                     <div className="relative group">
-                      <img
-                        src={getImageUrl(p.images)}
+                      <img src={getImageUrl(
+                          p.variants?.[0]?.images?.[0] ||     
+                          p.images?.[0] ||                     
+                          "/uploads/placeholder.png"          
+                        )}
                         alt={p.name}
                         className="w-full h-[227px] md:h-[227px] lg:h-[355px] transform transition-transform duration-300 hover:scale-105"
                       />
