@@ -6,25 +6,40 @@ const colors = [
     "#BCBCBC", "#D2AF9F", "#F43297"
 ];
 
-export default function ProductGallery({product}) {
+export default function ProductGallery({product, activeVariant }) {
 
    const [currentImage, setCurrentImage] = useState(null);
+   const [selectedColor, setSelectedColor] = useState(null);
 
-  // 🧩 Combine main and variant images
-    const fullImageUrls = useMemo(() => {
-      if (!product) return [];
-      const mainImages = product.images || [];
-      const variantImages =
-        product.variants?.length > 0
-          ? product.variants.flatMap((v) => v.images || [])
-          : [];
-      const allImages = [...new Set([...mainImages, ...variantImages])];
-      return allImages.map((img) => getImageUrl(img));
-    }, [product]);
+    const variants = product?.variants || [];
 
-    useEffect(() => {
-      if (fullImageUrls.length > 0) setCurrentImage(fullImageUrls[0]);
-    }, [fullImageUrls]);
+  // ⭐ Extract dynamic colors
+  const colorOptions = useMemo(() => {
+    const seen = new Map();
+    variants.forEach((v) => {
+      if (v.color_id?._id) {
+        seen.set(v.color_id._id, {
+          id: v.color_id._id,
+          name: v.color_id.name,
+          images: v.images || [],
+        });
+      }
+    });
+    return Array.from(seen.values());
+  }, [variants]);
+
+  // ⭐ Convert images to full image URLs based on selected activeVariant
+  const fullImageUrls = useMemo(() => {
+    if (!activeVariant) return [];
+    return (activeVariant?.images || []).map((img) => getImageUrl(img));
+  }, [activeVariant]);
+
+  // ⭐ Set default image when variant changes
+  useEffect(() => {
+    if (fullImageUrls.length > 0) {
+      setCurrentImage(fullImageUrls[0]);
+    }
+  }, [fullImageUrls]);
 
 
   const sliderSettings = {
@@ -84,17 +99,26 @@ export default function ProductGallery({product}) {
         )}
 
         {/* ✅ Display All Product Colors */}
-        <div className="flex gap-2 mt-[30px] justify-center">
-          {colors.map((color, index) => (
+        <div className="flex gap-[8px] mt-[30px] justify-center">
+          {colorOptions.map((color) => (
             <span
-              key={index}
-              className="w-[20px] h-[20px] rounded-full "
-              style={{ backgroundColor: color }}
-              title={color}
+              key={color.id}
+               onClick={() => setSelectedColor(color.id)}
+              className={`w-[24px] h-[24px] rounded-full border 
+                ${
+                  selectedColor === color.id
+                    ? "border-black scale-110"
+                    : "border-gray-400"
+                }
+              `}
+              style={{ backgroundColor: color.name.toLowerCase() }}
+              title={color.name}
             ></span>
           ))}
         </div>
+           
       </div>
+    
 
       {/* ✅ Mobile Slider */}
       <div className="block md:hidden w-full rounded-[10px]">

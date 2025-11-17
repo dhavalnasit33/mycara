@@ -106,7 +106,11 @@ const getDiscountedPrice = (item) => {
               </td>
               <td className="px-3 xl:px-6 w-[182px] pt-[40px] pb-[20px]">
                 <Link to={`/products/${item.product_id?._id}`}>
-                <img src={getImageUrl(item.product_id?.images?.[0])} 
+                <img src={
+                    item.variant_id?.images?.length > 0
+                      ? getImageUrl(item.variant_id.images[0])       
+                      : getImageUrl(item.product_id?.images?.[0])       
+                  } 
                     alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] max-h-[176px]" />
                 </Link>
               </td>

@@ -9,7 +9,7 @@ import LoginForm from "../../pages/Login";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
-export default function ProductInfo({product}) {
+export default function ProductInfo({product, setSelectedVariant }) {
 
   const { id } = useParams(); 
   const dispatch = useDispatch();
@@ -17,6 +17,59 @@ export default function ProductInfo({product}) {
  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
     const [showLoginPopup, setShowLoginPopup] = useState(false);
+
+      // ================= VARIANT STATES =================
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [activeVariant, setActiveVariant] = useState(null);
+
+  // -------------------- DEFAULT FIRST VARIANT --------------------
+  useEffect(() => {
+    if (product?.variants?.length > 0) {
+      const first = product.variants[0];
+
+      setSelectedSize(first.size_id?._id);
+      setSelectedColor(first.color_id?._id);
+      setActiveVariant(first);
+      setSelectedVariant(first);
+    }
+  }, [product]);
+
+  // -------------------- MATCH VARIANT BASED ON SIZE + COLOR --------------------
+  useEffect(() => {
+    if (!selectedSize) return;
+
+    let match = product?.variants?.find(
+      (v) =>
+        v.size_id?._id === selectedSize &&
+        (!selectedColor || v.color_id?._id === selectedColor)
+    );
+
+    if (!match) {
+      match = product?.variants?.find(
+        (v) => v.size_id?._id === selectedSize
+      );
+    }
+
+    setActiveVariant(match || null);
+    setSelectedVariant(match || null);
+  }, [selectedSize, selectedColor, product]);
+
+  // ================= PRICE + DISCOUNT =================
+  const originalPrice = activeVariant?.price || 0;
+  const discountType = product?.discount_id?.type;
+  const discountValue = product?.discount_id?.value || 0;
+
+  let discountedPrice = originalPrice;
+
+  if (discountType === "percentage") {
+    discountedPrice = Math.round(
+      originalPrice - (originalPrice * discountValue) / 100
+    );
+  } else if (discountType === "flat") {
+    discountedPrice = Math.max(0, originalPrice - discountValue);
+  }
+
 
 
 const handleAddToCart = async () => {
@@ -32,7 +85,8 @@ const handleAddToCart = async () => {
   const payload = {
     cart_id,
     product_id: product._id,
-    variant_id: product.variants?.[0]?._id,
+    // variant_id: product.variants?.[0]?._id,
+     variant_id: activeVariant._id, // 🔥 IMPORTANT
     quantity: 1,
   };
 
@@ -44,28 +98,13 @@ const handleAddToCart = async () => {
 
 
 
-//discount percentage
-  const variant = product?.variants?.[0];
-  const originalPrice = variant?.price || 0;
-  const discountType = product?.discount_id?.type;
-  const discountValue = product?.discount_id?.value || 0;
-
-  let discountedPrice = originalPrice;
-
-  if (discountType === "percentage") {
-    discountedPrice = Math.round(originalPrice - (originalPrice * discountValue) / 100);
-  } else if (discountType === "flat") {
-    discountedPrice = Math.max(0, originalPrice - discountValue);
-  }
-
-
 //add to wishlist
   const { handleAddToWishlist } = useAddToWishlist();
 
   return (
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
-      <h1 className="text-[24px] uppercase"> {product.variants?.[0]?.brand_id?.name || "No Brand"}  </h1>
+      <h1 className="text-[24px] uppercase"> {activeVariant?.brand_id?.name || "No Brand"}  </h1>
       <p className="text-p text-light pb-[12px]">{product.name}</p>
 
       {/* Rating */}
@@ -78,7 +117,7 @@ const handleAddToCart = async () => {
       <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center">
           <p className="text-[26px] text-black">
-            ₹{discountedPrice.toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+            ₹{discountedPrice}
           </p>
 
           {discountValue > 0 && (
@@ -92,10 +131,10 @@ const handleAddToCart = async () => {
 
         {discountValue > 0 && (
           <p className="sec-text-color">
-            MRP{" "}
+            MRP
             <span className="line-through">
-              ₹{originalPrice.toLocaleString("en-IN", { maximumFractionDigits: 0 })}
-            </span>{" "}
+              ₹{originalPrice}
+            </span>
             Inclusive of all taxes
           </p>
         )}
@@ -110,32 +149,37 @@ const handleAddToCart = async () => {
         </div>
 
         <div className="flex flex-wrap gap-[13px]">
-          {product.variants && product.variants.length > 0 ? (
-            product.variants.map((variant) => (
-              <div key={variant.size_id._id} className="relative">
+          {product?.variants?.map((v) => {
+            const outOfStock = v.stock_quantity === 0;
+
+            return (
+              <div key={v._id} className="flex flex-col items-center">
                 <button
-                  disabled={variant.stock_quantity === 0}
-                  className={`border light-border w-[50px] md:w-[71px] md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500 ${
-                    variant.stock_quantity === 0 ? "cursor-not-allowed" : ""
-                  }`}
+                  disabled={outOfStock}
+                  onClick={() => !outOfStock && setSelectedSize(v.size_id._id)}
+                  className={`text-black w-[65px] py-[6px] rounded-[20px] text-[16px] transition-all
+                    ${
+                      selectedSize === v.size_id._id
+                        ? "border border-black"
+                        : "border light-border"
+                    }
+                    ${outOfStock ? "cursor-not-allowed opacity-50" : ""}
+                  `}
                 >
-                  {variant.size_id.name}
+                  {v.size_id.name}
                 </button>
-                {variant.stock_quantity === 0 && (
-                  <span className="absolute -bottom-5 left-2 text-[10px] md:text-[12px] sec-text-color">
-                    Sold Out
-                  </span>
+
+                {outOfStock && (
+                  <span className="text-[12px] sec-text-color mt-[3px]">Sold Out</span>
                 )}
               </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No sizes available</p>
-          )}
+            );
+          })}
         </div>
 
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
-            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product)}>
+            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product, activeVariant)}>
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >

@@ -173,11 +173,15 @@ useEffect(() => {
               </td>
 
               <td className="p-4 py-[40px] flex items-center gap-[25px] xl:gap-[40px]">
-                  <img
-                    src={getImageUrl(item.product?.images)}
-                    alt={item.product?.name}
+                  <img  src={
+                      item.variant_id?.images?.length > 0
+                        ? getImageUrl(item.variant_id.images[0])
+                        : getImageUrl(item.product_id?.images?.[0])
+                    }
+                    alt={item.product_id?.name}
                     className="w-[74px] h-[84px] p-[5px] box-shadow"
                   />
+
                 <div className="text-p break">
                   <h3 className="pb-[13px] leading">{item.product?.name}</h3>
                   <p>
@@ -262,11 +266,15 @@ useEffect(() => {
           <div key={index}
             className="bg-white p-4 rounded-[5px] box-shadow flex sm:flex-nowrap gap-[20px] items-start"
           >
-            <img
-                src={getImageUrl(item.product?.images)}
-                alt={item.product?.name}
-              className="w-[90px] h-[110px] p-[5px] box-shadow"
-            />
+            <img  src={
+                  item.variant_id?.images?.length > 0
+                    ? getImageUrl(item.variant_id.images[0])
+                    : getImageUrl(item.product_id?.images?.[0])
+                }
+                alt={item.product_id?.name}
+                className="w-[90px] h-[110px] p-[5px] box-shadow"
+              />
+            
             <div className="flex-1 flex flex-col text-p">
               <h3 className="mb-[5px] break text-14">{item.product?.name}</h3>
               <p className="mb-[10px] text-14">

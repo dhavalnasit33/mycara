@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -18,6 +18,8 @@ export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product, products, loading,error } = useSelector((state) => state.products);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+
 
   useEffect(() => {
     if (id) dispatch(fetchProductById(id));
@@ -40,9 +42,9 @@ export default function Product() {
         </Row>
 
         <Row className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-          <ProductGallery product={product} />
+          <ProductGallery product={product} activeVariant={selectedVariant}/>
           <div>
-            <ProductInfo product={product} />
+            <ProductInfo product={product} setSelectedVariant={setSelectedVariant}  />
             <ProductTabs />
           </div>
         </Row>
