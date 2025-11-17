@@ -20,11 +20,14 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { fetchProducts } from "../../features/products/productsThunk";
 import { getImageUrl } from "../utils/helper";
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 const FeaturedProducts = () => {
    const dispatch = useDispatch();
   const navigate = useNavigate();
   const sliderRef = useRef();
+    // hook to add to wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
 
   // Redux data
   const { items : categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
@@ -221,7 +224,10 @@ const FeaturedProducts = () => {
 
                       {/*Wishlist Icon */}
                       <div className="absolute top-3 right-3 opacity-100 group-hover:opacity-0 transition-opacity duration-300 z-10">
-                        <button className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border hover:scale-110 transition">
+                        <button   onClick={(e) => { e.preventDefault(); 
+                                                    e.stopPropagation();  
+                                                    handleAddToWishlist(p); }}
+                        className="w-[20px] h-[20px] md:w-[20px] md:h-[20px] lg:w-[40px] lg:h-[40px] flex items-center justify-center bg-white text-black rounded-full border hover:scale-110 transition">
                           <HeartIcon className="w-[12px] h-[12px] sm:w-[12px] sm:h-[12px] lg:w-[26px] lg:h-[24px]" />
                         </button>
                       </div>
@@ -234,7 +240,7 @@ const FeaturedProducts = () => {
                       </div>
 
                       {/* Hover Overlay */}
-                      <div className="absolute inset-3 bg-[rgba(12,11,11,0.3)] border border-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className="absolute inset-3 bg-[rgba(12,11,11,0.3)] border border-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-400">
                         <p className="text-white font-medium text-center">View product</p>
                       </div>
                     </div>
