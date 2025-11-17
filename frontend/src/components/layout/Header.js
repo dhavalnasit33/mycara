@@ -237,7 +237,7 @@ const wishlistCount = wishlist?.length || 0;
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
+                    <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
                     </Link>
@@ -284,10 +284,10 @@ const wishlistCount = wishlist?.length || 0;
       )}
 
       {/* ===== Mobile Drawer ===== */}
-      <div
+      <div onClick={() => setIsMenuOpen(false)} 
         className={`fixed top-0 left-0 w-3/4 max-w-[430px] h-screen bg-white box-shadow z-50 transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        }` }
       >
         <button
           className="absolute top-4 right-2 transition-colors text-light border rounded-[3px] p-[5px] border-[#D2AF9F]"
@@ -338,7 +338,7 @@ const wishlistCount = wishlist?.length || 0;
                 </Link>
               </div>
               <div className="py-4 px-4 cursor-pointer light-color">
-                <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
+                <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
                 </Link>
               </div>

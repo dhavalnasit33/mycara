@@ -18,37 +18,6 @@ export default function ProductInfo({product}) {
   const { token } = useSelector((state) => state.auth);
     const [showLoginPopup, setShowLoginPopup] = useState(false);
 
-//  useEffect(() => {
-//     if (token) {
-//       dispatch(fetchCart());
-//     }
-//   }, [ token, dispatch]);
-
-//   const handleAddToCart = async () => {
-//     if (!token) {
-//       setShowLoginPopup(true);
-//       return;
-//     }
-//     let cart_id = localStorage.getItem("cart_id");
-//     const product_id = product._id;
-//     const variant_id = product.variants?.[0]?._id;
-//     const quantity = 1;
-
-//     if (!cart_id || cart_id === "undefined") {
-//       await dispatch(fetchCart()).unwrap();
-//       cart_id = localStorage.getItem("cart_id");
-//     }
-//     if (!cart_id || cart_id === "undefined") {
-//       alert("Cart not found. Please refresh and try again.");
-//       return;
-//     }
-//     const payload = { cart_id, product_id, variant_id, quantity };
-
-//     dispatch(addToCart(payload))
-//       .unwrap()
-//       dispatch(fetchCart());
-//       navigate("/cart");
-//   };
 
 const handleAddToCart = async () => {
   if (!token) {
