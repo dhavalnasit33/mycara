@@ -128,10 +128,10 @@ const getDiscountedPrice = (item) => {
                 </div>
               </td>
               <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-left">
-                  ₹ {getDiscountedPrice(item).discountedPrice.toFixed(0)} * {item.quantity}
+                   ₹ {Math.round(getDiscountedPrice(item).discountedPrice).toLocaleString("en-IN")} × {item.quantity}
               </td> 
                <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-center">
-                  ₹ {(getDiscountedPrice(item).discountedPrice * item.quantity).toFixed(0)}
+                  ₹ {Math.round(getDiscountedPrice(item).discountedPrice * item.quantity).toLocaleString("en-IN")}
               </td>
             </tr>
           ))}

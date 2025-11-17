@@ -117,7 +117,7 @@ const handleAddToCart = async () => {
       <div className="pb-[33px] border-dashed border-b light-border">
         <div className="flex items-center">
           <p className="text-[26px] text-black">
-            ₹{discountedPrice}
+            ₹{discountedPrice.toLocaleString("en-IN")}
           </p>
 
           {discountValue > 0 && (
@@ -131,11 +131,9 @@ const handleAddToCart = async () => {
 
         {discountValue > 0 && (
           <p className="sec-text-color">
-            MRP
-            <span className="line-through">
-              ₹{originalPrice}
-            </span>
-            Inclusive of all taxes
+            MRP <span className="line-through">
+              ₹{originalPrice.toLocaleString("en-IN")}
+            </span> Inclusive of all taxes
           </p>
         )}
       </div>

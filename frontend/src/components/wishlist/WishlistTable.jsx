@@ -102,11 +102,14 @@ const handleAddToCart = async (item) => {
 //discount price
 const getDiscountedPrice = (item) => {
   const discount = item?.product_id?.discount_id?.value || 0;
-  const originalPrice = item?.variant_id?.price || 0;
-  const discountedPrice =
+  const originalPrice = Number(item?.variant_id?.price || 0);
+
+  let discountedPrice =
     discount > 0
       ? originalPrice - (originalPrice * discount) / 100
       : originalPrice;
+
+  discountedPrice = Math.round(discountedPrice); 
 
   return { discount, originalPrice, discountedPrice };
 };
@@ -205,11 +208,11 @@ useEffect(() => {
               <td className="p-4">
                 {getDiscountedPrice(item).discount > 0 && (
                   <span className="sec-text-color text-14 line-through mr-[5px]">
-                    ₹{getDiscountedPrice(item).originalPrice}
+                    ₹{Number(getDiscountedPrice(item).originalPrice).toLocaleString("en-IN")}{" "}
                   </span>
                 )}
                 <span className="text-p">
-                  ₹{getDiscountedPrice(item).discountedPrice.toFixed(0)}
+                  ₹{Number(getDiscountedPrice(item).discountedPrice).toLocaleString("en-IN")}
                 </span>
               </td>
 
