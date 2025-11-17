@@ -28,10 +28,9 @@ export default function ProductGallery({product, activeVariant }) {
     return Array.from(seen.values());
   }, [variants]);
 
-  // ⭐ Convert images to full image URLs based on selected activeVariant
   const fullImageUrls = useMemo(() => {
     if (!activeVariant) return [];
-    return (activeVariant?.images || []).map((img) => getImageUrl(img));
+    return (activeVariant.images || []).map((img) => getImageUrl(img));
   }, [activeVariant]);
 
   // ⭐ Set default image when variant changes

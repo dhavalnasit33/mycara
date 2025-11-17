@@ -26,18 +26,25 @@ const getDiscountedPrice = (product) => {
 
 //product hover slider
   const [currentIndex, setCurrentIndex] = useState(0);
-  const mainImages = Array.isArray(product.images) ? product.images : [];
-  const variantImages =
-    product?.variants?.[0]?.images && Array.isArray(product.variants[0].images)
+
+
+  // //addto wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
+
+  const firstVariantImages =
+    Array.isArray(product?.variants?.[0]?.images)
       ? product.variants[0].images
       : [];
-  const allImages = [...mainImages, ...variantImages];
-  const displayedImage = getImageUrl(allImages[currentIndex] || mainImages[0]);
+
+  // MAIN FALLBACK IMAGE IF NO VARIANT IMAGES
+  const mainImages = Array.isArray(product?.images) ? product.images : [];
+
+  const allImages = firstVariantImages.length > 0 ? firstVariantImages : mainImages;
+
+  // main display image
+  const displayedImage = getImageUrl(allImages[currentIndex]);
   const hasMultipleImages = allImages.length > 1;
 
-  //addto wishlist
-  const { handleAddToWishlist } = useAddToWishlist();
-  
   return (
       <Link to={`/products/${product._id}`}>
     <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
