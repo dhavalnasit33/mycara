@@ -40,7 +40,7 @@ const getCarts = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("user_id", "name email")
       .populate("items.product_id", "name image images")
-      .populate("items.variant_id", "price color size sku");
+      .populate("items.variant_id", "price color size sku image images");
 
     sendResponse(res, true, { carts, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
@@ -58,7 +58,7 @@ const getCartById = async (req, res) => {
           select: "name price image images discount_id", 
           populate: { path: "discount_id", select: "type value", },
         })
-      .populate("items.variant_id", "color size sku price");
+      .populate("items.variant_id", "color size sku price image images");
     if (!cart) return sendResponse(res, false, null, "Cart not found");
     sendResponse(res, true, cart, "Cart retrieved successfully");
   } catch (err) {

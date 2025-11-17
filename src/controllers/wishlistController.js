@@ -22,7 +22,7 @@ const getWishlist = async (req, res) => {
       const wishlists = await Wishlist.find()
         .populate("user_id", "name email")
         .populate("items.product_id", "name image images")
-        .populate("items.variant_id", "price color size sku")
+        .populate("items.variant_id", "price color size sku image images")
         .sort({ createdAt: -1 });
 
       return sendResponse(res, true, { wishlists }, "All wishlists retrieved for download");
@@ -78,7 +78,7 @@ const addItemToWishlist = async (req, res) => {
     await wishlist.save();
 
     // Populate for response
-    wishlist = await wishlist.populate("items.product_id items.variant_id", "name price sku");
+    wishlist = await wishlist.populate("items.product_id items.variant_id", "name price sku image images");
 
     sendResponse(res, true, wishlist, "Items added to wishlist successfully");
   } catch (err) {
