@@ -3,7 +3,6 @@ import HeartIcon from "../icons/HeartIcon";
 import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
@@ -64,11 +63,11 @@ const getDiscountedPrice = (product) => {
 
         {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
-            <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] " />
+          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
+            <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
           </div>
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]">
-            <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
+            <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
           </div>
         </div>
 
