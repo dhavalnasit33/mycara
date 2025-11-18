@@ -24,7 +24,7 @@ const ProductGrid  = () => {
 
     return (
         <div className="py-10 ">
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-[10px] md:gap-[30px]">
+            <div className="grid grid-cols-2 md:grid-cols-3  gap-[10px] md:gap-[30px]">
                 {visibleProducts.length > 0 ? (
                     visibleProducts.map((product, index) => (
                         <ProductCard key={product.id || index} product={product} />
