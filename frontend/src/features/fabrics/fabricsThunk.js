@@ -10,7 +10,7 @@ export const fetchFabrics = createAsyncThunk(
       const res = await api.get(ROUTES.fabrics.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.fabrics; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch fabrics");

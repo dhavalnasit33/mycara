@@ -21,7 +21,7 @@ const colorsSlice = createSlice({
     })
     .addCase(fetchColors.fulfilled, (state, action) => {
       state.loading = false;
-      state.colors = action.payload;
+      state.colors = action.payload.colors;
     })
     .addCase(fetchColors.rejected, (state, action) => {
       state.loading = false;

@@ -14,7 +14,7 @@ export const fetchCategories = createAsyncThunk(
       const res = await api.get(ROUTES.categories.getAll, { params: queryParams });
 
       if (res.data.success) {
-        return res.data.data.categories; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch navbar items");

@@ -19,7 +19,7 @@ const typesSlice = createSlice({
       })
       .addCase(fetchtypes.fulfilled, (state, action) => {
         state.loading = false;
-        state.types = action.payload;
+        state.types = action.payload.types;
       })
       .addCase(fetchtypes.rejected, (state, action) => {
         state.loading = false;

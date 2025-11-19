@@ -10,7 +10,7 @@ export const fetchDiscounts = createAsyncThunk(
       const res = await api.get(ROUTES.discounts.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.discounts; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch discounts");

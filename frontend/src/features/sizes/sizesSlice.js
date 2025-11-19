@@ -20,7 +20,7 @@ const sizesSlice = createSlice({
       })
       .addCase(fetchSizes.fulfilled, (state, action) => {
         state.loading = false;
-        state.sizes = action.payload;
+        state.sizes = action.payload.sizes;
       })
       .addCase(fetchSizes.rejected, (state, action) => {
         state.loading = false;
@@ -33,7 +33,7 @@ const sizesSlice = createSlice({
       })
       .addCase(getSizeById.fulfilled, (state, action) => {
         state.loading = false;
-        state.size = action.payload;
+        state.size = action.payload.sizes;
       })
       .addCase(getSizeById.rejected, (state, action) => {
         state.loading = false;

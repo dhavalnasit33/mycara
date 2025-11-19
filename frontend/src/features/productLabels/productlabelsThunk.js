@@ -10,7 +10,7 @@ export const fetchProductLabels = createAsyncThunk(
       const res = await api.get(ROUTES.productLabels.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.labels; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch product labels");

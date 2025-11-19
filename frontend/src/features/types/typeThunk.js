@@ -10,7 +10,7 @@ export const fetchtypes = createAsyncThunk(
       const res = await api.get(ROUTES.types.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.types; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch types");

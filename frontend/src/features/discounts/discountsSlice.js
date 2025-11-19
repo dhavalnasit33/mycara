@@ -19,7 +19,7 @@ const discountsSlice = createSlice({
       })
       .addCase(fetchDiscounts.fulfilled, (state, action) => {
         state.loading = false;
-        state.discounts = action.payload;
+        state.discounts = action.payload.discounts;
       })
       .addCase(fetchDiscounts.rejected, (state, action) => {
         state.loading = false;
