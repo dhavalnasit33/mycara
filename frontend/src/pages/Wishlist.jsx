@@ -10,31 +10,14 @@ import { useEffect } from "react";
 import { getImageUrl } from "../components/utils/helper";
 
 
-const products = [
-  {
-    name: "Analog Watch for Women",
-    sku: "12345",
-    image: prod1,
-    oldPrice: 4575,
-    price: 1137,
-    quantity: 1,
-    inStock: true,
-    stockText: "50 in stock",
-  },
-  {
-    name: "Women Latest Trendy Pink Mojari",
-    sku: "12345",
-    image: prod2,
-    price: 1137,
-    quantity: 1,
-    inStock: false,
-    stockText: "out of stock",
-  },
-];
+// const products = [
+// ];
 
 export default function Wishlist(){
   const dispatch = useDispatch();
     const { pages, loading, error } = useSelector((state) => state.pages);
+    const { products} = useSelector((state) => state.products);
+
 
     useEffect(() => {
         dispatch(fetchPages());

@@ -4,6 +4,7 @@ import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
 import { Link } from "react-router-dom";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
+import { useSelector } from "react-redux";
 
 
 export default function ProductCard({ product }) {
@@ -26,23 +27,21 @@ const getDiscountedPrice = (product) => {
 //product hover slider
   const [currentIndex, setCurrentIndex] = useState(0);
 
-
-  // //addto wishlist
-  const { handleAddToWishlist } = useAddToWishlist();
-
   const firstVariantImages =
     Array.isArray(product?.variants?.[0]?.images)
       ? product.variants[0].images
       : [];
-
-  // MAIN FALLBACK IMAGE IF NO VARIANT IMAGES
   const mainImages = Array.isArray(product?.images) ? product.images : [];
-
   const allImages = firstVariantImages.length > 0 ? firstVariantImages : mainImages;
 
-  // main display image
   const displayedImage = getImageUrl(allImages[currentIndex]);
   const hasMultipleImages = allImages.length > 1;
+
+//addto wishlist
+  const { handleAddToWishlist } = useAddToWishlist();
+  const wishlistProductIds = useSelector((state) => state.wishlist.productIds);
+  const isWishlisted = wishlistProductIds.includes(product._id);
+
 
   return (
       <Link to={`/products/${product._id}`}>
@@ -63,8 +62,19 @@ const getDiscountedPrice = (product) => {
 
         {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
+          {/* <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
             <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
+          </div> */}
+          <div onClick={(e) => {
+                e.preventDefault(); 
+                handleAddToWishlist(product);
+              }}
+              className={`h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]
+                ${isWishlisted ? "bg-[#F43297]" : "bg-white"}`}   // ⭐ color change
+           >
+              <HeartIcon className={`w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200 
+                  ${isWishlisted ? "invert brightness-0 contrast-200" : ""}`} // ⭐ filled effect
+              />
           </div>
           <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]">
             <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
