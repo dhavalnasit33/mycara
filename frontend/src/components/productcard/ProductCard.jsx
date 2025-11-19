@@ -65,20 +65,22 @@ const getDiscountedPrice = (product) => {
           {/* <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
             <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
           </div> */}
-          <div onClick={(e) => {
-                e.preventDefault(); 
+           <div
+              onClick={(e) => {
+                e.preventDefault();
                 handleAddToWishlist(product);
               }}
-              className={`h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]
-                ${isWishlisted ? "bg-[#F43297]" : "bg-white"}`}   // ⭐ color change
-           >
-              <HeartIcon className={`w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200 
-                  ${isWishlisted ? "invert brightness-0 contrast-200" : ""}`} // ⭐ filled effect
+              className={`h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] flex items-center justify-center rounded-full hover:bg-[#F43297]
+                ${isWishlisted ? "bg-[#F43297]" : "bg-white"}`}  
+             >
+              <HeartIcon
+                className={`w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] transition hover:invert over:brightness-0 hover:contrast-200
+                  ${isWishlisted ? "invert brightness-0 contrast-200" : ""}`}
               />
-          </div>
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]">
-            <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
-          </div>
+            </div>
+              <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]">
+                <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
+              </div>
         </div>
 
         {/* Small Dots for Multiple Images */}
