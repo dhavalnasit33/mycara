@@ -5,19 +5,21 @@ import { useEffect, useState } from 'react';
 
 
 const ProductGrid  = () => {
-
-    const { products = [] } = useSelector((state) => state.products);
+    const dispatch = useDispatch();
+    const { products = [], loading = false } = useSelector((state) => state.products || {});
     const [visibleCount, setVisibleCount] = useState(3);
 
-    const dispatch = useDispatch();
+    const [page] = useState(1);
+    const limit = 100;
+
     useEffect(() => {
-        dispatch(fetchProducts({ limit: 50 }));
-    }, [dispatch]);
+        dispatch(fetchProducts({ page, limit }));
+    }, [dispatch, page, limit ]);
 
     const visibleProducts = products.slice(0, visibleCount); 
 
     const handleLoadMore = () => {
-        setVisibleCount(prev => prev + 3); 
+        setVisibleCount((prev) => prev + 3); 
     };
 
     console.log("Products in component:", products);
@@ -34,7 +36,7 @@ const ProductGrid  = () => {
                 )}
             </div>
 
-                {/* --- Load More Button Sectio --- */}
+                {/* --- Load More Button Section --- */}
             {visibleCount < products.length && (
                 <div className="flex justify-center mt-10">
                     <button  onClick={handleLoadMore}
