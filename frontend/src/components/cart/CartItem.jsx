@@ -11,11 +11,10 @@ export default function CartItem() {
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-
   useEffect(() => {
-    // ✅ Fetch cart when user logged in
-    if (user) {
-      dispatch(fetchCart());
+    const cart_id = localStorage.getItem("cart_id");
+    if (user && cart_id) {
+      dispatch(fetchCart(cart_id));
     }
   }, [dispatch, user]);
 
@@ -23,33 +22,36 @@ export default function CartItem() {
   if (!items.length) return <p className="text-center mb-[100px]">Your cart is empty.</p>;
 
 
-const handleIncrease = async (item) => {
-  const cart_id = localStorage.getItem("cart_id");
-  if (!cart_id) return;
-  const newQuantity = item.quantity + 1;
-  dispatch({
-    type: "cart/updateLocalQuantity",
-    payload: { item_id: item._id, quantity: newQuantity },
-  });
-  dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
-    .unwrap()
-    .catch(() => {
+  const handleIncrease = async (item) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id) return;
+    const newQuantity = item.quantity + 1;
+    dispatch({
+      type: "cart/updateLocalQuantity",
+      payload: { item_id: item._id, quantity: newQuantity },
     });
-};
+    dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
+    .unwrap()
+    .then(() => dispatch(
+      fetchCart(cart_id))
+    );
 
-const handleDecrease = async (item) => {
-  const cart_id = localStorage.getItem("cart_id");
-  if (!cart_id || item.quantity <= 1) return;
-  const newQuantity = item.quantity - 1;
-  dispatch({
-    type: "cart/updateLocalQuantity",
-    payload: { item_id: item._id, quantity: newQuantity },
-  });
-  dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
-    .unwrap()
-    .catch(() => {
+  };
+
+  const handleDecrease = async (item) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id || item.quantity <= 1) return;
+    const newQuantity = item.quantity - 1;
+    dispatch({
+      type: "cart/updateLocalQuantity",
+      payload: { item_id: item._id, quantity: newQuantity },
     });
-};
+    dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
+    .unwrap()
+    .then(() => dispatch(
+      fetchCart(cart_id))
+    );
+  };
 
 
 
@@ -58,26 +60,23 @@ const handleDecrease = async (item) => {
     const cart_id = localStorage.getItem("cart_id");
     if (!cart_id) return alert("No cart found!");
     dispatch(deleteCartItem({ cart_id, item_id }))
-      .unwrap()
-      .then(() => {
-        dispatch(fetchCart());
-      })
-      .catch((error) => {
-        console.error("Delete error:", error);
-      });
+    .unwrap()
+    .then(() => 
+      dispatch(fetchCart(cart_id))
+     )
   };
 
   //discount price
-const getDiscountedPrice = (item) => {
-  const discount = item?.product_id?.discount_id?.value || 0;
-  const originalPrice = item?.variant_id?.price || 0;
-  const discountedPrice =
-    discount > 0
-      ? originalPrice - (originalPrice * discount) / 100
-      : originalPrice;
+  const getDiscountedPrice = (item) => {
+    const discount = item?.product_id?.discount_id?.value || 0;
+    const originalPrice = item?.variant_id?.price || 0;
+    const discountedPrice =
+      discount > 0
+        ? originalPrice - (originalPrice * discount) / 100
+        : originalPrice;
 
-  return { discount, originalPrice, discountedPrice };
-};
+    return { discount, originalPrice, discountedPrice };
+  };
 
 
 

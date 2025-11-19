@@ -4,7 +4,7 @@ import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, fetchCart} from "../../features/cart/cartThunk";
+import { addToCart, createCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
@@ -22,6 +22,9 @@ export default function ProductInfo({product, setSelectedVariant }) {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedColor, setSelectedColor] = useState(null);
   const [activeVariant, setActiveVariant] = useState(null);
+  const cart = useSelector((state) => state.cart.cart);
+  const user = JSON.parse(localStorage.getItem("user"));
+
 
   // -------------------- DEFAULT FIRST VARIANT --------------------
   useEffect(() => {
@@ -72,27 +75,56 @@ export default function ProductInfo({product, setSelectedVariant }) {
 
 
 
-const handleAddToCart = async () => {
+// const handleAddToCart = async () => {
+//   if (!token) {
+//     setShowLoginPopup(true);
+//     return;
+//   }
+
+//   // Always ensure cart exists
+//   const cart = await dispatch(fetchCart()).unwrap();
+//   const cart_id = cart._id;
+
+//   const payload = {
+//     cart_id,
+//     product_id: product._id,
+//     // variant_id: product.variants?.[0]?._id,
+//      variant_id: activeVariant._id, // 🔥 IMPORTANT
+//     quantity: 1,
+//   };
+
+//   await dispatch(addToCart(payload)).unwrap();
+
+//   await dispatch(fetchCart());
+//   navigate("/cart");
+// };
+
+ const handleAddToCart = async () => {
   if (!token) {
     setShowLoginPopup(true);
     return;
   }
+  if (!activeVariant?._id) {
+    alert("Select a variant first!");
+    return;
+  }
 
-  // Always ensure cart exists
-  const cart = await dispatch(fetchCart()).unwrap();
-  const cart_id = cart._id;
+  let cartId = cart?._id || localStorage.getItem("cart_id");
+  if (!cartId) {
+    const newCart = await dispatch(createCart({ user_id: user._id })).unwrap();
+    cartId = newCart._id;
+  }
 
-  const payload = {
-    cart_id,
-    product_id: product._id,
-    // variant_id: product.variants?.[0]?._id,
-     variant_id: activeVariant._id, // 🔥 IMPORTANT
-    quantity: 1,
-  };
+  await dispatch(
+    addToCart({
+      cart_id: cartId,
+      product_id: product._id,
+      variant_id: activeVariant._id,
+      quantity: 1,
+    })
+  ).unwrap();
 
-  await dispatch(addToCart(payload)).unwrap();
-
-  await dispatch(fetchCart());
+  await dispatch(fetchCart(cartId));
   navigate("/cart");
 };
 
