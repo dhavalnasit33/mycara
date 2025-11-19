@@ -42,20 +42,21 @@
           state.error = action.payload;
         })
       
-      .addCase(fetchCart.fulfilled, (state, action) => {
-         state.loading = false;
-        state.cart = action.payload;
-        state.items = action.payload?.items || []; 
-      })
+        .addCase(fetchCart.fulfilled, (state, action) => {
+          state.loading = false;
+          state.cart = action.payload;
+          state.items = action.payload?.items || []; 
+        })
    
-
       .addCase(updateCartItem.fulfilled, (state, action) => {
         const updatedItem = action.payload?.item;
-        const item = state.items.find((i) => i._id === updatedItem._id);
-        if (item) {
-          item.quantity = updatedItem.quantity;
+        if (!updatedItem) return;
+        const existingItem = state.items.find((i) => i._id === updatedItem._id);
+        if (existingItem) {
+          existingItem.quantity = updatedItem.quantity;
         }
       })
+
 
       .addCase(deleteCartItem.fulfilled, (state, action) => {
         state.deletingItemId = null;
