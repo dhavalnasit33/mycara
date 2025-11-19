@@ -12,7 +12,7 @@ export const fetchProducts = createAsyncThunk(
       const res = await api.get(ROUTES.products.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.products; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch product");

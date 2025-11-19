@@ -26,7 +26,7 @@ const pagesSlice = createSlice({
       })
       .addCase(fetchPages.fulfilled, (state, action) => {
         state.loading = false;
-        state.pages = action.payload;
+        state.pages = action.payload.pages;
       })
       .addCase(fetchPages.rejected, (state, action) => {
         state.loading = false;

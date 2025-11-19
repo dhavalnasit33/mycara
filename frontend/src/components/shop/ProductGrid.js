@@ -34,7 +34,7 @@ const ProductGrid  = () => {
                 )}
             </div>
 
-                {/* --- Load More Button Section --- */}
+                {/* --- Load More Button Sectio --- */}
             {visibleCount < products.length && (
                 <div className="flex justify-center mt-10">
                     <button  onClick={handleLoadMore}
