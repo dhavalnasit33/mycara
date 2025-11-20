@@ -20,7 +20,7 @@ export default function TrendingCard ({ product }){
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
       <div className="flex justify-between items-start">
-        <div className="pr-2 sm:pr-[40px]">
+        <div className="pr-2 sm:pr-[20px]">
           <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">
             {product.name}
           </h3>
