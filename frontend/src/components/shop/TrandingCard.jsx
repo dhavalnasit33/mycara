@@ -16,7 +16,7 @@ export default function TrendingCard ({ product }){
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[350px] h-[180px] sm:h-[231px] p-4 sm:py-[30px] pl-4 sm:pl-[30px] pr-[15px]
+                    w-11/12 max-w-[297px] h-[180px] sm:h-[231px] p-4 sm:py-[30px] pl-4 sm:pl-[30px] pr-[15px]
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
       <div className="flex justify-between items-start">
