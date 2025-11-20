@@ -139,6 +139,8 @@ const FeaturedProducts = () => {
         })
       : [];
 
+    const limitedProducts = filteredProducts.slice(0, 8);
+
   return (
     <section className="w-full py-[25px] md:py-[50px]">
       <div className="flex flex-col items-center">
@@ -205,7 +207,7 @@ const FeaturedProducts = () => {
             {productLoading ? (
                 <p>Loading products...</p>
               ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-                filteredProducts.map((p,index) => {
+                limitedProducts.map((p,index) => {
                   const { originalPrice, discountedPrice, discountValue, discountType } =
                     getDiscountedPrice(p);
 
