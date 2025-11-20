@@ -6,7 +6,7 @@ import { ROUTES } from "../../services/routes";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ page, limit }, { rejectWithValue }) => {
+  async ({ page = 1, limit = 50 } = {}, { rejectWithValue }) => {
     try {
       const res = await api.get(ROUTES.products.getAll, {
         params: { page, limit }
@@ -22,6 +22,7 @@ export const fetchProducts = createAsyncThunk(
     }
   }
 );
+
 
 
 export const fetchProductById = createAsyncThunk(
