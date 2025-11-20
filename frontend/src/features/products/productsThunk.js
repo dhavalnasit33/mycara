@@ -13,7 +13,7 @@ export const fetchProducts = createAsyncThunk(
       });
 
       if (res.data.success) {
-        return res.data.data;
+        return res.data.data.products;
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch product");
