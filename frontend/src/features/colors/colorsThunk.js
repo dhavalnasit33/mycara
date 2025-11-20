@@ -10,7 +10,7 @@ export const fetchColors = createAsyncThunk(
       const res = await api.get(ROUTES.colors.getAll, { params:queryParams });
 
       if (res.data.success) {
-        return res.data.data.colors; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch colors");

@@ -237,7 +237,7 @@ const wishlistCount = wishlist?.length || 0;
                     </Link>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
+                    <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
                     </Link>
@@ -284,10 +284,10 @@ const wishlistCount = wishlist?.length || 0;
       )}
 
       {/* ===== Mobile Drawer ===== */}
-      <div
+      <div onClick={() => setIsMenuOpen(false)} 
         className={`fixed top-0 left-0 w-3/4 max-w-[430px] h-screen bg-white box-shadow z-50 transform transition-transform duration-300 ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        }` }
       >
         <button
           className="absolute top-4 right-2 transition-colors text-light border rounded-[3px] p-[5px] border-[#D2AF9F]"
@@ -302,12 +302,15 @@ const wishlistCount = wishlist?.length || 0;
           <nav className="py-3">
             {navItems.map((item, i) => {
               if (item.name === "Home") return null;
+                const isOdd = i % 2 !== 0; 
               return (
                 <NavLink
                   key={i}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className="flex items-center gap-3 py-4 px-4 text-light bg-white"
+                   className={`flex items-center gap-3 py-4 px-4 text-light 
+                      ${isOdd ? "light-color " : "bg-white "}
+                    `}
                 >
                   {item.icon}
                   <span>{item.name}</span>
@@ -321,7 +324,7 @@ const wishlistCount = wishlist?.length || 0;
             </div>
 
             <div className="text-light">
-              <div className="py-4 px-4 cursor-pointer">
+              <div className="py-4 px-4 cursor-pointer light-color">
                 <Link to="/my-account" className="flex items-center gap-[15px]">
                   <FaUser /> My Profile
                 </Link>
@@ -334,8 +337,8 @@ const wishlistCount = wishlist?.length || 0;
                   <Package size={20} /> Orders
                 </Link>
               </div>
-              <div className="py-4 px-4 cursor-pointer">
-                <Link onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
+              <div className="py-4 px-4 cursor-pointer light-color">
+                <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
                 </Link>
               </div>

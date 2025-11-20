@@ -7,52 +7,78 @@ import { Link } from "react-router-dom";
 import { getImageUrl } from "../utils/helper";
 
 export default function CartItem() {  
-  const { items = [], loading ,deletingItemId } = useSelector((state) => state.cart);
+  const { items = [], loading  } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
 
-
   useEffect(() => {
-    // ✅ Fetch cart when user logged in
-    if (user) {
-      dispatch(fetchCart());
+    const cart_id = localStorage.getItem("cart_id");
+    if (user && cart_id) {
+      dispatch(fetchCart(cart_id));
     }
   }, [dispatch, user]);
 
   if (loading) return <p>Loading cart...</p>;
-  if (!items.length) return <p>Your cart is empty.</p>;
+  if (!items.length) return <p className="text-center mb-[100px]">Your cart is empty.</p>;
 
 
-const handleIncrease = (item) => {
-  const cart_id = localStorage.getItem("cart_id");
-  const newQuantity = item.quantity + 1;
-  dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
-    .unwrap()
-    dispatch(fetchCart()); // refresh cart
-};
-const handleDecrease = (item) => {
-  const cart_id = localStorage.getItem("cart_id");
-  if (item.quantity > 1) {
-    const newQuantity = item.quantity - 1;
+  const handleIncrease = async (item) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id) return;
+    const newQuantity = item.quantity + 1;
+    dispatch({
+      type: "cart/updateLocalQuantity",
+      payload: { item_id: item._id, quantity: newQuantity },
+    });
     dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
-      .unwrap()
-      dispatch(fetchCart());
-  }
-};
+    .unwrap()
+    .then(() => dispatch(
+      fetchCart(cart_id))
+    );
+
+  };
+
+  const handleDecrease = async (item) => {
+    const cart_id = localStorage.getItem("cart_id");
+    if (!cart_id || item.quantity <= 1) return;
+    const newQuantity = item.quantity - 1;
+    dispatch({
+      type: "cart/updateLocalQuantity",
+      payload: { item_id: item._id, quantity: newQuantity },
+    });
+    dispatch(updateCartItem({ cart_id, item_id: item._id, quantity: newQuantity }))
+    .unwrap()
+    .then(() => dispatch(
+      fetchCart(cart_id))
+    );
+  };
+
+
 
 //remove cart
   const handleDelete = (item_id) => {
     const cart_id = localStorage.getItem("cart_id");
     if (!cart_id) return alert("No cart found!");
     dispatch(deleteCartItem({ cart_id, item_id }))
-      .unwrap()
-      .then(() => {
-        dispatch(fetchCart());
-      })
-      .catch((error) => {
-        console.error("Delete error:", error);
-      });
+    .unwrap()
+    .then(() => 
+      dispatch(fetchCart(cart_id))
+     )
   };
+
+  //discount price
+  const getDiscountedPrice = (item) => {
+    const discount = item?.product_id?.discount_id?.value || 0;
+    const originalPrice = item?.variant_id?.price || 0;
+    const discountedPrice =
+      discount > 0
+        ? originalPrice - (originalPrice * discount) / 100
+        : originalPrice;
+
+    return { discount, originalPrice, discountedPrice };
+  };
+
+
 
 
   return (
@@ -72,19 +98,23 @@ const handleDecrease = (item) => {
         <tbody>
           {items.map((item, index) => (
             <tr key={index} className="border-b light-border font-18 sec-text-color">
-              <td className="py-4 text-center">
+              <td className="text-center pt-[40px] pb-[20px]">
                 <button className="w-[20px] h-[20px]" onClick={() => handleDelete(item._id)}  >
                     <img src={remove} alt="remove" />
                 </button>
               </td>
-              <td className="p-4 w-[162px]">
+              <td className="px-3 xl:px-6 w-[182px] pt-[40px] pb-[20px]">
                 <Link to={`/products/${item.product_id?._id}`}>
-                <img src={getImageUrl(item.product_id?.images?.[0])} 
-                    alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] h-[176px]" />
+                <img src={
+                    item.variant_id?.images?.length > 0
+                      ? getImageUrl(item.variant_id.images[0])       
+                      : getImageUrl(item.product_id?.images?.[0])       
+                  } 
+                    alt={item.product_id?.name} className="box-shadow object-cover p-[5px]  w-[130px] max-h-[176px]" />
                 </Link>
               </td>
-              <td className="p-4 break  max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
-              <td className="p-4">
+              <td className="px-3 xl:px-6 break pt-[40px] pb-[20px] max-w-[230px] truncate overflow-hidden text-ellipsis">{item.product_id?.name}</td>
+              <td className="px-3 xl:px-6 pt-[40px] pb-[20px]">
                 <div className="inline-flex items-center gap-[10px] px-[8px] py-[5px] light-border border text-black rounded-[20px] leading">
                   <button onClick={() => handleDecrease(item)}>
                     <Minus size={14} />
@@ -96,8 +126,12 @@ const handleDecrease = (item) => {
                   </button>
                 </div>
               </td>
-              <td className="p-4 text-left">₹{item.variant_id?.price} * {item.quantity}</td>
-              <td className="p-4 text-center">₹ {(item.variant_id?.price || 0)*(item.quantity || 1)}</td>
+              <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-left">
+                   ₹ {Math.round(getDiscountedPrice(item).discountedPrice).toLocaleString("en-IN")} × {item.quantity}
+              </td> 
+               <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-center">
+                  ₹ {Math.round(getDiscountedPrice(item).discountedPrice * item.quantity).toLocaleString("en-IN")}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -112,12 +146,16 @@ const handleDecrease = (item) => {
                   <img src={remove}  alt="remove" className="w-full h-full object-contain" />
                 </button>
                 <Link to={`/products/${item.product_id?._id}`}>
-                  <img src={getImageUrl(item.product_id?.images?.[0])} alt={item.product_id?.name} className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                   <img src={
+                    item.variant_id?.images?.length > 0
+                      ? getImageUrl(item.variant_id.images[0])       
+                      : getImageUrl(item.product_id?.images?.[0])       
+                  }  className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
                 </Link>
             </div>
             <div className="flex flex-col  flex-wrap ">
                 <div className="mb-[8px] text-14 break ">{item.product_id?.name}</div>
-                <div className="text-p mb-[12px] text-color">₹{(item.variant_id?.price || 0) * (item.quantity || 1)}</div>
+                <div className="text-p mb-[12px] text-color">₹{(getDiscountedPrice(item).discountedPrice * item.quantity).toFixed(0)}</div>
 
                 <div className="flex items-center gap-[10px] text-14">
                 <button className="light-color rounded-[2px] flex items-center justify-center p-[2px] ">

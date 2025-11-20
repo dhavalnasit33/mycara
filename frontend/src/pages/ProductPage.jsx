@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
@@ -12,11 +12,14 @@ import ProductInfo from "../components/productcard/ProductInfo";
 import ProductTabs from "../components/productcard/ProductTabs";
 import SimilarProducts from "../components/productcard/SimilarProducts";
 import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
+import { fetchPages } from "../features/pages/pagesThunk";
 
 export default function Product() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { product, products, loading,error } = useSelector((state) => state.products);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+
 
   useEffect(() => {
     if (id) dispatch(fetchProductById(id));
@@ -24,6 +27,7 @@ export default function Product() {
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchPages());
   }, [dispatch]);
 
   if (loading) return <p className="text-center py-10">Loading product...</p>;
@@ -38,9 +42,9 @@ export default function Product() {
         </Row>
 
         <Row className="grid grid-cols-1 lg:grid-cols-2 gap-[30px]">
-          <ProductGallery product={product} />
+          <ProductGallery product={product} activeVariant={selectedVariant}/>
           <div>
-            <ProductInfo product={product} />
+            <ProductInfo product={product} setSelectedVariant={setSelectedVariant}  />
             <ProductTabs />
           </div>
         </Row>
@@ -48,14 +52,14 @@ export default function Product() {
 
       <Section>
         <Row>
-          <SectionHeading page="Products" order="2" />
+          <SectionHeading page="products"  order="2" index="0"   />
         </Row>
         <SimilarProducts product={product} products={products} />
       </Section>
 
       <Section>
         <Row>
-          <SectionHeading page="Products" order="3" />
+          <SectionHeading page="products"  order="2" index="1" />
         </Row>
         <CustomerAlsoViewed />
       </Section>

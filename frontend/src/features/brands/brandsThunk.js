@@ -10,7 +10,7 @@ export const fetchBrands = createAsyncThunk(
       const res = await api.get(ROUTES.brands.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.brands; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch product");

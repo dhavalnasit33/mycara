@@ -16,29 +16,23 @@ const colorsSlice = createSlice({
     builder
 
     .addCase(fetchColors.pending, (state) => {
-        state.loading = true;
-        })
-        .addCase(fetchColors.fulfilled, (state, action) => {
-        state.loading = false;
-        state.colors = action.payload;
-        })
-        .addCase(fetchColors.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-        })
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(fetchColors.fulfilled, (state, action) => {
+      state.loading = false;
+      state.colors = action.payload.colors;
+    })
+    .addCase(fetchColors.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
 
-      .addCase(fetchColorById.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchColorById.fulfilled, (state, action) => {
-        state.loading = false;
-        state.color = action.payload;
-      })
-      .addCase(fetchColorById.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      });
+
+    .addCase(fetchColorById.fulfilled, (state, action) => {
+      state.loading = false;
+      state.color = action.payload;
+    })
   },
 });
 

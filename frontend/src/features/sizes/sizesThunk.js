@@ -9,7 +9,7 @@ export const fetchSizes = createAsyncThunk(
       const res = await api.get(ROUTES.sizes.getAll, { params });
 
       if (res.data.success) {
-        return res.data.data.sizes; 
+        return res.data.data; 
       }
 
       return rejectWithValue(res.data.message || "Failed to fetch sizes");
@@ -27,7 +27,7 @@ export const getSizeById = createAsyncThunk(
         const res = await api.get(ROUTES.sizes.getById(id) , {
         headers: { Authorization: `Bearer ${token}` },
         });
-        return res.data.data.sizes;
+        return res.data.data;
     } catch (error) {
         return rejectWithValue(error.response?.data?.message || "Failed to fetch size");
     }

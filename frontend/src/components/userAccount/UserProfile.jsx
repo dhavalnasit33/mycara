@@ -22,7 +22,7 @@ export default function UserProfile () {
                 <img
                 src={defaultimg}
                 alt={user.name}
-                className="xl:w-[150px] xl:h-[150px] rounded-full border-4 circle-border transition-all duration-300 mx-auto md:mx-0"
+                className="w-[150px] h-[150px] rounded-full border-4 circle-border transition-all duration-300 mx-auto md:mx-0"
                 />
             </div>
         </Row>

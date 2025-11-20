@@ -19,7 +19,7 @@ const fabricsSlice = createSlice({
       })
       .addCase(fetchFabrics.fulfilled, (state, action) => {
         state.loading = false;
-        state.fabrics = action.payload;
+        state.fabrics = action.payload.fabrics;
       })
       .addCase(fetchFabrics.rejected, (state, action) => {
         state.loading = false;

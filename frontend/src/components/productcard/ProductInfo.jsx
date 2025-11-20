@@ -5,74 +5,131 @@ import Button from "../ui/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchDiscounts } from "../../features/discounts/discountsThunk";
-import { addToCart, fetchCart} from "../../features/cart/cartThunk";
+import { addToCart, createCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
-export default function ProductInfo({product}) {
+export default function ProductInfo({product, setSelectedVariant }) {
 
   const { id } = useParams(); 
   const dispatch = useDispatch();
-
-  const { discounts } = useSelector((state) => state.discounts);
 
  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
     const [showLoginPopup, setShowLoginPopup] = useState(false);
 
- useEffect(() => {
-    if (id) {
-      dispatch(fetchDiscounts());
+      // ================= VARIANT STATES =================
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [activeVariant, setActiveVariant] = useState(null);
+  const cart = useSelector((state) => state.cart.cart);
+  const user = JSON.parse(localStorage.getItem("user"));
+
+
+  // -------------------- DEFAULT FIRST VARIANT --------------------
+  useEffect(() => {
+    if (product?.variants?.length > 0) {
+      const first = product.variants[0];
+
+      setSelectedSize(first.size_id?._id);
+      setSelectedColor(first.color_id?._id);
+      setActiveVariant(first);
+      setSelectedVariant(first);
     }
-    if (token) {
-      dispatch(fetchCart());
+  }, [product]);
+
+  // -------------------- MATCH VARIANT BASED ON SIZE + COLOR --------------------
+  useEffect(() => {
+    if (!selectedSize) return;
+
+    let match = product?.variants?.find(
+      (v) =>
+        v.size_id?._id === selectedSize &&
+        (!selectedColor || v.color_id?._id === selectedColor)
+    );
+
+    if (!match) {
+      match = product?.variants?.find(
+        (v) => v.size_id?._id === selectedSize
+      );
     }
-  }, [id, token, dispatch]);
 
-  const handleAddToCart = async () => {
-    if (!token) {
-      setShowLoginPopup(true);
-      return;
-    }
-    let cart_id = localStorage.getItem("cart_id");
-    const product_id = product._id;
-    const variant_id = product.variants?.[0]?._id;
-    const quantity = 1;
+    setActiveVariant(match || null);
+    setSelectedVariant(match || null);
+  }, [selectedSize, selectedColor, product]);
 
-    if (!cart_id || cart_id === "undefined") {
-      await dispatch(fetchCart()).unwrap();
-      cart_id = localStorage.getItem("cart_id");
-    }
-    if (!cart_id || cart_id === "undefined") {
-      alert("Cart not found. Please refresh and try again.");
-      return;
-    }
-    const payload = { cart_id, product_id, variant_id, quantity };
+  // ================= PRICE + DISCOUNT =================
+  const originalPrice = activeVariant?.price || 0;
+  const discountType = product?.discount_id?.type;
+  const discountValue = product?.discount_id?.value || 0;
 
-    dispatch(addToCart(payload))
-      .unwrap()
-      dispatch(fetchCart());
-      navigate("/cart");
-  };
+  let discountedPrice = originalPrice;
 
-
-
-//discount percentage
-  const discount = product
-    ? discounts.find((d) => d._id === product?.discount_id)
-    : null;
-    const originalPrice = product?.variants?.[0]?.price || 0;
-    let finalPrice = originalPrice;
-
-    if (discount) {
-      if (discount.type === "percentage") {
-        finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-      } else {
-        finalPrice = originalPrice - discount.value;
-      }
+  if (discountType === "percentage") {
+    discountedPrice = Math.round(
+      originalPrice - (originalPrice * discountValue) / 100
+    );
+  } else if (discountType === "flat") {
+    discountedPrice = Math.max(0, originalPrice - discountValue);
   }
+
+
+
+// const handleAddToCart = async () => {
+//   if (!token) {
+//     setShowLoginPopup(true);
+//     return;
+//   }
+
+//   // Always ensure cart exists
+//   const cart = await dispatch(fetchCart()).unwrap();
+//   const cart_id = cart._id;
+
+//   const payload = {
+//     cart_id,
+//     product_id: product._id,
+//     // variant_id: product.variants?.[0]?._id,
+//      variant_id: activeVariant._id, // 🔥 IMPORTANT
+//     quantity: 1,
+//   };
+
+//   await dispatch(addToCart(payload)).unwrap();
+
+//   await dispatch(fetchCart());
+//   navigate("/cart");
+// };
+
+ const handleAddToCart = async () => {
+  if (!token) {
+    setShowLoginPopup(true);
+    return;
+  }
+  if (!activeVariant?._id) {
+    alert("Select a variant first!");
+    return;
+  }
+
+  let cartId = cart?._id || localStorage.getItem("cart_id");
+  if (!cartId) {
+    const newCart = await dispatch(createCart({ user_id: user._id })).unwrap();
+    cartId = newCart._id;
+  }
+
+  await dispatch(
+    addToCart({
+      cart_id: cartId,
+      product_id: product._id,
+      variant_id: activeVariant._id,
+      quantity: 1,
+    })
+  ).unwrap();
+
+  await dispatch(fetchCart(cartId));
+  navigate("/cart");
+};
+
+
 
 //add to wishlist
   const { handleAddToWishlist } = useAddToWishlist();
@@ -80,7 +137,7 @@ export default function ProductInfo({product}) {
   return (
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
-      <h1 className="text-[24px] uppercase"> {product.variants?.[0]?.brand_id?.name || "No Brand"}  </h1>
+      <h1 className="text-[24px] uppercase"> {activeVariant?.brand_id?.name || "No Brand"}  </h1>
       <p className="text-p text-light pb-[12px]">{product.name}</p>
 
       {/* Rating */}
@@ -91,17 +148,27 @@ export default function ProductInfo({product}) {
 
       {/* Price */}
       <div className="pb-[33px] border-dashed border-b light-border">
-        <div className="flex items-center ">
-            <p className="text-[26px] text-black">₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</p>
-             {discount && (
+        <div className="flex items-center">
+          <p className="text-[26px] text-black">
+            ₹{discountedPrice.toLocaleString("en-IN")}
+          </p>
+
+          {discountValue > 0 && (
             <p className="text-theme font-18 ml-[7px]">
-              {discount.type === "percentage"
-                ? `${discount.value}% Off`
-                : `₹${discount.value} Off`}
+              {discountType === "percentage"
+                ? `${discountValue}% Off`
+                : `₹${discountValue} Off`}
             </p>
           )}
         </div>
-        <p className="sec-text-color">MRP <span className="line-through"> ₹{Number(originalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}</span> Inclusive of all taxes</p>
+
+        {discountValue > 0 && (
+          <p className="sec-text-color">
+            MRP <span className="line-through">
+              ₹{originalPrice.toLocaleString("en-IN")}
+            </span> Inclusive of all taxes
+          </p>
+        )}
       </div>
 
 
@@ -113,32 +180,37 @@ export default function ProductInfo({product}) {
         </div>
 
         <div className="flex flex-wrap gap-[13px]">
-          {product.variants && product.variants.length > 0 ? (
-            product.variants.map((variant) => (
-              <div key={variant.size_id._id} className="relative">
+          {product?.variants?.map((v) => {
+            const outOfStock = v.stock_quantity === 0;
+
+            return (
+              <div key={v._id} className="flex flex-col items-center">
                 <button
-                  disabled={variant.stock_quantity === 0}
-                  className={`border light-border w-[50px] md:w-[71px] md:px-4 py-[3px] rounded-[20px] text-[14px] md:text-[18px] font-light hover:border-pink-500 ${
-                    variant.stock_quantity === 0 ? "cursor-not-allowed" : ""
-                  }`}
+                  disabled={outOfStock}
+                  onClick={() => !outOfStock && setSelectedSize(v.size_id._id)}
+                  className={`text-black w-[65px] py-[6px] rounded-[20px] text-[16px] transition-all
+                    ${
+                      selectedSize === v.size_id._id
+                        ? "border border-black"
+                        : "border light-border"
+                    }
+                    ${outOfStock ? "cursor-not-allowed opacity-50" : ""}
+                  `}
                 >
-                  {variant.size_id.name}
+                  {v.size_id.name}
                 </button>
-                {variant.stock_quantity === 0 && (
-                  <span className="absolute -bottom-5 left-2 text-[10px] md:text-[12px] sec-text-color">
-                    Sold Out
-                  </span>
+
+                {outOfStock && (
+                  <span className="text-[12px] sec-text-color mt-[3px]">Sold Out</span>
                 )}
               </div>
-            ))
-          ) : (
-            <p className="text-gray-500">No sizes available</p>
-          )}
+            );
+          })}
         </div>
 
 
         <div className="flex flex-col  sm:flex-row  gap-[17px] pt-[10px] ">
-            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product)}>
+            <Button variant="outline" className="flex items-center gap-[10px] !text-[22px] !py-[10px] "  onClick={() => handleAddToWishlist(product, activeVariant)}>
                 <HeartIcon className="h-[22px] w-[22px]" />Wishlist
             </Button>
             <Button variant="common" className="w-full !text-[22px] flex items-center gap-[10px] !py-[10px]"  onClick={handleAddToCart} >

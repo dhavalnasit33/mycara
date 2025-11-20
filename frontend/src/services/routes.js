@@ -63,7 +63,8 @@ export const ROUTES = {
     bulkDelete: "/wishlists/bulk-delete",
   },
   cart: {
-    getAll: "/carts",
+    getAll:"/carts",
+    getById: (id) => `/carts/${id}`,
     addItem: "/carts/items",
     updateItem: "/carts/items",
     deleteCart: "/carts/items",

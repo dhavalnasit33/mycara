@@ -256,7 +256,7 @@ const Footer = () => {
 
           {/* Copyright */}
           <div className="w-full p-[10px] text-center text-white bg-color">
-            © 2024 MYcra Fashion Ltd. All Rights Reserved
+            © {new Date().getFullYear()} MYcra Fashion Ltd. All Rights Reserved
           </div>
         </div>
       </div>

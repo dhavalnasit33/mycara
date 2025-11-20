@@ -2,32 +2,40 @@ import React from "react";
 import { useSelector } from "react-redux";
 import FlowerIcon from "../icons/FlowerIcon";
 
-export default function SectionHeading({page, order }) {
+export default function SectionHeading({ page, order, index = 0 }) {
+  const pages = useSelector((state) => state.pages?.pages || []);
+  const loading = useSelector((state) => state.pages?.loading);
 
-  const data = useSelector((state) => state.pages?.pages || []);
+  // Wait until pages load
+  if (loading || !pages.length) return null;
 
-
-  // 1️⃣ Find home page
-  const currentPage = data?.find(
+  // Find the correct page
+  const currentPage = pages.find(
     (p) => p.slug?.toLowerCase().trim() === page?.toLowerCase().trim()
   );
 
-  // 2️⃣ Find section by order
-    const currentSection = currentPage?.sections?.find(
+  if (!currentPage) {
+    console.warn("PAGE NOT FOUND:", page);
+    return null;
+  }
+
+  // Filter all sections with same order
+  const matchedSections = currentPage.sections.filter(
     (section) => Number(section.order) === Number(order)
   );
 
+  if (!matchedSections.length) {
+    console.warn("NO SECTIONS FOUND FOR ORDER:", order);
+    return null;
+  }
 
-  const title = currentSection?.title || "Default Title";
+  // Pick correct section based on index
+  const currentSection = matchedSections[index];
 
   if (!currentSection) {
-    console.warn(
-      ` Section not found for page: "${page}" with order: "${order}"`
-    );
+    console.warn(`NO SECTION FOUND AT INDEX ${index} FOR ORDER ${order}`);
+    return null;
   }
-//   if (!currentSection) {
-//   console.warn("Section not found:", { page, order, data, currentPage });
-// }
 
   return (
     <div className="relative flex justify-center items-center w-full mb-[50px] md:mb-[90px]">
@@ -35,7 +43,7 @@ export default function SectionHeading({page, order }) {
 
       <div className="relative mx-2 md:mx-4 flex flex-col items-center justify-center">
         <h2 className="font-h2 text-black whitespace-nowrap relative z-10">
-          {title}
+          {currentSection.title}
         </h2>
         <FlowerIcon className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40px] h-[25px] md:w-[110px] md:h-[80px] pointer-events-none z-0" />
       </div>

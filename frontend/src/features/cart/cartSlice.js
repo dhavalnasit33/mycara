@@ -18,10 +18,17 @@
       state.items = [];
       state.total = 0;
       state.cart_id = null;
+    },
+    updateLocalQuantity: (state, action) => {
+      const { item_id, quantity } = action.payload;
+      const item = state.items.find((i) => i._id === item_id);
+      if (item) {
+        item.quantity = quantity;
+      }
     },},
     extraReducers: (builder) => {
       builder
-        // Add to cart
+      
         .addCase(addToCart.pending, (state) => {
           state.loading = true;
         })
@@ -34,39 +41,28 @@
           state.loading = false;
           state.error = action.payload;
         })
-
-        // Fetch cart
-       .addCase(fetchCart.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(fetchCart.fulfilled, (state, action) => {
-         state.loading = false;
-        state.cart = action.payload;
-        state.items = action.payload?.items || []; 
-      })
-      .addCase(fetchCart.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+      
+        .addCase(fetchCart.fulfilled, (state, action) => {
+          state.loading = false;
+          state.cart = action.payload;
+          state.items = action.payload?.items || []; 
+        })
+   
       .addCase(updateCartItem.fulfilled, (state, action) => {
-        state.items = action.payload.items || [];
+        const updatedItem = action.payload?.item;
+        if (!updatedItem) return;
+        const existingItem = state.items.find((i) => i._id === updatedItem._id);
+        if (existingItem) {
+          existingItem.quantity = updatedItem.quantity;
+        }
       })
 
-        .addCase(deleteCartItem.pending, (state, action) => {
-        state.deletingItemId = action.meta.arg.item_id; // show spinner for this item
-        state.error = null;
-      })
+
       .addCase(deleteCartItem.fulfilled, (state, action) => {
         state.deletingItemId = null;
-        // backend returns updated cart — update local state
         state.cart = action.payload;
         state.items = action.payload?.items || [];
       })
-      .addCase(deleteCartItem.rejected, (state, action) => {
-        state.deletingItemId = null;
-        state.error = action.payload || action.error.message;
-      });
-
     },
   });
 

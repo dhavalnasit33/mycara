@@ -4,35 +4,64 @@ import api from "../../services/api";
 import { ROUTES } from "../../services/routes";
 
 export const addToCart = createAsyncThunk(
-  "cart/addToCart",
-  async (payload, { rejectWithValue }) => {
+  "carts/addToCart",
+  async ({ cart_id, product_id, variant_id, quantity }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.post(ROUTES.cart.addItem, payload, {  headers: { Authorization: `Bearer ${token}` }, });
-      return response.data;
+
+      const res = await api.post(
+        ROUTES.cart.addItem,
+        { cart_id, product_id, variant_id, quantity },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      return res.data.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data);
+    }
+  }
+);
+
+export const createCart = createAsyncThunk(
+  "cart/createCart",
+  async ({ user_id }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await api.post(
+       ROUTES.cart.getAll,
+        { user_id },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      const cart = response.data.data;
+
+      localStorage.setItem("cart_id", cart._id);
+
+      return cart;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "Add to cart failed.");
+      return rejectWithValue(error.response?.data || "Create cart failed");
     }
   }
 );
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-  async (_, { rejectWithValue }) => {
+  async (cart_id, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const response = await api.get(ROUTES.cart.getAll, { headers: { Authorization: `Bearer ${token}` }, });
-      const carts = response.data?.data?.carts || [];
-      const cart = carts[0] || null;
-      if (cart?._id) {
-        localStorage.setItem("cart_id", cart._id);
-      }
-      return cart;
+
+      const res = await api.get(ROUTES.cart.getById(cart_id), {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return res.data.data;
     } catch (error) {
       return rejectWithValue(error.response?.data || "Fetch cart failed");
     }
   }
 );
+
 
 
 export const updateCartItem = createAsyncThunk(

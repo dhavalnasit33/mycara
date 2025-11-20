@@ -59,6 +59,10 @@ const TrendingClothes = () => {
       },
       {
         breakpoint: 767, // mobile
+        settings: { slidesToShow: 2 },
+      },
+      {
+        breakpoint: 640, 
         settings: { slidesToShow: 1 },
       },
     ],
@@ -102,18 +106,30 @@ const TrendingClothes = () => {
 };
 
 const TrendingCloth = ({ product, desktop }) => {
+  const mainVariant = product?.variants?.[0];
+  const discount = product?.discount?.value || 0;
+  const originalPrice = mainVariant?.price || 0;
+  const discountedPrice =
+    discount > 0
+      ? originalPrice - (originalPrice * discount) / 100
+      : originalPrice;
+
+
   return (
      <Link to={`/products/${product._id}`}>
     <div className={`group ${desktop ? "" : "w-full"}`}>
      
-      <div className="relative rounded-lg overflow-visible p-2 h-[450px] md:h-[555px]">
+      <div className="relative rounded-lg overflow-visible p-2 h-[350px] md:h-[555px]">
         <span className="absolute top-0 left-0 w-[139px] border-t-[0.5px] border-dashed border-black"></span>
         <span className="absolute top-0 left-0 h-[177px] border-l-[0.5px] border-dashed border-black"></span>
         <span className="absolute bottom-0 right-0 w-[139px] border-b-[0.5px] border-dashed border-black"></span>
         <span className="absolute bottom-0 right-0 h-[177px] border-r-[0.5px] border-dashed border-black"></span>
         <FlowerIcon className="absolute top-0 left-0  w-[40px]  -translate-x-1/2   -translate-y-1/2  h-[30px] text-pink-300 pointer-events-none" />
-        <img
-          src={getImageUrl(product.images)}
+        <img  src={getImageUrl(
+            product.variants?.[0]?.images?.[0] ||    
+            product.images?.[0] ||                
+            "/uploads/placeholder.png"    
+          )}
           alt={product.name}
           className=" w-full h-full rounded-[5px]"
         />
@@ -128,11 +144,9 @@ const TrendingCloth = ({ product, desktop }) => {
       <div className="p-2 text-left">
         <h3 className="font-medium text-[13px] custom-lg:text-[20px] custom-lg:text-[20px] mb-[8px] leading">{product.name}</h3>
         <p className="sec-text-color mb-[8px]">
-          {product.variants?.map((variant) => (
-            <span key={variant._id} className="text-[10px] custom-lg:text-[14px] mr-2">
-              Rs {variant.price}
+           <span className="text-[10px] custom-lg:text-[14px] mr-2">
+              Rs {discountedPrice.toFixed(0)}
             </span>
-          ))}
         </p>
         <p className="text-black mb-2">★★★★★</p>
         <button className="text-black relative transition">

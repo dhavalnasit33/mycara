@@ -3,42 +3,46 @@ import HeartIcon from "../icons/HeartIcon";
 import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
+import { useSelector } from "react-redux";
 
 
 export default function ProductCard({ product }) {
-//discount percentage value 
-  const { discounts } = useSelector((state) => state.discounts);
+const getDiscountedPrice = (product) => {
+  const originalPrice = product?.variants?.[0]?.price || 0;
+  const discount = product?.discount?.value || 0;
+  const discountType = product?.discount?.type || "none";
 
-  const discount = discounts.find((d) => d._id === product.discount_id);
+  let discountedPrice = originalPrice;
 
-  const originalPrice = product.variants?.[0]?.price || 0;
-  let finalPrice = originalPrice;
-
-  if (discount) {
-    if (discount.type === "percentage") {
-      finalPrice = originalPrice - (originalPrice * discount.value) / 100;
-    } else {
-      finalPrice = originalPrice - discount.value;
-    }
+  if (discountType === "percentage") {
+    discountedPrice = originalPrice - (originalPrice * discount) / 100;
+  } else if (discountType === "flat") {
+    discountedPrice = originalPrice - discount;
   }
 
+  return {  originalPrice, discountedPrice, discountValue: discount, discountType, };
+};
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+//product hover slider
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const images = Array.isArray(product.images) && product.images.length
-    ? product.images
-    : product.imageUrl
-      ? [product.imageUrl]
-      : ["/placeholder.png"];
+  const firstVariantImages =
+    Array.isArray(product?.variants?.[0]?.images)
+      ? product.variants[0].images
+      : [];
+  const mainImages = Array.isArray(product?.images) ? product.images : [];
+  const allImages = firstVariantImages.length > 0 ? firstVariantImages : mainImages;
 
-  const displayedImage = getImageUrl(images[currentImageIndex]);
-  const hasMultipleImages = images.length > 1;
+  const displayedImage = getImageUrl(allImages[currentIndex]);
+  const hasMultipleImages = allImages.length > 1;
 
-  //addto wishlist
+//addto wishlist
   const { handleAddToWishlist } = useAddToWishlist();
-  
+  const wishlistProductIds = useSelector((state) => state.wishlist.productIds);
+  const isWishlisted = wishlistProductIds.includes(product._id);
+
+
   return (
       <Link to={`/products/${product._id}`}>
     <div className="bg-white overflow-hidden transition-all group w-full h-[470px] sm:h-[520px] hover:p-[10px] hover:shadow-[0_0_4px_0_rgba(0,0,0,0.25)] cursor-pointer">
@@ -46,8 +50,8 @@ export default function ProductCard({ product }) {
       <div className="relative mb-[10px]">
         <div
           className="relative mb-[10px] w-full h-[300px] sm:h-[355px]"
-          onMouseEnter={() => hasMultipleImages && setCurrentImageIndex(1)}
-          onMouseLeave={() => hasMultipleImages && setCurrentImageIndex(0)}
+          onMouseEnter={() => hasMultipleImages && setCurrentIndex(1)}
+          onMouseLeave={() => hasMultipleImages && setCurrentIndex(0)}
         >
           <img
             src={displayedImage}
@@ -58,29 +62,42 @@ export default function ProductCard({ product }) {
 
         {/* Wishlist + Cart Icons */}
         <div className="absolute top-3 right-3 flex flex-col space-y-2">
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full" onClick={() => handleAddToWishlist(product)}>
-            <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
-          </div>
-          <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full">
-            <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px]" />
-          </div>
+          {/* <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center  justify-center rounded-full hover:bg-[#F43297]" onClick={() => handleAddToWishlist(product)}>
+            <HeartIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
+          </div> */}
+           <div
+              onClick={(e) => {
+                e.preventDefault();
+                handleAddToWishlist(product);
+              }}
+              className={`h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] flex items-center justify-center rounded-full hover:bg-[#F43297]
+                ${isWishlisted ? "bg-[#F43297]" : "bg-white"}`}  
+             >
+              <HeartIcon
+                className={`w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] transition hover:invert over:brightness-0 hover:contrast-200
+                  ${isWishlisted ? "invert brightness-0 contrast-200" : ""}`}
+              />
+            </div>
+              <div className="h-[26px] w-[26px] sm:h-[40px] sm:w-[40px] bg-white flex items-center justify-center rounded-full hover:bg-[#F43297]">
+                <ShoppingBagIcon className="w-[16px] h-[16px] sm:w-[26px] sm:h-[24px] hover:invert over:brightness-0 hover:contrast-200" />
+              </div>
         </div>
 
         {/* Small Dots for Multiple Images */}
         {hasMultipleImages && (
-          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] p-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            {product.allImages.map((_, index) => (
+          <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-[5px] px-[10px] py-[4px] bg-[rgba(217,217,217,60%)] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {allImages.map((_, index) => (
               <div
                 key={index}
+                onMouseEnter={() => setCurrentIndex(index)} 
                 className={`w-[6px] h-[6px] rounded-full cursor-pointer transition-colors duration-300 ${
-                  index === currentImageIndex ? "bg-color" : "bg-white"
+                  currentIndex === index ? "bg-color" : "bg-white"
                 }`}
-                onMouseEnter={() => setCurrentImageIndex(index)}
-              />
+              ></div>
             ))}
           </div>
         )}
-      </div>
+        </div>
       
       {/* Product Info */}
       <div>
@@ -99,23 +116,28 @@ export default function ProductCard({ product }) {
 
         {/* Price Section */}
         <div className="flex items-center gap-[5px] text-p mb-[5px]">
-          <p className="text-p text-black ">
-            ₹{Number(finalPrice).toLocaleString("en-IN", { maximumFractionDigits: 0 })}
+          <p className="text-p text-black">
+            ₹ {getDiscountedPrice(product).discountedPrice.toLocaleString("en-IN", {
+              maximumFractionDigits: 0,
+            })}
           </p>
-          <p className="line-through text-[#BCBCBC]">
-            ₹{Number(originalPrice).toLocaleString("en-IN")}
-          </p>
-          {discount && (
+          {getDiscountedPrice(product).discountValue > 0 && (
+            <p className="line-through text-[#BCBCBC]">
+              ₹
+              {getDiscountedPrice(product).originalPrice.toLocaleString("en-IN", {
+                maximumFractionDigits: 0,
+              })}
+            </p>
+          )}
+          {getDiscountedPrice(product).discountValue > 0 && (
             <p className="text-theme text-p">
-              {discount.type === "percentage"
-                ? `${discount.value}% `
-                : `₹${discount.value} `}
+              {getDiscountedPrice(product).discountType === "percentage"
+                ? `${getDiscountedPrice(product).discountValue}% Off`
+                : `₹${getDiscountedPrice(product).discountValue} Off`}
             </p>
           )}
         </div>
-
-
-
+        
         {/* Color Options */}
          <div className="flex gap-[5px]"> 
             {product.variants?.map((variant, vi) =>

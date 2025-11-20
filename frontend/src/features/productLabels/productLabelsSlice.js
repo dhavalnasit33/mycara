@@ -19,7 +19,7 @@ const productLabelsSlice = createSlice({
       })
       .addCase(fetchProductLabels.fulfilled, (state, action) => {
         state.loading = false;
-        state.productLabels  = action.payload;
+        state.productLabels  = action.payload.labels;
       })
       .addCase(fetchProductLabels.rejected, (state, action) => {
         state.loading = false;
