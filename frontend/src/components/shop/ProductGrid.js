@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 const ProductGrid  = () => {
     const dispatch = useDispatch();
     const { products = [], loading = false } = useSelector((state) => state.products || {});
-    const [visibleCount, setVisibleCount] = useState(3);
+    const [visibleCount, setVisibleCount] = useState(6);
 
     const [page] = useState(1);
     const limit = 100;
@@ -19,7 +19,7 @@ const ProductGrid  = () => {
     const visibleProducts = products.slice(0, visibleCount); 
 
     const handleLoadMore = () => {
-        setVisibleCount((prev) => prev + 3); 
+        setVisibleCount((prev) => prev + 6); 
     };
 
     console.log("Products in component:", products);
