@@ -115,7 +115,7 @@ const getDiscountedPrice = (product) => {
         <p className="sec-text-color text-14 mb-2 truncate">{product.name}</p>
 
         {/* Price Section */}
-        <div className="flex items-center gap-[5px] text-p mb-[5px]">
+        <div className="flex flex-wrap items-center gap-[5px] text-p mb-[5px]">
           <p className="text-p text-black">
             ₹ {getDiscountedPrice(product).discountedPrice.toLocaleString("en-IN", {
               maximumFractionDigits: 0,
