@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import FlowerIcon from "../icons/FlowerIcon"; 
 import "slick-carousel/slick/slick.css";
@@ -32,6 +32,8 @@ const TrendingClothes = () => {
   const dispatch = useDispatch();
   const { products = [], loading } = useSelector((state) => state.products);
   const sliderRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -41,29 +43,22 @@ const TrendingClothes = () => {
     product.variants?.some((variant) => variant.is_trending)
   );
 
+    useEffect(() => {
+      const handleResize = () => setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+  
 
     const trendingProductsLimited = trendingProducts.slice(0, 3);
   const sliderSettings = {
     dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 2, 
+    slidesToShow:
+      windowWidth <= 640 ? 1 : windowWidth <= 980 ? 2 : 2,
     slidesToScroll: 1,
     arrows: false,
-    responsive: [
-      {
-        breakpoint: 1024, // tablet
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 767, // mobile
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 640, 
-        settings: { slidesToShow: 1 },
-      },
-    ],
   };
 
   if (loading) return <p>Loading...</p>;

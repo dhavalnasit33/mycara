@@ -32,6 +32,8 @@ const FeaturedProducts = () => {
   // Redux data
   const { items : categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
   const { products = [], loading: productLoading } = useSelector( (state) => state.products  );
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
 
   // Local states
   const [mounted, setMounted] = useState(false);
@@ -51,6 +53,7 @@ const FeaturedProducts = () => {
       setActiveCategory(categories[0]._id);
     }
   }, [categories, activeCategory]);
+
 //discount price
     const getDiscountedPrice = (product) => {
     const originalPrice = product?.variants?.[0]?.price || 0;
@@ -92,11 +95,20 @@ const FeaturedProducts = () => {
     return () => window.removeEventListener("resize", updateSlider);
   }, []);
 
+   useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }, []);
+    
+
   if (!mounted) return null;
 
   // ✅ Slider settings
   const settings = { 
-    slidesToShow: 9,
+    // slidesToShow: 9,
+     slidesToShow:
+            windowWidth <= 480 ? 2 : windowWidth <= 767 ? 3 : windowWidth <= 980 ? 4 : windowWidth <= 1280 ? 6 : 9,
     slidesToScroll: 1,
     autoplay: true,
     speed: 5000,
@@ -106,20 +118,6 @@ const FeaturedProducts = () => {
     dots: false,
     infinite: true,
     arrows: false, 
-    responsive: [
-              {
-                  breakpoint: 1440,
-                  settings: { slidesToShow: 6, }
-              },
-              {
-                  breakpoint: 1170,
-                  settings: { slidesToShow: 5, }
-              },
-              {
-                  breakpoint: 767,
-                  settings: { slidesToShow: 3, }
-              }
-          ] 
   };
 
   // ✅ Handle category selection
