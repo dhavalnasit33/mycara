@@ -1,4 +1,8 @@
+
+//D:\mycara\frontend\src\components\home\TrendingClothes.jsx
+
 import React, { useEffect, useRef, useState } from "react";
+
 import Slider from "react-slick";
 import FlowerIcon from "../icons/FlowerIcon"; 
 import "slick-carousel/slick/slick.css";

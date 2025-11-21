@@ -1,6 +1,10 @@
+// D:\mycara\frontend\src\features\wishlist\wishlistThunk.js
+
+
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ROUTES } from "../../services/routes";
 import api from "../../services/api";
+
 
 export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
@@ -35,11 +39,13 @@ export const fetchWishlistByUser = createAsyncThunk(
       } else {
         return { items: [] };
       }
+
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || "Failed to fetch wishlist");
+      return rejectWithValue(err.response?.data?.message || "Server Error");
     }
   }
 );
+
 
 export const removeWishlistItem = createAsyncThunk(
   "wishlists/removeItem",
@@ -56,6 +62,7 @@ export const removeWishlistItem = createAsyncThunk(
     }
   }
 );
+
 
 
 export const bulkDeleteWishlistItems = createAsyncThunk(
@@ -76,3 +83,4 @@ export const bulkDeleteWishlistItems = createAsyncThunk(
     }
   }
 );
+

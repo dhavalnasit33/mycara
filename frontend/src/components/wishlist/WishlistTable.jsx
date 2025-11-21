@@ -1,5 +1,10 @@
+
+//D:\mycara\frontend\src\components\wishlist\WishlistTable.jsx
+
 import React, { useEffect, useState } from "react";
+
 import { Minus, Plus, Eye, Trash2 } from "lucide-react";
+
 import Button from "../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { bulkDeleteWishlistItems, fetchWishlistByUser, removeWishlistItem } from "../../features/wishlist/wishlistThunk";

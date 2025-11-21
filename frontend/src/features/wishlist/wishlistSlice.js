@@ -1,3 +1,6 @@
+
+//D:\mycara\frontend\src\features\wishlist\wishlistSlice.js
+
 import { createSlice } from "@reduxjs/toolkit";
 import { addToWishlist, bulkDeleteWishlistItems, fetchWishlistByUser, removeWishlistItem } from "./wishlistThunk";
 
@@ -15,6 +18,7 @@ const wishlistSlice = createSlice({
   reducers: {
   setWishlist: (state, action) => {
       state.items = action.payload;
+
     },
     addToWishlist: (state, action) => {
       state.items.push(action.payload);
@@ -57,6 +61,8 @@ const wishlistSlice = createSlice({
       const deletedIds = action.meta.arg;
       state.items = state.items.filter(item => !deletedIds.includes(item._id));
     })
+
+
 
   },
 });

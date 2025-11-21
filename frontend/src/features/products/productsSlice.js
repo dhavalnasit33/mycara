@@ -1,13 +1,15 @@
-//D:\mycara\frontend\src\features\products\productsSlice.js
+// // D:\mycara\frontend\src\features\products\productsSlice.js
 
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchProductById, fetchProducts , fetchProductsByVariant } from "./productsThunk";
+import { fetchProductById, fetchProducts , fetchNewArrivals } from "./productsThunk";
 
 const initialState = {
   products: [],
   product: null,
 
-  newArrivals: [],
+   newArrivals: [],
+  newArrivalsLoading: false,
+  newArrivalsError: null,
 
   loading: false,
   error: null,
@@ -34,19 +36,25 @@ const productsSlice = createSlice({
 
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.loading = false;
-        state.product = action.payload; 
+        state.product = action.payload;
+      });
+
+      // ⭐ NEW ARRIVALS (IMPORTANT) ⭐
+    builder
+      .addCase(fetchNewArrivals.pending, (state) => {
+        state.newArrivalsLoading = true;
+        state.newArrivalsError = null;
       })
-
-
-// --- New Arrivals Cases ---
-
-      .addCase(fetchProductsByVariant.fulfilled, (state, action) => { 
-        state.loading = false;
-        state.newArrivals = action.payload; 
+      .addCase(fetchNewArrivals.fulfilled, (state, action) => {
+        state.newArrivalsLoading = false;
+        state.newArrivals = action.payload;
       })
-
+      .addCase(fetchNewArrivals.rejected, (state, action) => {
+        state.newArrivalsLoading = false;
+        state.newArrivalsError = action.payload;
+      });
   },
 });
 
-
 export default productsSlice.reducer;
+

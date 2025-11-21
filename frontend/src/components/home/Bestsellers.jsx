@@ -87,7 +87,7 @@ const Bestsellers = () => {
         </Row>
         
         {/* "View all" Button */}
-        <Row className="flex justify-center pt-[50px] md:pt-[100px] pb-[25px] md:pb-[50px]">
+        <Row className="flex justify-center pt-[50px] md:pt-[100px] pb-[0px] md:pb-[0px]">
           <button className="lg:w-[217px] lg:w-[217px] gap-[5px] flex items-center justify-center text-theme text-[12px] lg:text-[16px] font-sans border border-black py-3 px-5 rounded-[5px] transition-colors ">
             View all Best Seller's <ArrowRight size={20} />
           </button>

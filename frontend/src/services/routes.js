@@ -20,6 +20,18 @@ export const ROUTES = {
   pages:{
     getAll: "/pages",
   },
+// <<<<<<< Updated upstream
+// =======
+  
+// // <<<<<<< HEAD
+// //   heroBanners: {
+// //     getOne: "/hero-banners/active", // Make sure this is the correct endpoint path on your server
+// //   },
+// //   features: {
+// //     getAll: "/features",
+// // =======
+
+// >>>>>>> Stashed changes
   sizes:{
     getAll:"/sizes",
     getById: (id) => `/sizes/${id}`,
@@ -58,4 +70,13 @@ export const ROUTES = {
     deleteCart: "/carts/items",
   },
 
+// <<<<<<< Updated upstream
+// =======
+//   },
+//    discounts: {
+//     getAll: "/discounts",
+//     getById: (id) => `/discounts/${id}`,
+//   }
+  
+// >>>>>>> Stashed changes
 }

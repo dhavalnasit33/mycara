@@ -1,3 +1,5 @@
+// D:\mycara\frontend\src\pages\Wishlist.jsx
+
 import SecondarySection from "../components/ui/SecondarySection";
 import WishlistTable from "../components/wishlist/WishlistTable";
 import prod1 from "../assets/shopsaree3.jpg";
@@ -10,6 +12,7 @@ import { useEffect } from "react";
 import { getImageUrl } from "../components/utils/helper";
 
 
+
 // const products = [
 // ];
 
@@ -19,16 +22,13 @@ export default function Wishlist(){
     const { products} = useSelector((state) => state.products);
 
 
+
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
-
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
     const wishlistpage = pages.find(page => page.slug === 'wishlist');
-
-
-
     return(
         <>
           {wishlistpage?.sections.map(section => (

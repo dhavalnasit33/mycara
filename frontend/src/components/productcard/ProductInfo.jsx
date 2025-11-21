@@ -1,3 +1,4 @@
+//D:\mycara\frontend\src\components\productcard\ProductInfo.jsx
 import React, { useEffect, useState } from "react";
 import { Handbag, Star } from "lucide-react";
 import Button from "../ui/Button";
@@ -239,4 +240,3 @@ export default function ProductInfo({product, setSelectedVariant }) {
     </>
   );
 }
-

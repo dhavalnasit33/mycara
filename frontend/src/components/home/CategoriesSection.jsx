@@ -42,6 +42,9 @@ const CategoriesSection = () => {
   if (loading) return <p className="text-center">Loading categories...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
+    const filteredCategories = categories.filter(
+    (cat) => cat.section === "home"
+  );
   return (
     <>
       {categories && categories.length > 0 ? (
