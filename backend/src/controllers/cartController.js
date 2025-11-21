@@ -21,7 +21,7 @@ const getCarts = async (req, res) => {
       // Fetch all for download
       const carts = await Cart.find(query)
         .populate("user_id", "name email")
-        .populate("items.product_id", "name")
+        .populate("items.product_id", "name image images")
         .populate("items.variant_id", "price color size sku")
         .sort({ createdAt: -1 });
 
@@ -39,8 +39,8 @@ const getCarts = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("user_id", "name email")
-      .populate("items.product_id", "name")
-      .populate("items.variant_id", "price color size sku");
+      .populate("items.product_id", "name image images")
+      .populate("items.variant_id", "price color size sku image images");
 
     sendResponse(res, true, { carts, total, page, pages: Math.ceil(total / limit) });
   } catch (err) {
@@ -52,8 +52,13 @@ const getCartById = async (req, res) => {
   try {
     const cart = await Cart.findById(req.params.id)
       .populate("user_id", "name email")
-      .populate("items.product_id", "name price")
-      .populate("items.variant_id", "color size sku");
+      // .populate("items.product_id", "name price image images")
+       .populate({
+          path: "items.product_id",
+          select: "name price image images discount_id", 
+          populate: { path: "discount_id", select: "type value", },
+        })
+      .populate("items.variant_id", "color size sku price image images");
     if (!cart) return sendResponse(res, false, null, "Cart not found");
     sendResponse(res, true, cart, "Cart retrieved successfully");
   } catch (err) {
@@ -122,7 +127,9 @@ const deleteCartItem = async (req, res) => {
     const cart = await Cart.findById(cart_id);
     if (!cart) return sendResponse(res, false, null, "Cart not found");
 
-    cart.items.id(item_id)?.remove();
+    /* cart.items.id(item_id)?.remove();*/
+        cart.items = cart.items.filter(item => item._id.toString() !== item_id);
+
     await cart.save();
     sendResponse(res, true, cart, "Cart item deleted successfully");
   } catch (err) {

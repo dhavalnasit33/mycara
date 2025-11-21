@@ -31,8 +31,7 @@ const sizeRoutes = require("./src/routes/sizeRoutes");
 const uploadsRoutes = require("./src/routes/upload");
 const storeRoutes = require("./src/routes/storeRoutes");
 const dashboardRoutes = require("./src/routes/dashboardRoutes");
-const heroBannerRoutes = require('./src/routes/heroBannerRoutes');
-// const featureRoutes = require('./src/routes/featureRoutes');
+
 const mongoose = require("mongoose");
 dotenv.config();
 connectDB();
@@ -88,9 +87,6 @@ app.use("/api/sizes", sizeRoutes);
 app.use("/api/uploads", uploadsRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
-app.use("/api/hero-banners", heroBannerRoutes);
-
-// app.use("/api/features", featureRoutes); 
 
 app.use(errorHandler);
 

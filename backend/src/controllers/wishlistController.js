@@ -21,8 +21,8 @@ const getWishlist = async (req, res) => {
       // Fetch all for download
       const wishlists = await Wishlist.find()
         .populate("user_id", "name email")
-        .populate("items.product_id", "name")
-        .populate("items.variant_id", "price color size sku")
+        .populate("items.product_id", "name image images")
+        .populate("items.variant_id", "price color size sku image images")
         .sort({ createdAt: -1 });
 
       return sendResponse(res, true, { wishlists }, "All wishlists retrieved for download");
@@ -38,7 +38,7 @@ const getWishlist = async (req, res) => {
       .limit(limit)
       .sort({ createdAt: -1 })
       .populate("user_id", "name email")
-      .populate("items.product_id", "name")
+      .populate("items.product_id", "name image images")
       .populate("items.variant_id", "price color size sku");
 
     sendResponse(res, true, { wishlists, total, page, pages: Math.ceil(total / limit) });
@@ -78,7 +78,7 @@ const addItemToWishlist = async (req, res) => {
     await wishlist.save();
 
     // Populate for response
-    wishlist = await wishlist.populate("items.product_id items.variant_id", "name price sku");
+    wishlist = await wishlist.populate("items.product_id items.variant_id", "name price sku image images");
 
     sendResponse(res, true, wishlist, "Items added to wishlist successfully");
   } catch (err) {
@@ -106,7 +106,11 @@ const removeItemFromWishlist = async (req, res) => {
 const getWishlistByUser = async (req, res) => {
   try {
     const wishlist = await Wishlist.findOne({ user_id: req.params.user_id })
-      .populate("items.product_id")
+      // .populate("items.product_id")
+      .populate({
+        path: "items.product_id",
+        populate: { path: "discount_id", select: "type value", },
+      })
       .populate("items.variant_id");
 
     if (!wishlist) return sendResponse(res, false, null, "Wishlist not found");
