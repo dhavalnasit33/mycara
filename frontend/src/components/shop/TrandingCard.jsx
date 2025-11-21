@@ -16,12 +16,12 @@ export default function TrendingCard ({ product }){
         />
       </div>
     <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[350px] h-[210px] lg:h-[231px] p-3 sm:p-5
+                    w-11/12 max-w-[297px] h-[180px] sm:h-[231px] p-4 sm:py-[30px] pl-4 sm:pl-[30px] pr-[15px]
                     bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
                     flex flex-col justify-between">
       <div className="flex justify-between items-start">
-        <div className="pr-2 sm:pr-4">
-          <h3 className="text-xs sm:text-sm font-medium font-inter tracking-wider text-black uppercase leading-tight">
+        <div className="pr-2 sm:pr-[20px]">
+          <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">
             {product.name}
           </h3>
         </div>
@@ -29,8 +29,8 @@ export default function TrendingCard ({ product }){
           <Plus size={14}/>
         </button>
       </div>
-      <div>
-        <p className="text-sm font-medium font-inter text-black">
+      <div className="flex justify-end pr-[25px]">
+        <p className="text-[14px] font-medium font-inter text-black">
           Rs {Number(product.variants?.[0]?.price || 0).toLocaleString("en-IN")}
         </p>
       </div>

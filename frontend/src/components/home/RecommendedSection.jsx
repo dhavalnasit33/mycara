@@ -1,3 +1,6 @@
+//D:\mycara\frontend\src\components\home\RecommendedSection.jsx
+
+
 import React, { useState, useEffect, useCallback } from "react";
 import SectionHeading from "../ui/SectionHeading";
 import Row from "../ui/Row.jsx";
@@ -6,7 +9,8 @@ import axios from "axios";
 
 const IMAGE_BASE_URL = "http://localhost:5000";
 const ALL_PRODUCTS_API = `${IMAGE_BASE_URL}/api/products`;
-const RECOMMENDED_LABEL_ID = "690b2d666f7b1892beebdcd3";
+
+
 
 const RecommendedSection = () => {
   const [recommendedData, setRecommendedData] = useState([]);
@@ -19,41 +23,34 @@ const RecommendedSection = () => {
   }, []);
 
   // ✅ Fetch & filter products
-  useEffect(() => {
-    const fetchAndFilterProducts = async () => {
-      try {
-        const response = await axios.get(ALL_PRODUCTS_API);
-        const allProducts = response?.data?.data?.products || [];
+useEffect(() => {
+  const fetchAndFilterProducts = async () => {
+    try {
+      const response = await axios.get(ALL_PRODUCTS_API);
 
-        const filteredProducts = allProducts.filter(
-          (product) =>
-            Array.isArray(product?.variants) &&
-            product.variants.some(
-              (variant) =>
-                Array.isArray(variant.labels) &&
-                variant.labels.includes(RECOMMENDED_LABEL_ID)
-            )
-        );
+      const allProducts = response?.data?.data?.products || [];
 
-        const uniqueProducts = [];
-        const seen = new Set();
-        filteredProducts.forEach((p) => {
-          if (!seen.has(p._id)) {
-            seen.add(p._id);
-            const uniqueImages = [...new Set(p.images)];
-            uniqueProducts.push({ ...p, images: uniqueImages });
-          }
-        });
+      const uniqueProducts = [];
+      const seen = new Set();
 
-        setRecommendedData(uniqueProducts);
-      } catch (error) {
-        console.error("❌ Error fetching products:", error);
-        setRecommendedData([]);
-      }
-    };
+      allProducts.forEach((p) => {
+        if (!seen.has(p._id)) {
+          seen.add(p._id);
+          const uniqueImages = [...new Set(p.images)];
+          uniqueProducts.push({ ...p, images: uniqueImages });
+        }
+      });
 
-    fetchAndFilterProducts();
-  }, []);
+      setRecommendedData(uniqueProducts);
+    } catch (error) {
+      console.error("❌ Error fetching products:", error);
+      setRecommendedData([]);
+    }
+  };
+
+  fetchAndFilterProducts();
+}, []);
+
 
   // ✅ Handle resize for responsiveness
   useEffect(() => {
@@ -63,7 +60,6 @@ const RecommendedSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, [getItemsPerPage]);
 
-  // ✅ Carousel Navigation
   const goToNext = useCallback(() => {
     if (!recommendedData.length) return;
     setCurrentIndex(
@@ -141,7 +137,7 @@ const RecommendedSection = () => {
   );
 };
 
-// ✅ ProductCard (double image: blur background + inner main image)
+//  ProductCard (double image: blur background + inner main image)
 const ProductCard = ({ item }) => {
   const imageUrlPath = item?.images?.[0];
   const imageUrl = imageUrlPath
@@ -173,7 +169,7 @@ const ProductCard = ({ item }) => {
         <img
           src={imageUrl}
           alt={title}
-          className="w-[301px] h-[361px] object-cover  transition-transform duration-500 group-hover:scale-105"
+          className="w-[301px] h-[361px] object-cover  transition-transform duration-1000 group-hover:scale-105"
         />
       </div>
 

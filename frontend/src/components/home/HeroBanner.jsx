@@ -26,7 +26,7 @@ export default function HeroBanner (){
     }, [dispatch]);
 
     const homepage = pages?.find(page => page.slug === 'home');
-    const flashbanner = homepage?.sections?.find(section => section.order === 2);
+    const flashbanner = homepage?.sections?.find(section => section.order === 6);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;

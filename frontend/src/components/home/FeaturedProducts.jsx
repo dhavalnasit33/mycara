@@ -33,6 +33,8 @@ const FeaturedProducts = () => {
   // Redux data
   const { items : categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
   const { products = [], loading: productLoading } = useSelector( (state) => state.products  );
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  
 
   // Local states
   const [mounted, setMounted] = useState(false);
@@ -52,6 +54,7 @@ const FeaturedProducts = () => {
       setActiveCategory(categories[0]._id);
     }
   }, [categories, activeCategory]);
+
 //discount price
     const getDiscountedPrice = (product) => {
     const originalPrice = product?.variants?.[0]?.price || 0;
@@ -93,11 +96,20 @@ const FeaturedProducts = () => {
     return () => window.removeEventListener("resize", updateSlider);
   }, []);
 
+   useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+      }, []);
+    
+
   if (!mounted) return null;
 
   // ✅ Slider settings
   const settings = { 
-    slidesToShow: 9,
+    // slidesToShow: 9,
+     slidesToShow:
+            windowWidth <= 480 ? 2 : windowWidth <= 767 ? 3 : windowWidth <= 980 ? 4 : windowWidth <= 1280 ? 6 : 9,
     slidesToScroll: 1,
     autoplay: true,
     speed: 5000,
@@ -107,20 +119,6 @@ const FeaturedProducts = () => {
     dots: false,
     infinite: true,
     arrows: false, 
-    responsive: [
-              {
-                  breakpoint: 1440,
-                  settings: { slidesToShow: 6, }
-              },
-              {
-                  breakpoint: 1170,
-                  settings: { slidesToShow: 5, }
-              },
-              {
-                  breakpoint: 767,
-                  settings: { slidesToShow: 3, }
-              }
-          ] 
   };
 
   // ✅ Handle category selection
@@ -140,6 +138,8 @@ const FeaturedProducts = () => {
         })
       : [];
 
+    const limitedProducts = filteredProducts.slice(0, 8);
+
   return (
     <section className="w-full py-[25px] md:py-[50px]">
       <div className="flex flex-col items-center">
@@ -149,7 +149,7 @@ const FeaturedProducts = () => {
         </Row>
 
         {/* Category Section */}
-        <Row className="relative mb-5 ">
+        <Row >
           {showArrows && (
             <>
               <button
@@ -202,11 +202,11 @@ const FeaturedProducts = () => {
         </Row>
 
         {/* Products Grid */}
-          <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[14px] lg:gap-[30px] lg:px-0 sm:px-2 mt-6">
+          <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[10px] lg:gap-[30px] lg:px-0 sm:px-2 pt-[50px] custom-lg:pt-[100px]">
             {productLoading ? (
                 <p>Loading products...</p>
               ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-                filteredProducts.map((p,index) => {
+                limitedProducts.map((p,index) => {
                   const { originalPrice, discountedPrice, discountValue, discountType } =
                     getDiscountedPrice(p);
 

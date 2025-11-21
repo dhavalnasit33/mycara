@@ -13,7 +13,7 @@ const CustomChevronDown = (props) => ( <ChevronDown {...props} />);
 const Filter = (props) => (<FilterIconComponent {...props} />);
 // ---------- Mobile Filter Bar ----------// --- 1. Mobile Responsive UI (Filter Bar) ---
 const MobileFilterBar = ({ sortBy, filterCount, onSortClick, onFilterClick ,isHidden }) => (
-    <div className="flex  items-center w-full  gap-4 sm:gap-2  ${isHidden  ? 'hidden' : 'flex'}`}">
+    <div className="flex flex-wrap items-center w-full  gap-4 sm:gap-2  ${isHidden  ? 'hidden' : 'flex'}`}">
         <div className="rounded-[10px] cursor-pointer transition duration-300 border border-[#989696] drop-shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white w-[140px] sm:w-[180px] md:w-[200px] "
             onClick={onSortClick}
         >

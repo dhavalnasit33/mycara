@@ -45,26 +45,23 @@ export const fetchProductById = createAsyncThunk(
 );
 
 
+// ⭐ fetch NEW ARRIVALS ⭐
 export const fetchNewArrivals = createAsyncThunk(
   "products/fetchNewArrivals",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await api.get(ROUTES.products.getAll, {
-        // 🔍 Only fetch products that have Variant Label = "New Arrivals"
-        params: { 
-          variantLabel: "New Arrivals",
-          sort: "-createdAt",
+      const res = await api.get("/products", {
+        params: {
+          variantLabel: "New Arrivals", // FILTER HERE ONLY
           limit: 100,
         },
       });
 
-      if (res.data?.success) {
-        return res.data.data?.products || [];
-      }
-
-      return rejectWithValue(res.data?.message || "Failed to fetch new arrivals");
+      return res.data.data.products; 
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Server Error");
     }
   }
 );
+
+

@@ -1,3 +1,5 @@
+//D:\mycara\frontend\src\components\offers\SizeSection.jsx
+
 import React, { useEffect } from "react";
 import Row from "../ui/Row";
 import { useDispatch, useSelector } from "react-redux";

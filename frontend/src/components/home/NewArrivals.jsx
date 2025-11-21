@@ -1,3 +1,5 @@
+// //D:\mycara\frontend\src\components\home\NewArrivals.jsx
+
 import React, { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SectionHeading from "../ui/SectionHeading";
@@ -5,10 +7,8 @@ import Row from "../ui/Row";
 import { fetchNewArrivals } from "../../features/products/productsThunk";
 import ArrowRight from "../icons/ArrowRight";
 
-
-const NEW_ARRIVAL_LABEL_ID = "690450b34e15215dee956121"; 
-
 const IMAGE_BASE_URL = "http://localhost:5000";
+const NEW_ARRIVALS_LABEL_ID = "690450b34e15215dee956121";
 
 const ImageCard = ({ name, img, textColor = "text-black", description }) => {
     const lineTopPx = name === "Earrings" || name === "Winter Cloths" ? 55 : 25;
@@ -69,96 +69,87 @@ const ImageCard = ({ name, img, textColor = "text-black", description }) => {
 };
 
 
-// ✅ NewArrivals Component
+//  NewArrivals Component
 const NewArrivals = () => {
   const dispatch = useDispatch();
+  const { newArrivals: items = [], newArrivalsLoading: loading, newArrivalsError: error } = useSelector((state) => state.products);
 
-  const {
-    newArrivals: items = [],
-    newArrivalsLoading: loading,
-    newArrivalsError: error,
-  } = useSelector((state) => state.products);
+useEffect(() => {
+  dispatch(fetchNewArrivals());
+}, [dispatch]);
 
-  useEffect(() => {
-    
-    if (!items || items.length === 0) {
-      dispatch(fetchNewArrivals());
-    }
-  }, [dispatch, items.length]);
 
   const mappedItems = useMemo(() => {
-  
-    const filteredProducts = (items || []).filter((product) => {
-     
-      if (!product.variants || product.variants.length === 0) {
-        return false;
-      }
+    if (!items || items.length === 0) return [];
 
-     
-      return product.variants.some((variant) =>
-        variant.labels?.includes(NEW_ARRIVAL_LABEL_ID)
-      );
-    });
+    const filteredProducts = items.filter((product) =>
+      product.variants?.some((variant) =>
+        variant.labels?.includes(NEW_ARRIVALS_LABEL_ID)
+      )
+    );
 
-   
     const finalProductsToShow = filteredProducts.slice(0, 4);
 
-    if (finalProductsToShow.length === 0) {
-      return [];
-    }
-
-   
     return finalProductsToShow.map((product, index) => {
-     
-      const imagePath = product?.images?.[0] || "";
-      const baseUrl = IMAGE_BASE_URL.replace(/\/$/, "");
-      const cleanPath = imagePath.startsWith("/") ? imagePath.substring(1) : imagePath;
-      const finalImgUrl = `${baseUrl}/${cleanPath}`;
+
+       console.log("Labels:", product.variants?.[0]?.labels);
+       
+      const imageList = product?.images || [];
+      const rawPath = imageList[0];
+
+  let imagePath = "";
+
+
+if (product.images && product.images.length > 0) {
+  imagePath = product.images[0];
+}
+
+else if (product.variants?.[0]?.images?.length > 0) {
+  imagePath = product.variants[0].images[0];
+}
+
+if (!imagePath) {
+  imagePath = "/placeholder-image.png";
+}
+
+const finalImgUrl = imagePath.startsWith("http")
+  ? imagePath
+  : `${IMAGE_BASE_URL}/${imagePath.replace(/^\//, "")}`;
+
+ 
+
 
       return {
         name: product?.name || "Unnamed Product",
         img: finalImgUrl,
         description: product?.description || "Shop Now",
-        
         textColor: index === 1 || index === 2 ? "text-white" : "text-black",
       };
     });
   }, [items]);
 
+  if (loading) return (
+    <section className="w-full py-[50px] text-center">
+      <p className="text-xl font-medium">Loading New Arrivals...</p>
+    </section>
+  );
 
+  if (error) return (
+    <section className="w-full py-[50px] text-center">
+      <p className="text-xl font-medium text-red-600">
+        Error loading new arrivals: {String(error)}
+      </p>
+    </section>
+  );
 
-  if (loading) {
-    return (
-      <section className="w-full py-[50px] text-center">
-        <p className="text-xl font-medium">Loading New Arrivals...</p>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="w-full py-[50px] text-center">
-        <p className="text-xl font-medium text-red-600">
-          Error loading new arrivals: {String(error)}
-        </p>
-      </section>
-    );
-  }
-
-  
-  if (mappedItems.length === 0) {
-    return (
-      <section className="w-full py-[50px] text-center">
-        <Row className="flex flex-col items-center">
-          <SectionHeading page="Home" order={3} />
-        </Row>
-        <p className="text-xl font-medium text-gray-500">
-          No New Arrivals found.
-        </p>
-      </section>
-    );
-  }
-
+  if (mappedItems.length === 0) return (
+    <section className="w-full py-[50px] text-center">
+      <Row className="flex flex-col items-center">
+        <SectionHeading page="Home" order={3} />
+      </Row>
+      <p className="text-xl font-medium text-gray-500">No New Arrivals found.</p>
+    </section>
+  );
 
   const getTextColorFor = (index) => {
     if (index === 0 || index === 1) return "text-black"; // 1st & 4th positions visually
@@ -200,3 +191,5 @@ const NewArrivals = () => {
 };
 
 export default NewArrivals;
+
+
