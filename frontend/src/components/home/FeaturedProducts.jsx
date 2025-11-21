@@ -148,7 +148,7 @@ const FeaturedProducts = () => {
         </Row>
 
         {/* Category Section */}
-        <Row className="relative mb-5 ">
+        <Row >
           {showArrows && (
             <>
               <button
@@ -201,7 +201,7 @@ const FeaturedProducts = () => {
         </Row>
 
         {/* Products Grid */}
-          <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[14px] lg:gap-[30px] lg:px-0 sm:px-2 mt-6">
+          <Row className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-[10px] lg:gap-[30px] lg:px-0 sm:px-2 pt-[50px] custom-lg:pt-[100px]">
             {productLoading ? (
                 <p>Loading products...</p>
               ) : Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (

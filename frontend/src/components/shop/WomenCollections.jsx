@@ -314,13 +314,13 @@ export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem,
 // const WomenCollections = () => {
 //     // Filter States
 
-    // const dispatch = useDispatch();
-    // const { products = [], loading } = useSelector((state) => state.products);
+//     const dispatch = useDispatch();
+//     const { products = [], loading } = useSelector((state) => state.products);
 
-    // // ✅ Fetch once when the component mounts
-    // useEffect(() => {
-    //     dispatch(fetchProducts());
-    // }, [dispatch]);
+//     // ✅ Fetch once when the component mounts
+//     useEffect(() => {
+//         dispatch(fetchProducts());
+//     }, [dispatch]);
 
 //     const trendingProducts = products.filter((product) =>
 //         product.variants?.some((variant) => variant.is_trending)
@@ -455,7 +455,7 @@ export { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem,
    
 
 //     return (
-//         <Row className=" w-full container-1440 mx-auto lg:mt-[80px] py-3 px-3">
+//         <Row className="pt-[50px] custom-lg:pt-[100px]">
 //             <MobileFilterModal
 //                 isOpen={isMobileFilterOpen}
 //                 onClose={handleCloseMobileFilter}
@@ -878,17 +878,6 @@ const WomenCollections = () => {
         dispatch(fetchProducts());
     }, [dispatch]);
 
-  // --- fetch products once on mount ---
- 
-
-// frontend filtering
-// const filteredProducts = products.filter(product => {
-//     return (
-//       (!selectedCategory || product.category === selectedCategory) &&
-//       (!selectedSize || product.size?.includes(selectedSize)) &&
-//       (!selectedColor || product.color === selectedColor)
-//     );
-// });
 
 
   // --- filter selection state (kept here) ---
@@ -1154,7 +1143,7 @@ const WomenCollections = () => {
   };
 
   return (
-    <Row >
+    <Row className="pt-[50px] custom-lg:pt-[100px] ">
       <MobileFilterModal
         isOpen={isMobileFilterOpen}
         onClose={handleCloseMobileFilter}
@@ -1218,27 +1207,35 @@ const WomenCollections = () => {
           selectedCategories={selectedCategories}
           handleCategoryChange={handleCategoryChange}
           handleResetCategories={() => setSelectedCategories([])}
+
           selectedSizes={selectedSizes}
           handleSizeChange={handleSizeChange}
           handleResetSizes={() => setSelectedSizes([])}
+
           selectedColors={selectedColors}
           handleColorChange={handleColorChange}
           handleResetColors={() => setSelectedColors([])}
+
           selectedBrands={selectedBrands}
           handleBrandChange={handleBrandChange}
           handleResetBrands={() => setSelectedBrands([])}
+
           selectedTypes={selectedTypes}
           handleTypeChange={handleTypeChange}
           handleResetTypes={() => setSelectedTypes([])}
+
           selectedFabrics={selectedFabrics}
           handleFabricChange={handleFabricChange}
           handleResetFabrics={() => setSelectedFabrics([])}
+
           selectedDiscounts={selectedDiscounts}
           handleDiscountChange={handleDiscountChange}
           handleResetDiscounts={() => setSelectedDiscounts([])}
+
           selectedLabels={selectedLabels}
           handleLabelChange={handleLabelChange}
           handleResetLabels={() => setSelectedLabels([])}
+          
           minPrice={minPrice}
           setMinPrice={setMinPrice}
           maxPrice={maxPrice}
@@ -1260,9 +1257,9 @@ const WomenCollections = () => {
                   <select
                     value={currentSortValue}
                     onChange={(e) => setCurrentSortValue(e.target.value)}
-                    className="appearance-none bg-white text-black py-2 pl-3 pr-10 rounded-[3px] focus:outline-none"
+                    className="appearance-none box-shadow bg-white text-black py-[8px] px-[10px] rounded-[3px] focus:outline-none"
                   >
-                    <option value="popularity">Popularity</option>
+                    <option value="popularity">popularity</option>
                     <option value="latest">Newest</option>
                     <option value="price_asc">Price: Low to High</option>
                     <option value="price_desc">Price: High to Low</option>

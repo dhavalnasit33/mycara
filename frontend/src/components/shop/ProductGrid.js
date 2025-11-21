@@ -25,7 +25,7 @@
 //     console.log("Products in component:", products);
 
 //     return (
-//         <div className="py-10 ">
+//         <div className="mt-[50px] ">
 //             <div className="grid grid-cols-2 md:grid-cols-3  gap-[10px] md:gap-[30px]">
 //                 {visibleProducts.length > 0 ? (
 //                     visibleProducts.map((product, index) => (
@@ -38,7 +38,7 @@
 
 //                 {/* --- Load More Button Section --- */}
 //             {visibleCount < products.length && (
-//                 <div className="flex justify-center mt-10">
+//                 <div className="flex justify-center my-[50px]">
 //                     <button  onClick={handleLoadMore}
 //                         className="text-[18px] theme-border text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
 //                         style={{
@@ -74,7 +74,7 @@ const ProductGrid = ({ products = [] }) => {
   };
 
   return (
-    <div className="py-10">
+    <div className="mt-[50px]">
       <div className="grid grid-cols-2 md:grid-cols-3 gap-[10px] md:gap-[30px]">
         {visibleProducts.length > 0 ? (
           visibleProducts.map((product, index) => (
@@ -89,7 +89,7 @@ const ProductGrid = ({ products = [] }) => {
       </div>
 
       {visibleCount < products.length && (
-        <div className="flex justify-center mb-10">
+        <div className="flex justify-center my-[50px]">
           <button
             onClick={handleLoadMore}
             className="text-[18px] theme-border text-theme w-[187px] h-[70px] sm:w-[220px] sm:h-[89px] font-medium rounded-[10px] shadow-lg transition duration-300 uppercase"
