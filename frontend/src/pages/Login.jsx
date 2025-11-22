@@ -7,12 +7,15 @@ import Button from "../components/ui/Button";
 import { X } from "lucide-react";
 import { loginUser } from "../features/auth/authThunk";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = ({onClose, onSwitch}) => {
    const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { loading } = useSelector((state) => state.auth);
   const [formData, setFormData] = useState({ email: "", password: "" });
+    const { token, user } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,6 +29,22 @@ const LoginForm = ({onClose, onSwitch}) => {
       onClose();
     }
   };
+
+  //redirect path
+  useEffect(() => {
+    if (token) {
+      const redirectPage = localStorage.getItem("redirectAfterLogin");
+
+      if (redirectPage) {
+        navigate(redirectPage);
+        localStorage.removeItem("redirectAfterLogin");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [token]); 
+
+
   return (
     <div className="flex items-center justify-center ">
       <div className="bg-white box-shadow  rounded-lg flex w-full overflow-hidden  w-full max-w-[1062px] mx-auto ">

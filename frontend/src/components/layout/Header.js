@@ -37,6 +37,7 @@ import Row from "../ui/Row";
 import LoginForm from "../../pages/Login";
 import RegistrationForm from "../../pages/RegistrationForm";
 import { clearCart } from "../../features/cart/cartSlice";
+import useProtectedLink from "../../hooks/useProtectedLink";
 
 const staticNavItems = [
   { name: "Home", path: "/home", icon: <ShopIcon className="w-5 h-6 hidden custom-lg:block" /> },
@@ -95,22 +96,7 @@ const wishlistCount = wishlist?.length || 0;
     alert("Logged out successfully!");
   };
 
-  const handleOpenCart = async () => {
-      if (!token) {
-        setIsLoginOpen(true);
-        return;
-      }
-      navigate("/cart");
-    };
-
-     const handleOpenWishlist = async () => {
-      if (!token) {
-        setIsLoginOpen(true);
-        return;
-      }
-      navigate("/wishlist");
-    };
-    
+  const openProtectedLink = useProtectedLink(setIsLoginOpen, token);
 
   return (
     <header className="w-full mb-[5px] md:mb-[10px] sec-theme box-shadow">
@@ -138,13 +124,17 @@ const wishlistCount = wishlist?.length || 0;
                 <li key={i} className="relative group">
                   <NavLink
                     to={item.path}
-                    className={({ isActive }) =>
-                      `relative cursor-pointer transition-colors duration-300 ${
-                        isActive
-                          ? "text-[var(--theme-color)] font-medium"
-                          : "text-black hover:text-[var(--theme-color)] hover:font-medium"
-                      }`
-                    }
+                      className={({ isActive }) => `relative cursor-pointer transition-all duration-300 pb-[10px]
+                      ${isActive
+                          ? "text-[var(--theme-color)] font-medium after:opacity-100"
+                          : "text-black hover:text-[var(--theme-color)] hover:font-medium after:opacity-0"
+                      }
+                      after:content-['•••'] after:absolute after:left-[52%] after:-bottom-[4px]
+                      after:-translate-x-1/2 after:text-[20px] after:tracking-[3px]
+                      after:font-bold after:text-[var(--theme-color)]
+                      after:h-[14px] after:leading-[14px]
+                      after:transition-opacity after:duration-300`
+                      }
                   >
                     {item.name}
                     {item.hasDropdown && item.dropdownIcon}
@@ -222,25 +212,26 @@ const wishlistCount = wishlist?.length || 0;
 
                 <ul className="text-light text-p p-[17px]">
                   <li className="py-[10px] hover:text-[#F43297]">
-                    <Link to="/my-account" className="flex items-center gap-[15px] w-full">
+                     <button  onClick={() => openProtectedLink("/my-account")}
+                        className="flex items-center gap-[15px] w-full"
+                      >
                       <SvgComponent />
                       <span>My Profile</span>
-                    </Link>
+                    </button>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link
-                      to="/my-account/orders"
+                    <button  onClick={() => openProtectedLink("/my-account/orders")}
                       className="flex items-center gap-[15px] w-full"
                     >
                       <Package size={18} />
                       <span>Orders</span>
-                    </Link>
+                    </button>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
-                    <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px] w-full">
+                    <button   onClick={() => openProtectedLink("/wishlist")} className="flex items-center gap-[15px] w-full">
                       <FontAwesomeIcon icon={farHeart} />
                       <span>Wishlist</span>
-                    </Link>
+                    </button>
                   </li>
                   <li className="py-[8px] hover:text-[#F43297]">
                     <Link to="/cart" className="flex items-center gap-[15px] w-full">
@@ -254,7 +245,7 @@ const wishlistCount = wishlist?.length || 0;
 
 
           {/* Wishlist Icon */}
-          <button onClick={handleOpenWishlist} className=" relative text-light">
+          <button  onClick={() => openProtectedLink("/wishlist")} className=" relative text-light">
             <Heart className="w-5 h-5 " />
              {wishlistCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
@@ -264,7 +255,7 @@ const wishlistCount = wishlist?.length || 0;
           </button>
 
           {/* Cart Icon */}
-          <button className="relative text-light" onClick={handleOpenCart}>
+          <button className="relative text-light"  onClick={() => openProtectedLink("/cart")}>
             <FontAwesomeIcon icon={faCartShopping} className="w-5 h-5" />
                {cartCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-[#D2AF9F] text-black text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
@@ -325,22 +316,21 @@ const wishlistCount = wishlist?.length || 0;
 
             <div className="text-light">
               <div className="py-4 px-4 cursor-pointer light-color">
-                <Link to="/my-account" className="flex items-center gap-[15px]">
+                <button  onClick={() => openProtectedLink("/my-account")} className="flex items-center gap-[15px]">
                   <FaUser /> My Profile
-                </Link>
+                </button>
               </div>
               <div className="py-4 px-4 cursor-pointer">
-                <Link
-                  to="/my-account/orders"
+                <button  onClick={() => openProtectedLink("/my-account/orders")}
                   className="flex items-center gap-[15px]"
                 >
                   <Package size={20} /> Orders
-                </Link>
+                </button>
               </div>
               <div className="py-4 px-4 cursor-pointer light-color">
-                <Link to="/wishlist" onClick={handleOpenWishlist} className="flex items-center gap-[15px]">
+                <button  onClick={() => openProtectedLink("/wishlist")} className="flex items-center gap-[15px]">
                   <FontAwesomeIcon icon={farHeart} /> Wishlist
-                </Link>
+                </button>
               </div>
               <div className="py-4 px-4 cursor-pointer">
                 <Link to="/cart" className="flex items-center gap-[15px]">

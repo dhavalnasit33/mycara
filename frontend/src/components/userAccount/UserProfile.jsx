@@ -21,7 +21,7 @@ export default function UserProfile () {
             <div className="flex-shrink-0">
                 <img
                 src={defaultimg}
-                alt={user.name}
+                alt= {user?.name || "User"}
                 className="w-[150px] h-[150px] rounded-full border-4 circle-border transition-all duration-300 mx-auto md:mx-0"
                 />
             </div>
