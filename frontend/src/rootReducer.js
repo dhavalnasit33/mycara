@@ -14,6 +14,7 @@ import fabricsReducer from "./features/fabrics/fabricsSlice";
 import productLabelsReducer from "./features/productLabels/productLabelsSlice";
 import wishlistReducer from "./features/wishlist/wishlistSlice";
 import cartReducer from "./features/cart/cartSlice";
+// import orderReducer from "./features/orders/ordersSlice";
 
 export const rootReducer = {
     auth: authReducer,
@@ -31,4 +32,5 @@ export const rootReducer = {
     productLabels: productLabelsReducer,
     wishlist: wishlistReducer,
     cart: cartReducer,
+    // order: orderReducer,
 };
