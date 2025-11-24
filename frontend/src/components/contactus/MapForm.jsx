@@ -31,7 +31,7 @@ export default function ContactSection() {
               placeholder="E-mail*"
               className="input-common"
             />
-            <div className="grid grid-cols-2 gap-[15px] md:gap-[28px]">
+            <div className="flex sm:grid flex-col sm:grid-cols-2 gap-[15px] md:gap-[28px]">
               <input
                 type="text"
                 placeholder="Order Number"
