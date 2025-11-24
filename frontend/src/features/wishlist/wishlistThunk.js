@@ -16,7 +16,7 @@ export const addToWishlist = createAsyncThunk(
         { user_id, items: [{ product_id, variant_id }] },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      return response.data;
+      return response.data.data.item;
     } catch (err) {
       return rejectWithValue(err.response?.data || err.message);
     }
