@@ -6,9 +6,7 @@ export default function MyAccount() {
   return (
     <div>
       <UserProfile/>
-
       <AccountTabs />
-
     </div>
   );
 }

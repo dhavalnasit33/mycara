@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
-
-
 import Hero from "../components/home/Hero";
-
 import CategoriesSection from "../components/home/CategoriesSection";
 import NewArrivals from "../components/home/NewArrivals";
 import FeaturedProducts from "../components/home/FeaturedProducts";
@@ -16,22 +13,16 @@ import Row from "../components/ui/Row.jsx";
 import SectionHeading from "../components/ui/SectionHeading.jsx";
 import Section from "../components/ui/Section.jsx";
 
-
-
 const Home = () => {
-
-
   return (
     <div>
       <Hero />
-      
       <Section>
         <Row className="pt-[25px] md:pt-[50px]">
            <SectionHeading page="Home" order={2}/>
-
-          </Row>
-          <Row>
-        <CategoriesSection />
+        </Row>
+        <Row>
+          <CategoriesSection />
         </Row>
       </Section>
       <NewArrivals />
@@ -47,8 +38,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
