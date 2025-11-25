@@ -144,7 +144,7 @@ const ProductCard = ({ item }) => {
     ? `${IMAGE_BASE_URL}${imageUrlPath}`
     : "placeholder.png";
 
-  const title = item?.name || "Recommended Item";
+  const title = item?.category.name || "Recommended Item";
   const description = item?.description || "No description available";
 
   const backgroundColor = "#a0522d";
@@ -156,11 +156,11 @@ const ProductCard = ({ item }) => {
         <img
           src={imageUrl}
           alt={title}
-          className="w-full h-full object-cover"
-          style={{
-            filter: "brightness(70%) contrast(120%) saturate(120%)",
-            mixBlendMode: "luminosity",
-          }}
+          className="w-full h-full object-cover filter grayscale brightness-35 contrast-125 "
+          // style={{
+          //   filter: "brightness(70%) contrast(120%) saturate(120%)",
+          //   mixBlendMode: "luminosity",
+          // }}
         />
       </div>
 
@@ -175,7 +175,7 @@ const ProductCard = ({ item }) => {
 
       {/* 🔹 Text Info */}
       <div className="absolute bottom-8 left-6 text-white z-20">
-        <h2 className="font-h5">{title}</h2>
+        <h2 className="font-h5 leading">{title}</h2>
         <p className="font-sans font-medium text-[16px]">{description}</p>
       </div>
     </div>
