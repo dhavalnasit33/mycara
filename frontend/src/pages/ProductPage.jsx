@@ -13,6 +13,7 @@ import ProductTabs from "../components/productcard/ProductTabs";
 import SimilarProducts from "../components/productcard/SimilarProducts";
 import CustomerAlsoViewed from "../components/productcard/CustomerAlsoViewed";
 import { fetchPages } from "../features/pages/pagesThunk";
+import { addRecentlyViewed } from "../components/utils/recentlyViewed";
 
 export default function Product() {
   const { id } = useParams();
@@ -29,6 +30,13 @@ export default function Product() {
     dispatch(fetchProducts());
     dispatch(fetchPages());
   }, [dispatch]);
+
+  // also viewed  Product()
+  useEffect(() => {
+    if (product && product._id) {
+      addRecentlyViewed(product);
+    }
+  }, [product]);
 
   if (loading) return <p className="text-center py-10">Loading product...</p>;
   if (error) return <p className="text-center text-red-500 py-10">{error}</p>;
@@ -61,7 +69,7 @@ export default function Product() {
         <Row>
           <SectionHeading page="products"  order="2" index="1" />
         </Row>
-        <CustomerAlsoViewed />
+          <CustomerAlsoViewed products={products} currentProductId={product?._id} />
       </Section>
     </>
   );

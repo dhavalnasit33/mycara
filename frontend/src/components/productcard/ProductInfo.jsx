@@ -7,7 +7,7 @@ import HeartIcon from "../icons/HeartIcon"
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, createCart, fetchCart} from "../../features/cart/cartThunk";
 import LoginForm from "../../pages/Login";
-import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
+import { useAddToWishlist } from "../../hooks/handleAddTowishlist";
 
 
 export default function ProductInfo({product, setSelectedVariant }) {

@@ -21,7 +21,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { fetchProducts } from "../../features/products/productsThunk";
 import { getImageUrl } from "../utils/helper";
-import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
+import { useAddToWishlist } from "../../hooks/handleAddTowishlist";
 
 const FeaturedProducts = () => {
    const dispatch = useDispatch();
@@ -150,7 +150,7 @@ const FeaturedProducts = () => {
 
         {/* Category Section */}
         <Row >
-          {showArrows && (
+          {/* {showArrows && (
             <>
               <button
                 className="absolute top-1/2 -translate-y-1/2 -left-[15px] z-20 w-[10px]  flex items-center justify-center"
@@ -166,7 +166,7 @@ const FeaturedProducts = () => {
                 <ArrowRightIcon className="text-black" />
               </button>
             </>
-          )}
+          )} */}
 
           {/* Category List */}
           {catLoading ? (
