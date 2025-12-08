@@ -1,9 +1,6 @@
-import React, { useEffect } from "react";
-import { X } from "lucide-react"; // make sure lucide-react is installed
-
+import React, { useEffect, useState } from "react";
+import { X } from "lucide-react";
 import { CollapsibleFilter, FilterItemCheckbox, PriceRangeFilter } from './WomenCollections';
-
-
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { fetchSizes } from "../../features/sizes/sizesThunk";
 import { fetchColors } from "../../features/colors/colorsThunk";
@@ -30,17 +27,21 @@ const MobileFilterModal = ({
   
 
     const dispatch = useDispatch();
+    const [openFilter, setOpenFilter] = useState("Category");
+    const toggleFilter = (filterId) => {
+      setOpenFilter(prev => (prev === filterId ? null : filterId));
+    };
 
   // Redux data
-  const { items:categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
+    const { items:categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
     const { products } = useSelector((state) => state.products);
-   const {  sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
+    const {  sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
     const {  colors =[], loading: colorLoading} = useSelector((state) => state.colors);
-     const {  brands =[], loading: brandLoading} = useSelector((state) => state.brands);
-      const { types =[], loading: typesLoading} = useSelector((state) => state.types);
-       const { fabrics =[], loading: fabricsLoading} = useSelector((state) => state.fabrics);
-       const { discounts =[], loading: discountsLoading} = useSelector((state) => state.discounts);
-      const { productLabels = [], loading: labelsLoading } = useSelector((state) => state.productLabels);
+    const {  brands =[], loading: brandLoading} = useSelector((state) => state.brands);
+    const { types =[], loading: typesLoading} = useSelector((state) => state.types);
+    const { fabrics =[], loading: fabricsLoading} = useSelector((state) => state.fabrics);
+    const { discounts =[], loading: discountsLoading} = useSelector((state) => state.discounts);
+    const { productLabels = [], loading: labelsLoading } = useSelector((state) => state.productLabels);
 
 
   useEffect(() => {
@@ -140,6 +141,8 @@ const discountCounts = products.reduce((acc, product) => {
                         <CollapsibleFilter
                             title="Category"
                             defaultOpen={true}
+                            isOpen={openFilter === "Category"}
+                            onToggle={() => toggleFilter("Category")}
                             isSelected={selectedCategories.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetCategories}
@@ -166,6 +169,8 @@ const discountCounts = products.reduce((acc, product) => {
                         </CollapsibleFilter>
 
                         <PriceRangeFilter
+                            isOpen={openFilter === "Price"}
+                            onToggle={() => toggleFilter("Price")}
                             minPrice={minPrice}
                             maxPrice={maxPrice}
                             setMinPrice={setMinPrice}
@@ -175,6 +180,8 @@ const discountCounts = products.reduce((acc, product) => {
 
                         <CollapsibleFilter
                             title="Size"
+                            isOpen={openFilter === "Size"}
+                            onToggle={() => toggleFilter("Size")}
                             isSelected={selectedSizes.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetSizes}
@@ -200,6 +207,8 @@ const discountCounts = products.reduce((acc, product) => {
 
                         <CollapsibleFilter
                             title="Color"
+                            isOpen={openFilter === "Color"}
+                            onToggle={() => toggleFilter("Color")}
                             isSelected={selectedColors.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetColors}
@@ -237,6 +246,8 @@ const discountCounts = products.reduce((acc, product) => {
                         {/* Brands Filter */}
                         <CollapsibleFilter
                             title="Brands"
+                            isOpen={openFilter === "Brands"}
+                            onToggle={() => toggleFilter("Brands")}
                             isSelected={selectedBrands.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetBrands}
@@ -264,6 +275,8 @@ const discountCounts = products.reduce((acc, product) => {
                         {/* Type Filter */}
                         <CollapsibleFilter
                             title="Type"
+                            isOpen={openFilter === "Type"}
+                            onToggle={() => toggleFilter("Type")}
                             isSelected={selectedTypes.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetTypes}
@@ -290,6 +303,8 @@ const discountCounts = products.reduce((acc, product) => {
 
                         <CollapsibleFilter
                             title="Fabric"
+                            isOpen={openFilter === "Fabric"}
+                            onToggle={() => toggleFilter("Fabric")}
                             isSelected={selectedFabrics.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetFabrics}
@@ -316,6 +331,8 @@ const discountCounts = products.reduce((acc, product) => {
 
                         <CollapsibleFilter
                             title="Discounts"
+                            isOpen={openFilter === "Discounts"}
+                            onToggle={() => toggleFilter("Discounts")}
                             isSelected={selectedDiscounts.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetDiscounts}
@@ -330,8 +347,9 @@ const discountCounts = products.reduce((acc, product) => {
                                           key={discount._id}
                                           name={discount.name}
                                           count={discountCounts[discount._id] || 0}
-                                          isChecked={selectedDiscounts.includes(discount.name)}
-                                          onChange={handleDiscountChange}
+                                          isChecked={selectedDiscounts.includes(discount._id)}
+                                          // onChange={handleDiscountChange}
+                                          onChange={() => handleDiscountChange(discount._id)}
                                         />
                                       ))
                                     ) : (
@@ -342,6 +360,8 @@ const discountCounts = products.reduce((acc, product) => {
 
                         <CollapsibleFilter
                             title="Product Label"
+                            isOpen={openFilter === "Product Label"}
+                            onToggle={() => toggleFilter("Product Label")}
                             isSelected={selectedLabels.length > 0}
                             showButtons={true}
                             onCancelClick={handleResetLabels}
@@ -356,8 +376,9 @@ const discountCounts = products.reduce((acc, product) => {
                                           key={label._id}
                                           name={label.name}
                                           count={labelCounts[label._id] || 0}
-                                          isChecked={selectedLabels.includes(label.name)}
-                                          onChange={handleLabelChange}
+                                          isChecked={selectedLabels.includes(label._id)}
+                                          // onChange={handleLabelChange}
+                                          onChange={() => handleLabelChange(label._id)}
                                         />
                                       ))
                                     ) : (

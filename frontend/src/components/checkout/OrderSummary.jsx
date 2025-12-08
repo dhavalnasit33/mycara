@@ -1,84 +1,106 @@
-// D:\mycara\frontend\src\components\checkout\OrderSummary.jsx
-
 import React, { useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import cartitem from "../../assets/Girls full sleave fancy t shirt.png";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../ui/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart } from "../../features/cart/cartThunk";
+import { getImageUrl } from "../utils/helper";
+import { createPayment } from "../../features/payments/paymentThunk";
+import { createOrder } from "../../features/orders/orderThunk";
 
 export default function OrderSummary() {
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [cartItems, setCartItems] = useState([]);
-  const [billingAddress, setBillingAddress] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("cod");
-  const [isPlacing, setIsPlacing] = useState(false);
+  const { items = [], loading  } = useSelector((state) => state.cart);
+  const { payment, loading: paymentLoading } = useSelector((state) => state.payments);
+  const { user } = useSelector((state) => state.auth);
 
-  // 🔥 Load REAL cart data from localStorage
+  const [selectedPayment, setSelectedPayment] = useState("credit_card");
+  const [paymentError, setPaymentError] = useState("");
+  const [cardNumber, setCardNumber] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [cvv, setCvv] = useState("");
+
+// Load cart on mount
   useEffect(() => {
-    const saved = localStorage.getItem("cartItems");
-    if (saved) {
-      setCartItems(JSON.parse(saved));
+    const cart_id = localStorage.getItem("cart_id");
+    if (user && cart_id) {
+      dispatch(fetchCart(cart_id));
     }
-  }, []);
+  }, [dispatch, user]);
 
-  // 💰 auto-calculation
-  const subtotal = cartItems.reduce(
-    (sum, it) => sum + it.price * it.qty,
-    0
-  );
+  if (loading) return <p>Loading cart...</p>;
+  if (!items.length) return <p className="text-center mb-[100px]">Your cart is empty.</p>;
 
-  const taxes = Math.round(subtotal * 0.1);
-  const shipping = 0;
-  const total = subtotal + taxes + shipping;
-
-  const PLACE_ORDER_API = "http://localhost:5000/api/orders";
-
-  // 🔥 place order
-  const placeOrderOnBackend = async (orderData) => {
-    const res = await fetch(PLACE_ORDER_API, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(orderData),
-    });
-
-    if (!res.ok) {
-      throw new Error("Order failed");
-    }
-
-    return await res.json();
+  // Discounted price calculation
+  const getDiscountedPrice = (item) => {
+    const discount = item?.product_id?.discount_id?.value || 0;
+    const originalPrice = item?.variant_id?.price || 0;
+    const discountedPrice = discount > 0 ? originalPrice - (originalPrice * discount) / 100 : originalPrice;
+    return { discount, originalPrice, discountedPrice };
   };
 
-  const handlePlaceOrder = async () => {
-    if (isPlacing) return;
-    setIsPlacing(true);
+  // Subtotal, taxes, shipping, total
+  const subtotal = items.reduce(
+    (sum, item) => sum + getDiscountedPrice(item).discountedPrice * (item.quantity || 1),
+    0
+  );
+  const taxes = Number((subtotal * 0.1).toFixed(2));
+  const shipping = 0;
+  const total = Number((subtotal + taxes + shipping).toFixed(2));
 
-    const orderPayload = {
-      orderId: `ORD-${Date.now()}`,
-      items: cartItems,              // 👉 REAL FORM DATA (not hard-coded)
-      billingAddress,
-      paymentMethod,
-      subtotal,
-      taxes,
-      shipping,
-      total,
-      paid: paymentMethod !== "cod",
-      status: "Pending",
-      createdAt: new Date().toISOString(),
+  // Place order & payment
+  
+
+  const handlePlaceOrder = async () => {
+    if (!selectedPayment) return alert("Select a payment method");
+
+    if (selectedPayment === "credit_card") {
+      if (!cardNumber.trim() || !expiryDate.trim() || !cvv.trim()) {
+        setPaymentError("Please fill all credit card details before proceeding.");
+        return;
+      }
+    }
+
+    if (!user || !user._id) {
+      alert("Please login before placing the order");
+      return navigate("/login");
+    }
+
+    const orderData = {
+      user_id: user._id,
+      items,
+      total_price: total,
+      coupon_id: null,
     };
 
-    try {
-      const result = await placeOrderOnBackend(orderPayload);
+    // 1️⃣ Dispatch createOrder thunk
+    const orderAction = await dispatch(createOrder(orderData));
+    
+    if (createOrder.fulfilled.match(orderAction)) {
+      const orderId = orderAction.payload?._id;
 
-      // Save last order locally
-      localStorage.setItem("lastOrder", JSON.stringify(result));
+      // 2️⃣ Dispatch createPayment thunk
+      const paymentPayload = {
+        user_id: user._id,
+        order_id: orderId,
+        items,
+        subtotal,
+        taxes,
+        shipping,
+        total,
+        amount_paid: selectedPayment === "cod" ? 0 : total,
+        payment_method: selectedPayment,
+        status: selectedPayment === "cod" ? "pending" : "completed",
+      };
 
-      // redirect
-      navigate("/my-account/orders");
+      await dispatch(createPayment(paymentPayload));
 
-    } catch (err) {
-      alert("Order failed!");
-    } finally {
-      setIsPlacing(false);
+      alert("Order placed successfully!");
+      navigate("/my-account/orders"); 
+    } else {
+      alert("Failed to place order: " + orderAction.payload);
     }
   };
 
@@ -90,29 +112,37 @@ export default function OrderSummary() {
           <span className="theme-border-block w-[34px] h-[2px] rounded-[10px] block"></span>
         </div>
       </h2>
-
-        <div className="pb-[10px] text-p">1 item</div>
-        <div className="flex border-b border-[#BCBCBC] pb-[10px] mb-[30px]">
-            <div className="relative w-[80px] md:w-[105px] h-auto flex-shrink-0">
-                <img src={cartitem} alt="Product" className="w-full h-[122px] md:h-[150px] object-contain rounded-md" />
-                <span className="absolute top-[-6px] right-[-6px] w-[22px] h-[22px] bg-white text-black text-p rounded-full flex items-center justify-center">
-                    1
-                </span>
-            </div>
-
-            <div className="flex justify-between gap-[10px] flex-1 ml-4">
-                <p className="text-14 text-gray-700">
-                Women latest Florals pink printed Pair Kurti with cotton pant and chunri
-                </p>
-                <p className="text-p text-right ">₹1,430.00</p>
-            </div>
-        </div>
-
+      <div className="pb-[10px] text-p">
+        {items.reduce((sum, item) => sum + (item.quantity || 1), 0)} items
+      </div>
+      {items.map((item, index) => (
+      <div key={item._id || index} className="flex border-b border-[#BCBCBC] pb-[10px] mb-[30px]">
+          <div className="relative w-[80px] md:w-[105px] h-auto flex-shrink-0">
+            <Link to={`/products/${item.product_id?._id}`}>
+              <img src={
+                  item.variant_id?.images?.length > 0
+                    ? getImageUrl(item.variant_id.images[0])
+                    : getImageUrl(item.product_id?.images?.[0])
+                } 
+                  alt={item.product_id?.name} className="w-full h-[122px] md:h-[150px] object-cover " />
+              </Link>
+              <span className="absolute top-[-10px] right-[-10px] w-[22px] h-[22px] bg-white text-black text-p rounded-full flex items-center justify-center">
+                {item.quantity || 1}
+              </span>
+          </div>
+          <div className="flex justify-between gap-[10px] flex-1 ml-4">
+              <p className="text-14 text-gray-700">
+              {item.product_id?.name}
+              </p>
+              <p className="text-p text-right "> ₹{Math.round(getDiscountedPrice(item).discountedPrice * item.quantity).toLocaleString("en-IN")} </p>
+          </div>
+      </div>
+      ))}
 
       <div className="border-t pb-[30px] space-y-[14px] text-p text-light">
         <div className="flex justify-between text-black">
            <span>Subtotal</span>
-          <span>₹{subtotal}</span>
+          <span>₹ {Math.round(subtotal).toLocaleString("en-IN")}</span>
         </div>
         <div className="flex justify-between">
           <span>Shipping</span>
@@ -120,67 +150,81 @@ export default function OrderSummary() {
         </div>
         <div className="flex justify-between">
           <span>Taxes</span>
-           <span>₹{taxes}</span>
+           <span>₹ {Math.round(taxes).toLocaleString("en-IN")}</span>
         </div>
         <div className="text-theme text-[12px] border-b border-[#BCBCBC] pb-[30px]">Promo Gift Certificate</div>
         <div className="flex justify-between text-p text-black ">
           <span>Total(₹)</span>
-          <span className="text-20px font-medium ">₹{total}</span>
+          <span className="text-20px font-medium ">₹{Math.round(total).toLocaleString("en-IN")}</span>
         </div>
       </div>
-
+      
       {/* Payment Options */}
+        <div className="text-light text-14 space-y-[10px]">
+          {["cod", "paypal", "credit_card"].map((method) => (
+            <label key={method} className="flex items-center gap-2 cursor-pointer text-p">
+              <input
+                type="radio"
+                name="payment"
+                value={method}
+                checked={selectedPayment === method}
+                onChange={(e) => setSelectedPayment(e.target.value)}
+                className="peer appearance-none w-4 h-4 border-[1px] checked:border-[3px] border-black rounded-full 
+                          border-[#000000] checked:border-[#F43297]   
+                          transition-all duration-200"
+              />
+              <span className={`capitalize ${
+                selectedPayment === method ? "text-light" : "text-light"
+              }`}>
+                {method === "cod"
+                  ? "Cash on Delivery"
+                  : method === "credit_card"
+                  ? "Credit Card"
+                  : "PayPal"}
+              </span>
 
-        <div className=" text-light text-14">
-            <label className="flex items-center pb-[10px] gap-2 cursor-pointer" >
-                <input type="radio" name="payment" className="hidden peer" />
-                <span className="w-[16px] h-[16px] border-2 border-[#F43297] rounded-full flex items-center justify-center transition">
-                    <span className="w-[16px] h-[16px] bg-white rounded-full peer-checked:block hidden"></span>
-                </span>
-                <span>Credit Card</span>
             </label>
-            <p className="text-[12px] pb-[15px]">Pay with your creadit cart via authorize net.</p>
-            <div className="space-y-[19px] pb-[30px]">
-                <input type="text" placeholder="Card No." className="input-common" />
-                <div className="grid grid-cols-2 gap-[13px]">
-                <input type="text" placeholder="Expiry (mm/yy)" className="input-common" />
-                <input type="text" placeholder="Card code" className="input-common" />
-            </div>
-            </div>
+          ))}
+           {selectedPayment === "credit_card" && (  
+              <div className="space-y-[19px] text-light text-14 ">
+                <p className="text-light text-[12px] mb-[5px]">Pay with your credit cart via authorize net.</p>
+                <input 
+                  type="text"
+                  placeholder="Card Number"
+                  value={cardNumber}
+                  onChange={(e) => setCardNumber(e.target.value.replace(/\D/g, ""))}
+
+                  className="input-common w-full"
+                />
+                <div className="flex gap-[13px]">
+                  <input
+                    type="text"
+                    placeholder="Expiry (MM/YY)"
+                    value={expiryDate}
+                    onChange={(e) => setExpiryDate(e.target.value)}
+                    className="input-common flex-1"
+                  />
+                  <input
+                    type="text"
+                    placeholder="CVV"
+                    value={cvv}
+                    onChange={(e) => { setCvv(e.target.value.replace(/\D/g, "")); if (paymentError) setPaymentError(""); }}
+                    className="input-common flex-1"
+                  />
+                </div>
+              </div>
+            )}
+          {paymentError && <p className="text-red-500 text-sm mt-2">{paymentError}</p>}
         </div>
-        <div className="text-p text-light ">
-            <label className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="payment" className="hidden peer" />
-                <span className="w-[16px] h-[16px] border border-[#000] rounded-full flex items-center justify-center transition">
-                    <span className="w-[16px] h-[16px] bg-white rounded-full peer-checked:block hidden"></span>
-                </span>
-                <span>Check Payments</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="payment" className="hidden peer" />
-                <span className="w-[16px] h-[16px] border border-[#000] rounded-full flex items-center justify-center transition">
-                    <span className="w-[16px] h-[16px] bg-white rounded-full peer-checked:block hidden"></span>
-                </span>
-                <span>Cash on Delivery</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-                <input type="radio" name="payment" className="hidden peer" />
-                <span className="w-[16px] h-[16px] border border-[#000] rounded-full flex items-center justify-center transition">
-                    <span className="w-[16px] h-[16px] bg-white rounded-full peer-checked:block hidden"></span>
-                </span>
-                <span>PayPal</span>
-            </label>
-            </div>
-
         <div className="text-center mt-[50px]">
-   <Button
-          variant="common"
-          className="min-w-auto sm:min-w-[300px] uppercase"
-          onClick={handlePlaceOrder}
-          disabled={isPlacing}
-        >
-          {isPlacing ? "PLACING ORDER..." : "PLACE ORDER"}
-        </Button>
+          <Button
+            variant="common"
+            className="min-w-auto sm:min-w-[300px] uppercase"
+            onClick={handlePlaceOrder}
+            disabled={paymentLoading}
+          >
+            {paymentLoading ? "PROCESSING..." : "PLACE ORDER"}
+          </Button>
         </div>
     </div>
   );

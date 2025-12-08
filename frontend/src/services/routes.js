@@ -57,4 +57,12 @@ export const ROUTES = {
     updateItem: "/carts/items",
     deleteCart: "/carts/items",
   },
+  orders: {
+    getAll: "/orders",
+    getById: (id) => `/orders/${id}`,
+    getUserOrders: (userId) => `/orders?user=${userId}`,
+  },
+  payments: {
+    getAll: "/payments",
+  }
 }

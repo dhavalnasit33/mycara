@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 // Import your filter components
 import { CollapsibleFilter, FilterItemCheckbox, SizeFilterItem, ColorFilterItem, PriceRangeFilter } from './WomenCollections';
@@ -28,17 +28,21 @@ const DesktopFilters = ({
 }) => {
 
     const dispatch = useDispatch();
+    const [openFilter, setOpenFilter] = useState("Category");
+    const toggleFilter = (filterId) => {
+      setOpenFilter(prev => (prev === filterId ? null : filterId));
+    };
 
   // Redux data
   const { items:categories = [], loading: catLoading } = useSelector( (state) => state.categories  );
-    const { products, loading, error } = useSelector((state) => state.products);
-   const {  sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
-    const {  colors =[], loading: colorLoading} = useSelector((state) => state.colors);
-     const {  brands =[], loading: brandLoading} = useSelector((state) => state.brands);
-      const { types =[], loading: typesLoading} = useSelector((state) => state.types);
-       const { fabrics =[], loading: fabricsLoading} = useSelector((state) => state.fabrics);
-       const { discounts =[], loading: discountsLoading} = useSelector((state) => state.discounts);
-      const { productLabels = [], loading: labelsLoading } = useSelector((state) => state.productLabels);
+  const { products, loading, error } = useSelector((state) => state.products);
+  const { sizes =[], loading: sizeLoading} = useSelector((state) => state.sizes);
+  const { colors =[], loading: colorLoading} = useSelector((state) => state.colors);
+  const { brands =[], loading: brandLoading} = useSelector((state) => state.brands);
+  const { types =[], loading: typesLoading} = useSelector((state) => state.types);
+  const { fabrics =[], loading: fabricsLoading} = useSelector((state) => state.fabrics);
+  const { discounts =[], loading: discountsLoading} = useSelector((state) => state.discounts);
+  const { productLabels = [], loading: labelsLoading } = useSelector((state) => state.productLabels);
 
 
   useEffect(() => {
@@ -90,13 +94,13 @@ const DesktopFilters = ({
 }, {});
 
 //discountcount
-const discountCounts = products.reduce((acc, product) => {
-  const discountId = product.discount_id;
-  if (discountId) {
-    acc[discountId] = (acc[discountId] || 0) + 1;
-  }
-  return acc;
-}, {});
+  const discountCounts = products.reduce((acc, product) => {
+    const discountId = product.discount_id;
+    if (discountId) {
+      acc[discountId] = (acc[discountId] || 0) + 1;
+    }
+    return acc;
+  }, {});
 
 //productLabels
   const labelCounts = products.reduce((acc, product) => {
@@ -109,7 +113,7 @@ const discountCounts = products.reduce((acc, product) => {
 
 
   return (
-  <aside className="hidden lg:block lg:w-1/4 h-[150vh] overflow-y-auto px-4 py-5 bg-white rounded-[20px] box-shadow hide-scrollbar">
+    <aside className="hidden lg:block lg:w-1/4 h-[120vh] overflow-y-auto  px-4 py-5 bg-white rounded-[20px] box-shadow hide-scrollbar">
       <div className="p-4">
         <h2 className="text-20px font-medium text-black lowercase">Filter Products</h2>
       </div>
@@ -118,6 +122,8 @@ const discountCounts = products.reduce((acc, product) => {
       <CollapsibleFilter
         title="Category"
         defaultOpen={true}
+        isOpen={openFilter === "Category"}
+        onToggle={() => toggleFilter("Category")}
         isSelected={isCategorySelected}
         onReset={handleResetCategories}
         showButtons={true}
@@ -139,22 +145,26 @@ const discountCounts = products.reduce((acc, product) => {
             <p className="text-sm text-gray-500">No categories found.</p>
           )}
         </div>
-    </CollapsibleFilter>
+     </CollapsibleFilter>
 
 
       {/* Price */}
       <PriceRangeFilter
+        title="Price"
         minPrice={minPrice}
         maxPrice={maxPrice}
         setMinPrice={setMinPrice}
         setMaxPrice={setMaxPrice}
         isMobile={false}
+        isOpen={openFilter === "Price"}
+        onToggle={() => toggleFilter("Price")}
       />
 
       {/* Size */}
       <CollapsibleFilter
         title="Size"
-        defaultOpen={true}
+        isOpen={openFilter === "Size"}
+        onToggle={() => toggleFilter("Size")}
         isSelected={selectedSizes.length > 0}
         onReset={handleResetSizes}
         showButtons={true}
@@ -180,7 +190,8 @@ const discountCounts = products.reduce((acc, product) => {
       {/* Color */}
       <CollapsibleFilter
         title="Color"
-        defaultOpen={true}
+        isOpen={openFilter === "Color"}
+        onToggle={() => toggleFilter("Color")}
         isSelected={selectedColors.length > 0}
         onReset={handleResetColors}
         showButtons={true}
@@ -214,10 +225,11 @@ const discountCounts = products.reduce((acc, product) => {
         </div>
 
       </CollapsibleFilter>
-
       {/* Brands */}
       <CollapsibleFilter
         title="Brands"
+        isOpen={openFilter === "Brands"}
+        onToggle={() => toggleFilter("Brands")}
         isSelected={selectedBrands.length > 0}
         onReset={handleResetBrands}
         showButtons={true}
@@ -244,6 +256,8 @@ const discountCounts = products.reduce((acc, product) => {
       {/* Type */}
       <CollapsibleFilter
         title="Type"
+        isOpen={openFilter === "Type"}
+        onToggle={() => toggleFilter("Type")}
         isSelected={selectedTypes.length > 0}
         onReset={handleResetTypes}
         showButtons={true}
@@ -270,6 +284,8 @@ const discountCounts = products.reduce((acc, product) => {
       {/* Fabric */}
       <CollapsibleFilter
         title="Fabric"
+        isOpen={openFilter === "Fabric"}
+        onToggle={() => toggleFilter("Fabric")}
         isSelected={selectedFabrics.length > 0}
         onReset={handleResetFabrics}
         showButtons={true}
@@ -296,6 +312,8 @@ const discountCounts = products.reduce((acc, product) => {
       {/* Discounts */}
       <CollapsibleFilter
         title="Discounts"
+        isOpen={openFilter === "Discounts"}
+        onToggle={() => toggleFilter("Discounts")}
         isSelected={selectedDiscounts.length > 0}
         onReset={handleResetDiscounts}
         showButtons={true}
@@ -309,8 +327,9 @@ const discountCounts = products.reduce((acc, product) => {
               key={discount._id}
               name={discount.name}
               count={discountCounts[discount._id] || 0}
-              isChecked={selectedDiscounts.includes(discount.name)}
-              onChange={handleDiscountChange}
+              isChecked={selectedDiscounts.includes(discount._id)}
+              // onChange={handleDiscountChange}
+              onChange={() => handleDiscountChange(discount._id)}
             />
           ))
         ) : (
@@ -323,6 +342,8 @@ const discountCounts = products.reduce((acc, product) => {
       {/* Product Labels */}
       <CollapsibleFilter
         title="Product Label"
+        isOpen={openFilter === "Product Label"}
+        onToggle={() => toggleFilter("Product Label")}
         isSelected={selectedLabels.length > 0}
         onReset={handleResetLabels}
         showButtons={true}
@@ -336,8 +357,9 @@ const discountCounts = products.reduce((acc, product) => {
               key={label._id}
               name={label.name}
               count={labelCounts[label._id] || 0}
-              isChecked={selectedLabels.includes(label.name)}
-              onChange={handleLabelChange}
+              isChecked={selectedLabels.includes(label._id)}
+              // onChange={handleLabelChange}
+              onChange={() => handleLabelChange(label._id)}
             />
           ))
         ) : (

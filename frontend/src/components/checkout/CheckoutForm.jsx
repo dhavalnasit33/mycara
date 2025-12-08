@@ -1,7 +1,29 @@
 import { ArrowLeft, Plus } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function CheckoutForm() {
+  const [states, setStates] = useState([]);
+  const [selectedState, setSelectedState] = useState("");
+  
+  useEffect(() => {
+    async function fetchStates() {
+      try {
+        const response = await fetch("https://countriesnow.space/api/v0.1/countries/states", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ country: "India" })
+        });
+
+        const data = await response.json()
+        setStates(data.data.states);
+      } catch (error) {
+        console.error("Error loading states:", error);
+      }
+    }
+    fetchStates();
+  }, []);
+
   return (
     <div className="flex-1">
       {/* Contact Information */}
@@ -31,12 +53,27 @@ export default function CheckoutForm() {
             </div>
             <div className="flex items-center mb-[30px] gap-[12px]">
                 <Plus size={16}/>
-                <p className="text-p text-light  ">Add State, City And etc...</p>
+                <p className="text-p text-light">Add State, City And etc...</p>
             </div>
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px]">
                 <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
-                    <input type="text" placeholder="State" className="input-common" />
-                    <input type="text" placeholder="City" className="input-common" />
+                    {/* <input type="text" placeholder="State" className="input-common" /> */}
+                    <select
+                      className={ `input-common text-[#BCBCBC] ${selectedState === "" ? "placeholder-option" : ""}`}
+                      value={selectedState}
+                      onChange={(e) => setSelectedState(e.target.value)}
+                    >
+                      <option value="" disabled>
+                        Select State
+                      </option>
+
+                      {states.map((state, index) => (
+                        <option key={index} value={state.name} className="text-light">
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                  <input type="text" placeholder="City" className="input-common" />
                 </div>
                 <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
                     <input type="text" placeholder="Pin Code" className="input-common" />

@@ -6,7 +6,7 @@ import { ROUTES } from "../../services/routes";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ page = 1, limit = 50 } = {}, { rejectWithValue }) => {
+  async ({ page , limit } = {}, { rejectWithValue }) => {
     try {
       const res = await api.get(ROUTES.products.getAll, {
         params: { page, limit }
@@ -52,7 +52,7 @@ export const fetchNewArrivals = createAsyncThunk(
     try {
       const res = await api.get("/products", {
         params: {
-          variantLabel: "New Arrivals", // FILTER HERE ONLY
+          variantLabel: "New Arrivals", 
           limit: 100,
         },
       });

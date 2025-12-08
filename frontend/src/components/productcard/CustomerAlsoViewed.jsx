@@ -70,7 +70,7 @@ export default function CustomerAlsoViewed({ products = [], currentProductId = n
 
             <div className="grid grid-rows-2 gap-[7px]">
               {product.sideImages.map((side, idx) => (
-                 <a href={`/products/${side.productId}`} target="_blank" rel="noopener noreferrer">
+                 <a href={`/products/${side.productId}`} key={side.id || side.productId || idx} target="_blank" rel="noopener noreferrer">
                   <img
                     src={side.imageUrl}
                     alt={`related-${idx}`}

@@ -6,17 +6,29 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function CartSummary() {
-   const { items = [] } = useSelector((state) => state.cart);
+  const { items = [], loading  } = useSelector((state) => state.cart);
+  
+  // discount
+  const getDiscountedPrice = (item) => {
+  const discount = item?.product_id?.discount_id?.value || 0;
+  const originalPrice = item?.variant_id?.price || 0;
+  const discountedPrice =
+    discount > 0
+      ? originalPrice - (originalPrice * discount) / 100
+      : originalPrice;
 
-  const subtotal = items.reduce((acc, item) => {
-    const price = item?.variant_id?.price || 0;
-    const quantity = item?.quantity || 1;
-    return acc + price * quantity;
+    return { discount, originalPrice, discountedPrice };
+  };
+
+  //subtotal
+  const subtotal = items.reduce((sum, item) => {
+    const { discountedPrice } = getDiscountedPrice(item);
+    return sum + discountedPrice * (item.quantity || 1);
   }, 0);
 
-  const tax = subtotal * 0.1; // 10% tax
-  const shipping = 0;
-  const total = subtotal + tax + shipping;
+  const taxes = Math.round(subtotal * 0.10); // 10% tax
+  const shipping = 0; // Free
+  const total = subtotal + taxes + shipping;
 
   return (
     <div className="w-full  rounded-[3px] py-[45px] px-[22px] light-color ">
@@ -29,19 +41,19 @@ export default function CartSummary() {
       <div className="space-y-[25px] text-light text-p mb-[50px]">
         <div className="flex justify-between pb-[10px] border-b border-1 light-border ">
           <span>Sub-Total:</span>
-          <span>₹{subtotal.toFixed(2)}</span>
+          <span>₹{Math.round(subtotal).toLocaleString("en-IN")}</span>
         </div>
         <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Tax (10%):</span>
-          <span>₹{tax.toFixed(2)}</span>
+          <span>₹ {Math.round(taxes).toLocaleString("en-IN")}</span>
         </div>
         <div className="flex justify-between pb-[10px] border-b border-1 light-border">
           <span>Shipping:</span>
-          <span>₹{shipping.toFixed(2)}</span>
+          <span>free</span>
         </div>
         <div className="flex justify-between font-bold ">
           <span>TOTAL:</span>
-          <span>₹{total.toFixed(2)}</span>
+          <span>₹{Math.round(total).toLocaleString("en-IN")}</span>
         </div>
       </div>
 
