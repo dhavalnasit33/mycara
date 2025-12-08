@@ -179,7 +179,7 @@ const isDiscountValid = (discount) => {
 // CREATE ORDER
 const createOrder = async (req, res) => {
   try {
-    const { user_id, items, coupon_id } = req.body;
+    const { user_id, items, coupon_id, shippingAddress  } = req.body;
 
     if (!items || !items.length) {
       return sendResponse(res, false, null, "No items provided");
@@ -245,6 +245,7 @@ const createOrder = async (req, res) => {
       user_id,
       total_price,
       coupon_id: coupon_id || null,
+      shippingAddress 
     });
     const savedOrder = await order.save();
 

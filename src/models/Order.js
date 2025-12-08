@@ -13,6 +13,15 @@ const orderSchema = new mongoose.Schema(
       enum: ["pending", "processing", "completed", "cancelled"],
       default: "pending",
     },
+    shippingAddress: {
+      firstName: String,
+      lastName: String,
+      address: String,
+      state: String,
+      city: String,
+      pincode: String,
+      phone: String,
+    },
     coupon_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Coupon",
