@@ -19,6 +19,8 @@ const Bestsellers = () => {
   }, [dispatch]);
 
   const sellersProducts = products.filter((product) =>
+    product.status === "active" && 
+    product.category?.status === "active" &&
     product.variants?.some((variant) => variant.is_best_seller)
   );
 

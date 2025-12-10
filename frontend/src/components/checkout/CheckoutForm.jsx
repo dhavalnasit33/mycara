@@ -2,27 +2,76 @@ import { ArrowLeft, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ formData, setFormData }) {
+  const [countries, setCountries] = useState([]);
   const [states, setStates] = useState([]);
   const [selectedState, setSelectedState] = useState("");
-  
+  const [cities, setCities] = useState([]);
+
+  //country dropdown
   useEffect(() => {
-    async function fetchStates() {
-      try {
-        const response = await fetch("https://countriesnow.space/api/v0.1/countries/states", {
+  async function fetchCountries() {
+    try {
+      const res = await fetch("https://countriesnow.space/api/v0.1/countries/positions");
+      const json = await res.json();
+      if (json?.data) setCountries(json.data.map(c => c.name));
+    } catch (err) {
+      console.error("Error loading countries:", err);
+    }
+  }
+    fetchCountries();
+  }, []);
+
+
+  //state dropdown
+  useEffect(() => {
+  async function fetchStates() {
+    if (!formData.country) {
+      setStates([]); 
+      return; 
+    }
+    try {
+      const response = await fetch(
+        "https://countriesnow.space/api/v0.1/countries/states",
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ country: "India" })
-        });
+          body: JSON.stringify({ country: formData.country }),
+        }
+      );
 
-        const data = await response.json()
-        setStates(data.data.states);
-      } catch (error) {
-        console.error("Error loading states:", error);
-      }
+    const data = await response.json()
+      setStates(data.data.states);
+    } catch (error) {
+      console.error("Error loading states:", error);
     }
-    fetchStates();
-  }, []);
+  }
+
+  fetchStates();
+}, [formData.country]);
+
+
+  //city dropdown
+  useEffect(() => {
+  if (!selectedState) {
+    setCities([]);
+    setFormData({ ...formData, city: "" });
+    return;
+  }
+
+  async function fetchCities() {
+    const res = await fetch("https://countriesnow.space/api/v0.1/countries/state/cities", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ country: formData.country, state: selectedState }),
+    });
+    const json = await res.json();
+    if (json?.data) setCities(json.data);
+    else setCities([]);
+  }
+
+  fetchCities();
+}, [selectedState]);
 
   return (
     <div className="flex-1">
@@ -35,6 +84,8 @@ export default function CheckoutForm() {
           type="email"
           placeholder="Email Address"
           className="input-common"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
         />
       </div>
 
@@ -44,12 +95,32 @@ export default function CheckoutForm() {
         <span className="theme-border-block w-[59px] h-[2px] rounded-[10px] block mb-[12px]"></span>
         <p className="text-p text-light  mb-[30px]">Enter the address where you want your order delivered.</p>
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px] ">
-                <input type="text" placeholder="Country" className="input-common" />
+                <select
+                  className={`input-common ${!formData.country ? "text-[#BCBCBC]" : "text-black"}`}
+                  value={formData.country || ""}
+                  onChange={(e) => {
+                    setFormData({ ...formData, country: e.target.value, state: "", city: "" });
+                    setSelectedState(""); 
+                    setCities([]);  
+                  }}
+                >
+                  <option value="" disabled className="text-[#BCBCBC]">Select Country</option>
+                  {countries.map((countryName, idx) => (
+                    <option key={idx} value={countryName} className="text-black">{countryName}</option>
+                  ))}
+                </select>
+
                 <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
-                    <input type="text" placeholder="First Name" className="input-common" />
-                    <input type="text" placeholder="Last Name" className="input-common" />
+                    <input type="text" placeholder="First Name" className="input-common" value={formData.firstName}
+                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                    />
+                    <input type="text" placeholder="Last Name" className="input-common" value={formData.lastName}
+                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                    />
                 </div>
-                <input type="text" placeholder="Address" className="input-common" />
+                <input type="text" placeholder="Address" className="input-common" value={formData.address}
+                   onChange={(e) => setFormData({ ...formData, address: e.target.value })} 
+                />
             </div>
             <div className="flex items-center mb-[30px] gap-[12px]">
                 <Plus size={16}/>
@@ -58,26 +129,45 @@ export default function CheckoutForm() {
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px]">
                 <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
                     {/* <input type="text" placeholder="State" className="input-common" /> */}
-                    <select
-                      className={ `input-common text-[#BCBCBC] ${selectedState === "" ? "placeholder-option" : ""}`}
-                      value={selectedState}
-                      onChange={(e) => setSelectedState(e.target.value)}
+                    <select className={`input-common ${ !formData.state ? "text-[#BCBCBC]" : "text-black" }`}
+                      value={formData.state || ""}
+                      onChange={(e) => {
+                        setSelectedState(e.target.value);
+                        setFormData({ ...formData, state: e.target.value });
+                      }}
                     >
-                      <option value="" disabled>
+                      <option value="" disabled className="text-[#BCBCBC]">
                         Select State
                       </option>
-
                       {states.map((state, index) => (
-                        <option key={index} value={state.name} className="text-light">
+                        <option key={index} value={state.name} className="text-black">
                           {state.name}
                         </option>
                       ))}
                     </select>
-                  <input type="text" placeholder="City" className="input-common" />
+                  {/* <input type="text" placeholder="City" className="input-common"  /> */}
+                  <select className={`input-common ${ !formData.city ? "text-[#BCBCBC]" : "text-black" }`}
+                    value={formData.city || ""}
+                    onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                    disabled={!selectedState || cities.length === 0}
+                  >
+                    <option value="" className="text-[#BCBCBC]">
+                      Select City
+                    </option>
+                    {cities.map((cityName, idx) => (
+                      <option key={idx} value={cityName} className="text-black">
+                        {cityName}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
-                    <input type="text" placeholder="Pin Code" className="input-common" />
-                    <input type="text" placeholder="Phone (Optional)" className="input-common" />
+                    <input type="text" placeholder="Pin Code" className="input-common"  value={formData.pincode}
+                        onChange={(e) => setFormData({ ...formData, pincode: e.target.value })} 
+                    />
+                    <input type="text" placeholder="Phone (Optional)" className="input-common"  value={formData.phone}
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    />
                 </div>
             </div>
             <div className="flex items-center">
@@ -94,8 +184,7 @@ export default function CheckoutForm() {
             {/* <input type="radio" name="shipping" checked readOnly /> */}
             <input type="radio" name="shipping" checked readOnly
                 className="accent-[#F43297] w-5 h-5 rounded-full cursor-pointer"
-                />
-
+            />
             <span className="text-[#BCBCBC]">Free Shipping</span>
           </label>
           <span className="text-p sec-text-color">FREE</span>

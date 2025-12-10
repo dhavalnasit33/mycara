@@ -6,7 +6,7 @@ export const fetchColors = createAsyncThunk(
   "colors/fetchColors",
   async (params = {}, { rejectWithValue }) => {
     try {
-         const queryParams = { page: 1, limit: 0, ...params };
+         const queryParams = { page: 1, limit: 0, status: "active", ...params };
       const res = await api.get(ROUTES.colors.getAll, { params:queryParams });
 
       if (res.data.success) {

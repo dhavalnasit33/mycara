@@ -6,11 +6,10 @@ import { ROUTES } from "../../services/routes";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async ({ page , limit } = {}, { rejectWithValue }) => {
+  async (params = {}, { rejectWithValue }) => {
     try {
-      const res = await api.get(ROUTES.products.getAll, {
-        params: { page, limit }
-      });
+      const queryParams = { page: 1, limit: 50, status: "active" , ...params };
+      const res = await api.get(ROUTES.products.getAll, { params: queryParams});
 
       if (res.data.success) {
         return res.data.data.products;

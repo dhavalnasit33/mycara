@@ -4,7 +4,7 @@ import ShoppingBagIcon from "../icons/ShoppingBagIcon";
 import { getImageUrl } from "../utils/helper";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useAddToWishlist } from "../../hooks/handleAddTowishlist";
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 
 export default function ProductCard({ product }) {

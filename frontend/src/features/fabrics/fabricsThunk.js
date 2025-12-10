@@ -7,7 +7,8 @@ export const fetchFabrics = createAsyncThunk(
   "fabrics/fetchFabrics",
   async (params = {}, { rejectWithValue }) => {
     try {
-      const res = await api.get(ROUTES.fabrics.getAll, { params });
+      const queryParams = { page: 1, limit: 0, status: "active" , ...params };
+      const res = await api.get(ROUTES.fabrics.getAll, { params: queryParams });
 
       if (res.data.success) {
         return res.data.data; 

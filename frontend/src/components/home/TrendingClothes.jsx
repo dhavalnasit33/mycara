@@ -44,6 +44,8 @@ const TrendingClothes = () => {
   }, [dispatch]);
 
   const trendingProducts = products.filter((product) =>
+     product.status === "active" && 
+    product.category?.status === "active" &&
     product.variants?.some((variant) => variant.is_trending)
   );
 

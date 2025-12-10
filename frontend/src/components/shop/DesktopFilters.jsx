@@ -46,14 +46,14 @@ const DesktopFilters = ({
 
 
   useEffect(() => {
-    dispatch(fetchCategories());
-    dispatch(fetchSizes());
-    dispatch(fetchColors());
-    dispatch(fetchBrands());
-    dispatch(fetchtypes());
-    dispatch(fetchFabrics());
-    dispatch(fetchDiscounts());
-    dispatch(fetchProductLabels());
+    dispatch(fetchCategories({ status: "active" }));
+    dispatch(fetchSizes({ status: "active" }));
+    dispatch(fetchColors({ status: "active" }));
+    dispatch(fetchBrands({ status: "active" }));
+    dispatch(fetchtypes({ status: "active" }));
+    dispatch(fetchFabrics({ status: "active" }));
+    dispatch(fetchDiscounts({ status: "active" }));
+    dispatch(fetchProductLabels({ status: "active" }));
   }, [dispatch]);
   
 

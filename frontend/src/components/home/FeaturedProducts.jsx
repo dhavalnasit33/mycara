@@ -21,7 +21,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { fetchProducts } from "../../features/products/productsThunk";
 import { getImageUrl } from "../utils/helper";
-import { useAddToWishlist } from "../../hooks/handleAddTowishlist";
+import { useAddToWishlist } from "../wishlist/handleAddTowishlist";
 
 const FeaturedProducts = () => {
    const dispatch = useDispatch();

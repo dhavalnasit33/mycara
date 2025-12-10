@@ -7,7 +7,7 @@ import { getImageUrl } from "../utils/helper";
 import { createPayment } from "../../features/payments/paymentThunk";
 import { createOrder } from "../../features/orders/orderThunk";
 
-export default function OrderSummary() {
+export default function OrderSummary({  formData }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,57 +51,75 @@ export default function OrderSummary() {
   const total = Number((subtotal + taxes + shipping).toFixed(2));
 
   // Place order & payment
-  
-
   const handlePlaceOrder = async () => {
-    if (!selectedPayment) return alert("Select a payment method");
+
+    const userLS = JSON.parse(localStorage.getItem("user"));
+    if (!userLS || !userLS._id) {
+      alert("Please login before placing order");
+      return navigate("/login");
+    }
+
+    if (!selectedPayment) {
+      return alert("Select a payment method");
+    }
 
     if (selectedPayment === "credit_card") {
-      if (!cardNumber.trim() || !expiryDate.trim() || !cvv.trim()) {
-        setPaymentError("Please fill all credit card details before proceeding.");
+      if (!cardNumber || !expiryDate || !cvv) {
+        setPaymentError("Please fill all credit card details");
         return;
       }
     }
 
-    if (!user || !user._id) {
-      alert("Please login before placing the order");
-      return navigate("/login");
-    }
-
     const orderData = {
-      user_id: user._id,
+      user_id: userLS._id,
       items,
       total_price: total,
       coupon_id: null,
+      shippingAddress: {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        address: formData.address,
+        state: formData.state,
+        city: formData.city,
+        pincode: formData.pincode,
+        phone: formData.phone,
+      },
     };
 
-    // 1️⃣ Dispatch createOrder thunk
     const orderAction = await dispatch(createOrder(orderData));
-    
-    if (createOrder.fulfilled.match(orderAction)) {
-      const orderId = orderAction.payload?._id;
 
-      // 2️⃣ Dispatch createPayment thunk
-      const paymentPayload = {
-        user_id: user._id,
-        order_id: orderId,
-        items,
-        subtotal,
-        taxes,
-        shipping,
-        total,
-        amount_paid: selectedPayment === "cod" ? 0 : total,
-        payment_method: selectedPayment,
-        status: selectedPayment === "cod" ? "pending" : "completed",
-      };
-
-      await dispatch(createPayment(paymentPayload));
-
-      alert("Order placed successfully!");
-      navigate("/my-account/orders"); 
-    } else {
-      alert("Failed to place order: " + orderAction.payload);
+    if (!createOrder.fulfilled.match(orderAction)) {
+      alert("Order failed: " + (orderAction.payload?.message || "Unknown error"));
+      return;
     }
+
+    const orderId =
+      orderAction.payload?.data?._id || 
+      orderAction.payload?._id || 
+      null;
+
+    if (!orderId) {
+      alert("Order created but ID missing!");
+      return;
+    }
+
+    const paymentPayload = {
+      user_id: userLS._id,
+      order_id: orderId,
+      items,
+      subtotal,
+      taxes,
+      shipping,
+      total,
+      amount_paid: selectedPayment === "cod" ? 0 : total,
+      payment_method: selectedPayment,
+      status: selectedPayment === "cod" ? "pending" : "completed",
+    };
+
+    await dispatch(createPayment(paymentPayload));
+
+    alert("Order placed successfully!");
+    navigate("/my-account/orders");
   };
 
   return (

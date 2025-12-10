@@ -8,6 +8,16 @@ import { Link } from "react-router-dom";
 
 
 export default function Checkout() {
+     const [formData, setFormData] = React.useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    state: "",
+    city: "",
+    pincode: "",
+    phone: "",
+  });
   return (
     <div>
         <CartProgress/>
@@ -18,8 +28,8 @@ export default function Checkout() {
                 </h2>
             </Row>
             <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[2fr_1fr] gap-[30px] items-start">
-                <CheckoutForm />
-                <OrderSummary />
+                <CheckoutForm  formData={formData} setFormData={setFormData} />
+                <OrderSummary  formData={formData} setFormData={setFormData} />
             </Row>
         </Section>
     </div>

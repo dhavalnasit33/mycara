@@ -5,7 +5,7 @@ import { ChevronDown, ChevronLeftIcon, ChevronRightIcon, ChevronUp } from "lucid
 import sortImg from "../../assets/sorting.png";
 
 
-export default function OrderCardMobile({orders ,total, page, limit, onPageChange}) {
+export default function OrderCardMobile({orders ,total, page, limit, onPageChange, totalPages}) {
   const [openRow, setOpenRow] = useState(null);
 
   const toggleRow = (id) => {
@@ -80,7 +80,7 @@ export default function OrderCardMobile({orders ,total, page, limit, onPageChang
               </p>
               <p className="flex items-center gap-2">
                 <span  className="text-black w-[80px] inline-block">Address:</span>
-                <span>{order.user?.address?.street || "-"}</span>
+                <span>{order.shippingAddress?.address || "-"}</span>
               </p>
               <p className="flex items-center gap-2">
                 <span  className="text-black w-[80px] inline-block">Status:</span>{" "}
@@ -104,6 +104,7 @@ export default function OrderCardMobile({orders ,total, page, limit, onPageChang
           )}
         </div>
       ))}
+      {totalPages > 1 && (
         <div className="flex justify-between items-center py-[18px] px-[12px] text-sm">
             <div className="flex flex-row justify-between items-center gap-3 text-14 sec-text-color w-full">
                 <p className="sec-text-color text-p">
@@ -119,6 +120,7 @@ export default function OrderCardMobile({orders ,total, page, limit, onPageChang
                 </div>
             </div>
         </div>
+      )}
     </div>
   );
 }

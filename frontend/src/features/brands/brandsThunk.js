@@ -7,7 +7,8 @@ export const fetchBrands = createAsyncThunk(
   "brands/fetchbrands",
   async (params = {}, { rejectWithValue }) => {
     try {
-      const res = await api.get(ROUTES.brands.getAll, { params });
+      const queryParams = { page: 1, limit: 0, status: "active", ...params };
+      const res = await api.get(ROUTES.brands.getAll, { params : queryParams });
 
       if (res.data.success) {
         return res.data.data; 

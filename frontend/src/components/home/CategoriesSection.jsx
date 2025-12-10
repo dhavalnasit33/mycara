@@ -7,8 +7,10 @@ import "slick-carousel/slick/slick-theme.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { getImageUrl } from "../utils/helper";
+import { useNavigate } from "react-router-dom";
 
 const CategoriesSection = () => {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const sliderRef = useRef(null);
@@ -42,9 +44,6 @@ const CategoriesSection = () => {
   if (loading) return <p className="text-center">Loading categories...</p>;
   if (error) return <p className="text-center text-red-500">Error: {error}</p>;
 
-    const filteredCategories = categories.filter(
-    (cat) => cat.section === "home"
-  );
   return (
     <>
       {categories && categories.length > 0 ? (
@@ -54,6 +53,7 @@ const CategoriesSection = () => {
               <div
                 key={category._id || index}
                 className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]"
+                onClick={() => navigate(`/shop?category=${category.name}`)}
               >
                 <div className="relative w-full aspect-square rounded-full overflow-hidden border-4 circle-border duration-300">
                   <img

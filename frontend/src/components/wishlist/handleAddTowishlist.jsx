@@ -1,7 +1,7 @@
 // ✅ src/hooks/useAddToWishlist.js
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addToWishlist } from "../features/wishlist/wishlistThunk";
+import { addToWishlist } from "../../features/wishlist/wishlistThunk";
 
 export const useAddToWishlist = () => {
   const dispatch = useDispatch();

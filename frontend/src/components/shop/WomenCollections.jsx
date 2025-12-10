@@ -1,5 +1,5 @@
 // // D:\mycara\frontend\src\components\shop\WomenCollections.jsx
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -37,7 +37,7 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
                   transition duration-150 ease-in-out " 
             >
                <option value="popularity">Popularity</option>
-                <option value="latest">Newest</option>
+                <option value="latest">Leatest</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
                 <option value="rating">Average Rating</option>
@@ -50,11 +50,12 @@ const DesktopSortBar = ({ sortBy, setSortBy }) => (
 
 // --------------------- FilterItemCheckbox ---------------------
 const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
-    <label className="flex items-center justify-between cursor-pointer p-1 rounded ">
-        <div className="flex items-center">
-                  {/* Custom checkbox box */}
+    <label className="flex items-center justify-between cursor-pointer p-1 rounded">
+        <div className="flex items-center relative">
+            
+            {/* custom checkbox */}
             <div className={`w-[15px] h-[15px] rounded border flex items-center justify-center
-                ${isChecked ? 'bg-color border-color' : 'bg-white border-gray-400'}
+                ${isChecked ? "bg-color border-color" : "bg-white border-gray-400"}
             `}>
                 {isChecked && <CheckedIcon className="w-3 h-3 text-white" />}
             </div>
@@ -65,7 +66,7 @@ const FilterItemCheckbox = ({ name, count, isChecked, onChange }) => (
                 checked={isChecked}
                 onChange={() => onChange(name)}
                 aria-checked={isChecked}
-                className="absolute w-[15px] h-[15px] opacity-0 cursor-pointer"
+                className="absolute top-0 left-0 w-[15px] h-[15px] opacity-0 cursor-pointer z-10"
             />
             <span className="ml-3 text-[14px] font-inter text-[rgba(0,0,0,0.7)]">{name}</span>
         </div>
@@ -153,7 +154,7 @@ const CollapsibleFilter = ({
                 </div>
             </div>
 
-            {isOpen && (
+            {isOpen && (   
                 <div className=" space-y-1 py-2">
                     {children}
                     {showButtons && (
@@ -178,6 +179,7 @@ const CollapsibleFilter = ({
             )}
         </div>
     );
+
 };
 // ---------- Price Range Filter ----------
 const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobile = false, isOpen, onToggle, }) => {
@@ -299,7 +301,8 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
 // --------------------- Main Component ---------------------
 export default function WomenCollections () {
     // Filter States
-
+  const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { products = [], loading } = useSelector((state) => state.products || {});
 
@@ -357,7 +360,18 @@ export default function WomenCollections () {
     setSelectedLabels([]);
     setMinPrice(500);
     setMaxPrice(5000);
+
+    navigate("/shop", { replace: true });
   };
+
+  useEffect(() => {
+  const query = new URLSearchParams(location.search);
+  const categoryFromURL = query.get("category");
+
+  if (categoryFromURL) {
+    setSelectedCategories([categoryFromURL]);
+  }
+}, [location.search]);
 
   // Build currentFilters list for display
   const currentFilters = useMemo(() => {
@@ -525,9 +539,75 @@ const filteredProducts = useMemo(() => {
 ]);
 // console.log("filteredProducts length:", filteredProducts.length);
 
+//sorting
+const sortComparators = {
+  popularity: (a, b) => {
+    const pa = (a?.variants || []).reduce((s, v) => s + (v.popularity || v.rank || 0), 0);
+    const pb = (b?.variants || []).reduce((s, v) => s + (v.popularity || v.rank || 0), 0);
+    return pb - pa;
+  },
+  latest: (a, b) => {
+    const ta = new Date(a?.createdAt || a?.updatedAt || a?._createdAt || 0).getTime() || 0;
+    const tb = new Date(b?.createdAt || b?.updatedAt || b?._createdAt || 0).getTime() || 0;
+    return tb - ta; 
+  },
+  price_asc: (a, b) => {
+    const getPrice = (p) => {
+      const candidates = [
+        p?.selling_price,
+        p?.price,
+        p?.variants?.[0]?.selling_price,
+        p?.variants?.[0]?.price,
+        p?.variants?.[0]?.mrp,
+      ].filter(Boolean);
+      return candidates.length ? Number(candidates[0]) : Infinity;
+    };
+    return getPrice(a) - getPrice(b);
+  },
+  price_desc: (a, b) => {
+    const getPrice = (p) => {
+      const candidates = [
+        p?.selling_price,
+        p?.price,
+        p?.variants?.[0]?.selling_price,
+        p?.variants?.[0]?.price,
+        p?.variants?.[0]?.mrp,
+      ].filter(Boolean);
+      return candidates.length ? Number(candidates[0]) : -Infinity;
+    };
+    return getPrice(b) - getPrice(a);
+  },
+  rating: (a, b) => {
+    const ra = Number(a?.rating || a?.average_rating || 0);
+    const rb = Number(b?.rating || b?.average_rating || 0);
+    return rb - ra;
+  },
+  discounts: (a, b) => {
+    const da = (a?.discount_percent || 0);
+    const db = (b?.discount_percent || 0);
+    return db - da;
+  },
+};
+
+// sortedProducts derived from filteredProducts and currentSortValue
+const sortedProducts = useMemo(() => {
+  if (!Array.isArray(filteredProducts)) return [];
+
+  const arr = [...filteredProducts]; 
+  const comparator = sortComparators[currentSortValue] || sortComparators.popularity;
+
+  try {
+    arr.sort(comparator);
+  } catch (err) {
+    console.warn("Sort failed, returning unsorted list:", err);
+  }
+  return arr;
+}, [filteredProducts, currentSortValue]);
+
+
   // UI helpers
   const filterCount = currentFilters.length;
-  const trendingProducts = filteredProducts.filter((p) => (p.variants || []).some((v) => v.is_trending));
+  const trendingProducts = sortedProducts.filter((p) => (p.variants || []).some((v) => v.is_trending));
   const showingResults = filteredProducts.length;
   const totalResults = products.length;
 
@@ -620,6 +700,7 @@ const filteredProducts = useMemo(() => {
                 />
             </div>
             <div className="flex flex-col  lg:flex-row gap-[30px]">
+              
                 <DesktopFilters
                   products={products}
                   selectedCategories={selectedCategories} 
@@ -665,47 +746,56 @@ const filteredProducts = useMemo(() => {
                         <div className="hidden lg:block text-[16px] sec-text-color ">
                             Showing  <span className="font-medium text-black">
                             {showingResults}</span> results from total <span className="font-medium text-black">{totalResults}
-                            </span> for “<span className="font-medium text-black">Saree</span>“
+                            </span> for “<span className="font-medium text-black">{selectedCategories.length > 0 ? selectedCategories.join(", ") : "Products"}</span>“
                         </div>
 
                         <div className=" sm:flex lg:hidden">
         
                         </div>
                         <div className="hidden lg:flex justify-end">
-                            <DesktopSortBar sortBy={currentSortValue} setSortBy={setCurrentSortValue} />
+                            {/* <DesktopSortBar sortBy={currentSortValue} setSortBy={setCurrentSortValue} /> */}
+                            <DesktopSortBar
+                              sortBy={currentSortValue}
+                              setSortBy={(val) => {
+                                setCurrentSortValue(val);
+                              }}
+                            />
                         </div>
                     </div>
 
                     {/* Active Filters Display */}
                     <div className="hidden sm:flex flex-wrap items-center gap-2 mb-6">
-                      <span onClick={handleClearAllFilters} className="text-[16px] font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer">
-                        Clear Filters:
-                      </span>
-                      {currentFilters.map((filter, idx) => (
-                        <span
-                          key={idx}
-                          className="theme-border min-w-[110px] text-theme border px-[10px] py-[5px] rounded-[10px] cursor-pointer flex items-center justify-between"
-                          onClick={() => {
-                            // remove single filter on click
-                            const { type, value } = filter;
-                            if (type === "category") setSelectedCategories((p) => p.filter((x) => x !== value));
-                            if (type === "size") setSelectedSizes((p) => p.filter((x) => x !== value));
-                            if (type === "color") setSelectedColors((p) => p.filter((x) => x !== value));
-                            if (type === "brand") setSelectedBrands((p) => p.filter((x) => x !== value));
-                            if (type === "type") setSelectedTypes((p) => p.filter((x) => x !== value));
-                            if (type === "fabric") setSelectedFabrics((p) => p.filter((x) => x !== value));
-                            if (type === "discount") setSelectedDiscounts((p) => p.filter((x) => x !== value));
-                            if (type === "label") setSelectedLabels((p) => p.filter((x) => x !== value));
-                            if (type === "price") {
-                              setMinPrice(500);
-                              setMaxPrice(5000);
-                            }
-                          }}
-                        >
-                          {filter.value}
-                          <X className={`w-4 h-4 ml-2 text-theme `} />
-                        </span>
-                      ))}
+                        {currentFilters.length > 0 ? (
+                          <>
+                            <span onClick={handleClearAllFilters} className="text-[16px] font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer">
+                                Clear Filters:
+                            </span>
+                            {currentFilters.map((filter, idx) => (
+                              <span
+                                key={idx}
+                                className="theme-border min-w-[110px] text-theme border px-[10px] py-[5px] rounded-[10px] cursor-pointer flex items-center justify-between"
+                                onClick={() => {
+                                  const { type, value } = filter;
+                                  if (type === "category") setSelectedCategories((p) => p.filter((x) => x !== value));
+                                  if (type === "size") setSelectedSizes((p) => p.filter((x) => x !== value));
+                                  if (type === "color") setSelectedColors((p) => p.filter((x) => x !== value));
+                                  if (type === "brand") setSelectedBrands((p) => p.filter((x) => x !== value));
+                                  if (type === "type") setSelectedTypes((p) => p.filter((x) => x !== value));
+                                  if (type === "fabric") setSelectedFabrics((p) => p.filter((x) => x !== value));
+                                  if (type === "discount") setSelectedDiscounts((p) => p.filter((x) => x !== value));
+                                  if (type === "label") setSelectedLabels((p) => p.filter((x) => x !== value));
+                                  if (type === "price") {
+                                    setMinPrice(500);
+                                    setMaxPrice(5000);
+                                  }
+                                }}
+                              >
+                                {filter.value}
+                                <X className={`w-4 h-4 ml-2 text-theme `} />
+                              </span>
+                            ))}
+                          </>
+                        ) : null}
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-[30px] ">
                       {trendingProducts.length > 0 && (
@@ -714,7 +804,8 @@ const filteredProducts = useMemo(() => {
                         ))
                       )}
                     </div>
-                    <ProductGrid products={filteredProducts} loading={loading} />
+                    {/* <ProductGrid products={filteredProducts} loading={loading} /> */}
+                    <ProductGrid products={sortedProducts} loading={loading} />
                 </main>
             </div>
            </Row>
