@@ -8,7 +8,8 @@ import { Link } from "react-router-dom";
 
 
 export default function Checkout() {
-     const [formData, setFormData] = React.useState({
+  
+  const [formData, setFormData] = React.useState({
     email: "",
     firstName: "",
     lastName: "",
@@ -18,9 +19,10 @@ export default function Checkout() {
     pincode: "",
     phone: "",
   });
+
   return (
     <div>
-        <CartProgress/>
+        <CartProgress currentStep={2}/>
         <Section >
             <Row>
                 <h2 className="text-[28px] font-normal mb-[50px] hidden md:block leading">

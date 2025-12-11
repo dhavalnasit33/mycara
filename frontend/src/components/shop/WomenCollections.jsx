@@ -453,6 +453,11 @@ export default function WomenCollections () {
 
   // Check if product matches selected filters
   const matchesFilters = (p) => {
+     if (!p?.category?.status || p.category.status !== "active") {
+    // Category is inactive, hide product
+    return false;
+  }
+
     // Category
     if (selectedCategories.length > 0) {
       const cat = productCategoryName(p);
@@ -609,7 +614,7 @@ const sortedProducts = useMemo(() => {
   const filterCount = currentFilters.length;
   const trendingProducts = sortedProducts.filter((p) => (p.variants || []).some((v) => v.is_trending));
   const showingResults = filteredProducts.length;
-  const totalResults = products.length;
+  // const totalResults = products.length;
 
   // handlers for mobile & sort
   const handleOpenMobileFilter = () => setIsMobileFilterOpen(true);
@@ -745,15 +750,14 @@ const sortedProducts = useMemo(() => {
                     <div className="flex justify-between items-center mb-6">
                         <div className="hidden lg:block text-[16px] sec-text-color ">
                             Showing  <span className="font-medium text-black">
-                            {showingResults}</span> results from total <span className="font-medium text-black">{totalResults}
-                            </span> for “<span className="font-medium text-black">{selectedCategories.length > 0 ? selectedCategories.join(", ") : "Products"}</span>“
+                            {showingResults}</span> results 
+                            {/* from total <span className="font-medium text-black">{totalResults}</span>  */} for “<span className="font-medium text-black">{selectedCategories.length > 0 ? selectedCategories.join(", ") : "Products"}</span>“
                         </div>
 
                         <div className=" sm:flex lg:hidden">
         
                         </div>
                         <div className="hidden lg:flex justify-end">
-                            {/* <DesktopSortBar sortBy={currentSortValue} setSortBy={setCurrentSortValue} /> */}
                             <DesktopSortBar
                               sortBy={currentSortValue}
                               setSortBy={(val) => {
@@ -767,7 +771,11 @@ const sortedProducts = useMemo(() => {
                     <div className="hidden sm:flex flex-wrap items-center gap-2 mb-6">
                         {currentFilters.length > 0 ? (
                           <>
-                            <span onClick={handleClearAllFilters} className="text-[16px] font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer">
+                            <span onClick={() => {
+                                  handleClearAllFilters();
+                                  navigate("/shop", { replace: true });
+                                }} 
+                                className="text-[16px] font-medium text-[#989696] mr-2 border-b border-[#989696] cursor-pointer">
                                 Clear Filters:
                             </span>
                             {currentFilters.map((filter, idx) => (
@@ -788,6 +796,14 @@ const sortedProducts = useMemo(() => {
                                     setMinPrice(500);
                                     setMaxPrice(5000);
                                   }
+                                  setTimeout(() => {
+                                    const params = new URLSearchParams();
+
+                                    if (type !== "category" && selectedCategories.length > 0) params.set("category", selectedCategories.join(","));
+
+                                    const queryString = params.toString();
+                                    navigate(`/shop${queryString ? `?${queryString}` : ""}`, { replace: true });
+                                  }, 0);
                                 }}
                               >
                                 {filter.value}

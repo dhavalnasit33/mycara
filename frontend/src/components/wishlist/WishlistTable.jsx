@@ -15,10 +15,13 @@ import { addToCart, fetchCart } from "../../features/cart/cartThunk";
 const Wishlist = ({product}) => {
   const [quantities, setQuantities] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { token } = useSelector((state) => state.auth);
+  const [showLoginPopup, setShowLoginPopup] = useState(false);
   const { items = [] } = useSelector((state) => state.wishlist);
   const userId = useSelector((state) => state.auth.user?._id);
   const wishlistId = useSelector((state) => state.wishlist.wishlistId);
-    const [selectedItems, setSelectedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
 
   const increment = (index) =>
@@ -73,10 +76,6 @@ const formattedItems = Array.isArray(items)
 
 
 //adddtocart
- const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
-    const [showLoginPopup, setShowLoginPopup] = useState(false);
-
 const handleAddToCart = async (item) => {
   if (!token) return setShowLoginPopup(true);
 

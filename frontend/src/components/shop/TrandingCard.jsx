@@ -6,7 +6,7 @@ export default function TrendingCard ({ product }){
   return(
  <Link
      to={`/products/${product._id}`}
-    className="block relative group overflow-hidden bg-white transition-transform duration-300 hover:scale-[1.02]"
+    className="block relative group overflow-hidden bg-white transition-transform duration-300 "
   >
       <div className="w-full h-auto overflow-hidden">
         <img

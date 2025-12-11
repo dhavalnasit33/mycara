@@ -16,7 +16,7 @@ export default function Cart() {
  
   return (
     <>
-      <CartProgress />
+      <CartProgress currentStep={1} />
       <Section>
         <Row>
           <h2 className="text-[28px]  mb-[50px] hidden md:block leading">
