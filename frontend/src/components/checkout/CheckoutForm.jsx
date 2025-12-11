@@ -110,8 +110,8 @@ export default function CheckoutForm({ formData, setFormData }) {
                   ))}
                 </select>
 
-                <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
-                    <input type="text" placeholder="First Name" className="input-common" value={formData.firstName}
+                <div className="bloxk sm:flex  gap-[10px] md:gap-[27px]">
+                    <input type="text" placeholder="First Name" className="input-common mb-[10px] sm:mb-0" value={formData.firstName}
                         onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                     />
                     <input type="text" placeholder="Last Name" className="input-common" value={formData.lastName}
@@ -127,9 +127,9 @@ export default function CheckoutForm({ formData, setFormData }) {
                 <p className="text-p text-light">Add State, City And etc...</p>
             </div>
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px]">
-                <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
+                <div className="bloxk sm:flex gap-[10px] md:gap-[27px]">
                     {/* <input type="text" placeholder="State" className="input-common" /> */}
-                    <select className={`input-common ${ !formData.state ? "text-[#BCBCBC]" : "text-black" }`}
+                    <select className={`input-common mb-[10px] sm:mb-0 ${ !formData.state ? "text-[#BCBCBC]" : "text-black" }`}
                       value={formData.state || ""}
                       onChange={(e) => {
                         setSelectedState(e.target.value);
@@ -161,8 +161,8 @@ export default function CheckoutForm({ formData, setFormData }) {
                     ))}
                   </select>
                 </div>
-                <div className="grid grid-cols-2 gap-[10px] md:gap-[27px]">
-                    <input type="text" placeholder="Pin Code" className="input-common"  value={formData.pincode}
+                <div className="bloxk sm:flex gap-[10px] md:gap-[27px]">
+                    <input type="text" placeholder="Pin Code" className="input-common mb-[10px] sm:mb-0"  value={formData.pincode}
                         onChange={(e) => setFormData({ ...formData, pincode: e.target.value })} 
                     />
                     <input type="text" placeholder="Phone (Optional)" className="input-common"  value={formData.phone}

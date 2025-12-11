@@ -29,7 +29,7 @@ export default function Checkout() {
                   <Link to="/home">Home </Link>/ <span className="font-light ">Checkout</span>
                 </h2>
             </Row>
-            <Row className="grid grid-cols-[1fr] custom-lg:grid-cols-[2fr_1fr] gap-[30px] items-start">
+            <Row className="grid grid-cols-1 custom-lg:grid-cols-[2fr_1fr] gap-[30px] items-start">
                 <CheckoutForm  formData={formData} setFormData={setFormData} />
                 <OrderSummary  formData={formData} setFormData={setFormData} />
             </Row>

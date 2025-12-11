@@ -150,7 +150,7 @@ export default function CartItem() {
                     item.variant_id?.images?.length > 0
                       ? getImageUrl(item.variant_id.images[0])       
                       : getImageUrl(item.product_id?.images?.[0])       
-                  }  className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[90px] sm:w-[87px] " />
+                  }  className="box-shadow object-cover p-[5px] h-[110px] sm:h-[109px] w-[75px] sm:w-[87px] " />
                 </Link>
             </div>
             <div className="flex flex-col  flex-wrap ">
