@@ -47,10 +47,14 @@ const roleHierarchy = {
 const authorizeMinRole = (minRole) => (req, res, next) => {
   if (!req.user) return sendResponse(res, false, null, "Unauthorized: User not found");
 
-  if (roleHierarchy[req.user.role] < roleHierarchy[minRole]) {
-    return sendResponse(res, false, null, "Forbidden: Insufficient role");
-  }
-
+  // if (roleHierarchy[req.user.role] < roleHierarchy[minRole]) {
+  //   return sendResponse(res, false, null, "Forbidden: Insufficient role");
+  // }
+  const checkRole = (role) => (req, res, next) => {
+    if (req.user.role !== role) return res.status(403).json({ message: "Forbidden: Insufficient role" });
+    next();
+  };
+  
   next();
 };
 
