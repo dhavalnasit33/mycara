@@ -113,7 +113,7 @@ const DesktopFilters = ({
 
 
   return (
-    <aside className="hidden lg:block lg:w-1/4 h-[120vh] overflow-y-auto  px-4 py-5 bg-white rounded-[20px] box-shadow hide-scrollbar">
+    <aside className="hidden lg:block lg:w-1/4 h-[100%] box-shadow px-4 py-5 rounded-[20px]">
       <div className="p-4">
         <h2 className="text-20px font-medium text-black lowercase">Filter Products</h2>
       </div>

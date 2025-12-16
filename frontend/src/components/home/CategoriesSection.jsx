@@ -9,6 +9,44 @@ import { fetchCategories } from "../../features/categories/categoriesThunk";
 import { getImageUrl } from "../utils/helper";
 import { useNavigate } from "react-router-dom";
 
+const STATIC_CATEGORIES = [
+  {
+    _id: "static-1",
+    name: "Saree",
+    image_url: "/images/static/saree.jpg",
+  },
+  {
+    _id: "static-2",
+    name: "Lehenga",
+    image_url: "/images/static/lehenga.jpg",
+  },
+  {
+    _id: "static-3",
+    name: "Kurti",
+    image_url: "/images/static/kurti.jpg",
+  },
+  {
+    _id: "static-4",
+    name: "Dress",
+    image_url: "/images/static/dress.jpg",
+  },
+  {
+    _id: "static-5",
+    name: "Jeans",
+    image_url: "/images/static/dress.jpg",
+  },
+  {
+    _id: "static-6",
+    name: "WesterWear",
+    image_url: "/images/static/dress.jpg",
+  },
+  {
+    _id: "static-7",
+    name: "Indianwear",
+    image_url: "/images/static/dress.jpg",
+  },
+];
+
 const CategoriesSection = () => {
   const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -30,6 +68,12 @@ const CategoriesSection = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const displayCategories =
+  categories && categories.length > 0
+    ? categories   
+    : STATIC_CATEGORIES; 
+
+
   const settings = {
     dots: false,
     infinite: true,
@@ -46,10 +90,10 @@ const CategoriesSection = () => {
 
   return (
     <>
-      {categories && categories.length > 0 ? (
+      {displayCategories  && displayCategories .length > 0 ? (
         <>
           <Slider ref={sliderRef} {...settings}>
-            {categories.map((category, index) => (
+            {displayCategories.map((category, index) => (
               <div
                 key={category._id || index}
                 className="flex flex-col items-center group cursor-pointer px-[10px] sm:px-[26.5px]"
@@ -71,7 +115,7 @@ const CategoriesSection = () => {
           </Slider>
 
           <div className="flex justify-center mt-[35px] sm:mt-[65px] space-x-[5px]">
-            {categories.slice(0, 8).map((_, i) => (
+            {displayCategories.slice(0, 9).map((_, i) => (
               <button
                 key={i}
                 onClick={() => sliderRef.current.slickGoTo(i)}

@@ -12,7 +12,12 @@ const initialState = {
 const orderSlice = createSlice({
   name: "orders",
   initialState,
-  reducers: {},
+  reducers: {
+    clearOrders: (state) => {
+      state.orders = [];
+      state.total = 0;
+    },
+  },
   extraReducers: (builder) => {
     // CREATE ORDER
     builder
@@ -42,4 +47,5 @@ const orderSlice = createSlice({
   },
 });
 
+export const {clearOrders} = orderSlice.actions;
 export default orderSlice.reducer;

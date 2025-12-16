@@ -1,6 +1,7 @@
 //D:\mycara\frontend\src\rootReducer.js
 import authReducer from "./features/auth/authSlice";
 import navbarReducer from "./features/navbar/navbarSlice";
+import footerReducer from "./features/footer/footerSlice";
 import productsReducer from "./features/products/productsSlice";
 import discountsReducer from './features/discounts/discountsSlice';
 import categoriesReducer from "./features/categories/categoriesSlice";
@@ -20,6 +21,7 @@ import paymentReducer from "./features/payments/paymentSlice";
 export const rootReducer = {
     auth: authReducer,
     navbar: navbarReducer,
+    footer: footerReducer,
     products: productsReducer,
     discounts: discountsReducer,
     categories: categoriesReducer,

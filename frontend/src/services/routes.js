@@ -10,6 +10,9 @@ export const ROUTES = {
   navbar: {
   getAll: "/navbar",
   },
+  footer:{
+    getAll: "/footer",
+  },
   products:{
     getAll: "/products",
     getById: (id) => `/products/${id}`,

@@ -15,8 +15,12 @@ import Row from "../ui/Row";
 import Section from "../ui/Section";
 import { Link } from "react-router-dom";
 import mylogo from "../../assets/my_logo.png"
+import { fetchFooter } from "../../features/footer/footerThunk";
+import { useDispatch, useSelector } from "react-redux";
 
-const Footer = () => {
+export default function Footer () {
+  const dispatch = useDispatch();
+  const { footers = [], loading } = useSelector((state) => state.footer);
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const contentRef = useRef(null);
@@ -31,6 +35,15 @@ const Footer = () => {
   const handleToggle = () => {
     if (isMobile) setIsOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    dispatch(fetchFooter());
+  }, [dispatch]);
+
+  const reversedFooters = [...footers].reverse();
+
+  const navigationLinks = reversedFooters.slice(0, 4);
+  const supportLinks = reversedFooters.slice(4, 9);
 
   return (
     <footer className="mt-[25px] md:mt-[50px]">
@@ -69,14 +82,14 @@ const Footer = () => {
           style={{ backgroundColor: "rgba(210, 175, 159, 0.3)" }}
         >
           {/* Main Footer */}
-          <Row className="py-[50px] md:py-[80px] grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 md:grid-cols-4 gap-8">
+          <Row className="py-[50px] md:py-[80px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Logo & Contact */}
             <div className="space-y-[22px] max-w-[280px] w-full">
 
               <Link to="/home"><img 
                 src={mylogo}
                 alt="MYcra Logo"
-                className="w-[190px] h-[58.52px] mb-[35px]"
+                className="w-[190px] h-[58px] mb-[35px]"
               /></Link>
 
 
@@ -109,26 +122,13 @@ const Footer = () => {
                 <span className="theme-border-block w-[45px]"></span>
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
-                <li>
-                  <Link to="#" >
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact-us">
-                    Contact Us
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/offer">
-                    Offers
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#">
-                    Women
-                  </Link>
-                </li>
+                {!loading && navigationLinks?.map((item) => (
+                  <li key={item._id}>
+                    <Link to={item.url}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -139,31 +139,13 @@ const Footer = () => {
                 <span className="theme-border-block w-[45px]"></span>
               </h2>
               <ul className="pl-[20px] text-[15px] text-light list-disc marker:text-light space-y-[15px]">
-                <li>
-                  <Link to="#" >
-                    Return Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/contact-us" >
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#" >
-                    Terms & Conditions
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#">
-                    Privacy Policy
-                  </Link>
-                </li>
-                <li>
-                  <Link to="#">
-                    Payment Methods
-                  </Link>
-                </li>
+                {!loading && supportLinks?.map((item) => (
+                  <li key={item._id}>
+                    <Link to={item.url}>
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
 
@@ -243,7 +225,7 @@ const Footer = () => {
                   <h3 className="font-medium text-black text-[22px] mb-[28px] leading">
                     FOLLOW US
                   </h3>
-                  <div className="flex gap-3 flex-wrap justify-center md:justify-start">
+                  <div className="flex gap-3 flex-wrap justify-center md:justify-center">
                     <FiFacebook className="w-[50px] h-[50px] p-2 rounded-[5px] bg-color text-white cursor-pointer" />
                     <FaInstagram className="w-[50px] h-[50px] p-2 rounded-[5px] bg-color text-white cursor-pointer" />
                     <FaYoutube className="w-[50px] h-[50px] p-2 rounded-[5px] bg-color text-white cursor-pointer" />
@@ -264,4 +246,3 @@ const Footer = () => {
   );
 };
 
-export default Footer;

@@ -38,6 +38,7 @@ import LoginForm from "../../pages/Login";
 import RegistrationForm from "../../pages/RegistrationForm";
 import { clearCart } from "../../features/cart/cartSlice";
 import useProtectedLink from "../../hooks/useProtectedLink";
+import { clearOrders } from "../../features/orders/orderSlice";
 
 const staticNavItems = [
   { name: "Home", path: "/home", icon: <ShopIcon className="w-5 h-6 hidden custom-lg:block" /> },
@@ -91,7 +92,12 @@ const wishlistCount = wishlist?.length || 0;
 
   const handleLogout = () => {
     dispatch(logout());
-    dispatch(clearCart()); 
+    dispatch(clearCart());  
+    dispatch(clearOrders()); 
+    
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+
     navigate("/shop");
     alert("Logged out successfully!");
   };
