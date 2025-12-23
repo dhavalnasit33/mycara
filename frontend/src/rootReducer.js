@@ -17,11 +17,13 @@ import wishlistReducer from "./features/wishlist/wishlistSlice";
 import cartReducer from "./features/cart/cartSlice";
 import orderReducer from "./features/orders/orderSlice";
 import paymentReducer from "./features/payments/paymentSlice";
+import contactReducer from "./features/contact/contactSlice";
 
 export const rootReducer = {
     auth: authReducer,
     navbar: navbarReducer,
     footer: footerReducer,
+    contact: contactReducer,
     products: productsReducer,
     discounts: discountsReducer,
     categories: categoriesReducer,

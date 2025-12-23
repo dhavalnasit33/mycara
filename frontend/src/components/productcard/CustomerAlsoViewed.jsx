@@ -51,7 +51,7 @@ export default function CustomerAlsoViewed({ products = [], currentProductId = n
       return { imageUrl, productId: p._id };
     });
 
-    return { ...product, mainImageUrl, sideImages,};
+    return { ...product, mainImageUrl, sideImages };
   });
 
   return (

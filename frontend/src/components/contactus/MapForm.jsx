@@ -1,11 +1,54 @@
 // components/ContactSection.jsx
-import React from "react";
+import React, { useState } from "react";
 import Row from "../ui/Row";
 import Button from "../ui/Button";
 import formBg from '../../assets/formbg.png';
 import Section from "../ui/Section";
+import api from "../../services/api";
+import { createContact, fetchContact } from "../../features/contact/contactThunk";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ContactSection() {
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contact.contacts);
+
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  order_number: "",
+  orderDate: "",
+  message: "",
+});
+
+const handleChange = (e) => {
+  setFormData({
+    ...formData,
+    [e.target.name]: e.target.value,
+  });
+};
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+   dispatch(createContact(formData));
+
+
+    alert("Message sent successfully");
+
+    setFormData({
+      name: "",
+      email: "",
+      order_number: "",
+      orderDate: "",
+      message: "",
+    });
+  } catch (error) {
+    alert(error.response?.data?.message || "Something went wrong");
+  }
+};
+
+
   return (
     <Section className="w-full bg-white mb-[25px] md:mb-[50px] " 
     style={{ backgroundImage: `url(${formBg})` }}
@@ -19,35 +62,50 @@ export default function ContactSection() {
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation......
           </p>
 
-          <form className="space-y-[15px] md:space-y-[28px] ">
+          <form className="space-y-[15px] md:space-y-[28px] " onSubmit={handleSubmit}>
           
             <input
               type="text"
+              name="name"
               placeholder="Name*"
               className="input-common"
+              value={formData.name}
+              onChange={handleChange}
             />
             <input
               type="email"
+              name="email"
               placeholder="E-mail*"
               className="input-common"
+              value={formData.email}
+              onChange={handleChange}
             />
             <div className="flex sm:grid flex-col sm:grid-cols-2 gap-[15px] md:gap-[28px]">
               <input
                 type="text"
+                name="order_number"
                 placeholder="Order Number"
                 className="input-common"
+                value={formData.order_number}
+                onChange={handleChange}
               />
               <input
                 type="date"
+                name="orderDate"
                 placeholder="DD/MM/YY"
                 className="input-common placeholder-[#BCBCBC]"
+                value={formData.orderDate}
+                onChange={handleChange}
               />
             </div>
 
             <textarea
               rows="4"
+              name="message"
               placeholder="Description"
               className="input-common"
+              value={formData.message}
+              onChange={handleChange}
             ></textarea>
   
             <Button

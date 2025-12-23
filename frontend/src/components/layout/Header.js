@@ -133,7 +133,7 @@ const wishlistCount = wishlist?.length || 0;
                       className={({ isActive }) => `relative cursor-pointer transition-all duration-300 pb-[10px]
                       ${isActive
                           ? "text-[var(--theme-color)] font-medium after:opacity-100"
-                          : "text-black hover:text-[var(--theme-color)] hover:font-medium after:opacity-0"
+                          : "text-black hover:text-[var(--theme-color)] after:opacity-0"
                       }
                       after:content-['•••'] after:absolute after:left-[52%] after:-bottom-[4px]
                       after:-translate-x-1/2 after:text-[20px] after:tracking-[3px]

@@ -96,7 +96,7 @@ export default function CheckoutForm({ formData, setFormData }) {
         <p className="text-p text-light  mb-[30px]">Enter the address where you want your order delivered.</p>
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px] ">
                 <select
-                  className={`input-common ${!formData.country ? "text-[#BCBCBC]" : "text-black"}`}
+                  className={`input-common w-full appearance-none ${!formData.country ? "text-[#BCBCBC]" : "text-black"}`}
                   value={formData.country || ""}
                   onChange={(e) => {
                     setFormData({ ...formData, country: e.target.value, state: "", city: "" });
@@ -127,9 +127,9 @@ export default function CheckoutForm({ formData, setFormData }) {
                 <p className="text-p text-light">Add State, City And etc...</p>
             </div>
             <div className="space-y-[10px] md:space-y-[28px] mb-[30px]">
-                <div className="bloxk sm:flex gap-[10px] md:gap-[27px]">
+                <div className="block sm:flex gap-[10px] md:gap-[27px]">
                     {/* <input type="text" placeholder="State" className="input-common" /> */}
-                    <select className={`input-common mb-[10px] sm:mb-0 ${ !formData.state ? "text-[#BCBCBC]" : "text-black" }`}
+                     <select className={`input-common mb-[10px] w-full appearance-none sm:mb-0 ${ !formData.state ? "text-[#BCBCBC]" : "text-black" }`}
                       value={formData.state || ""}
                       onChange={(e) => {
                         setSelectedState(e.target.value);
@@ -146,7 +146,7 @@ export default function CheckoutForm({ formData, setFormData }) {
                       ))}
                     </select>
                   {/* <input type="text" placeholder="City" className="input-common"  /> */}
-                  <select className={`input-common ${ !formData.city ? "text-[#BCBCBC]" : "text-black" }`}
+                  <select className={`input-common w-full appearance-none ${ !formData.city ? "text-[#BCBCBC]" : "text-black" }`}
                     value={formData.city || ""}
                     onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                     disabled={!selectedState || cities.length === 0}
