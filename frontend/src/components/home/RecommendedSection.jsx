@@ -1,183 +1,110 @@
-//D:\mycara\frontend\src\components\home\RecommendedSection.jsx
-
-
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState } from "react";
+import Slider from "react-slick";
 import SectionHeading from "../ui/SectionHeading";
 import Row from "../ui/Row.jsx";
 import Section from "../ui/Section.jsx";
-import axios from "axios";
-
-const IMAGE_BASE_URL = "http://localhost:5000";
-const ALL_PRODUCTS_API = `${IMAGE_BASE_URL}/api/products`;
-
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../features/products/productsThunk.js";
+import { getImageUrl } from "../utils/helper.js";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 
 const RecommendedSection = () => {
-  const [recommendedData, setRecommendedData] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [itemsPerPage, setItemsPerPage] = useState(3);
+  const dispatch = useDispatch();
+  const { products, loading } = useSelector( (state) => state.products );
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  // ✅ Responsive items per page
-  const getItemsPerPage = useCallback(() => {
-    return window.innerWidth < 1024 ? 1 : 3;
-  }, []);
-
-  // ✅ Fetch & filter products
-useEffect(() => {
-  const fetchAndFilterProducts = async () => {
-    try {
-      const response = await axios.get(ALL_PRODUCTS_API);
-
-      const allProducts = response?.data?.data?.products || [];
-
-      const uniqueProducts = [];
-      const seen = new Set();
-
-      allProducts.forEach((p) => {
-        if (!seen.has(p._id)) {
-          seen.add(p._id);
-          const uniqueImages = [...new Set(p.images)];
-          uniqueProducts.push({ ...p, images: uniqueImages });
-        }
-      });
-
-      setRecommendedData(uniqueProducts);
-    } catch (error) {
-      console.error("❌ Error fetching products:", error);
-      setRecommendedData([]);
-    }
-  };
-
-  fetchAndFilterProducts();
-}, []);
-
-
-  // ✅ Handle resize for responsiveness
   useEffect(() => {
-    const handleResize = () => setItemsPerPage(getItemsPerPage());
-    setItemsPerPage(getItemsPerPage());
+     dispatch(fetchProducts());
+  }, [dispatch] );
+
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [getItemsPerPage]);
+  }, []);
 
-  const goToNext = useCallback(() => {
-    if (!recommendedData.length) return;
-    setCurrentIndex(
-      (prev) => (prev + itemsPerPage) % (recommendedData.length * 2)
-    );
-  }, [itemsPerPage, recommendedData.length]);
+  if (!products.length) return null;
 
-  const goToPrevious = useCallback(() => {
-    if (!recommendedData.length) return;
-    const doubledLength = recommendedData.length * 2;
-    setCurrentIndex(
-      (prev) => (prev - itemsPerPage + doubledLength) % doubledLength
-    );
-  }, [itemsPerPage, recommendedData.length]);
+  const NextArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white box-shadow rounded-full  absolute right-0 top-1/2 z-10 
+      translate-x-[120%] md:translate-x-[100%] -translate-y-[50%]"
+    >
+      <ChevronRight />
+    </button>
+  );
 
-  const getDisplayItems = useCallback(() => {
-    const doubledData = [...recommendedData, ...recommendedData];
-    const effectiveLength = doubledData.length;
+  const PrevArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white box-shadow rounded-full  absolute left-0 top-1/2 z-10 
+      -translate-x-[120%] -md:translate-x-[100%] -translate-y-[50%]"
+    >
+      <ChevronLeft />
+    </button>
+  );
 
-    const items = [];
-    for (let i = 0; i < Math.min(itemsPerPage, effectiveLength); i++) {
-      items.push(doubledData[(currentIndex + i) % effectiveLength]);
-    }
-    return items;
-  }, [currentIndex, itemsPerPage, recommendedData]);
-
-  const displayItems = getDisplayItems();
-
-  if (recommendedData.length === 0) return null;
+  const settings = {
+    dots: false,
+    arrows: true,
+    prevArrow: <PrevArrow />,
+    nextArrow: <NextArrow />,
+    infinite: true,
+    speed: 600,
+    slidesToShow:  windowWidth <= 767 ? 1 : windowWidth <= 980 ? 2 : 3,
+    slidesToScroll: 1,
+  };
 
   return (
-    <div>
-      <Section className="w-full py-[25px] md:py-[50px]">
-        <Row>
-          <SectionHeading page="Home" order={8} />
-        </Row>
+    <Section className="w-full ">
+      <Row>
+        <SectionHeading page="Home" order={8} />
+      </Row>
 
-        <Row className="relative !max-w-[1179px] flex items-center justify-center mb-[50px] md:mb-[90px]">
-          {/* Left Arrow */}
-          <button
-            onClick={goToPrevious}
-            className="absolute left-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold"
-            style={{ boxShadow: "0px 0px 4px rgba(0,0,0,0.25)" }}
-            aria-label="Previous"
-          >
-            &lt;
-          </button>
-
-          {/* Product Cards */}
-          <div className="flex gap-6 justify-center w-full px-10 sm:px-10 lg:px-20 overflow-hidden">
-            {displayItems.map((item) => (
-              <div
-                key={item._id}
-                className={`flex-shrink-0 w-full ${
-                  itemsPerPage === 3 ? "md:w-1/3" : "w-full"
-                }`}
-              >
-                <ProductCard item={item} />
-              </div>
-            ))}
-          </div>
-
-          {/* Right Arrow */}
-          <button
-            onClick={goToNext}
-            className="absolute right-0 z-30 flex items-center justify-center w-[26px] h-[26px] lg:w-[40px] lg:h-[40px] rounded-full bg-white text-gray-800 text-2xl font-bold"
-            style={{ boxShadow: "0px 0px 4px rgba(0,0,0,0.25)" }}
-            aria-label="Next"
-          >
-            &gt;
-          </button>
-        </Row>
-      </Section>
-    </div>
+      <Row className="!max-w-[1179px] mx-auto mb-[50px] md:mb-[90px] overflow-visible relative px-10 ">
+        <Slider {...settings}>
+          {products.map((item) => (
+            <div key={item._id} className="px-[5px] sm:px-[15px]">
+              <ProductCard item={item} />
+            </div>
+          ))}
+        </Slider>
+      </Row>
+    </Section>
   );
 };
 
-//  ProductCard (double image: blur background + inner main image)
+// PRODUCT CARD
 const ProductCard = ({ item }) => {
-  const imageUrlPath = item?.images?.[0];
-  const imageUrl = imageUrlPath
-    ? `${IMAGE_BASE_URL}${imageUrlPath}`
-    : "placeholder.png";
+  const imageUrl =
+    item?.images?.length > 0
+      ? getImageUrl(item.images[0])
+      : "/placeholder.png";
 
-  const title = item?.category.name || "Recommended Item";
-  const description = item?.description || "No description available";
-
-  const backgroundColor = "#a0522d";
+  const title = item?.category?.name || "Recommanded Item";
+  const description = item?.name || "No description available";
 
   return (
-    <div className="relative w-full lg:w-[342px] lg:h-[398px] h-[398px] overflow-hidden shadow-lg">
-      {/* 🔹 Background blurred image */}
-       <div className="absolute inset-0 w-full h-full">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-full h-full object-cover filter grayscale brightness-35 contrast-125 "
-          // style={{
-          //   filter: "brightness(70%) contrast(120%) saturate(120%)",
-          //   mixBlendMode: "luminosity",
-          // }}
-        />
-      </div>
-
-      {/* 🔹 Foreground centered main image */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <img
-          src={imageUrl}
-          alt={title}
-          className="w-[301px] h-[361px] object-cover  transition-transform duration-1000 group-hover:scale-105"
-        />
-      </div>
-
-      {/* 🔹 Text Info */}
-      <div className="absolute bottom-8 left-6 text-white z-20">
-        <h2 className="font-h5 leading">{title}</h2>
-        <p className="font-sans font-medium text-[16px]">{description}</p>
-      </div>
+      <div className="relative shadow-lg overflow-hidden transition-transform duration-300">
+        <div className="relative w-full min-h-[300px]  lg:w-[342px] h-[398px]">
+          <img src={imageUrl} alt={title} className="w-full h-full object-cover filter grayscale brightness-35 contrast-125" />
+          <div className="absolute inset-0 bg-black opacity-30" style={{ mixBlendMode: 'luminosity' }}></div>
+        </div>
+        <div className="absolute inset-0 flex justify-center items-center">
+          <img src={imageUrl} alt={title} className="w-[90%] h-[92%] object-fit" />
+        </div>
+        <div className="absolute bottom-8 left-6 text-white z-20">
+          <h2 className="font-h5 max-w-[200px] leading">
+            {title}
+          </h2>
+          <p className="font-sans font-medium text-[16px]">
+            {description}
+          </p>
+        </div>
     </div>
   );
 };

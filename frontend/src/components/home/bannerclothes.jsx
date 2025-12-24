@@ -7,27 +7,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPages } from '../../features/pages/pagesThunk';
 import { getImageUrl } from '../utils/helper';
 
+const bannerItem = {
+  title: "Up To 20% Off",
+  description: "Best outfits for every occasion",
+  button_name: "Shop Now",
+  button_link: "/shop",
+  image_url: clothesBanner,
+  isStatic: true,
+};
+
 const BannerClothes = () => {
-    const dispatch = useDispatch();
-    const { pages, loading, error } = useSelector((state) => state.pages);
+  const dispatch = useDispatch();
+  const { pages, } = useSelector((state) => state.pages);
 
-    useEffect(() => {
-        dispatch(fetchPages());
-    }, [dispatch]);
+  useEffect(() => {
+      dispatch(fetchPages());
+  }, [dispatch]);
 
-    const homepage = pages?.find(page => page.slug === 'home');
-    const bannerSection = homepage?.sections?.find(section => section.order === 9);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    if (!bannerSection) return <p>No Section 9 Found</p>;
-
+  const homepage = pages?.find(page => page.slug === 'home');
+  const bannerSectionFromApi = homepage?.sections?.find(section => section.order === 9);
+  const bannerSection = bannerSectionFromApi || bannerItem;
 
   return (
      <Section
       className="relative mx-auto  min-h-[300px] h-auto lg:h-[719px] flex items-center justify-center overflow-hidden bg-cover bg-center inset-0" 
-      style={{backgroundImage: `linear-gradient( to bottom,rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.20),rgba(115, 115, 115, 0.10)), 
-          url(${getImageUrl(bannerSection.image_url)})`,}}
+       style={{ backgroundImage: `linear-gradient( to bottom,rgba(0, 0, 0, 0.40), rgba(0, 0, 0, 0.20),rgba(115, 115, 115, 0.10)), url(${ bannerSection?.isStatic
+            ? bannerSection.image_url 
+            : getImageUrl(bannerSection.image_url)
+        })`, }}
      > 
       <Row
         className="relative  h-[250px] sm:h-[400px] md:h-[563px] flex items-center justify-center rounded-[10px] border border-white/50"
@@ -39,7 +46,7 @@ const BannerClothes = () => {
       >
       <div className="flex flex-col items-center justify-center text-center ">
         <h1 
-          className="text-white  font-semibold tracking-wide text-[30px] lg:text-[80px] leading-tight"
+          className="text-white  font-semibold text-[30px] lg:text-[80px] leading-tight"
         >
            {bannerSection.title}
         </h1>

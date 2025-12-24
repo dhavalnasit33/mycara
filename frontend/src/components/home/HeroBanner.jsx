@@ -7,36 +7,44 @@ import Button from "../ui/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../../features/pages/pagesThunk";
 import { getImageUrl } from "../utils/helper";
-const DiscountBadge = ({ text = "50% off" }) => {
+
+const heroBannerItem = {
+  title: "Flesh Deals",
+  description: "Best outfits for every occasion",
+  button_name: "Shop Now",
+  button_link: "/shop",
+  image_url: herobannerImage,
+  isStatic: true,
+};
+
+const DiscountBadge = () => {
   return (
     <div className="absolute top-3 left-3 w-[60px] h-[60px] sm:w-[80px] sm:h-[80px] md:w-[120px] md:h-[120px] z-30 flex items-center justify-center">
        <img src={sale}/>
       <div className="absolute text-white text-[12px]  md:text-[22px] transform rotate-[-50deg]">
-        {text}
+        50% off
       </div>
     </div>
   );
 };
+
 export default function HeroBanner (){
   const dispatch = useDispatch();
-    const { pages, loading, error } = useSelector((state) => state.pages);
+    const { pages } = useSelector((state) => state.pages);
 
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
 
     const homepage = pages?.find(page => page.slug === 'home');
-    const flashbanner = homepage?.sections?.find(section => section.order === 6);
-
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    if (!flashbanner) return <p>No Section 9 Found</p>;
+    const bannerSectionFromApi = homepage?.sections?.find(section => section.order === 6);
+    const flashbanner = bannerSectionFromApi || heroBannerItem;
 
   return (
   <Section className="sec-theme relative overflow-hidden !pb-0">
     {/* Blur overlay */}
     <div className="absolute top-0 left-0 w-[23%] h-full bg-white/10 backdrop-blur-sm z-20 pointer-events-none"></div>
-    <DiscountBadge text="50% off" />
+    <DiscountBadge />
     <div className="flex gap-[10px] justify-center items-center h-auto min-h-[150px] md:h-[544px] relative z-10">
       <div className="relative flex-1">
         <img

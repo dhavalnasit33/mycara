@@ -37,22 +37,26 @@ const productsSlice = createSlice({
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.loading = false;
         state.product = action.payload;
-      });
-
+      })
+      
       // ⭐ NEW ARRIVALS (IMPORTANT) ⭐
-    builder
-      .addCase(fetchNewArrivals.pending, (state) => {
-        state.newArrivalsLoading = true;
-        state.newArrivalsError = null;
-      })
-      .addCase(fetchNewArrivals.fulfilled, (state, action) => {
-        state.newArrivalsLoading = false;
-        state.newArrivals = action.payload;
-      })
-      .addCase(fetchNewArrivals.rejected, (state, action) => {
-        state.newArrivalsLoading = false;
-        state.newArrivalsError = action.payload;
-      });
+    // builder
+    //   .addCase(fetchNewArrivals.pending, (state) => {
+    //     state.newArrivalsLoading = true;
+    //     state.newArrivalsError = null;
+    //   })
+    //   .addCase(fetchNewArrivals.fulfilled, (state, action) => {
+    //     state.newArrivalsLoading = false;
+    //     state.newArrivals = action.payload;
+    //   })
+    //   .addCase(fetchNewArrivals.rejected, (state, action) => {
+    //     state.newArrivalsLoading = false;
+    //     state.newArrivalsError = action.payload;
+    //   });
+      // .addCase(fetchNewArrivals.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.newArrivals = action.payload;
+      // })
   },
 });
 
