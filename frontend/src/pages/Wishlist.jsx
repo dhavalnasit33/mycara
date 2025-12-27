@@ -10,37 +10,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPages } from "../features/pages/pagesThunk";
 import { useEffect } from "react";
 import { getImageUrl } from "../components/utils/helper";
+import wishlistBg from "../assets/wishlistbg.png"
 
-
-
-// const products = [
-// ];
+const staticBg = {
+  sections: [
+    {
+      _id: "static-1",
+      title: "Wishlist",
+      description: "Your Favourites item added.",
+      image_url: wishlistBg,
+      isStatic: true,
+    },
+  ],
+};
 
 export default function Wishlist(){
-  const dispatch = useDispatch();
-    const { pages, loading, error } = useSelector((state) => state.pages);
+    const dispatch = useDispatch();
+    const { pages } = useSelector((state) => state.pages);
     const { products} = useSelector((state) => state.products);
-
-
 
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-    const wishlistpage = pages.find(page => page.slug === 'wishlist');
+
+    const wishlistpage = pages.find(page => page.slug === 'wishlist') || staticBg;
+
     return(
         <>
-          {wishlistpage?.sections.map(section => (
-              <SecondarySection
-                  key={section._id}
-                  title={section.title}
-                  description={section.description}
-                  backgroundImage={getImageUrl(
-                  section.background_image_url || section.image_url
-                  )}
-              />
-              ))}
+        {wishlistpage?.sections.map(section => (
+            <SecondarySection
+                key={section._id}
+                title={section.title}
+                description={section.description}
+                backgroundImage={ section.isStatic
+                    ? section.image_url
+                    : getImageUrl(section.image_url)
+                }
+            />
+            ))}
            <Section >
             <Row className="pt-[50px]">
                 <WishlistTable products={products} />

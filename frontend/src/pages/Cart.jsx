@@ -1,8 +1,5 @@
 //D:\mycara\frontend\src\pages\Cart.jsx
-
-
 import React from "react";
-
 import CartProgress from "../components/cart/CartProgress";
 import CartSummary from "../components/cart/CartSummary";
 import Row from "../components/ui/Row";
@@ -30,7 +27,7 @@ export default function Cart() {
                 <div className="flex flex-col md:flex-row gap-[12px] md:gap-[16px] items-center">
                     <input
                     placeholder="COUPON CODE"
-                    className="light-color placeholder-[#D2AF9F] border border-[#D2AF9F] rounded-[3px] px-[10px] py-[7px]  md:py-[14px] text-18 w-[200px] md:w-[181px] "
+                    className="light-color text-center placeholder-[#D2AF9F] border border-[#D2AF9F] rounded-[3px] px-[10px] py-[7px]  md:py-[14px] text-18 w-[200px] md:w-[181px] "
                     />
                     <Button
                     variant="common"

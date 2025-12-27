@@ -72,5 +72,9 @@ export const ROUTES = {
   },
   contact: {
     getAll: "/contact-us",
-  }
+  },
+  user: {
+    updateOneProfile: "/users/me",
+    updateProfile: (id) => `/users/${id}`,
+  },
 }

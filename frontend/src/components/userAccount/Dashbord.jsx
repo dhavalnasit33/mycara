@@ -35,7 +35,7 @@ export default function Dashboard() {
           className="bg-white px-[42px] py-[35px] box-shadow  transition flex flex-col items-center text-center"
         >
           <div className="flex justify-center items-center mb-[32px]">
-            <img src={card.image} alt={`${card.title} Icon`} className="w-[90px] h-[90px] rounded-full" />
+            <img src={card.image} alt={`${card.title} Icon`} className="w-[90px] h-[90px]" />
           </div>
           <h3 className="text-[24px] leading font-medium mb-[17px]">{card.title}</h3>
           <p className="text-14 text-light">{card.description}</p>

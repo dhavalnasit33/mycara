@@ -127,10 +127,10 @@ export default function CartItem() {
                 </div>
               </td>
               <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-left">
-                   ₹ {Math.round(getDiscountedPrice(item).discountedPrice).toLocaleString("en-IN")} × {item.quantity}
+                   ₹{Math.round(getDiscountedPrice(item).discountedPrice).toLocaleString("en-IN")} * {item.quantity}
               </td> 
                <td className="px-3 xl:px-6 pt-[40px] pb-[20px] text-center">
-                  ₹ {Math.round(getDiscountedPrice(item).discountedPrice * item.quantity).toLocaleString("en-IN")}
+                  ₹{Math.round(getDiscountedPrice(item).discountedPrice * item.quantity).toLocaleString("en-IN")}
               </td>
             </tr>
           ))}

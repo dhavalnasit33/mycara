@@ -4,37 +4,46 @@ import WomenCollections from '../components/shop/WomenCollections';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchPages } from '../features/pages/pagesThunk';
 import { getImageUrl } from '../components/utils/helper';
+import shopBg from "../assets/shopBannerImage.jpg"
 
-const Shop = () => {
+const staticBg = {
+  sections: [
+    {
+      _id: "static-1",
+      title: "Shop",
+      description: "Wearing Fancy Clothes.",
+      image_url: shopBg,
+      isStatic: true,
+    },
+  ],
+};
 
+export default function Shop () {
     const dispatch = useDispatch();
-    const { pages, loading, error } = useSelector((state) => state.pages);
+    const { pages } = useSelector((state) => state.pages);
 
     useEffect(() => {
         dispatch(fetchPages());
     }, [dispatch]);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>{error}</p>;
-
-      const shopPage = pages.find(page => page.slug === 'shop');
+    const shopPage = pages.find(page => page.slug === 'shop') || staticBg;
 
     return (
         <>
             <div className="hidden lg:flex relative">
-             {shopPage?.sections.map(section => (
-                <SecondarySection
-                    key={section._id}
-                    title={section.title}
-                    description={section.description}
-                    backgroundImage={getImageUrl(
-                    section.background_image_url || section.image_url
-                    )}
-                />
+                {shopPage?.sections.map(section => (
+                    <SecondarySection
+                        key={section._id}
+                        title={section.title}
+                        description={section.description}
+                        backgroundImage={ section.isStatic
+                            ? section.image_url
+                            : getImageUrl(section.image_url)
+                        }
+                    />
                 ))}
             </div>
             <WomenCollections />
         </>
     );
 };
-export default Shop;
