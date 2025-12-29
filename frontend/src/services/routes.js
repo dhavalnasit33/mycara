@@ -1,7 +1,4 @@
 //D:\mycara\frontend\src\services\routes.js
-
-import { Contact } from "lucide-react";
-
 export const ROUTES = {
   auth: {
     login: "/auth/login",
@@ -77,4 +74,8 @@ export const ROUTES = {
     updateOneProfile: "/users/me",
     updateProfile: (id) => `/users/${id}`,
   },
+  coupons: {
+    getAll: "/coupons",
+    getById: (id) => `/coupons/${id}`,
+  }
 }

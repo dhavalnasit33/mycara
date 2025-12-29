@@ -35,32 +35,32 @@ export default function UserProfile () {
                     <h1 className="text-[40px] font-medium text-dark mb-[24px] leading">My Account</h1>
                     <p className="text-[20px] text-dark mb-[20px] leading">Hello {user?.name || "User"} !</p>
                     <p className="text-light text-p">
-                    Aspernatur magni in repellat repellendus itaque consequuntur alias necessitatibus.
+                        Aspernatur magni in repellat repellendus itaque consequuntur alias necessitatibus.
                     </p>
                 </div>
 
                 <div className="relative w-[150px] h-[150px]">
-                <img
-                    src={preview || defaultimg}
-                    alt={user?.name || "User"}
-                    className="w-full h-full rounded-full border-4 circle-border object-cover"
-                />
-                <div
-                    className="absolute bottom-1 right-1 box-shadow bg-color text-white p-2 rounded-full cursor-pointer"
-                    onClick={() => fileInputRef.current.click()}
-                    title="Edit Profile Picture"
-                >
-                    <Pencil size={16} />
+                    <img
+                        src={preview || defaultimg}
+                        alt={user?.name || "User"}
+                        className="w-full h-full rounded-full border-4 circle-border object-cover"
+                    />
+                    <div
+                        className="absolute bottom-1 right-1 box-shadow bg-color text-white p-2 rounded-full cursor-pointer"
+                        onClick={() => fileInputRef.current.click()}
+                        title="Edit Profile Picture"
+                    >
+                        <Pencil size={16} />
+                    </div>
+                    <input  
+                        type="file"
+                        accept="image/*"
+                        ref={fileInputRef}
+                        onChange={handleImageChange}
+                        className="hidden"
+                    />
                 </div>
-                <input
-                    type="file"
-                    accept="image/*"
-                    ref={fileInputRef}
-                    onChange={handleImageChange}
-                    className="hidden"
-                />
-                </div>
-            </Row>
+            </Row>  
         </Section>
     );
 };

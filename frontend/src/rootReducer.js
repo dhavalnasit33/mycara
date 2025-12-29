@@ -5,6 +5,7 @@ import navbarReducer from "./features/navbar/navbarSlice";
 import footerReducer from "./features/footer/footerSlice";
 import productsReducer from "./features/products/productsSlice";
 import discountsReducer from './features/discounts/discountsSlice';
+import couponsReducer from "./features/coupons/couponsSlice";
 import categoriesReducer from "./features/categories/categoriesSlice";
 import pagesReducer from "./features/pages/pagesSlice";
 import sizesReducer from "./features/sizes/sizesSlice";
@@ -29,6 +30,7 @@ export const rootReducer = {
     products: productsReducer,
     discounts: discountsReducer,
     categories: categoriesReducer,
+    coupons: couponsReducer,
     pages: pagesReducer,
     sizes: sizesReducer,
     colors: colorsReducer,

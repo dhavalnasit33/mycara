@@ -1,12 +1,12 @@
-//D:\mycara\frontend\src\components\cart\CartSummary.jsx
+// //D:\mycara\frontend\src\components\cart\CartSummary.jsx
 
 import React from "react";
 import Button from "../ui/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export default function CartSummary() {
-  const { items = [], loading  } = useSelector((state) => state.cart);
+export default function CartSummary({ appliedCoupon }) {
+  const { items = []  } = useSelector((state) => state.cart);
   
   // discount
   const getDiscountedPrice = (item) => {
@@ -21,14 +21,37 @@ export default function CartSummary() {
   };
 
   //subtotal
+  // const subtotal = items.reduce((sum, item) => {
+  //   const { discountedPrice } = getDiscountedPrice(item);
+  //   return sum + discountedPrice * (item.quantity || 1);
+  // }, 0);
+
+  // const taxes = Math.round(subtotal * 0.10);
+  // const shipping = 0; // Free
+  // const total = subtotal + taxes + shipping;
+
+  // 🔹 Calculate subtotal
   const subtotal = items.reduce((sum, item) => {
     const { discountedPrice } = getDiscountedPrice(item);
     return sum + discountedPrice * (item.quantity || 1);
   }, 0);
 
-  const taxes = Math.round(subtotal * 0.10); // 10% tax
-  const shipping = 0; // Free
-  const total = subtotal + taxes + shipping;
+  let discountAmount = 0;
+  if (appliedCoupon) {
+    discountAmount = appliedCoupon.discount_type === "fixed"
+      ? appliedCoupon.discount_value
+      : (subtotal * appliedCoupon.discount_value) / 100;
+
+    // optional: enforce max_discount_amount
+    if (appliedCoupon.max_discount_amount) {
+      discountAmount = Math.min(discountAmount, appliedCoupon.max_discount_amount);
+    }
+  }
+
+  const subtotalAfterDiscount = subtotal - discountAmount;
+  const taxes = Math.round(subtotalAfterDiscount * 0.1); 
+  const shipping = 0;
+  const total = subtotalAfterDiscount + taxes + shipping;
 
   return (
     <div className="w-full  rounded-[3px] py-[45px] px-[22px] light-color ">
@@ -48,9 +71,15 @@ export default function CartSummary() {
           <span>₹ {Math.round(taxes).toLocaleString("en-IN")}</span>
         </div>
         <div className="flex justify-between pb-[10px] border-b border-1 light-border">
-          <span>Shipping:</span>
+          <span>Shipping-Cost:</span>
           <span>free</span>
         </div>
+        {appliedCoupon && (
+          <div className="flex justify-between text-green-600">
+            <span>Coupon ({appliedCoupon.code}):</span>
+            <span>- ₹{Math.round(discountAmount).toLocaleString("en-IN")}</span>
+          </div>
+        )}
         <div className="flex justify-between font-bold ">
           <span>TOTAL:</span>
           <span>₹{Math.round(total).toLocaleString("en-IN")}</span>
