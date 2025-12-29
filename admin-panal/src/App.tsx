@@ -28,8 +28,8 @@ import Sizes from "./pages/Sizes/Sizes";
 import SizeFormPage from "./pages/Sizes/SizeForm";
 import Discounts from "./pages/Discount/Discounts";
 import DiscountFormPage from "./pages/Discount/DiscountForm";
-// import Coupons from "./pages/Coupons/Coupons";
-// import CouponFormPage from "./pages/Coupons/CouponForm";
+import CouponFormPage from "./pages/coupons/CouponForm";
+import CouponsPage from "./pages/coupons/Coupons";
 import Orders from "./pages/Orders/Orders";
 import Payments from "./pages/Payments/Payments";
 import UserFormPage from "./pages/Users/UserForm";
@@ -105,9 +105,9 @@ const App = () => (
                 path="discounts/:id/edit"
                 element={<DiscountFormPage />}
               />
-              {/* <Route path="coupons" element={<Coupons />} />
-              <Route path="coupons/add" element={<CouponFormPage />} />
-              <Route path="coupons/:id/edit" element={<CouponFormPage />} /> */}
+              <Route path="coupons" element={<CouponsPage />} />
+              <Route path="coupons/add" element={<CouponFormPage/>} />
+              <Route path="coupons/:id/edit" element={<CouponFormPage />} />
               <Route path="orders" element={<Orders />} />
               <Route path="payments" element={<Payments />} />
               <Route path="users" element={<Users />} />
