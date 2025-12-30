@@ -328,7 +328,6 @@ const discountCounts = products.reduce((acc, product) => {
                               )}
                       </div>
                   </CollapsibleFilter>
-
                   <CollapsibleFilter
                       title="Discounts"
                       isOpen={openFilter === "Discounts"}

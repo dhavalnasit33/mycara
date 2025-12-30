@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import offerbg from '../../assets/offer-1.png';
+import offerbg from '../../assets/offerBg.png';
 import Button from '../ui/Button';
 import Row from '../ui/Row';
 import { useDispatch, useSelector } from 'react-redux';

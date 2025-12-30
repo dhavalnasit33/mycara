@@ -85,7 +85,6 @@ export default function OrderSummary({  formData }) {
         phone: formData.phone,
       },
     };
-
     const orderAction = await dispatch(createOrder(orderData));
 
     if (!createOrder.fulfilled.match(orderAction)) {

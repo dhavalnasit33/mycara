@@ -94,12 +94,16 @@ export default function Footer () {
 
 
               <div className="flex items-start gap-[20px] text-sm text-light">
-                <MapPin size={24} className="mt-1" />
+                <div className="w-[20px]">
+                  <MapPin  className="mt-1" size={20}/>
+                </div>
                 <p>215, Dhara Arcade near Lajamani Chowk, Surat</p>
               </div>
 
               <div className="flex items-start gap-5 text-sm text-light">
-                <TfiEmail className="mt-1" />
+                <div className="w-[20px]">
+                  <TfiEmail className="mt-1" size={20} />
+                </div>
                 <Link
                   to="mailto:info@gmail.com"
                   className="underline break-words"
@@ -109,7 +113,9 @@ export default function Footer () {
               </div>
 
               <div className="flex items-start gap-5 text-sm text-light">
-                <BsTelephone className="mt-1" />
+                <div className="w-[20px]">
+                  <BsTelephone className="mt-1" size={20}/>
+                </div>
                 <p>+1 [155] 000-01000</p>
               </div>
             </div>

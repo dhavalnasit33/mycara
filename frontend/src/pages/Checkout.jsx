@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import CheckoutForm from "../components/checkout/CheckoutForm";
 import OrderSummary from "../components/checkout/OrderSummary";
 import Section from "../components/ui/Section";
@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Checkout() {
-  
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [formData, setFormData] = React.useState({
     email: "",
     firstName: "",
@@ -31,7 +31,7 @@ export default function Checkout() {
             </Row>
             <Row className="grid grid-cols-1 custom-lg:grid-cols-[2fr_1fr] gap-[30px] items-start">
                 <CheckoutForm  formData={formData} setFormData={setFormData} />
-                <OrderSummary  formData={formData}/>
+                <OrderSummary  formData={formData} appliedCoupon={appliedCoupon}/>
             </Row>
         </Section>
     </div>
