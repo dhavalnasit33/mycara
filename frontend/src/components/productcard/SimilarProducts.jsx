@@ -4,26 +4,24 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./ProductCard";
 import Row from "../ui/Row";
 
-function PrevArrow({ onClick, disabled }) {
+function PrevArrow({ onClick, currentSlide }) {
   return (
     <button
-      onClick={!disabled ? onClick : undefined}
-      className={`absolute right-14 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border ${
-        disabled ? "sec-text-color cursor-not-allowed" : "bg-white text-black"
-      }`}
+      onClick={onClick}
+      className="absolute right-16 md:right-20 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border bg-white p-0 md:p-2 text-black disabled:opacity-40"
+      disabled={currentSlide === 0}
     >
       <ChevronLeft size={22} />
     </button>
   );
 }
 
-function NextArrow({ onClick, disabled }) {
+function NextArrow({ onClick, currentSlide, slideCount, slidesToShow  }) {
   return (
     <button
-      onClick={!disabled ? onClick : undefined}
-      className={`absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border ${
-        disabled ? "sec-text-color cursor-not-allowed" : "bg-white text-black"
-      }`}
+      onClick={onClick}
+      className="absolute right-8 top-0 -translate-y-[140%] z-10 flex items-center justify-center rounded-[3px] border light-border bg-white p-0 md:p-2 text-black disabled:opacity-40"
+            disabled={currentSlide >= slideCount - slidesToShow}
     >
       <ChevronRight size={22} />
     </button>

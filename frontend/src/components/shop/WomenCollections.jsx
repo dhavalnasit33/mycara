@@ -260,17 +260,17 @@ const PriceRangeFilter = ({ minPrice, maxPrice, setMinPrice, setMaxPrice, isMobi
                 </div>
 
                 {/* Price Labels */}
-                <div className="flex justify-between text-center">
-                    <div className="flex flex-col items-start">
-                        <span className="font-inter text-[#989696] text-[14px] font-regular">Min</span>
-                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-full text-black text-[14px] font-regular">
+                <div className="flex gap-[15px] ">
+                    <div className="flex flex-col flex-1">
+                        <span className="sec-text-color text-14">Min</span>
+                        <div className="mt-2 h-[40px] flex items-center justify-center border border-gray-300 rounded-full text-[14px]">
                             Rs {minPrice}
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-end">
-                        <span className="font-inter text-[#989696] text-[14px] font-regular">Max</span>
-                        <div className="mt-2 w-[100px] h-[40px] flex items-center justify-center border border-gray-300 rounded-full text-black text-[14px] font-regular">
+                    <div className="flex flex-col flex-1">
+                        <span className="sec-text-color text-14">Max</span>
+                        <div className="mt-2 h-[40px] flex items-center justify-center border border-gray-300 rounded-full text-[14px]">
                             Rs {maxPrice}
                         </div>
                     </div>

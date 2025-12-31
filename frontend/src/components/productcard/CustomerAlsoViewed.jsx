@@ -55,33 +55,33 @@ export default function CustomerAlsoViewed({ products = [], currentProductId = n
   });
 
   return (
-    <Row className="!max-w-[1155px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px]">
+    <Row className="!max-w-[1155px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[15px] auto-rows-fr">
        {productData.map((product, index) => (
-        <div key={product._id || index} className="bg-white rounded-[3px] box-shadow overflow-hidden p-[23px]">
-          <div className="grid grid-cols-[2fr_1fr] gap-[7px] mb-[12px] h-auto">
+        <div key={product._id || index} className="bg-white rounded-[3px] box-shadow overflow-hidden p-[23px] h-full flex flex-col">
+          <div className="grid grid-cols-[2fr_1fr] gap-[7px] mb-[12px] aspect-[21/22]">
 
             <a href={`/products/${product._id}`} target="_blank" rel="noopener noreferrer">
               <img
                 src={product.mainImageUrl}
                 alt={product?.name || product?.title || "product"}
-                className="w-full h-full object-cover md:h-[325px]"
+                className="w-full h-full object-cover "
               />
             </a>
 
-            <div className="grid grid-rows-2 gap-[7px]">
+            <div className="grid grid-rows-2 gap-[7px] h-full">
               {product.sideImages.map((side, idx) => (
                  <a href={`/products/${side.productId}`} key={side.id || side.productId || idx} target="_blank" rel="noopener noreferrer">
                   <img
                     src={side.imageUrl}
                     alt={`related-${idx}`}
-                    className="w-full h-full object-cover md:h-[159px]"
+                    className="w-full h-full object-cover"
                   />
                   </a>
               ))}
             </div>
           </div>
-          <p className="text-p mb-[5px]">{product?.category.name}</p>
-          <h3 className="text-14 sec-text-color">{product?.name || product?.title}</h3>
+          <p className="text-p mb-[5px]  mt-auto">{product?.category.name}</p>
+          <h3 className="text-14 sec-text-color line-clamp-2">{product?.name || product?.title}</h3>
         </div>
       ))}
     </Row>

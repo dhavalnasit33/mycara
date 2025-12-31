@@ -15,10 +15,8 @@ export default function TrendingCard ({ product }){
           className="w-full h-full  aspect-[4/5] sm:aspect-square transition-transform duration-500"
         />
       </div>
-    <div className="absolute right-2 bottom-2 sm:right-4 sm:bottom-4
-                    w-11/12 max-w-[297px] h-[180px] sm:h-[231px] p-4 sm:py-[30px] pl-4 sm:pl-[30px] pr-[15px]
-                    bg-white/70 backdrop-blur-sm transition-opacity duration-300 opacity-100
-                    flex flex-col justify-between">
+    <div className="absolute right-3 bottom-3 sm:right-8 sm:bottom-8 w-11/12 max-w-[297px] h-[180px] sm:h-[231px] p-4 sm:py-[30px] pl-4 sm:pl-[30px] pr-[15px]
+                    bg-white/60 flex flex-col justify-between">
       <div className="flex justify-between items-start">
         <div className="pr-2 sm:pr-[20px]">
           <h3 className="text-[14px] font-medium font-inter tracking-wider text-black uppercase leading-tight">

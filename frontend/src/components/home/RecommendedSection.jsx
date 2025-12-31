@@ -32,7 +32,7 @@ const RecommendedSection = () => {
     <button
       onClick={onClick}
       className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white box-shadow rounded-full  absolute right-0 top-1/2 z-10 
-      translate-x-[120%] md:translate-x-[100%] -translate-y-[50%]"
+      translate-x-[120%] md:translate-x-[110%] -translate-y-[50%]"
     >
       <ChevronRight />
     </button>
@@ -42,7 +42,7 @@ const RecommendedSection = () => {
     <button
       onClick={onClick}
       className="w-[30px] md:w-[40px] h-[30px] md:h-[40px] flex items-center justify-center bg-white box-shadow rounded-full  absolute left-0 top-1/2 z-10 
-      -translate-x-[120%] -md:translate-x-[100%] -translate-y-[50%]"
+      -translate-x-[120%] md:-translate-x-[110%] -translate-y-[50%]"
     >
       <ChevronLeft />
     </button>
@@ -65,10 +65,10 @@ const RecommendedSection = () => {
         <SectionHeading page="Home" order={8} />
       </Row>
 
-      <Row className="!max-w-[1179px] mx-auto mb-[50px] md:mb-[90px] overflow-visible relative px-10 ">
+      <Row className="!max-w-[1179px] mx-auto mb-[50px] md:mb-[90px] overflow-visible relative px-11 ">
         <Slider {...settings}>
           {products.map((item) => (
-            <div key={item._id} className="px-[5px] sm:px-[15px]">
+            <div key={item._id} className="px-[5px] sm:px-[12.5px]">
               <ProductCard item={item} />
             </div>
           ))}

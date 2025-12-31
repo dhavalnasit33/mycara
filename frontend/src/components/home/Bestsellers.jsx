@@ -66,8 +66,7 @@ const Bestsellers = () => {
 
                   {/* Hover overlay */}
                   <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-                    <div className="w-[95%] h-[95%] bg-black bg-opacity-30 flex justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-[5px] pointer-events-auto cursor-pointer">
-
+                    <div className='absolute inset-3 bg-black bg-opacity-30 rounded-[5px] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-400'>
                       <div className="bg-white px-4 py-2 rounded-[5px] text-center mx-[10px]">
                         <p className="text-black text-[10px] lg:text-[18px] font-medium">
                           {product.name}

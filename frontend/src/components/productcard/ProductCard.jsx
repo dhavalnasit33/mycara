@@ -112,7 +112,7 @@ const getDiscountedPrice = (product) => {
           </div>
         )}
         <h3 className="text-p"> {product.variants?.[0]?.brand?.[0]?.name || "No Brand"}</h3>
-        <p className="sec-text-color text-14 mb-2 truncate">{product.name}</p>
+        <p className="sec-text-color text-14 mb-2 truncate lowercase capitalize">{product.name}</p>
 
         {/* Price Section */}
         <div className="flex flex-wrap items-center gap-[5px] text-p mb-[5px]">

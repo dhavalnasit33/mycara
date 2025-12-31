@@ -136,7 +136,7 @@ export default function ProductInfo({product, setSelectedVariant }) {
     <>
       <p className="text-theme text-p pb-[25px] pt-[20px] md:pt-0">Leatest Style <span className="text-[#BCBCBC]"> | </span> Express Shipping</p>
       <h1 className="text-[24px] uppercase"> {activeVariant?.brand_id?.name || "No Brand"}  </h1>
-      <p className="text-p text-light pb-[12px]">{product.name}</p>
+      <p className="text-p text-light pb-[12px] lowercase capitalize">{product.name}</p>
 
       {/* Rating */}
       <div className="flex items-center gap-[15px] text-14 sec-text-color mb-[25px]">
